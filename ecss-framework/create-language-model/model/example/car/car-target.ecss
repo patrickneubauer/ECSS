@@ -1,0 +1,19 @@
+class Car:
+  'MyCar' (name='') '['
+  	'count' (numWheels='')
+  	(wheel='')
+  	(other='')*
+  ']'
+;
+
+class Wheel:
+   name=''
+;
+
+attribute WheelsNumb:
+  bound=#@INT
+;
+
+attribute name:
+ bound=#@STRING
+;

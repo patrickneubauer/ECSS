@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+	xmlns:xtext="http://www.eclipse.org/2008/Xtext" name="OtherLanguage">
+  <usedGrammars href="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data/search/Xbase.xtext#XtextFragmentProvider_org.eclipse.xtext.xbase.Xbase"/>
+  <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="http://abc.com">
+    <ePackage href="http://www.mavenized.my/HeroLanguage#/"/>
+  </metamodelDeclarations>
+  <rules xsi:type="xtext:ParserRule" name="Heros">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EClass" href="http://www.mavenized.my/HeroLanguage#//Heros"/>
+    </type>
+    <alternatives xsi:type="xtext:Assignment" cardinality="*" feature="heros" operator="+=">
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.1"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="SuperHero">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EClass" href="http://www.mavenized.my/HeroLanguage#//SuperHero"/>
+    </type>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="hero"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="can"/>
+      <elements xsi:type="xtext:Assignment" feature="abilities" operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.2"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="someCode" operator="=">
+        <terminal xsi:type="xtext:RuleCall">
+          <rule href="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data/search/Xbase.xtext#XtextFragmentProvider_org.eclipse.xtext.xbase.Xbase/XBlockExpression"/>
+        </terminal>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:EnumRule" name="Ability">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EEnum" href="http://www.mavenized.my/HeroLanguage#//Ability"/>
+    </type>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://www.mavenized.my/HeroLanguage#//Ability/FLY"/>
+        <literal value="FLY"/>
+      </elements>
+      <elements xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://www.mavenized.my/HeroLanguage#//Ability/SUPERPOWER"/>
+        <literal value="SUPERPOWER"/>
+      </elements>
+      <elements xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://www.mavenized.my/HeroLanguage#//Ability/FIRE"/>
+        <literal value="FIRE"/>
+      </elements>
+      <elements xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://www.mavenized.my/HeroLanguage#//Ability/ICE"/>
+        <literal value="ICE"/>
+      </elements>
+    </alternatives>
+  </rules>
+</xtext:Grammar>

@@ -1,0 +1,332 @@
+// Transformation: XTEXT model ==> ECSS model
+// FROM		xtext grammar in XMI format
+// TO		ecss model in XMI format
+// EXAMPLE	car.xtext.xmi --> car.ecss.xmi
+
+pre {
+	"Running xtext2ecss transformation ...".println();
+	"=====================================================".println();
+	var Grammar = SOURCE.getResource().getContents().first();
+	Grammar.println("grammar ");
+	/*if (TARGET!Ecss.println("Ecss ").isUndefined()) {
+		var m : new SOURCE!Ecss;
+		println("here");
+	}*/
+	//var m : new TARGET!;
+	TARGET.getResource().getContents().first().type().println("target resource type ");
+	//xtext!ParserRule.allInstances().println();
+	SOURCE.getResource().getContents().size().println();
+	SOURCE.getResource().getContents().first().type().println("source resource type ");
+	SOURCE.getResource().getContents().first().rules.size().println("rules size ");
+	SOURCE.getResource().getContents().first().name.println("name ");
+	SOURCE.getResource().getContents().first().usedGrammars.println("usedGrammars ");
+	SOURCE.getResource().getContents().first().println("resource contents ");
+	
+	for (r : SOURCE!AbstractRule in SOURCE.getResource().getContents().first().getRules()) {
+		r.println("rule ");
+	}
+	TARGET!Ecss.all.first().println("FirstECSS");
+	//SOURCE.getResource().getContents().first().getRules().println("grammar rules ");
+	//SOURCE!ParserRule.println("ParserRule ");
+	//Generate default rule
+	var ecssl = TARGET.getResource.getContents().first();
+	ecssl.println("ecssl-zeugs:");
+}
+
+post {
+	"=====================================================".println();
+	"... finished running xtext2ecss transformation.".println();
+	ecssl.println("Ecss ");
+	ecssl.rules.println("Ecss.rules ");
+	//Generate a default attribute rule
+
+	
+	
+}
+
+
+rule Grammar2Ecss 
+	transform s : SOURCE!Grammar
+	to t : TARGET!Ecss {
+		t.rules ::= s.rules;
+		//s.name.println("grammar name ");
+		//s.println("new ecss created ");
+		//s.rules.println();
+		//target.rules ::= source.rules;
+		//target.appendChildren(source.rules);
+
+		var addRule = new TARGET!AttributeRule;
+		var assignment = new TARGET!RuleAssignment;
+		assignment.feature =  "bound";
+		assignment.operator = "=";
+		var defaultCall = new TARGET!CallExpr;
+		defaultCall.isBasicCall = true;
+		defaultCall.isTerminal = true;
+		defaultCall.name = "$DEFAULT";
+		assignment.terminal = defaultCall;
+		addRule.expr = assignment;
+		t.rules.add(addRule);
+		addRule.println("GRAMMAR END OF everything");
+	}
+
+/*
+@abstract
+rule AbstractRule2Rule 
+	transform s : SOURCE!AbstractRule
+	to t : TARGET!Rule {
+		t.name = s.name;
+		//target.println();
+}*/
+
+rule EnumLiterals2RuleEnumLiterals
+	transform s: SOURCE!Alternatives
+	to t: TARGET!RuleAlternatives {
+		guard: s.elements->forAll(e | e.isTypeOf(SOURCE!EnumLiteralDeclaration) or e.isKindOf(SOURCE!EnumLiteralDeclaration)) 
+		t.elements ::= s.elements;
+	}
+
+rule ParserRule2ClassRule
+	transform s : SOURCE!ParserRule
+	to t : TARGET!ClassRule {
+		t.name = s.name;
+		t.expr ::= s.alternatives;	
+		/*var addRule = new TARGET!AttributeRule;
+		var assignment = new TARGET!RuleAssignment;
+		assignment.feature =  "bound";
+		assignment.operator = "=";
+		var defaultCall = new TARGET!CallExpr;
+		defaultCall.isBasicCall = true;
+		defaultCall.isTerminal = true;
+		defaultCall.name = "$DEFAULT";
+		assignment.terminal = defaultCall;
+		addRule.expr = assignment;
+		ecssl.rules.add(addRule);
+		addRule.println("END OF everything");*/
+	
+}
+
+rule TerminalRule2TerminalRule
+	transform s : SOURCE!TerminalRule
+	to t : TARGET!RuleTerminalRule {
+		t.name = s.name;
+		var zeugs = s.alternatives.equivalent();
+		//var alt = new TARGET!RuleParenthesizedTerminalElement;
+		//alt.thisValue = zeugs;
+		//t.alternatives = alt;
+		t.alternatives = zeugs;
+		//Ecss.rules.add(t);
+}
+
+
+rule EnumRule2EnumRule
+	transform s : SOURCE!EnumRule
+	to t : TARGET!RuleEnumRule {
+		t.name = s.name;
+		t.alternatives ::= s.alternatives;	
+		//Ecss.rules.add(t);
+}
+
+
+
+rule Group2RuleGroup
+	transform s: SOURCE!Group
+	to t: TARGET!RuleParenthesizedElement {
+		var thisValue = new TARGET!RuleGroup;
+		thisValue.elements ::= s.elements;
+		//thisValue.left ::= s.elements.first();
+		//thisValue.elements ::= s.elements.excluding(s.elements.first());
+		t.thisValue = thisValue;
+		t.cardinality = s.cardinality;
+}
+
+
+rule UnorderedGroup2RuleUnorderedGroup
+	transform s: SOURCE!UnorderedGroup
+	to t: TARGET!RuleParenthesizedElement {
+		var thisValue = new TARGET!RuleUnorderedGroup;
+		thisValue.elements ::= s.elements;
+		//thisValue.left ::= s.elements.first();
+		//thisValue.elements ::= s.elements.excluding(s.elements.first());
+		t.thisValue = thisValue;
+		t.cardinality = s.cardinality;
+}
+
+rule Alternatives2RuleAlternatives
+	transform s: SOURCE!Alternatives
+	to t: TARGET!RuleParenthesizedElement {
+		guard: s.elements->forAll(e | not e.isTypeOf(SOURCE!EnumLiteralDeclaration) and not e.isKindOf(SOURCE!EnumLiteralDeclaration))
+		var thisValue = new TARGET!RuleAlternatives;
+		/*thisValue.left ::= s.elements.first();
+		thisValue.elements ::= s.elements.excluding(s.elements.first());*/
+		thisValue.elements ::= s.elements;
+		t.thisValue = thisValue;
+		t.cardinality = s.cardinality;
+}
+
+
+
+rule Keyword2RuleKeyword
+	transform s: SOURCE!Keyword 
+	to t: TARGET!CallExpr {
+		t.value = s.value.escapeString();
+		t.cardinality = s.cardinality;
+	}
+
+
+
+/*rule Assignment2RuleAssignment
+	transform s: SOURCE!Assignment 
+	to t: TARGET!RuleParenthesizedElement {
+		var thisValue = new TARGET!RuleAssignment;
+		t.thisValue = thisValue;
+		thisValue.feature = s.feature;
+		thisValue.operator = '=';
+		thisValue.terminal ::= s.terminal;
+}*/
+rule Assignment2RuleAssignment
+	transform s: SOURCE!Assignment 
+	to t: TARGET!RuleAssignment {
+		t.feature = s.feature;
+		t.operator = '=';
+		t.terminal ::= s.terminal;
+		t.cardinality = s.cardinality;
+}
+
+rule RuleCall2CallExpr
+	transform s: SOURCE!RuleCall
+	to t: TARGET!CallExpr {
+		t.isBasicCall = true;
+		
+		var targetRule = s.eGet(s.eClass().getEStructuralFeature("rule"));
+		t.isTerminal = targetRule.isKindOf(SOURCE!TerminalRule);
+		if (targetRule.isUndefined()) {
+			t.name = "Unknown";
+		} else {
+			t.name = targetRule.name;
+		}
+	  t.cardinality = s.cardinality;
+}
+
+
+rule RulecallReference2RuleCall
+	transform s: SOURCE!CrossReference
+	to t: TARGET!CallExpr {
+		guard: s.terminal.isKindOf(SOURCE!RuleCall)
+		t.isBasicCall = true;
+		var targetRule = s.terminal.eGet(s.terminal.eClass().getEStructuralFeature("rule"));
+		t.isTerminal = targetRule.isKindOf(SOURCE!TerminalRule);
+		if (targetRule.isUndefined()) {
+			t.name = "Unknown";
+		} else {
+			t.name = targetRule.name;
+		}
+		t.cardinality = s.cardinality;
+	}
+
+
+rule KeywordReference2RuleKeyword
+	transform s: SOURCE!CrossReference
+	
+	to t: TARGET!CallExpr {
+		guard: s.terminal == null or s.terminal.isKindOf(SOURCE!Keyword)
+		if (s.terminal == null) {
+			t.value = "ID".escapeString();
+		} else {
+			t.cardinality = s.terminal.cardinality;
+			t.value = s.terminal.value.escapeString();
+		}
+	}
+
+
+	
+rule EnumLiteralDeclaration2RuleEnumLiteralDeclaration
+	transform s: SOURCE!EnumLiteralDeclaration
+	to t: TARGET!RuleEnumLiteralDeclaration {
+		if (s.enumLiteral <> null) {
+			t.enumLiteral = s.enumLiteral.name;
+		} else {
+			if (s.literal <> null) {
+				t.enumLiteral = s.literal.value;
+			} else {
+				t.enumLiteral = 'UnknownLiteral';
+			}
+		}
+		if (s.literal <> null) {
+			t.literal = new TARGET!RuleKeyword;
+			t.literal.value = s.literal.value;
+		}
+	}
+	
+	
+rule CharacterRange2CharacterRange
+	transform s: SOURCE!CharacterRange
+	to t: TARGET!XtextCharacterRange {
+		t.left = new TARGET!RuleKeyword;
+		t.left.value = s.left.value;
+		t.right = new TARGET!RuleKeyword;
+		t.right.value = s.right.value;
+	}
+
+
+rule UntilToken2XtextUntilToken
+	transform s: SOURCE!UntilToken
+	to t: TARGET!XtextUntilToken {
+		t.terminal ::= s.terminal;
+	}
+	
+	
+
+rule NegatedToken2XtextNegatedToken
+	transform s: SOURCE!NegatedToken
+	to t: TARGET!XtextNegatedToken {
+		t.terminal ::= s.terminal;
+	}
+//rule CrossReferenc2Terminal 
+
+
+rule Wildcard2XtextWildcard
+	transform s: SOURCE!Wildcard
+	to t: TARGET!XtextWildcard {
+	}
+	
+	
+rule XtextEOF2EOF
+	transform s: SOURCE!EOF
+	to t: TARGET!EOF {
+	}
+
+
+/*
+rule TerminalRule2RuleTerminalRule
+	transform s : SOURCE!TerminalRule
+	to t : TARGET!RuleTerminalRule {
+		
+}*/
+
+/*
+rule 2AttributeRule
+	transform 
+*/
+
+operation String escapeString(): String {
+//(self+" --> "+"'"+self.replace("\\\\","\\\\\\\\").replace("'","\\\\'")+"'").println();
+	return "'"+self.replace("\\\\","\\\\\\\\").replace("\n","\\\\n").replace("\b","\\\\b").replace("\f","\\\\f").replace("\r","\\\\r").replace("\t","\\\\t").replace("'","\\\\'")+"'";
+}
+
+// =============================================
+
+operation Any appendChildren(c : Collection) {
+	for (child in c) {
+		self.appendChild(child);
+	}
+}
+
+operation Any appendEquivalentsOfChildrenOf(source : Any) {
+	for (child in source.children) {
+		var e = child.equivalent();
+		if (e.isDefined()) {
+			self.appendChild(e);
+		}
+	}
+}
+	

@@ -1,0 +1,2 @@
+xtext!ParserRule.all.println();
+xtext.getResource().getURI().println();

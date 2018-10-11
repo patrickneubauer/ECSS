@@ -1,0 +1,80 @@
+package uk.ac.york.cs.ecss.create.lanuage.model;
+
+import static org.junit.Assert.fail;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import uk.ac.york.cs.ecss.create.language.model.Xtext2EcssTransformer;
+
+/**
+ * Unit test for simple App.
+ */
+public class Xtext2EcssTransformerTest {
+
+	private static String DATA_FOLDER = "../../data/";
+	private static String EXAMPLE_DATA_FOLDER = "../../data-example/";
+
+	private static String ANALYSIS_MODEL_FILE_LOCATION = "analysis/ecssal-analysis-model.xmi";
+	private static String REPORT_FILE_LOCATION = "analysis/xtext-to-ecss-report.txt";
+	private static String TRANSFORMATION_INPUT_PATH = "search/";
+	private static String TRANSFORMATION_OUTPUT_PATH = "generated/ecss";
+	    
+    
+	/**
+	 * 
+	 */
+	@Test
+	@Ignore("to be executed manually")
+	public void testWithAnalysisModel() {
+		try {
+			Xtext2EcssTransformer xtext2ecssTransformation = new Xtext2EcssTransformer(
+					DATA_FOLDER + REPORT_FILE_LOCATION, DATA_FOLDER + ANALYSIS_MODEL_FILE_LOCATION);
+			xtext2ecssTransformation.transformPath(DATA_FOLDER + TRANSFORMATION_INPUT_PATH,
+					DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH);
+			xtext2ecssTransformation.serializeAnalysisModel();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	//@Ignore("to be executed manually")
+	public void testWithoutAnalysisModel() {
+		try {
+			Xtext2EcssTransformer xtext2ecssTransformation = new Xtext2EcssTransformer(
+					DATA_FOLDER + REPORT_FILE_LOCATION);
+			xtext2ecssTransformation.transformPath(DATA_FOLDER + TRANSFORMATION_INPUT_PATH,
+					DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	@Ignore("temporarily")
+	public void testExampleDataWithAnalysisModel() {
+		try {
+			Xtext2EcssTransformer xtext2ecssTransformation = new Xtext2EcssTransformer(
+					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, EXAMPLE_DATA_FOLDER + ANALYSIS_MODEL_FILE_LOCATION);
+			xtext2ecssTransformation.transformPath(EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH,
+					EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH);
+			xtext2ecssTransformation.serializeAnalysisModel();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	// @Ignore("temporarily")
+	public void testExampleDataWithoutAnalysisModel() {
+		try {
+			Xtext2EcssTransformer xtext2ecssTransformation = new Xtext2EcssTransformer(REPORT_FILE_LOCATION);
+			xtext2ecssTransformation.transformPath(EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH,
+					EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+}

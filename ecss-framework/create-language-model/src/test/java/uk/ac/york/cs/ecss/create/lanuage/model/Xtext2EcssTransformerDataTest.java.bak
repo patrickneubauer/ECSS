@@ -1,0 +1,98 @@
+package uk.ac.york.cs.ecss.create.lanuage.model;
+
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.Path;
+import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import uk.ac.york.cs.ecss.create.language.model.Xtext2EcssTransformer;
+import uk.ac.york.cs.ecss.helper.FileUtils;
+
+/**
+ * Unit test for simple App.
+ */
+//@Ignore("to be executed manually")
+@RunWith(Parameterized.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class Xtext2EcssTransformerDataTest {
+
+	private static final Logger logger = LogManager.getLogger(Xtext2EcssTransformerDataTest.class);
+
+	
+	private static String ANALYSIS_MODEL_FILE_LOCATION = "analysis/ecssal-analysis-model.xmi";
+	private static String REPORT_FILE_LOCATION = "analysis/xtext-to-ecss-report.txt";
+	private static String TRANSFORMATION_INPUT_PATH = "search/";
+	private static String TRANSFORMATION_OUTPUT_PATH = "generated/";
+
+protected static final String INPUT_DATA_FOLDER = "../../data/";
+	
+	private String uniqueLanguageId;
+
+	private Path outputPath;
+	private String languageName;
+	
+	protected static final String languageProjectBaseName = "me.ecss.language";
+	protected static final String LANGUAGE_NAME_PREFIX = "me.ecss.language";
+	
+	protected static final String ECORE_PATH = "/analysis/default-ecore/";
+	protected static final String ECSS_PATH = "/analysis/ecss/";
+	protected static final String XTEXT_INPUT_PATH = "/search/";
+	protected static final String OUTPUT_PATH = "/generated/";
+
+	protected static final String ECSSAL_MODEL_FILE_LOCATION = "/analysis/ecssal-analysis-model.xmi";
+	
+	protected static final String METAMODEL_FILE_EXTENSION = "ecore";
+	protected static final String GRAMMAR_FILE_EXTENSION = "xtext";
+	protected static final String STYLE_FILE_EXTENSION = "ecss";
+
+	
+	protected static List<String> languageFileExtensions = new LinkedList<String>();
+	
+	@Parameters
+	public static List<File> data() {
+		File dataFolder = new File(INPUT_DATA_FOLDER + Path.SEPARATOR + XTEXT_INPUT_PATH);
+		File[] dataFolderFileArray = FileUtils.getListOfAcceptedFiles(dataFolder, GRAMMAR_FILE_EXTENSION);
+		return Arrays.asList(dataFolderFileArray);
+	}
+
+	public Xtext2EcssTransformerDataTest(File inputFile) {
+		uniqueLanguageId = com.google.common.io.Files.getNameWithoutExtension(inputFile.toString());
+		languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
+		outputPath = new Path(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		languageFileExtensions.add("mydsl");
+
+		File reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
+		//File analysisModelFile = new File(INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION);
+		logger.debug("Running " + this.getClass().getName() + "( " + uniqueLanguageId + " )");
+	}
+
+	@Test
+	// @Ignore("temporarily")
+	public void test() {
+		try {
+			Xtext2EcssTransformer xtext2ecssTransformation = new Xtext2EcssTransformer(REPORT_FILE_LOCATION);
+			xtext2ecssTransformation.transform(INPUT_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + uniqueLanguageId + "." + GRAMMAR_FILE_EXTENSION,
+					INPUT_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH + uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + STYLE_FILE_EXTENSION);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+}

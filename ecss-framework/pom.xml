@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>uk.ac.york.cs.ecss</groupId>
+        <artifactId>ecss-framework-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ecss-framework</artifactId>
+    <packaging>pom</packaging>
+
+    <name>ECSS Framework</name>
+
+    <modules>
+
+        <!-- FRAMEWORK HELPER MODULE (independent) -->
+        <module>helper</module>
+
+        <!-- XTEXT LANGUAGE PROJECTS-CREATOR (independent) -->
+        <!--  IN: (XTEXT | ECORE)  ==>  OUT: XTEXT LANGUAGE PROJECTS  -->
+        <!-- TODO (low priority): merge with "helper" module -->
+        <module>create-language-projects</module>
+
+        <!-- SIMPLEREG LANGUAGE MODULE (independent) -->
+        <!-- Xtext-based language to capture regular expressions defined as part of style models -->
+        <!-- TODO (low priority): merge with "language" module -->
+        <module>simplereg-language</module>
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- STYLE LANGUAGE MODULE (depends on "simplereg-language" module only) -->
+        <!-- Xtext-based style language -->
+        <!-- Also an Eclipse-plugin; offers web integration and has LSP support -->
+        <module>language</module>
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- STYLE-CREATOR FOR XTEXT GRAMMAR MODULE (depends on "language" module only) -->
+        <!--  IN: XTEXT  ===>  OUT: ECSS  -->
+        <!-- <module>create-language-model</module> -->
+
+        <!-- XTEXT GRAMMAR-CREATOR MODULE (depends on "language" module only) -->
+        <!--  IN: ECORE + ECSS  ===>  OUT: XTEXT  -->
+        <!-- <module>create-grammar</module> -->
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- GENERATOR MODULE (depends on "create-language-model" and "create-grammar" modules only) -->
+        <!-- Provides API access to framework capabilities -->
+        <!-- <module>generator</module> -->
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- ECLIPSE WIZARD MODULE (depends on "generator" module only) -->
+        <!-- Eclispse Wizard-based UI for generator module -->
+        <!-- <module>eclipse-wizard</module> -->
+
+    </modules>
+
+</project>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecssl:Ecssl xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecssl="http://www.ac.at/tuwien/big/Ecssl">
+  <rules xsi:type="ecssl:ClassRule" name="Car">
+    <expr xsi:type="ecssl:RuleParenthesizedElement">
+      <thisValue xsi:type="ecssl:RuleGroup">
+        <elements xsi:type="ecssl:RuleKeyword" value="'MyCar'"/>
+        <elements xsi:type="ecssl:RuleParenthesizedElement">
+          <thisValue xsi:type="ecssl:RuleParenthesizedElement">
+            <thisValue xsi:type="ecssl:RuleAssignment" feature="name" operator="=">
+              <terminal xsi:type="ecssl:CallExpr" isTerminal="true" isBasicCall="true" name="STRING"/>
+            </thisValue>
+          </thisValue>
+        </elements>
+        <elements xsi:type="ecssl:RuleParenthesizedElement">
+          <thisValue xsi:type="ecssl:RuleParenthesizedElement">
+            <thisValue xsi:type="ecssl:RuleAssignment" feature="next" operator="=">
+              <terminal xsi:type="ecssl:CallExpr" isTerminal="true" isBasicCall="true" name="STRING"/>
+            </thisValue>
+          </thisValue>
+        </elements>
+        <elements xsi:type="ecssl:RuleKeyword" value="'['"/>
+        <elements xsi:type="ecssl:RuleKeyword" value="'count'"/>
+        <elements xsi:type="ecssl:RuleParenthesizedElement">
+          <thisValue xsi:type="ecssl:RuleParenthesizedElement">
+            <thisValue xsi:type="ecssl:RuleAssignment" feature="numWheels" operator="=">
+              <terminal xsi:type="ecssl:CallExpr" isTerminal="true" isBasicCall="true" name="INT"/>
+            </thisValue>
+          </thisValue>
+        </elements>
+        <elements xsi:type="ecssl:RuleParenthesizedElement">
+          <thisValue xsi:type="ecssl:RuleParenthesizedElement">
+            <thisValue xsi:type="ecssl:RuleAssignment" feature="wheel" operator="=">
+              <terminal xsi:type="ecssl:CallExpr" isTerminal="true" isBasicCall="true" name="INT"/>
+            </thisValue>
+          </thisValue>
+        </elements>
+        <elements xsi:type="ecssl:RuleKeyword" value="']'"/>
+      </thisValue>
+    </expr>
+  </rules>
+  <rules xsi:type="ecssl:ClassRule" name="Wheel">
+    <expr xsi:type="ecssl:RuleParenthesizedElement">
+      <thisValue xsi:type="ecssl:RuleGroup">
+        <elements xsi:type="ecssl:RuleKeyword" value="'MyCar'"/>
+        <elements xsi:type="ecssl:RuleParenthesizedElement">
+          <thisValue xsi:type="ecssl:RuleParenthesizedElement">
+            <thisValue xsi:type="ecssl:RuleAssignment" feature="name" operator="=">
+              <terminal xsi:type="ecssl:CallExpr" isTerminal="true" isBasicCall="true" name="STRING"/>
+            </thisValue>
+          </thisValue>
+        </elements>
+        <elements xsi:type="ecssl:RuleKeyword" value="'['"/>
+        <elements xsi:type="ecssl:RuleKeyword" value="'count'"/>
+        <elements xsi:type="ecssl:RuleKeyword" value="']'"/>
+      </thisValue>
+    </expr>
+  </rules>
+</ecssl:Ecssl>

@@ -1,0 +1,255 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>uk.ac.york.cs.ecss</groupId>
+    <artifactId>ecss-framework-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>ECSS Framework Parent</name>
+
+    <modules>
+        <module>ecss-framework</module>
+    </modules>
+
+    <properties>
+        <!-- GENERAL PROPERTIES -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- MAVEN PROPERTIES -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
+        <maven.surefire.plugin>2.20.1</maven.surefire.plugin>
+        <maven.clean.plugin>3.0.0</maven.clean.plugin>
+        <maven.resources.plugin>3.0.2</maven.resources.plugin>
+        <maven.exec.plugin>1.4.0</maven.exec.plugin>
+        <maven.invoker>3.0.0</maven.invoker>
+
+        <!-- ECLIPSE PROPERTIES -->
+        <maven.eclipse.plugin>2.10</maven.eclipse.plugin>
+        <eclipse-xsd>2.12.0</eclipse-xsd>
+        <eclipse-core-runtime>3.12.0</eclipse-core-runtime>
+        <eclipse-xtext-ui>2.10.0</eclipse-xtext-ui>
+        <eclipse-equinox-common>3.10.0</eclipse-equinox-common>
+
+        <!-- XTEXT PROPERTIES -->
+        <tycho-version>1.0.0</tycho-version>
+        <xtextVersion>2.12.0</xtextVersion>
+
+        <!-- EPSILON PROPERTIES -->
+        <epsilon-emf>1.4.0</epsilon-emf>
+
+        <!-- EMF PROPERTIES -->
+        <emf-version>2.12.0</emf-version>
+        <emf-mwe-version>1.3.20.201605261059</emf-mwe-version>
+        <emf-mwe2-version>2.9.0.201605261059</emf-mwe2-version>
+
+    </properties>
+
+    <repositories>
+        <!-- for github releases -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+        <!-- for Eclipse Oxygen -->
+        <repository>
+            <id>eclipse-oxygen</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/releases/oxygen</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+        <!-- for Xtext releases -->
+        <repository>
+            <id>xtext-update-site</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+        <!-- maven central -->
+        <repository>
+            <id>maven-central</id>
+            <name>Maven Repository Switchboard</name>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+    </repositories>
+
+
+    <profiles>
+        <profile>
+            <id>skip-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.surefire.plugin}</version>
+                        <configuration>
+                            <!-- <argLine>-XX:-UseLoopPredicate</argLine> -->
+                            <skipTests>true</skipTests>
+                            <!-- <forkCount>1</forkCount> -->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>run-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.surefire.plugin}</version>
+                        <configuration>
+                            <skipTests>false</skipTests>
+                            <reportFormat>plain</reportFormat>
+                            <testFailureIgnore>false</testFailureIgnore> <!-- true: continue build on failed tests -->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven.clean.plugin}</version>
+                <configuration>
+                    <skip>true</skip> <!-- skipped by default to speedup build -->
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/data</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>${maven.eclipse.plugin}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-eclipse-plugin</artifactId>
+                        <version>${maven.eclipse.plugin}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.plugin}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- For creating dependency graphs, see: https://github.com/ferstl/depgraph-maven-plugin -->
+                <plugin>
+                    <groupId>com.github.ferstl</groupId>
+                    <artifactId>depgraph-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>depgraph-creation</id>
+                            <phase>test</phase>
+                            <goals>
+                                <!-- <goal>graph</goal> -->
+                                <!-- <goal>by-groupid</goal> -->
+                                <goal>aggregate-by-groupid</goal>
+                            </goals>
+                            <configuration>
+                                <imageFormat>png</imageFormat>
+                                <outputDirectory>${project.basedir}</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <!-- GLOBAL FRAMEWORK DEPENDENCIES BELOW -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.10.0</version>
+        </dependency>
+        <!-- EXAMPLE for jitpack -->
+        <!-- <dependency> <groupId>com.github.User</groupId> <artifactId>Repo</artifactId>
+            <version>Tag</version> </dependency> -->
+    </dependencies>
+
+</project>

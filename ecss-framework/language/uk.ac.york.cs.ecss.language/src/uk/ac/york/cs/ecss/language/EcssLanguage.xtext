@@ -1,0 +1,192 @@
+grammar uk.ac.york.cs.ecss.language.EcssLanguage with org.eclipse.xtext.common.Terminals //org.eclipse.ocl.xtext.essentialocl.EssentialOCL
+
+generate ecssLanguage "http://www.ac.uk/york/cs/ecss/language/EcssLanguage"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+//import "platform:/resource/uk.ac.york.cs.ecss.language/model/imported/org.eclipse.emf.ecore/Ecore.ecore" as ecore
+//import "platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore" as pivot
+//import "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore" as base
+//import "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.ecore" as essentialocl
+
+
+Model:
+	/*string = TEST1MIDT
+	string2 = TEST3MID*/
+	(config = Config)?
+	(importStatement+= Import)*
+	(
+		templateDefs+= TemplateDef |
+		templateGenDefs+= TemplateGenDef |
+		templates+=TemplateRule	|
+		properties+=PropertyRule
+	)*;
+
+Config:
+	{Config}
+	'Config' '{'
+		(hasMinImprovement?='minImprovement' minImprovement=NUMBER)?
+		(hasMaxDegression?='maxDegression' maxDegression=NUMBER)?
+		(haxMaxThings?='maxThings' maxThings=INT)?
+	'}'
+;
+
+Import:
+	'import' (name=STRING) ';'
+;
+
+/*Template or template generator class! */
+TemplateRuleOrDef:
+	TemplateDef | TemplateRule
+;
+
+TemplateDef:
+	'template' (name=ID) ':' javaClass=QUALIFIEDNAME ';'
+;
+
+TemplateGenDef:
+	'templateGen' (name=ID)  ('extends' superRule=[TemplateRuleOrDef|ID])? (':' javaClass=QUALIFIEDNAME)? ';'
+;
+
+terminal QUALIFIEDNAME:
+	ID ('.' ID)+
+;
+
+TemplateRule:
+	BasicTemplateRule | TemplateGeneratorRule;
+
+BasicTemplateRule:
+	'javarule' type=[TemplateDef|ID] (name=ID) ('::' (groups+=ID)+)? ';'
+;
+
+TemplateGeneratorRule:
+	'rule' (type=[TemplateGenDef|ID]) (name=ID) ('::' (groups+=ID)+)? ('with' (typeDef+= TypeDef (',' typeDef+=TypeDef)*))?  ('id' (
+		idPart+=TemplateRulePart
+	)|('{'
+		(idPart+=TemplateRulePart)+
+		'}'
+	))? (':'
+	(templateRulePart+=TemplateRulePart)+)?
+	';'
+;
+
+TypeDef:
+	type=ID name=ID
+;
+
+TemplateRulePart:
+	TemplateFunctionCall| LocalEvaluationCall | LocalOrValueCall  | StaticTemplateRulePart | EvaluationCall	| SlotCall
+	 | ForEachExpression | IfExpression
+;
+
+ForEachExpression:
+	'for' (type=ID)? variable=ID ':' (exprVar=ID|completeExpr=STRING) ('join' (join+=TemplateRulePart)+ )?  '{'
+		(body+=TemplateRulePart)*
+	'}'
+;
+
+IfExpression:
+	'if' '(' val=ID ')' '{'
+		(then+=TemplateRulePart)*
+	'}' ('else' '{'
+			(else+=TemplateRulePart)*
+	'}')?
+;
+
+StaticTemplateRulePart:
+	value=STRING
+;
+
+TemplateFunctionCall:
+	'$'(isReference?='@')?(name=ID)'(' (parValue+=TemplateParameterValue (',' parValue+= TemplateParameterValue)*)? ')'
+;
+
+SlotCall:
+	'§'(name=ID) ('[' minValue=INT ('..' maxValue=INT) ']')?
+;
+
+LocalOrValueCall:
+	'$'(name=ID|name=QUALIFIEDNAME)
+;
+
+
+LocalEvaluationCall:
+	'$#' value=STRING
+;
+
+TemplateParameterValue:
+	('$' propName=ID) | (varName=ID) | ('§' slotName=ID  ('[' minValue=INT ('..' maxValue=INT) ']')?) | (direct=STRING)
+;
+
+EvaluationCall:
+	'#' value=STRING
+;
+
+PropertyRule:
+	{PropertyRule}
+	(selector=Selector)? '{'
+		(property+=Property)*
+	'}'
+;
+
+Selector:
+	(selectors+=SingleSelector)+
+;
+
+SingleSelector:
+	((allTypes?='*') | (referredName=(ID|STRING)))
+	(condition=Condition)?
+;
+
+PossiblySignedNumber returns ecore::EBigDecimal: '-'? NUMBER;
+
+terminal NUMBER returns ecore::EBigDecimal:
+ INT ('.' (INT)?);
+
+//Actions ersetzt durch priority(), priorityAdd()
+Property:
+	(templateMatch=TemplateMatch | slotMatch=SlotMatch | name=(ID|STRING)) (condition=Condition)?
+	 ':' (value+=PropertyValue)+ ';'
+;
+
+TemplateMatch:
+	'template' '(' selector=SingleSelector ')'
+;
+
+SlotMatch:
+	'slot' '(' first=SingleSelector ',' second=SingleSelector  ')'
+;
+
+PropertyValue:
+	((value=ID|value=STRING|valueNumb=PossiblySignedNumber| 'ocl' oclvalue=SpecificationCS))
+	(hasProperty?='(' (argument+= PropertyValue (',' argument+= PropertyValue)* )? ')')?
+;
+
+TEST1MID returns ecore::EString:
+	TEST1|TEST2
+;
+
+TEST3MID returns ecore::EString:
+	TEST3|TEST2
+;
+
+terminal TEST1:
+	 'test1'
+;
+
+terminal TEST3:
+	'test3'
+;
+
+terminal TEST2:
+	'test2'
+;
+
+
+Condition:
+	'[' expression=SpecificationCS  ']'
+;
+
+
+SpecificationCS/* returns essentialocl::ExpSpecificationCS*/:
+	ownedExpression=STRING;
+	

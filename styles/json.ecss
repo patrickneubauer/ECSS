@@ -1,0 +1,37 @@
+import "common.ecss";
+
+class AnyClass:
+	##@PAROPEN
+		'"_clazz"' '=' ##@ESCCLASSNAME
+		(otherAttribute={this: 0.51;}'' (',' otherAttribute='') )?
+	##@PARCLOSE
+;
+
+attribute otherAttributeOptional  {
+	this["feature().lowerBound = 0 and not feature().many"]: 0.6;
+}:
+	(##@ESCFEATURENAME '=' bound=#TYPETERMINAL)?
+;
+
+attribute otherAttributeSingle {
+	this["feature().lowerBound > 0 and not feature().many"]: 0.6;
+}:
+	##@ESCFEATURENAME '=' bound=#TYPETERMINAL
+;
+
+attribute otherAttributeMany {
+	this["feature().lowerBound > 0 and feature().many"]: 0.6;
+}:
+	##@ESCFEATURENAME '=' '[' bound=#TYPETERMINAL (',' bound=#TYPETERMINAL)* ']'
+;
+
+attribute otherAttributeManyOptional {
+	this["feature().lowerBound = 0 and feature().many"]: 0.6;
+}:
+	(##@ESCFEATURENAME '=' '[' (bound=#TYPETERMINAL (',' bound=#TYPETERMINAL)*)? ']')?
+;
+
+* {
+	PAROPEN: "{";
+	PARCLOSE: "}";
+}

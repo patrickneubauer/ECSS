@@ -1,0 +1,1045 @@
+package uk.ac.york.cs.ecss.create.language.model;
+
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.epsilon.common.parse.problem.ParseProblem;
+import org.eclipse.epsilon.common.util.StringProperties;
+import org.eclipse.epsilon.emc.emf.EmfModel;
+import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
+import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
+import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
+import org.eclipse.epsilon.eol.execute.context.Variable;
+import org.eclipse.epsilon.eol.models.IModel;
+import org.eclipse.epsilon.eol.models.IRelativePathResolver;
+import org.eclipse.epsilon.eol.models.ModelRepository;
+import org.eclipse.epsilon.etl.EtlModule;
+import org.eclipse.epsilon.etl.IEtlModule;
+import org.eclipse.epsilon.etl.trace.Transformation;
+import org.eclipse.epsilon.etl.trace.TransformationTrace;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.XtextStandaloneSetup;
+import org.eclipse.xtext.resource.SaveOptions;
+import org.eclipse.xtext.resource.SaveOptions.Builder;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
+
+import com.google.inject.Injector;
+
+import uk.ac.york.cs.ecss.ecssal.AnalysisElement;
+import uk.ac.york.cs.ecss.ecssal.EcssalFactory;
+import uk.ac.york.cs.ecss.ecssal.EcssalPackage;
+import uk.ac.york.cs.ecss.ecssal.Root;
+import uk.ac.york.cs.ecss.ecssal.SearchElement;
+import uk.ac.york.cs.ecss.ecssal.TargetGrammar;
+import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
+import uk.ac.york.cs.ecss.language.ECSSLanguageStandaloneSetup;
+import uk.ac.york.cs.ecss.language.ecsslanguage.AttributeRule;
+import uk.ac.york.cs.ecss.language.ecsslanguage.CallExpr;
+import uk.ac.york.cs.ecss.language.ecsslanguage.ClassRule;
+import uk.ac.york.cs.ecss.language.ecsslanguage.Ecss;
+import uk.ac.york.cs.ecss.language.ecsslanguage.EcsslanguageFactory;
+import uk.ac.york.cs.ecss.language.ecsslanguage.Property;
+import uk.ac.york.cs.ecss.language.ecsslanguage.PropertyRule;
+import uk.ac.york.cs.ecss.language.ecsslanguage.PropertyValue;
+import uk.ac.york.cs.ecss.language.ecsslanguage.Rule;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleAbstractToken;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleAlternatives;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleAssignment;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleEnumLiteralDeclaration;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleExp;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleGroup;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleKeyword;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleParenthesizedElement;
+import uk.ac.york.cs.ecss.language.ecsslanguage.RuleUnorderedGroup;
+import uk.ac.york.cs.ecss.language.ecsslanguage.Selector;
+import uk.ac.york.cs.ecss.language.ecsslanguage.SingleSelector;
+import uk.ac.york.cs.ecss.language.util.LanguageHelper;
+
+/**
+ * This class has the following functionalities: - Load existing Xtext grammar
+ * files (*.xtext) from a folder into memory - Transform them to ECSS models
+ * (*.ecss) by instanciating an ETL transformation - Serialize generated ECSS
+ * models to disk - Update existing analysis model (*.xmi) by associating
+ * grammars with their ECSS models
+ *
+ */
+public class Xtext2EcssTransformer {
+	
+	private static final Logger logger = LogManager.getLogger(Xtext2EcssTransformer.class);
+	
+	private static final String TRANSFORMATION_FILE_LOCATION = "../create-language-model/etl/xtext2ecss.etl";
+	private static final String SOURCE_FILE_EXTENSION = "xtext";
+	private static final String TARGET_FILE_EXTENSION = "ecss";
+
+	private final String reportFile;
+	private String analysisModelFileLocation;
+	
+	public static final String XTEXT_METAMODEL_FILE_LOCATION = "../language/uk.ac.york.cs.ecss.language/model/imported/Xtext.ecore";
+	public static final String ECORE_METAMODEL_FILE_LOCATION = "../language/uk.ac.york.cs.ecss.language/model/imported/org.eclipse.emf.ecore/Ecore.ecore";
+	protected static final int DEFAULT_CLUSTER_NO = 1;
+	protected static final String DEFAULT_LINK_TYPE = "COMPLETE";
+	protected Resource emfModelResource;
+	protected Resource xtextMetamodelResource;
+	protected Resource analysisModelResource;
+
+	protected Root analysisModelRoot;
+	protected ResourceSet emfResourceSet;
+	protected XtextResourceSet xtextResourceSet;
+
+	private ModelRepository etlModelRepository;
+	private EtlModule etlModule;
+	
+	private List<AbstractRule> lateHandle = new ArrayList<>();
+	private File sourceFilePath;
+	private File targetFilePath;
+	
+	/*
+	 * public XtextToDefaultEcoreTransformer(String reportFileLocation, String
+	 * analysisModelFileLocation) { reportFile = reportFileLocation;
+	 * this.analysisModelFileLocation = analysisModelFileLocation;
+	 * logger.info("Initiating " +
+	 * this.getClass().getCanonicalName() + " at " + LocalDateTime.now()); init(); }
+	 */
+
+	/**
+	 * WITH use of analysis model
+	 * 
+	 * @param reportFileLocation
+	 * @param analysisModelFileLocation
+	 */
+	public Xtext2EcssTransformer(String reportFileLocation, String analysisModelFileLocation) throws Exception {
+		this.reportFile = reportFileLocation;
+		this.analysisModelFileLocation = analysisModelFileLocation;
+		
+		logger.info("Initiating " + this.getClass().getCanonicalName() + " at " + LocalDateTime.now());
+		
+		// resource set initializations
+		init();
+
+		// ETL module creation
+		etlModule = new EtlModule();
+		
+		// ETL initialization 
+		etlModule.parse(new File(TRANSFORMATION_FILE_LOCATION));
+		etlModelRepository = etlModule.getContext().getModelRepository();
+//			throw new Exception("Could not load transformation file " + TRANSFORMATION_FILE_LOCATION + " from disk. " + e.getMessage());
+		
+	}
+	
+	/**
+	 * WITHOUT use of analysis model
+	 * 
+	 * @param reportFileLocation
+	 */
+	public Xtext2EcssTransformer(String reportFileLocation) throws Exception {
+		this(reportFileLocation, null);
+	}
+
+	protected List<Variable> parameters = new ArrayList<Variable>();
+
+	protected Object currentResult;
+	private List<IModel> currentModels;
+	private Resource currentTargetResource;
+	private XtextResource currentSourceResource;
+
+	public void postProcess() {
+		
+	};
+
+	public void preProcess() {
+	};
+
+	private void executeETL() throws Exception {
+		logger.info("Starting to execute ETL transformation ...");
+		/**TODO: Should not be done for everything*/
+		// ETL module creation
+		etlModule = new EtlModule();
+		
+		// ETL initialization 
+		try {
+			etlModule.parse(new File(TRANSFORMATION_FILE_LOCATION));
+			etlModelRepository = etlModule.getContext().getModelRepository();
+		} catch (Exception e) {
+			logger.error("Could not load transformation file " + TRANSFORMATION_FILE_LOCATION + " from disk.");
+			e.printStackTrace();
+		}
+		
+		if (etlModule.getParseProblems().size() > 0) {
+			logger.error("Parse errors occured...");
+			for (ParseProblem problem : etlModule.getParseProblems()) {
+				logger.error(problem.toString());
+			}
+			return;
+		}
+
+		for (IModel model: new ArrayList<>(etlModule.getContext().getModelRepository().getModels())) {
+			etlModule.getContext().getModelRepository().removeModel(model);
+		}
+		for (IModel model : currentModels) { 
+			etlModule.getContext().getModelRepository().addModel(model);
+		}
+
+		for (Variable parameter : parameters) {
+			etlModule.getContext().getFrameStack().put(parameter);
+			logger.info("Added parameter name: " + parameter.getName() + " with value: " + parameter.getValue());
+		}
+
+		preProcess();
+		try {
+			currentResult = null;
+			currentResult = transform(etlModule);
+			
+		} catch (EolRuntimeException e) {
+			logger.info("Failed to execute ETL transformation: " + e.getMessage());
+			return;
+
+		}
+		postProcess();
+		
+		// store result as XMI/ECSS model on disk
+		Ecss ecssElement = null;//EcsslanguageFactory.eINSTANCE.createEcss();
+		
+		TransformationTrace transformationTrace = (TransformationTrace) currentResult;
+		for (Transformation transformation : transformationTrace.getTransformations()) {
+			for (Object target : transformation.getTargets()) {
+				/*if (target instanceof Rule) {
+					ecssElement.getRules().add((Rule)target);
+				}*/
+				if (target instanceof Ecss) {
+					ecssElement = (Ecss)target;
+				}
+			}
+		}
+		
+		if (ecssElement == null) { //???
+			ecssElement = EcsslanguageFactory.eINSTANCE.createEcss();
+			
+			for (Transformation transformation : transformationTrace.getTransformations()) {
+				for (Object target : transformation.getTargets()) {
+					if (target instanceof Rule) {
+						ecssElement.getRules().add((Rule)target);
+					}
+				}
+			}
+			
+		}
+		postProcessECSSElement(ecssElement);
+		
+		try {
+			Resource ecssTargetResource = currentTargetResource;
+			ecssTargetResource.getContents().clear();
+			ecssTargetResource.getContents().add(ecssElement);
+			Builder builder = SaveOptions.newBuilder().noValidation().format();
+			ecssTargetResource.save(builder.getOptions().toOptionsMap());
+			logger.debug("Target URI: "+ecssTargetResource.getURI());
+		} catch (Exception e){
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		/*currentTargetResource.getContents().set(0, ecssElement);
+		// serialize target model
+		Builder builder = SaveOptions.newBuilder().format();
+		currentTargetResource.save(builder.getOptions().toOptionsMap());*/
+		
+
+		
+		//logger.info("RESULT: " + currentResult);
+		
+		etlModule.getContext().getModelRepository().dispose();
+		logger.info("... finished executing ETL transformations.");
+	}
+	
+	
+
+	private void postProcessECSSElement(Ecss ecssElement) {
+		//Create Attribute rule for each attribute
+		//It has to include all cardinalities - but how?
+		//Directly attached cardinality - take with you
+		//Is directly related to scope ... you need to invert that
+		Set<RuleAssignment> ruleAssignmetns = new HashSet<>();
+		ecssElement.eAllContents().forEachRemaining((eobj)->{
+			if (eobj instanceof RuleAssignment) {
+				ruleAssignmetns.add((RuleAssignment)eobj);
+			}
+		});
+		EcsslanguageFactory cfact = EcsslanguageFactory.eINSTANCE;
+		Map<RuleAssignment, List<EObject>> scopeMap = new HashMap<RuleAssignment, List<EObject>>();
+		for (RuleAssignment rass: ruleAssignmetns) {
+			scopeMap.put(rass, LanguageHelper.getApproximateAttributeScope(rass));
+		}
+		//Extract the whole scope into an attributeRule - I think that should work??
+		Map<RuleAssignment, AttributeRule> createdAttributeRule = new HashMap<RuleAssignment, AttributeRule>();
+		Map<String,List<AttributeRule>> currentAttributeRules = new HashMap<>();
+		List<PropertyRule> addPropertyRules = new ArrayList<PropertyRule>();
+		Set<EObject> usedEobjects = new HashSet<EObject>();
+		Set<RuleAssignment> firstAssignments = new HashSet<>();
+		scopeMap.forEach((rass,eobjl)->{
+			Set<EObject> unused = new HashSet<>(eobjl);
+			if (usedEobjects.addAll(unused)) {
+				firstAssignments.add(rass);
+			}
+		});
+		scopeMap.keySet().retainAll(firstAssignments);
+		scopeMap.forEach((rass,eobjl)->{
+			/*if (usedEobjects.containsAll(eobjl)) {
+				return;
+			}
+			usedEobjects.addAll(eobjl);*/
+			List<RuleAssignment> realAssignments = new ArrayList<>();
+			for (EObject eobj: eobjl) {
+				if (eobj instanceof RuleAssignment) {
+					realAssignments.add((RuleAssignment)eobj);
+				} else {
+					eobj.eAllContents().forEachRemaining(x->{
+						if (x instanceof RuleAssignment) {
+							realAssignments.add((RuleAssignment)x);
+						}
+					});
+				}
+			}
+			
+			AttributeRule newRule = cfact.createAttributeRule();
+			String ruleName = rass.getFeature();
+			List<AttributeRule> curRules = currentAttributeRules.get(ruleName);
+			if (curRules != null) {
+				//Just hope for no strange name clashes
+				ruleName = ruleName+"_"+(curRules.size()+1);
+				
+			} else {
+				currentAttributeRules.put(ruleName, curRules = new ArrayList<>());
+			}
+			curRules.add(newRule);
+			newRule.setName(ruleName);
+			//Add the attribute rule ruleCall instead of e.g. the first element in the scopeMap
+			RuleAssignment addAssignment = cfact.createRuleAssignment();
+			
+			/*CallExpr addCall = cfact.createCallExpr();
+			addCall.setIsBasicCall(true);
+			addCall.setName(ruleName);*/
+			
+			EObject ruleCont = rass.eContainer();
+			while (ruleCont != null && !(ruleCont instanceof Rule)) {
+				ruleCont = ruleCont.eContainer();
+			}
+			Rule topRule = (Rule)ruleCont;
+			
+			String realFeature = null;
+			String realOperator = null;
+			for (RuleAssignment ra: realAssignments) {
+				if (realFeature == null) {
+					realFeature = ra.getFeature();
+				}
+				if (realOperator == null) {
+					realOperator = ra.getOperator();
+				}
+			}
+			
+			addAssignment.setFeature(ruleName);
+			if (!Objects.equals(ruleName,realFeature)) { {
+				PropertyRule mapName = cfact.createPropertyRule();
+				Selector selector = cfact.createSelector();
+				SingleSelector eclassselector = cfact.createSingleSelector();
+				if (topRule instanceof ClassRule) {
+					eclassselector.setReferredName(((ClassRule)topRule).getName());
+				}
+				
+				SingleSelector ss = cfact.createSingleSelector();
+				ss.setReferredName(realFeature);
+				selector.getSelectors().add(eclassselector);
+				selector.getSelectors().add(ss);
+				mapName.setSelector(selector);						
+				{
+					Property prop = cfact.createProperty();
+					prop.setName(ruleName);
+					PropertyValue val = cfact.createPropertyValue();
+					val.setValueNumb(BigDecimal.ONE.add(BigDecimal.ONE));
+					prop.getValue().add(val);
+					mapName.getProperty().add(prop);
+				}
+				
+				addPropertyRules.add(mapName);
+			}
+			{
+				PropertyRule mapName = cfact.createPropertyRule();
+				Selector selector = cfact.createSelector();
+				SingleSelector eclassselector = cfact.createSingleSelector();
+				if (topRule instanceof ClassRule) {
+					eclassselector.setReferredName(((ClassRule)topRule).getName());
+				}
+				
+				SingleSelector ss = cfact.createSingleSelector();
+				ss.setReferredName(realFeature);
+				SingleSelector starsel = cfact.createSingleSelector();
+				starsel.setReferredName("*");
+				selector.getSelectors().add(eclassselector);
+				selector.getSelectors().add(ss);
+				selector.getSelectors().add(starsel);
+				mapName.setSelector(selector);						
+				{
+					Property prop = cfact.createProperty();
+					prop.setName(ruleName);
+					PropertyValue val = cfact.createPropertyValue();
+					val.setValueNumb(BigDecimal.ONE.add(BigDecimal.ONE));
+					prop.getValue().add(val);
+					mapName.getProperty().add(prop);
+				}
+				
+				addPropertyRules.add(mapName);
+			}
+			}
+			addAssignment.setOperator("=");
+			RuleKeyword empty = cfact.createRuleKeyword();
+			empty.setValue("");
+			addAssignment.setTerminal(empty);
+			
+			for (RuleAssignment realAssignment: realAssignments) {
+				realAssignment.setFeature("bound");
+				realAssignment.setOperator(realOperator);
+			}
+			EObject first = eobjl.get(0);
+			if (first.eContainer() != null) {
+				EStructuralFeature esf = first.eContainingFeature();
+				Object o = first.eContainer().eGet(esf);
+				if (esf.isMany()) {
+					List l = (List)o;
+					int index = l.indexOf(first);
+					l.add(index, addAssignment);
+				} else {
+					try {
+						first.eContainer().eSet(esf,addAssignment);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if (eobjl.size() == 1) {
+				newRule.setExpr((RuleExp)eobjl.get(0));
+			} else {
+				//Minimum 2
+				RuleGroup gr = cfact.createRuleGroup();
+				eobjl.forEach(x->gr.getElements().add((RuleAlternatives)x));
+				newRule.setExpr(gr);
+			}
+			ecssElement.getRules().add(newRule);
+		});
+		ecssElement.getRules().addAll(addPropertyRules);
+		//Remove ruleGroup and ruleAlternative with only 1 element
+		List<RuleAlternatives> deleteThings = new ArrayList();
+		ecssElement.eAllContents().forEachRemaining((x)->
+		{
+			if (x instanceof RuleAlternatives) {
+				RuleAlternatives alt = (RuleAlternatives)x;
+				if (alt.getElements().size() == 1) {
+					logger.debug("Small "+alt);
+					deleteThings.add(alt);
+				}
+			}
+		});
+		Collections.reverse(deleteThings);
+		for (RuleAlternatives delete: deleteThings) {
+			EObject cont = delete.eContainer();
+			EStructuralFeature contFeat = delete.eContainingFeature();
+			if (contFeat.isMany()) {
+				List l = (List)cont.eGet(contFeat);
+				int index = l.indexOf(delete);
+				if (!delete.getElements().isEmpty()) {
+					l.set(index,delete.getElements().get(0));
+				} else {
+					l.remove(index);
+				}
+			} else {
+				if (delete.getElements().isEmpty()) {
+					cont.eSet(contFeat, null);
+				} else {
+					cont.eSet(contFeat, delete.getElements().get(0));
+				}
+			}
+		}
+		{
+			Set<RuleEnumLiteralDeclaration> decl = new HashSet<>();
+			ecssElement.eAllContents().forEachRemaining(x->{
+				if (x instanceof RuleEnumLiteralDeclaration) {
+					decl.add((RuleEnumLiteralDeclaration)x);
+				}
+			});
+			//Leave out rules only containing a ruleAlternative for each element ... hope that is in the metamodel
+			Collection<Rule> deleteRules = new ArrayList<>();
+			for (Rule rule: ecssElement.getRules()) {
+				if (rule instanceof ClassRule) {
+					ClassRule pr = (ClassRule)rule;
+					EObject expr = pr.getExpr();
+					while (expr instanceof RuleParenthesizedElement) {
+						expr = ((RuleParenthesizedElement)expr).getThisValue();
+					}
+					if (expr instanceof RuleAlternatives && !(expr instanceof RuleUnorderedGroup) && !(expr instanceof RuleGroup)) {
+						RuleAlternatives gr = (RuleAlternatives)expr;
+						if (!gr.getElements().isEmpty()) {
+							boolean allBasicCalls = true;
+							for (RuleAlternatives alt: gr.getElements()) {
+								if (alt instanceof CallExpr) {
+									CallExpr ce = (CallExpr)alt;
+									if (ce.isIsBasicCall() && !ce.isIsTerminal()) {
+										continue;
+									}
+								}
+								allBasicCalls = false;
+								break;
+							}
+							if (allBasicCalls) {
+								deleteRules.add(rule);
+							}
+						}
+					}
+				}
+			}
+			ecssElement.getRules().removeAll(deleteRules);
+			//Remove empty groups
+			
+			boolean changed = false;
+			do{
+				changed = false;
+				{
+					Set<RuleParenthesizedElement> pare = new HashSet<>();
+					Set<RuleParenthesizedElement> pared = new HashSet<>();
+					ecssElement.eAllContents().forEachRemaining(x->{
+						if (x instanceof RuleParenthesizedElement) {
+							pare.add((RuleParenthesizedElement)x);
+						}
+					});
+					for (RuleParenthesizedElement rpe: pare) {
+						if (pared.contains(rpe)) {continue;}
+						while (rpe.getThisValue() instanceof RuleParenthesizedElement) {
+							RuleParenthesizedElement rsub = (RuleParenthesizedElement)rpe.getThisValue();
+							rpe.setCardinality(mergeCard(rpe.getCardinality(),rsub.getCardinality()));
+							pared.add((RuleParenthesizedElement)rpe.getThisValue());
+							rpe.setThisValue(((RuleParenthesizedElement)rpe.getThisValue()).getThisValue());
+							changed = true;
+						}
+					}
+				}
+				{
+					Set<RuleAlternatives> pare = new HashSet<>();
+					Set<RuleAlternatives> pared = new HashSet<>();
+					ecssElement.eAllContents().forEachRemaining(x->{
+						if (x instanceof RuleAlternatives && x.eClass().getName().equals("RuleAlternatives")) {
+							pare.add((RuleAlternatives)x);
+						}
+					});
+					for (RuleAlternatives rpe: pare) {
+						if (pared.contains(rpe)) {continue;}
+						if (rpe.getElements().size() == 1) {
+							//Wandle in eine RuleParanthesis um
+							RuleParenthesizedElement newPar = cfact.createRuleParenthesizedElement();
+							newPar.setThisValue(rpe.getElements().get(0));
+							if (rpe instanceof RuleAbstractToken) {
+								newPar.setCardinality(((RuleAbstractToken) rpe).getCardinality());
+							}
+							LanguageHelper.replace(rpe,newPar);
+							changed = true;
+						}
+					}
+				}
+				{
+					Set<RuleGroup> pare = new HashSet<>();
+					Set<RuleGroup> pared = new HashSet<>();
+					ecssElement.eAllContents().forEachRemaining(x->{
+						if (x instanceof RuleGroup && x.eClass().getName().equals("RuleGroup")) {
+							pare.add((RuleGroup)x);
+						}
+					});
+					for (RuleGroup rpe: pare) {
+						if (pared.contains(rpe)) {continue;}
+						if (rpe.getElements().size() == 1) {
+							//Wandle in eine RuleParanthesis um
+							RuleParenthesizedElement newPar = cfact.createRuleParenthesizedElement();
+							newPar.setThisValue(rpe.getElements().get(0));
+							if (rpe instanceof RuleAbstractToken) {
+								newPar.setCardinality(((RuleAbstractToken) rpe).getCardinality());
+							}
+							LanguageHelper.replace(rpe,newPar);
+							changed = true;
+						}
+					}
+				}
+				
+				Set<EObject> removeObjs = new HashSet<EObject>();
+			Iterator<EObject> eobjs = ecssElement.eAllContents();
+			while (eobjs.hasNext()) {
+				EObject eobj = eobjs.next();
+				EClass cl = eobj.eClass();
+				if (eobj instanceof RuleParenthesizedElement ) {
+					RuleParenthesizedElement rpe = (RuleParenthesizedElement)eobj;
+					if (rpe.getThisValue() == null) {
+						removeObjs.add(rpe);
+						continue;
+					}
+				}
+				if (eobj instanceof RuleGroup && "RuleGroup".equals(cl.getName())) {
+					RuleGroup rg = (RuleGroup)eobj;
+					if (rg.getElements().isEmpty()) {
+						removeObjs.add(rg);
+						continue;
+					}
+				} else { 
+					if (eobj instanceof RuleAlternatives && "RuleAlternatives".equals(cl.getName())) {
+						RuleAlternatives rg = (RuleAlternatives)eobj;
+						if (rg.getElements().isEmpty()) {
+							removeObjs.add(rg);
+							continue;
+						}
+					}
+				} 
+			}
+			for (EObject eobj: removeObjs) {
+				EObject cont = eobj.eContainer();
+				if (cont != null) {
+					EStructuralFeature econtFeat = eobj.eContainingFeature();
+					if (econtFeat.isMany()) {
+						((List)cont.eGet(econtFeat)).remove(eobj);
+						changed = true;
+					} else {
+						cont.eUnset(econtFeat);
+						changed = true;
+					}
+					
+				}
+			}
+			} while (changed);
+			
+			//Remove double groups
+			/*List<RuleGroup> mergeGroups = new ArrayList<>();
+			ecssElement.eAllContents().forEachRemaining(x->{
+				if (x instanceof RuleGroup  && x.eContainer() instanceof RuleGroup) {
+					RuleGroup grp = (RuleGroup)x;
+					
+					if (!(grp instanceof RuleAbstractToken) ||  ((RuleAbstractToken)grp).getCardinality() == null) {
+						mergeGroups.add((RuleGroup)x);
+					}
+				}
+			});
+			//Collections.reverse(mergeGroups);
+			for (RuleGroup gr: mergeGroups) {
+				RuleGroup superCont = (RuleGroup)gr.eContainer();
+				int index = superCont.getElements().indexOf(gr);
+				if (index != -1) {
+					superCont.getElements().addAll(index, gr.getElements());
+					superCont.getElements().remove(gr);
+				}
+			}*/
+		}
+	}
+
+	private static String mergeCard(String cardinality, String cardinality2) {
+		if (cardinality == null) {
+			return cardinality2;
+		}
+		if (cardinality2 == null) {
+			return cardinality;
+		}
+		if ("*".equals(cardinality) || "*".equals(cardinality2)) {
+			return "*";
+		}
+		//Only ? and +
+		boolean mayZero = "?".equals(cardinality) || "?".equals(cardinality2);
+		boolean mayMultiple = "+".equals(cardinality) || "+".equals(cardinality2);
+		if (mayZero) {
+			if (mayMultiple) {
+				return "*";
+			} else {
+				return "?";
+			}
+		} else {
+			return "+";
+		}
+	}
+
+	public List<Variable> getParameters() {
+		return parameters;
+	}
+
+	protected Object transform(IEtlModule module) throws EolRuntimeException {
+		return module.execute();
+	}
+	
+	protected EmfModel createEmfModelFromFile(String name, File model, String metamodel, boolean readOnLoad,
+			boolean storeOnDisposal) throws EolModelLoadingException, URISyntaxException {
+		EmfModel emfModel = new EmfModel();
+		StringProperties properties = new StringProperties();
+		properties.put(EmfModel.PROPERTY_NAME, name);
+		properties.put(EmfModel.PROPERTY_FILE_BASED_METAMODEL_URI, java.net.URI.create(metamodel).toString());
+		properties.put(EmfModel.PROPERTY_MODEL_URI, java.net.URI.create(model.toString()).toString());
+		properties.put(EmfModel.PROPERTY_READONLOAD, readOnLoad + "");
+		properties.put(EmfModel.PROPERTY_STOREONDISPOSAL, storeOnDisposal + "");
+		emfModel.load(properties, (IRelativePathResolver) null);
+		return emfModel;
+	}
+	
+	protected InMemoryEmfModel createInMemoryEmfModelFromResource(String name, Resource model, boolean readOnLoad,
+			boolean storeOnDisposal, String... metamodels) throws EolModelLoadingException, URISyntaxException {
+		InMemoryEmfModel emfModel = new InMemoryEmfModel(name,model);
+		StringProperties properties = new StringProperties();
+		properties.put(InMemoryEmfModel.PROPERTY_NAME, name);
+		for (String metamodel : metamodels) {
+			properties.put(InMemoryEmfModel.PROPERTY_FILE_BASED_METAMODEL_URI, java.net.URI.create(metamodel).toString());
+		}
+		properties.put(InMemoryEmfModel.PROPERTY_MODEL_URI, java.net.URI.create("file://"+model.getURI().toFileString().replace('\\', '/')).toString());
+		properties.put(InMemoryEmfModel.PROPERTY_READONLOAD, readOnLoad + "");
+		properties.put(InMemoryEmfModel.PROPERTY_STOREONDISPOSAL, storeOnDisposal + "");
+		emfModel.load(properties, (IRelativePathResolver) null);
+		return emfModel;
+	}
+
+//	protected EmfModel createEmfModel(String name, String model, String metamodel, boolean readOnLoad,
+//			boolean storeOnDisposal) throws EolModelLoadingException, URISyntaxException {
+//		EmfModel emfModel = new EmfModel();
+//		StringProperties properties = new StringProperties();
+//		properties.put(EmfModel.PROPERTY_NAME, name);
+//		properties.put(EmfModel.PROPERTY_FILE_BASED_METAMODEL_URI, getFileURI(metamodel).toString());
+//		properties.put(EmfModel.PROPERTY_MODEL_URI, getFileURI(model).toString());
+//		properties.put(EmfModel.PROPERTY_READONLOAD, readOnLoad + "");
+//		properties.put(EmfModel.PROPERTY_STOREONDISPOSAL, storeOnDisposal + "");
+//		emfModel.load(properties, (IRelativePathResolver) null);
+//		return emfModel;
+//	}
+//
+//	protected EmfModel createEmfModelByURI(String name, String model, String metamodel, boolean readOnLoad,
+//			boolean storeOnDisposal) throws EolModelLoadingException, URISyntaxException {
+//		EmfModel emfModel = new EmfModel();
+//		StringProperties properties = new StringProperties();
+//		properties.put(EmfModel.PROPERTY_NAME, name);
+//		properties.put(EmfModel.PROPERTY_METAMODEL_URI, metamodel);
+//		properties.put(EmfModel.PROPERTY_MODEL_URI, getFileURI(model).toString());
+//		properties.put(EmfModel.PROPERTY_READONLOAD, readOnLoad + "");
+//		properties.put(EmfModel.PROPERTY_STOREONDISPOSAL, storeOnDisposal + "");
+//		emfModel.load(properties, (IRelativePathResolver) null);
+//		return emfModel;
+//	}
+
+	protected URI getFileURI(String fileName) throws URISyntaxException {
+
+		// TODO?
+//		URI binUri = getResource(fileName).toURI();
+//		URI uri = null;
+//
+//		if (binUri.toString().indexOf("bin") > -1) {
+//			uri = new URI(binUri.toString().replaceAll("bin", "src"));
+//		} else {
+//			uri = binUri;
+//		}
+//
+//		return uri;
+		return null;
+	}
+
+	public IEtlModule createModule() {
+		return new EtlModule();
+	}
+
+//	public List<IModel> getModels() throws Exception {
+//		List<IModel> models = new ArrayList<IModel>();
+//		models.add(createEmfModel("Source", "models/Tree.xmi", "models/Tree.ecore", true, false));
+//		models.add(createEmfModel("Target", "models/Copy.xmi", "models/Tree.ecore", false, true));
+//		return models;
+//	}
+
+//	public String getSource() throws Exception {
+//		return "etl/Demo.etl";
+//	}
+	
+	/**
+	 * 
+	 * @param sourceFile string file path to SINGLE xtext grammar file
+	 * @param targetFile string file path to SINGLE (new) ecss file created from transforming the source xtext grammar file
+	 */
+	public void transform(String sourceFile, String targetFile) {
+		transform(new File(sourceFile), new File(targetFile));
+	}
+	
+	/**
+	 * 
+	 * @param sourceFile string file path to SINGLE xtext grammar file
+	 * @param targetFile string file path to SINGLE (new) ecss file created from transforming the source xtext grammar file
+	 */
+	public void transform(File sourceFile, File targetFile) {
+		sourceFilePath = sourceFile;
+		targetFilePath = targetFile;
+		if (!targetFile.getParentFile().exists()) {
+			targetFile.getParentFile().mkdirs();
+		}
+		handleMainCase(sourceFile, targetFile);
+	}
+
+
+	/**
+	 * 
+	 * @param sourceFile string file path to xtext grammar file directory
+	 * @param targetFile string file path to (new) ecss file directory created from transforming the source xtext grammar file
+	 */
+	public void transformPath(String sourceFile, String targetFile) {
+		transformPath(new File(sourceFile), new File(targetFile));
+	}
+
+
+	/**
+	 * 
+	 * @param sourceFile xtext grammar file directory
+	 * @param targetFile string file path to (new) ecss file directory created from transforming the source xtext grammar file
+	 */
+	public void transformPath(File sourceFile, File targetFile) {
+		sourceFilePath = sourceFile;
+		targetFilePath = targetFile;
+		//Don't go in output dir
+		File test = targetFile.getAbsoluteFile().getParentFile();
+		while (test != null) {
+			if (test.equals(sourceFile))  {
+				return;
+			}
+			test = test.getParentFile();
+		}
+		if (sourceFile.isDirectory()) {
+			logger.info("");
+			if (!targetFile.isDirectory()) {
+				if (!targetFile.exists()) {
+					targetFile.mkdirs();
+				} else {
+					logger.error("Can't make directory in file "+targetFile.getAbsolutePath());
+				}
+			}			
+			
+			for (File file: sourceFile.listFiles()) {
+				String newName = file.getName();
+				int lastPoint = newName.lastIndexOf('.');
+				String baseName = newName;
+				if (lastPoint > newName.lastIndexOf(File.separator)) {
+					//It's ok, replace
+					baseName = newName.substring(0,lastPoint);
+				}
+				if (!file.isDirectory()) {
+					newName = baseName+"."+TARGET_FILE_EXTENSION;
+				} 
+				try {
+					transformPath(file, new File(targetFile.toString()+File.separator+newName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					logger.error("Exception "+e.getMessage());
+					lateHandle.clear();
+				}
+				if (!file.isDirectory()) {
+					//Reporter.report(); //TODO?
+				}
+			}
+		} else {
+			if (!sourceFile.getName().endsWith("."+SOURCE_FILE_EXTENSION)) {
+				//Not an xtext file
+				return;
+			}
+			
+			handleMainCase(sourceFile, targetFile);
+		}
+	}
+
+	private void handleMainCase(File sourceFile, File targetFile) {
+		// =====================================================
+		// MAIN CASE: handling input file (*.xtext in this case)
+//					etlModelRepository.addModel(xtextModel);
+		currentModels = new ArrayList<IModel>();
+		
+		currentSourceResource = (XtextResource) xtextResourceSet.getResource(URI.createFileURI(sourceFile.getAbsolutePath()), true);
+		try {
+			currentSourceResource.load(null);
+		
+		} catch (IOException e) {
+			logger.error("Error when loading source resource from " + currentSourceResource.getURI());
+			logger.error(e.getMessage());
+		}
+		
+		if ( !Files.exists(targetFile.toPath()) ) {
+			currentTargetResource = xtextResourceSet.createResource(URI.createFileURI(targetFile.getAbsolutePath()));
+		} else {
+			currentTargetResource = xtextResourceSet.getResource(URI.createFileURI(targetFile.getAbsolutePath()), true);
+		}
+		currentTargetResource.getContents().clear();
+		currentTargetResource.getContents().add(EcsslanguageFactory.eINSTANCE.createEcss());
+		try {
+			Builder builder = SaveOptions.newBuilder().noValidation().format();
+			currentTargetResource.save(builder.getOptions().toOptionsMap());
+		} catch (IOException e) {
+			logger.error("Failed to create target resource " + targetFile.getName());
+			e.printStackTrace();
+		}
+		
+		try {
+			// add input model (*.xtext) and output model (*.xmi/ecss)
+			currentModels.add(createInMemoryEmfModelFromResource("SOURCE", currentSourceResource, true, false, XTEXT_METAMODEL_FILE_LOCATION, ECORE_METAMODEL_FILE_LOCATION));
+			currentModels.add(createInMemoryEmfModelFromResource("TARGET", currentTargetResource, true, true, XTEXT_METAMODEL_FILE_LOCATION, ECORE_METAMODEL_FILE_LOCATION));
+			logger.info("Added source model " + sourceFile.getName());
+			logger.info("Added target model " + targetFile.getName());
+
+		} catch (EolModelLoadingException | URISyntaxException e1) {
+			logger.error("Could not add models to ETL module.");
+			logger.error("Affected source model: " + sourceFile);
+			logger.error("Affected target model: " + targetFile);
+			e1.printStackTrace();
+		}
+		
+		try {
+			// ETL execution call
+			executeETL();
+			
+		} catch (Exception e) {
+			logger.error("Could not execute ETL transformation.");
+			logger.error("Affected source model: " + sourceFile);
+		    logger.error("Affected target model: " + targetFile);
+			e.printStackTrace();
+		}
+		
+		// update analysis model if present
+		if (analysisModelFileLocation != null && !analysisModelFileLocation.equals(AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING)) {
+			updateAnalysisModel(sourceFile, targetFile);
+		}
+	}
+	
+	private void updateAnalysisModel(File sourceFile, File targetFile) {
+		logger.info("Starting to update analysis model ...");
+
+		AnalysisElement analysisElement = obtainAnalysisElement(sourceFile);
+		
+		TargetGrammar targetGrammar = EcssalFactory.eINSTANCE.createTargetGrammar();
+		Path targetFilePath = new Path(targetFile.toString());
+		
+		targetGrammar.setEcssModelLocation(targetFilePath.toString());
+		
+		if ( !analysisElement.getTargetGrammar().contains(targetGrammar) ) {
+			analysisElement.getTargetGrammar().add(targetGrammar);
+		}
+		logger.info("... finished updating analysis model.");
+	}
+	
+	public void serializeAnalysisModel() {
+		logger.info("Serializing analysis model ...");
+
+		if (analysisModelResource == null) {
+			logger.error("Unable to serialize/save analysis model due to missing model and/or initilization.");
+			return; // do not proceed
+		}
+		
+		try {
+			analysisModelResource.getContents().set(0, analysisModelRoot);
+			analysisModelResource.save(Collections.emptyMap());
+			logger.info("Serialized analysis model to " + analysisModelFileLocation);
+		} catch (IOException e) {
+			logger.error("Unable to serialize/save analysis model.");
+			e.printStackTrace();
+		}
+		logger.info("... finished serializing analysis model.");
+
+	}
+	
+	private Injector injector;
+	
+	public XtextResourceSet xtextResourceSet() {
+		return injector.getInstance(XtextResourceSet.class);
+	}
+	
+	protected void init() {
+		logger.info("Initializing transformer ...");
+
+		new ECSSLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+		
+		this.injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
+		xtextResourceSet = injector.getInstance(XtextResourceSet.class);
+		emfResourceSet = new ResourceSetImpl();
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+		EPackage.Registry.INSTANCE.put(EcssalPackage.eNS_URI, EcssalPackage.eINSTANCE);
+		
+		if (analysisModelFileLocation != null && !analysisModelFileLocation.equals(AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING)) {
+			analysisModelResource = emfResourceSet.getResource(URI.createFileURI(analysisModelFileLocation), true);
+	
+		    try {
+				analysisModelResource.load(null);
+				analysisModelRoot = (Root) analysisModelResource.getContents().get(0);
+		    } catch (IOException e) {
+				logger.error("Failed to load model resource from " + analysisModelFileLocation);
+				logger.error(e.getMessage());
+			}
+		}
+	    
+		logger.info("... finished initializing transformer.");
+
+	}
+
+	
+	public static AnalysisElement obtainAnalysisElement(Root ecssalRoot, File sourceFile) {
+		SearchElement searchElement = obtainSearchElement(ecssalRoot, sourceFile);
+		AnalysisElement analysisElement;
+		if (searchElement != null) {
+			analysisElement = searchElement.getAnalysisElement();
+			// create new analysis element (if not yet existing) for given search element
+			if (analysisElement == null) {
+				analysisElement = EcssalFactory.eINSTANCE.createAnalysisElement();
+				analysisElement.setName(searchElement.getName());
+				analysisElement.setSearchElement(searchElement);
+				analysisElement.setSourceGrammar(searchElement.getGrammar());
+			}
+		} else {
+			// create a new analysis element that is not associated with any search element
+			analysisElement = EcssalFactory.eINSTANCE.createAnalysisElement();
+			analysisElement.setName(sourceFile.getName().replaceFirst("[.][^.]+$", "")); // name derived from sourceFile
+		}
+		if (!ecssalRoot.getAnalysisElements().contains(analysisElement)) {
+			ecssalRoot.getAnalysisElements().add(analysisElement);
+		}
+		
+		return analysisElement;
+	}
+
+	protected AnalysisElement obtainAnalysisElement(File sourceFile) {
+		return obtainAnalysisElement(analysisModelRoot,sourceFile);
+	}
+	
+	public static SearchElement obtainSearchElement(Root ecssalRoot, File sourceFile) {
+		EList<SearchElement> searchElements = ecssalRoot.getSearchElements();
+		String sourceFileName = sourceFile.getName().replaceFirst("[.][^.]+$", "");
+	
+		Optional<SearchElement> optionalSearchElement = 
+				searchElements.stream().filter(searchElement -> searchElement != null && sourceFileName.equals(searchElement.getName())).findFirst();
+		
+		SearchElement searchElement = (SearchElement) optionalSearchElement.orElse(null);
+		return searchElement;
+	}
+	
+	protected SearchElement obtainSearchElement(File sourceFile) {
+		return obtainSearchElement(analysisModelRoot, sourceFile);
+	}
+
+}
