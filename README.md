@@ -1,1 +1,1 @@
-# ECSS
+# Ecore Concrete Syntax Specification Framework
