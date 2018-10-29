@@ -17,6 +17,9 @@ import org.junit.Test;
  */
 public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTest {
 	
+	// run the following in shell to determine maven home directory: echo $M2_HOME
+	private static String MAVEN_HOME = "/usr/local/Cellar/maven/3.5.0/libexec"; // macOS homebrew
+	
 	@Test
 	public void testHeroLanguage_1() {
 		String languageShortName = "HeroLanguage_1";
@@ -32,7 +35,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -53,7 +56,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}

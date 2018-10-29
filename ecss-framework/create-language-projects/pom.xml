@@ -12,19 +12,15 @@
 
 	<name>ECSS Language Projects Creator</name>
 
-	<!-- this module produces a set of Xtext projects from either 
-		Ecore metamodel or Xtext grammar as well as executes the associated MWE2 
+	<!-- this module produces a set of Xtext projects from either
+		Ecore metamodel or Xtext grammar as well as executes the associated MWE2
 		workflow -->
 
 	<dependencies>
-	
+
 		<!-- INTERNAL DEPENDENCIES -->
-		<dependency>
-			<groupId>uk.ac.york.cs.ecss</groupId>
-			<artifactId>helper</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		
+
+
 		<!-- EXTERNAL DEPENDENCIES -->
 		<!-- for Xtext support -->
 		<dependency>
@@ -61,9 +57,9 @@
 		</dependency>
 		<!-- for maven invokation in source code -->
 		<dependency>
-			<groupId>org.apache.maven.shared</groupId>
-			<artifactId>maven-invoker</artifactId>
-			<version>${maven.invoker}</version>
+			<groupId>io.takari</groupId>
+			<artifactId>maven-wrapper</artifactId>
+			<version>0.4.2</version>
 		</dependency>
 	</dependencies>
 

@@ -24,7 +24,7 @@
         <maven.clean.plugin>3.0.0</maven.clean.plugin>
         <maven.resources.plugin>3.0.2</maven.resources.plugin>
         <maven.exec.plugin>1.4.0</maven.exec.plugin>
-        <maven.invoker>3.0.0</maven.invoker>
+        <maven.invoker>3.0.1</maven.invoker>
 
         <!-- ECLIPSE PROPERTIES -->
         <maven.eclipse.plugin>2.10</maven.eclipse.plugin>
@@ -48,6 +48,21 @@
     </properties>
 
     <repositories>
+    	<!-- maven central -->
+        <repository>
+            <id>maven-central</id>
+            <name>Maven Repository Switchboard</name>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
         <!-- for github releases -->
         <repository>
             <id>jitpack.io</id>
@@ -80,21 +95,6 @@
             <id>xtext-update-site</id>
             <layout>p2</layout>
             <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </repository>
-        <!-- maven central -->
-        <repository>
-            <id>maven-central</id>
-            <name>Maven Repository Switchboard</name>
-            <layout>default</layout>
-            <url>http://repo1.maven.org/maven2</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
