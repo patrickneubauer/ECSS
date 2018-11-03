@@ -29,7 +29,7 @@ import com.google.inject.Injector;
 
 import uk.ac.york.cs.ecss.create.language.project.Ecore2XtextConfigurationHelper;
 import uk.ac.york.cs.ecss.create.language.project.configuration.BaseXtextProjectConfiguration;
-import uk.ac.york.cs.ecss.helper.FileUtils;
+import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 public class BaseXtextProjectCreator {
 

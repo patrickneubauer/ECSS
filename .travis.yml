@@ -24,4 +24,4 @@ script:
 #- mvn clean install -Prun-tests
 
 after_failure:
-  - cat ecss-framework/generator/target/surefire-reports/*.txt
+  - cat uk.ac.york.cs.ecss/target/surefire-reports/*.txt

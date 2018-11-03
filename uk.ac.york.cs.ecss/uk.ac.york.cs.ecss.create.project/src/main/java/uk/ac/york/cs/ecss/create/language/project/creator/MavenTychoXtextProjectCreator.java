@@ -27,8 +27,8 @@ import uk.ac.york.cs.ecss.create.language.project.configuration.MavenTychoXtextP
 public class MavenTychoXtextProjectCreator extends BaseXtextProjectCreator {
 	
 	private static final Logger logger = LogManager.getLogger(MavenTychoXtextProjectCreator.class);
-	 private final Installer install;
-	 private final BootstrapMainStarter start;
+	 private Installer install;
+	 private BootstrapMainStarter start;
 	
 	private static final String DEFAULT_BUILD_COMMAND = "clean install";
 //	private Invoker invoker;
@@ -55,11 +55,14 @@ public class MavenTychoXtextProjectCreator extends BaseXtextProjectCreator {
 				
 			}
 		};
-		install = new Installer(download, pathAssembler)
+		// FIXME
+		/* 
+		install = new Installer(download, pathAssembler);
 		
 		wrapper.execute(new String[] {
 			      "arg"
 			    }, install, start);
+			    */
 	}
 	
 //	/**
