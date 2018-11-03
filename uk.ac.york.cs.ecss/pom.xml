@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>uk.ac.york.cs.ecss</groupId>
+        <artifactId>uk.ac.york.cs.ecss.parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>uk.ac.york.cs.ecss</artifactId>
+    <packaging>pom</packaging>
+
+    <name>uk.ac.york.cs.ecss</name>
+
+    <modules>
+
+        <!-- FRAMEWORK UTILITIES MODULE (independent) -->
+        <module>uk.ac.york.cs.ecss.utilities</module>
+
+        <!-- XTEXT LANGUAGE PROJECTS-CREATOR (independent) -->
+        <!--  IN: (XTEXT | ECORE)  ==>  OUT: XTEXT LANGUAGE PROJECTS  -->
+        <!-- TODO (low priority): merge with "uk.ac.york.cs.ecss.utilities" module -->
+        <module>uk.ac.york.cs.ecss.create.project</module>
+
+        <!-- SIMPLEREG LANGUAGE MODULE (independent) -->
+        <!-- Xtext-based language to capture regular expressions defined as part of style models -->
+        <!-- TODO (low priority): merge with "language" module -->
+        <module>uk.ac.york.cs.ecss.simpleregexp.simplereg.parent</module>
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- STYLE LANGUAGE MODULE (depends on "uk.ac.york.cs.ecss.simpleregexp.simplereg.parent" module only) -->
+        <!-- Xtext-based style language -->
+        <!-- Also an Eclipse-plugin; offers web integration and has LSP support -->
+        <module>uk.ac.york.cs.ecss.language.parent</module>
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- STYLE-CREATOR FOR XTEXT GRAMMAR MODULE (depends on "uk.ac.york.cs.ecss.language.parent" module only) -->
+        <!--  IN: XTEXT  ===>  OUT: ECSS  -->
+        <!-- <module>uk.ac.york.cs.ecss.create.style</module> -->
+
+        <!-- XTEXT GRAMMAR-CREATOR MODULE (depends on "uk.ac.york.cs.ecss.language.parent" module only) -->
+        <!--  IN: ECORE + ECSS  ===>  OUT: XTEXT  -->
+        <!-- <module>uk.ac.york.cs.ecss.create.grammar</module> -->
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- API MODULE (depends on "uk.ac.york.cs.ecss.create.style" and "uk.ac.york.cs.ecss.create.grammar" modules only) -->
+        <!-- Provides API access to framework capabilities -->
+        <!-- <module>uk.ac.york.cs.ecss.api</module> -->
+
+        <!-- /////////////////////////////////////////////////////////////// -->
+
+        <!-- ECLIPSE WIZARD MODULE (depends on "uk.ac.york.cs.ecss.api" module only) -->
+        <!-- Eclispse Wizard-based UI for generator module -->
+        <!-- <module>uk.ac.york.cs.ecss.wizard.eclipse</module> -->
+
+    </modules>
+
+</project>

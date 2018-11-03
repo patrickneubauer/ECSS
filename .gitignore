@@ -1,14 +1,33 @@
-# Compiled class file
+# binaries
+target
+bin
+*.xtendbin
 *.class
 
-# Log file
+# classpath files
+.classpath
+
+# settings and configurations
+.settings
+config
+
+# Log and report files
 *.log
+**/*-report\.txt
 
-# BlueJ files
-*.ctxt
+# any non-parent logger configuration (copied from parent during build)
+*/*/*/log4j.xml
+*/*/*/log4j2.xml
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# generated and downloaded artifacts
+generated
+src-gen
+xtend-gen
+.antlr-generator-*-patch.jar
+.xml_gen
 
 # Package Files #
 *.jar
@@ -19,7 +38,19 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# OS-specific, IDE, and analysis artifacts
+.project
+.DS_Store
+\.fseventsd/
+dependency-graph.dot
+*._trace
+*.iml
+*.ipr
+*.iws
+.idea
 
-data-example/generated/
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/

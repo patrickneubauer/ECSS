@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>uk.ac.york.cs.ecss</groupId>
-    <artifactId>ecss-framework-parent</artifactId>
+    <artifactId>uk.ac.york.cs.ecss.parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>ECSS Framework Parent</name>
+    <name>uk.ac.york.cs.ecss.parent</name>
 
     <modules>
-        <module>ecss-framework</module>
+        <module>uk.ac.york.cs.ecss</module>
     </modules>
 
     <properties>
@@ -22,8 +22,9 @@
         <maven.compiler.plugin>3.6.1</maven.compiler.plugin>
         <maven.surefire.plugin>2.20.1</maven.surefire.plugin>
         <maven.clean.plugin>3.0.0</maven.clean.plugin>
+        <maven.clean.plugin-version-range>[2.5,)</maven.clean.plugin-version-range>
         <maven.resources.plugin>3.0.2</maven.resources.plugin>
-        <maven.exec.plugin>1.4.0</maven.exec.plugin>
+
         <maven.invoker>3.0.1</maven.invoker>
 
         <!-- ECLIPSE PROPERTIES -->
@@ -32,19 +33,24 @@
         <eclipse-core-runtime>3.12.0</eclipse-core-runtime>
         <eclipse-xtext-ui>2.10.0</eclipse-xtext-ui>
         <eclipse-equinox-common>3.10.0</eclipse-equinox-common>
-
-        <!-- XTEXT PROPERTIES -->
-        <tycho-version>1.0.0</tycho-version>
-        <xtextVersion>2.12.0</xtextVersion>
-
+        
+        
         <!-- EPSILON PROPERTIES -->
         <epsilon-emf>1.4.0</epsilon-emf>
+        <epsilon-core>1.4.0</epsilon-core>
 
         <!-- EMF PROPERTIES -->
         <emf-version>2.12.0</emf-version>
-        <emf-mwe-version>1.3.20.201605261059</emf-mwe-version>
-        <emf-mwe2-version>2.9.0.201605261059</emf-mwe2-version>
-
+        
+    	<!-- XTEXT PROPERTIES (beware that these properties are also defined in 'language' module should always be kept in sync) -->
+        <tycho-version>1.1.0</tycho-version>
+        <xtextVersion>2.14.0</xtextVersion>
+        <xtextAntlrGenerator>[2.1.1, 3)</xtextAntlrGenerator>
+        <maven.exec.plugin>1.4.0</maven.exec.plugin>
+        <eclipse.m2-lifecycle-mapping-version>1.0.0</eclipse.m2-lifecycle-mapping-version>
+        <eclipse.m2-lifecycle-mapping-version-range>[1.2.1,)</eclipse.m2-lifecycle-mapping-version-range>	
+        <emf-mwe-version>1.3.21.201705291010</emf-mwe-version>
+        <emf-mwe2-version>2.9.1.201705291010</emf-mwe2-version>
     </properties>
 
     <repositories>

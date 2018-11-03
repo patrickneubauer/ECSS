@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>uk.ac.york.cs.ecss</groupId>
+		<artifactId>uk.ac.york.cs.ecss</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>eclipse-wizard</artifactId>
+	<packaging>jar</packaging>
+
+	<!-- ECLIPSE WIZARD MODULE -->
+	<!-- Wizard for generator module -->
+	<name>ECSS Eclipse Wizard</name>
+
+	<dependencies>
+	
+		<!-- INTERNAL DEPENDENCIES -->
+		<dependency>
+			<groupId>uk.ac.york.cs.ecss</groupId>
+			<artifactId>uk.ac.york.cs.ecss.utilities</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>uk.ac.york.cs.ecss</groupId>
+			<artifactId>generator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- EXTERNAL DEPENDENCIES -->
+		<!-- ... TO BE ADD HERE ... -->
+
+		
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven.resources.plugin}</version>
+				<executions>
+					<execution>
+						<id>copy-base-analysis-model</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<!-- reset analysis model for data-example tests -->
+							<outputDirectory>${project.basedir}/../../data-example/analysis</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/../../data-example/analysis/BASE</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-log4j-configuration</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<!-- copy global log4j configuration -->
+							<outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/../resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
