@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.generator;
+package uk.ac.york.cs.ecss.api;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,14 +24,14 @@ import com.google.inject.Injector;
 import uk.ac.york.cs.ecss.analysis.grammaranalysis.SimpleResourceHandler;
 import uk.ac.york.cs.ecss.analysis.grammaranalysis.XtextToDefaultEcoreTransformer;
 import uk.ac.york.cs.ecss.basicdistance.EcoreNameRelationDistanceManager;
-import uk.ac.york.cs.ecss.create.language.project.creator.BaseXtextProjectCreator;
-import uk.ac.york.cs.ecss.create.language.project.creator.MavenTychoXtextProjectCreator;
+import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
+import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.ecssal.EcssalPackage;
 import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
-import uk.ac.york.cs.ecss.helper.FileUtils;
-import uk.ac.york.cs.ecss.language.ECSSLanguageStandaloneSetup;
+import uk.ac.york.cs.ecss.language.EcssLanguageStandaloneSetup;
 import uk.ac.york.cs.ecss.loader.EcoreResourceLoader;
 import uk.ac.york.cs.ecss.optimize.ResourceResolver;
+import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 public class MainLanguageResourcesGenerator implements LanguageResourcesGenerator {
 
@@ -270,7 +270,7 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		xtextResourceSet = xtextInjector.getInstance(XtextResourceSet.class);
 
 		// ecss
-		Injector ecssInjector = new ECSSLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector ecssInjector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
 		ecssResourceSet = ecssInjector.getInstance(XtextResourceSet.class);
 		
 		if ( !analysisModelFileLocation.equals(AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING) ) {

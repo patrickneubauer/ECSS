@@ -1,7 +1,7 @@
 /**
  * 
  */
-package uk.ac.york.cs.ecss.generator;
+package uk.ac.york.cs.ecss.api;
 
 import java.util.LinkedList;
 import java.util.List;

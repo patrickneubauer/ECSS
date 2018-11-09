@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
+
 public class BaseXtextProjectCreatorTest {
 
 	protected static final String LANGUAGE_GRAMMAR_URI_PREFIX = "me.ecss.language";

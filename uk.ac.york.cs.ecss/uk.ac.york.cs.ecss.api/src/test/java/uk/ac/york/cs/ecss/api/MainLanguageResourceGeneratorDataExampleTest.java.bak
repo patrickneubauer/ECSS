@@ -1,7 +1,9 @@
-package uk.ac.york.cs.ecss.generator;
+package uk.ac.york.cs.ecss.api;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
@@ -17,17 +19,22 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import uk.ac.york.cs.ecss.create.language.project.creator.MavenTychoXtextProjectCreator;
-import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
-import uk.ac.york.cs.ecss.helper.FileUtils;
+import uk.ac.york.cs.ecss.analysis.ecoreanalysis.learning.relation.EcoreKeywordConfig;
+import uk.ac.york.cs.ecss.analysis.ecoreanalysis.learning.relation.EcoreNameRelation;
+import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
+import uk.ac.york.cs.ecss.basicdistance.EcoreNameRelationDistanceManager;
+import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
+import uk.ac.york.cs.ecss.utilities.FileUtils;
+import uk.ac.york.cs.ecss.loader.EcoreResourceLoader;
+import uk.ac.york.cs.ecss.optimize.ResourceResolver;
 
-@Ignore("to be executed manually -- takes too long on Travis and thus causing erroneous build")
+//@Ignore("to be executed manually")
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResourcesGeneratorTest {
-	private static final Logger logger = LogManager.getLogger(MainLanguageResourceGeneratorDataTest.class);
+public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageResourcesGeneratorTest {
+	private static final Logger logger = LogManager.getLogger(MainLanguageResourceGeneratorDataExampleTest.class);
 
-	protected static final String INPUT_DATA_FOLDER = "../../data";
+	protected static final String INPUT_DATA_FOLDER = "../../data-example";
 
 	private String uniqueLanguageId;
 
@@ -45,7 +52,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		return Arrays.asList(dataFolderFileArray);
 	}
 
-	public MainLanguageResourceGeneratorDataTest(File inputFile) {
+	public MainLanguageResourceGeneratorDataExampleTest(File inputFile) {
 		uniqueLanguageId = com.google.common.io.Files.getNameWithoutExtension(inputFile.toString());
 		languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
 		outputPath = new Path(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId);
@@ -61,9 +68,23 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		languageFileExtensions.add("mydsl");
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
 
-		//File analysisModelFile = new File(INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION);
-		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING,
+		File analysisModelFile = new File(INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION);
+		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), analysisModelFile.toString(),
 				languageProjectBaseName, "", languageFileExtensions);
+		ResourceResolver ecssResolver = ResourceResolver.get(new File(INPUT_DATA_FOLDER+OUTPUT_PATH),
+				"","ecss", true);
+		generator.setEcssResolver(ecssResolver);
+		ResourceResolver ecoreResolver = ResourceResolver.get(new File(INPUT_DATA_FOLDER+OUTPUT_PATH),
+				"","ecore", true);
+		EcoreResourceLoader loader = new EcoreResourceLoader(ecoreResolver);
+		loader.loadAll();
+		EcoreKeywordConfig config = new EcoreKeywordConfig();
+		config.useKeywords = true;
+		EcoreNameRelation relation = new EcoreNameRelation(reportFile.getAbsolutePath(), loader.getResources(), 
+				loader.getResourceSet(), config);
+		EcoreNameRelationDistanceManager man = new EcoreNameRelationDistanceManager(loader, relation);
+		generator.initEcoreUtil(loader, man);
+		
 	}
 
 	@Test
@@ -122,7 +143,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 	 * ecore --> specific xtext grammar-based ecss style (optimized)
 	 */
 	@Test
-	@Ignore("remove @Ignore when feature implemented")
+//	@Ignore("remove @Ignore when feature implemented")
 	public void _3optimized_testGenerateStyleModelFileBooleanTrue() {
 		logger.info(
 				"RUNNING: _3optimized_testGenerateStyleModelFileBooleanTrue: " + uniqueLanguageId);
@@ -177,6 +198,25 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 			Resource xtextGrammar = generator.generateGrammar(metamodelFile, new File(INPUT_DATA_FOLDER + OUTPUT_PATH
 					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + STYLE_FILE_EXTENSION));
 		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+
+	/**
+	 * ecore --> specific ecss-based xtext grammar (optimized)
+	 */
+	@Test
+	public void _4specific_testGenerateOptimizedGrammarFileFile() {
+		logger.info("RUNNING: _4specific_testGenerateOptimizedGrammarFileFile: " + uniqueLanguageId);
+
+		File metamodelFile = new File(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + Path.SEPARATOR
+				+ uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION);
+		try {
+			Resource xtextGrammar = generator.generateGrammar(metamodelFile, true);
+			xtextGrammar.save(new FileOutputStream(metamodelFile.getAbsolutePath()+".xtext"), Collections.emptyMap());
+		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 	}
@@ -235,7 +275,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 	}
 
 	public static void main(String args[]) {
-		org.junit.runner.JUnitCore.main("uk.ac.york.cs.ecss.generator.MainLanguageResourceGeneratorDataTest");
+		org.junit.runner.JUnitCore.main("uk.ac.york.cs.ecss.api.MainLanguageResourceGeneratorDataTest");
 	}
 
 }

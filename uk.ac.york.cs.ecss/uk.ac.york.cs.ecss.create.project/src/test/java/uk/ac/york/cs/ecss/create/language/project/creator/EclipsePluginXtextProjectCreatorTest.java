@@ -11,6 +11,9 @@ import java.util.List;
 import org.eclipse.core.runtime.Path;
 import org.junit.Test;
 
+import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
+import uk.ac.york.cs.ecss.create.project.creator.EclipsePluginXtextProjectCreator;
+
 /**
  * @author blizzfire
  *

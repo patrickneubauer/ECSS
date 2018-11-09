@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.create.language.project;
+package uk.ac.york.cs.ecss.create.project;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

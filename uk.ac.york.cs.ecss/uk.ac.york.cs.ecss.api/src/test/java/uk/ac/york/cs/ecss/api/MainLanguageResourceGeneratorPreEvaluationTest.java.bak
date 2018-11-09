@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.generator;
+package uk.ac.york.cs.ecss.api;
 
 import static org.junit.Assert.fail;
 
@@ -16,9 +16,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import uk.ac.york.cs.ecss.create.language.project.creator.MavenTychoXtextProjectCreator;
+import uk.ac.york.cs.ecss.api.LanguageResourcesGenerator;
+import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
+import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
+import uk.ac.york.cs.ecss.utilities.FileUtils;
 import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
-import uk.ac.york.cs.ecss.helper.FileUtils;
 
 @Ignore("to be executed manually")
 @RunWith(Parameterized.class)

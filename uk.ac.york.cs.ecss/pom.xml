@@ -49,7 +49,7 @@
 
         <!-- API MODULE (depends on "uk.ac.york.cs.ecss.create.style" and "uk.ac.york.cs.ecss.create.grammar" modules only) -->
         <!-- Provides API access to framework capabilities -->
-        <!-- <module>uk.ac.york.cs.ecss.api</module> -->
+        <module>uk.ac.york.cs.ecss.api</module>
 
         <!-- /////////////////////////////////////////////////////////////// -->
 

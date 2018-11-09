@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.generator;
+package uk.ac.york.cs.ecss.api;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xtext.GrammarResource;
 
-import uk.ac.york.cs.ecss.create.language.project.creator.MavenTychoXtextProjectCreator;
+import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 
 public interface LanguageResourcesGenerator {
 
