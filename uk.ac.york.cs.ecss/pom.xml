@@ -39,7 +39,7 @@
 
         <!-- STYLE-CREATOR FOR XTEXT GRAMMAR MODULE (depends on "uk.ac.york.cs.ecss.language.parent" module only) -->
         <!--  IN: XTEXT  ===>  OUT: ECSS  -->
-        <!-- <module>uk.ac.york.cs.ecss.create.style</module> -->
+        <module>uk.ac.york.cs.ecss.create.style</module>
 
         <!-- XTEXT GRAMMAR-CREATOR MODULE (depends on "uk.ac.york.cs.ecss.language.parent" module only) -->
         <!--  IN: ECORE + ECSS  ===>  OUT: XTEXT  -->

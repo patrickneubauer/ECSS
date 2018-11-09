@@ -24,8 +24,8 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
  		<dependency>
-			<groupId>uk.ac.york.cs.ecss</groupId>
- 			<artifactId>uk.ac.york.cs.ecss.language.parent</artifactId>
+			<groupId>uk.ac.york.cs.ecss.language</groupId>
+ 			<artifactId>uk.ac.york.cs.ecss.language</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
@@ -60,23 +60,6 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>${maven.resources.plugin}</version>
 				<executions>
-					<execution>
-						<id>copy-base-analysis-model</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<!-- reset analysis model for data-example tests -->
-							<outputDirectory>${project.basedir}/../../data-example/analysis</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/../../data-example/analysis/BASE</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
 					<execution>
 						<id>copy-log4j-configuration</id>
 						<phase>validate</phase>
