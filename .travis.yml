@@ -13,7 +13,8 @@ before_install:
 - unzip -qq apache-maven-3.5.3-bin.zip
 - export M2_HOME=$PWD/apache-maven-3.5.3
 - export PATH=$M2_HOME/bin:$PATH
-- "Xvfb :1 -screen 0 1360x1024x24 &" - "export DISPLAY=:1"
+- Xvfb :1 -screen 0 1360x1024x24 &
+- export DISPLAY=:1
 
 cache:
   directories:
