@@ -7,12 +7,12 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>eclipse-wizard</artifactId>
+	<artifactId>uk.ac.york.cs.ecss.wizard.eclipse</artifactId>
 	<packaging>jar</packaging>
 
 	<!-- ECLIPSE WIZARD MODULE -->
 	<!-- Wizard for generator module -->
-	<name>ECSS Eclipse Wizard</name>
+	<name>uk.ac.york.cs.ecss.wizard.eclipse</name>
 
 	<dependencies>
 	
@@ -24,7 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>uk.ac.york.cs.ecss</groupId>
-			<artifactId>generator</artifactId>
+			<artifactId>uk.ac.york.cs.ecss.api</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		
@@ -40,23 +40,6 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>${maven.resources.plugin}</version>
 				<executions>
-					<execution>
-						<id>copy-base-analysis-model</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<!-- reset analysis model for data-example tests -->
-							<outputDirectory>${project.basedir}/../../data-example/analysis</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/../../data-example/analysis/BASE</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
 					<execution>
 						<id>copy-log4j-configuration</id>
 						<phase>validate</phase>

@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
 import uk.ac.york.cs.ecss.language.ecssLanguage.Model
-import org.junit.Ignore
-import org.junit.Assert
+import org.junit.jupiter.api.Disabled
 
 @ExtendWith(InjectionExtension)
 @InjectWith(EcssLanguageInjectorProvider)
@@ -21,7 +20,7 @@ class EcssLanguageParsingTest {
 	ParseHelper<Model> parseHelper
 	
 	@Test
-	@Ignore
+	@Disabled
 	def void loadModel() {
 		val result = parseHelper.parse('''
 			Hello Xtext!
@@ -33,6 +32,6 @@ class EcssLanguageParsingTest {
 	
 	@Test
 	def void fakeTestForTravis() {
-		Assert.assertTrue(true);
+		Assertions.assertTrue(true);
 	}
 }

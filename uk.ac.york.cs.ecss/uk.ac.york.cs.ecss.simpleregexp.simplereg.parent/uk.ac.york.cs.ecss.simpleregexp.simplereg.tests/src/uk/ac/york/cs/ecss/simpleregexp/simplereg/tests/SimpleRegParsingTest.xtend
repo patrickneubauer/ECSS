@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.^extension.ExtendWith
 import uk.ac.york.cs.ecss.simpleregexp.simplereg.simpleReg.RegexAlternatives
-import org.junit.Ignore
-import org.junit.Assert
+import org.junit.jupiter.api.Disabled
 
 @ExtendWith(InjectionExtension)
 @InjectWith(SimpleRegInjectorProvider)
@@ -21,7 +20,7 @@ class SimpleRegParsingTest {
 	ParseHelper<RegexAlternatives> parseHelper
 	
 	@Test
-	@Ignore
+	@Disabled
 	def void loadModel() {
 		val result = parseHelper.parse('''
 			Hello Xtext!
@@ -33,6 +32,6 @@ class SimpleRegParsingTest {
 	
 	@Test
 	def void fakeTestForTravis() {
-		Assert.assertTrue(true);
+		Assertions.assertTrue(true);
 	}
 }

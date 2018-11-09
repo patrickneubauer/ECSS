@@ -12,9 +12,8 @@ import org.eclipse.xtext.testing.extensions.InjectionExtension;
 import org.eclipse.xtext.testing.util.ParseHelper;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import uk.ac.york.cs.ecss.language.ecssLanguage.Model;
@@ -28,7 +27,7 @@ public class EcssLanguageParsingTest {
   private ParseHelper<Model> parseHelper;
   
   @Test
-  @Ignore
+  @Disabled
   public void loadModel() {
     try {
       StringConcatenation _builder = new StringConcatenation();
@@ -50,6 +49,6 @@ public class EcssLanguageParsingTest {
   
   @Test
   public void fakeTestForTravis() {
-    Assert.assertTrue(true);
+    Assertions.assertTrue(true);
   }
 }
