@@ -67,7 +67,7 @@
 							<outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${project.basedir}/../resources</directory>
+									<directory>${project.basedir}/../common-resources/logging</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
