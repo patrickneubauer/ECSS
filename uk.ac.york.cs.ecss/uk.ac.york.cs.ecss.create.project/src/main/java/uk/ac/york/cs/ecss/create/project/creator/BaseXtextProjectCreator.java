@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.create.language.project.creator;
+package uk.ac.york.cs.ecss.create.project.creator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,8 +27,8 @@ import org.eclipse.xtext.xtext.wizard.ecore2xtext.Ecore2XtextGrammarCreator;
 import com.google.common.io.Files;
 import com.google.inject.Injector;
 
-import uk.ac.york.cs.ecss.create.language.project.Ecore2XtextConfigurationHelper;
-import uk.ac.york.cs.ecss.create.language.project.configuration.BaseXtextProjectConfiguration;
+import uk.ac.york.cs.ecss.create.project.Ecore2XtextConfigurationHelper;
+import uk.ac.york.cs.ecss.create.project.configuration.BaseXtextProjectConfiguration;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 public class BaseXtextProjectCreator {

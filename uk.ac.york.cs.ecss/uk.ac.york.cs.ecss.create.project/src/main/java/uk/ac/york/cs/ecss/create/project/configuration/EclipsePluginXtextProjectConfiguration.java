@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.create.language.project.configuration;
+package uk.ac.york.cs.ecss.create.project.configuration;
 
 import org.eclipse.xtext.xtext.wizard.BuildSystem;
 import org.eclipse.xtext.xtext.wizard.IdeProjectDescriptor;

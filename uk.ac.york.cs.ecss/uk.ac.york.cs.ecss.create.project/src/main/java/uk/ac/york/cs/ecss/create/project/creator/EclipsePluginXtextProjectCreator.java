@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.create.language.project.creator;
+package uk.ac.york.cs.ecss.create.project.creator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import uk.ac.york.cs.ecss.create.language.project.configuration.EclipsePluginXtextProjectConfiguration;
+import uk.ac.york.cs.ecss.create.project.configuration.EclipsePluginXtextProjectConfiguration;
 
 public class EclipsePluginXtextProjectCreator extends BaseXtextProjectCreator {
 	

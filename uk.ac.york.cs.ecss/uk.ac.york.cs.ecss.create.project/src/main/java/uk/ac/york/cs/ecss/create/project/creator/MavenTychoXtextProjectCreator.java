@@ -1,4 +1,4 @@
-package uk.ac.york.cs.ecss.create.language.project.creator;
+package uk.ac.york.cs.ecss.create.project.creator;
 
 import java.io.File;
 import java.net.URI;
@@ -22,7 +22,7 @@ import org.apache.maven.wrapper.Installer;
 //import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.apache.maven.wrapper.WrapperExecutor;
 
-import uk.ac.york.cs.ecss.create.language.project.configuration.MavenTychoXtextProjectConfiguration;
+import uk.ac.york.cs.ecss.create.project.configuration.MavenTychoXtextProjectConfiguration;
 
 public class MavenTychoXtextProjectCreator extends BaseXtextProjectCreator {
 	

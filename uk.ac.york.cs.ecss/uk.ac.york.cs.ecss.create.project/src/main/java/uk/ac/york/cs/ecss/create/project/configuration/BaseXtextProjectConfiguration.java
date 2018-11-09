@@ -1,7 +1,7 @@
 /**
  * 
  */
-package uk.ac.york.cs.ecss.create.language.project.configuration;
+package uk.ac.york.cs.ecss.create.project.configuration;
 
 import java.util.List;
 
