@@ -287,7 +287,7 @@
 						<configuration>
 							<artifactSet>
 								<includes>
-									<include>uk.ac.york.cs.ecss:uk.ac.york.cs.ecss.creator.grammar</include>
+									<include>uk.ac.york.cs.ecss:uk.ac.york.cs.ecss.create.grammar</include>
 								</includes>
 							</artifactSet>
 						</configuration>
