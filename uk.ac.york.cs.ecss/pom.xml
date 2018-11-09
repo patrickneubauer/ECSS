@@ -30,20 +30,20 @@
 
         <!-- /////////////////////////////////////////////////////////////// -->
 
-        <!-- STYLE LANGUAGE MODULE (depends on "uk.ac.york.cs.ecss.simpleregexp.simplereg.parent" module only) -->
+        <!-- STYLE LANGUAGE MODULE (depends on "uk.ac.york.cs.ecss.simpleregexp.simplereg" module only) -->
         <!-- Xtext-based style language -->
         <!-- Also an Eclipse-plugin; offers web integration and has LSP support -->
         <module>uk.ac.york.cs.ecss.language.parent</module>
 
         <!-- /////////////////////////////////////////////////////////////// -->
 
-        <!-- STYLE-CREATOR FOR XTEXT GRAMMAR MODULE (depends on "uk.ac.york.cs.ecss.language.parent" module only) -->
+        <!-- STYLE-CREATOR FOR XTEXT GRAMMAR MODULE (depends on "uk.ac.york.cs.ecss.language" module only) -->
         <!--  IN: XTEXT  ===>  OUT: ECSS  -->
         <module>uk.ac.york.cs.ecss.create.style</module>
 
-        <!-- XTEXT GRAMMAR-CREATOR MODULE (depends on "uk.ac.york.cs.ecss.language.parent" module only) -->
+        <!-- XTEXT GRAMMAR-CREATOR MODULE (depends on "uk.ac.york.cs.ecss.language" module only) -->
         <!--  IN: ECORE + ECSS  ===>  OUT: XTEXT  -->
-        <!-- <module>uk.ac.york.cs.ecss.create.grammar</module> -->
+        <module>uk.ac.york.cs.ecss.create.grammar</module>
 
         <!-- /////////////////////////////////////////////////////////////// -->
 

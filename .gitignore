@@ -16,8 +16,8 @@ config/
 **/*-report.txt
 
 # any non-parent logger configuration (copied from parent during build)
-*/*/*/log4j.xml
-*/*/*/log4j2.xml
+*log4j.xml
+*log4j2.xml
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
