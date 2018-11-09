@@ -15,7 +15,7 @@
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
-					<version>${eclipse.m2-lifecycle-mapping-version}</version>
+					<version>1.0.0</version>
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
@@ -28,7 +28,7 @@
 											maven-clean-plugin
 										</artifactId>
 										<versionRange>
-											${maven.clean.plugin-version-range}
+											[2.5,)
 										</versionRange>
 										<goals>
 											<goal>clean</goal>

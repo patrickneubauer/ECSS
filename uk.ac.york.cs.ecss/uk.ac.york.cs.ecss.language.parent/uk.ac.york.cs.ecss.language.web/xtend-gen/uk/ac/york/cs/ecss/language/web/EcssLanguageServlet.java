@@ -18,6 +18,7 @@ import uk.ac.york.cs.ecss.language.web.EcssLanguageWebSetup;
 public class EcssLanguageServlet extends XtextServlet {
   private DisposableRegistry disposableRegistry;
   
+  @Override
   public void init() {
     try {
       super.init();
@@ -28,6 +29,7 @@ public class EcssLanguageServlet extends XtextServlet {
     }
   }
   
+  @Override
   public void destroy() {
     if ((this.disposableRegistry != null)) {
       this.disposableRegistry.dispose();

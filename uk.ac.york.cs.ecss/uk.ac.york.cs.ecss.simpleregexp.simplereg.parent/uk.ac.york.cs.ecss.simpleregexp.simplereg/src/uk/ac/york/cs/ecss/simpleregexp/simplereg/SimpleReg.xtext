@@ -1,0 +1,67 @@
+grammar uk.ac.york.cs.ecss.simpleregexp.simplereg.SimpleReg
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+generate simpleReg "http://www.ac.uk/york/cs/ecss/simpleregexp/simplereg/SimpleReg"
+
+
+
+RegexAlternatives returns AbstractElement:
+	RegexGroup ({RegexAlternatives.elements+=current} ('|' elements+=RegexGroup)+)?
+;
+
+RegexGroup returns AbstractElement:
+	RegexToken ({RegexGroup.elements+=current} (elements+=RegexToken)+)?
+;
+
+/* SuppressWarnings[potentialOverride]: Handled in CardinalityAwareEcoreFactory */
+RegexToken returns AbstractElement:
+	RegexTokenElement (cardinality=('?'|'*'|'+'))? (hasMinCard?='{' (minCardinality=EINT)? (hasMaxCard?=','
+		(maxCardinality=EINT)?
+	)? '}')?
+;
+
+RegexTokenElement returns AbstractElement:
+	MultiCharacters | ParenthesizedRegexElement |  Wildcard | SingleChars  
+;
+
+ParenthesizedRegexElement returns AbstractElement:
+	'(' RegexAlternatives ')'
+;
+
+SingleChars:
+	value=(TSINGLECHARSDT)
+;
+
+EINT returns ecore::EInt:
+	INT | TEST2
+;
+
+TEST2:
+	'test2'
+;
+
+terminal INT: ('0'..'9')+;
+
+TSINGLECHARSDT:
+	INT | TSINGLECHARS;
+
+Wildcard:
+	{Wildcard}
+	'.'
+;
+
+
+//TODO: Hier muss man dann die zeichen manuell parsen
+MultiCharacters:
+	value=MULTICHARTERMINAL
+;
+
+terminal MULTICHARTERMINAL:
+	'[' -> ']'
+;
+
+
+terminal TSINGLECHARS:
+	(('\\' . ) | !('[' | ')' | '{' | '}' | ']' | '\\' | '(' | '|' | '.'))+
+;

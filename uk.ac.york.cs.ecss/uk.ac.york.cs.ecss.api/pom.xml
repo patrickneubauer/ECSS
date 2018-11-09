@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>uk.ac.york.cs.ecss</groupId>
 		<artifactId>uk.ac.york.cs.ecss</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>uk.ac.york.cs.ecss.api</artifactId>
@@ -17,12 +17,12 @@
  		<dependency>
 			<groupId>uk.ac.york.cs.ecss</groupId>
 			<artifactId>uk.ac.york.cs.ecss.create.style</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>uk.ac.york.cs.ecss</groupId>
 			<artifactId>uk.ac.york.cs.ecss.create.grammar</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

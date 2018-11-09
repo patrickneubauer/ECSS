@@ -16,6 +16,7 @@ import uk.ac.york.cs.ecss.language.web.EcssLanguageWebModule;
  */
 @SuppressWarnings("all")
 public class EcssLanguageWebSetup extends EcssLanguageStandaloneSetup {
+  @Override
   public Injector createInjector() {
     EcssLanguageRuntimeModule _ecssLanguageRuntimeModule = new EcssLanguageRuntimeModule();
     EcssLanguageIdeModule _ecssLanguageIdeModule = new EcssLanguageIdeModule();

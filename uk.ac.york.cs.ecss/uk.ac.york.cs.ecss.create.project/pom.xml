@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>uk.ac.york.cs.ecss</groupId>
 		<artifactId>uk.ac.york.cs.ecss</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>uk.ac.york.cs.ecss.create.project</artifactId>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>uk.ac.york.cs.ecss</groupId>
 			<artifactId>uk.ac.york.cs.ecss.utilities</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- EXTERNAL DEPENDENCIES -->

@@ -4,7 +4,7 @@
 
     <groupId>uk.ac.york.cs.ecss</groupId>
     <artifactId>uk.ac.york.cs.ecss.parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>uk.ac.york.cs.ecss.parent</name>
 
@@ -42,13 +42,13 @@
         <!-- EMF PROPERTIES -->
         <emf-version>2.12.0</emf-version>
         
-    	<!-- XTEXT PROPERTIES (beware that these properties are also defined in 'language' module should always be kept in sync) -->
-        <tycho-version>1.1.0</tycho-version>
-        <xtextVersion>2.14.0</xtextVersion>
+    	<!-- XTEXT PROPERTIES (beware that these properties are also defined in language module(s) and should always be kept in sync) -->
+        <tycho-version>1.2.0</tycho-version>
+        <xtextVersion>2.15.0</xtextVersion>
         <xtextAntlrGenerator>[2.1.1, 3)</xtextAntlrGenerator>
         <maven.exec.plugin>1.4.0</maven.exec.plugin>
         <eclipse.m2-lifecycle-mapping-version>1.0.0</eclipse.m2-lifecycle-mapping-version>
-        <eclipse.m2-lifecycle-mapping-version-range>[1.2.1,)</eclipse.m2-lifecycle-mapping-version-range>	
+        <eclipse.m2-lifecycle-mapping-version-range>[2.4.3,)</eclipse.m2-lifecycle-mapping-version-range>	
         <emf-mwe-version>1.3.21.201705291010</emf-mwe-version>
         <emf-mwe2-version>2.9.1.201705291010</emf-mwe2-version>
     </properties>
@@ -82,11 +82,11 @@
                 <updatePolicy>never</updatePolicy>
             </releases>
         </repository>
-        <!-- for Eclipse Oxygen -->
+        <!-- for Eclipse Photon -->
         <repository>
-            <id>eclipse-oxygen</id>
+            <id>eclipse-photon</id>
             <layout>p2</layout>
-            <url>http://download.eclipse.org/releases/oxygen</url>
+            <url>http://download.eclipse.org/releases/photon</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>

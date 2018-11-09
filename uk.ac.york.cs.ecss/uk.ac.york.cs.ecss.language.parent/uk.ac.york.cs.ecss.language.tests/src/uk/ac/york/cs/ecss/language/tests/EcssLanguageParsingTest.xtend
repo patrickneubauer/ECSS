@@ -5,29 +5,30 @@ package uk.ac.york.cs.ecss.language.tests
 
 import com.google.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.extensions.InjectionExtension
 import org.eclipse.xtext.testing.util.ParseHelper
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
 import uk.ac.york.cs.ecss.language.ecssLanguage.Model
 import org.junit.Ignore
+import org.junit.Assert
 
-@RunWith(XtextRunner)
+@ExtendWith(InjectionExtension)
 @InjectWith(EcssLanguageInjectorProvider)
 class EcssLanguageParsingTest {
 	@Inject
 	ParseHelper<Model> parseHelper
 	
 	@Test
-	@Ignore("to be implemented")
+	@Ignore
 	def void loadModel() {
 		val result = parseHelper.parse('''
 			Hello Xtext!
 		''')
-		Assert.assertNotNull(result)
+		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
-		Assert.assertTrue('''Unexpected errors: «errors.join(", ")»''', errors.isEmpty)
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
 	
 	@Test
