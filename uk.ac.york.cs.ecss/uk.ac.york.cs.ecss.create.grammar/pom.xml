@@ -62,11 +62,7 @@
 		</dependency>
 
 		<!-- EXTERNAL DEPENDENCIES -->
-		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-shade-plugin</artifactId>
-			<version>3.1.1</version>
-		</dependency>
+		<!-- ... ADD HERE ... -->
 
 		<!-- https://mvnrepository.com/artifact/org.jamesframework/james-core -->
 		<dependency>
@@ -253,26 +249,6 @@
 									<filtering>true</filtering>
 								</resource>
 							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.1.1</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<artifactSet>
-								<includes>
-									<include>uk.ac.york.cs.ecss:uk.ac.york.cs.ecss.create.grammar</include>
-								</includes>
-							</artifactSet>
 						</configuration>
 					</execution>
 				</executions>
