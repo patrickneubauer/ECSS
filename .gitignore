@@ -39,7 +39,7 @@ xtend-gen/
 *.rar
 
 # OS-specific, IDE, and analysis artifacts
-*.project
+.project
 *.DS_Store
 .fseventsd/
 *dependency-graph.dot
