@@ -1,19 +1,19 @@
 # binaries
-target
-bin
+target/
+bin/
 *.xtendbin
 *.class
 
 # classpath files
-.classpath
+*.classpath
 
 # settings and configurations
-.settings
-config
+.settings/
+config/
 
 # Log and report files
 *.log
-**/*-report\.txt
+**/*-report.txt
 
 # any non-parent logger configuration (copied from parent during build)
 */*/*/log4j.xml
@@ -23,11 +23,11 @@ config
 hs_err_pid*
 
 # generated and downloaded artifacts
-generated
-src-gen
-xtend-gen
-.antlr-generator-*-patch.jar
-.xml_gen
+generated/
+src-gen/
+xtend-gen/
+*.antlr-generator-*-patch.jar
+*.xml_gen
 
 # Package Files #
 *.jar
@@ -39,18 +39,20 @@ xtend-gen
 *.rar
 
 # OS-specific, IDE, and analysis artifacts
-.project
-.DS_Store
-\.fseventsd/
-dependency-graph.dot
+*.project
+*.DS_Store
+.fseventsd/
+*dependency-graph.dot
 *._trace
 *.iml
 *.ipr
 *.iws
-.idea
+.idea/
 
 # BlueJ files
 *.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+\.travis\.yml\.swp
