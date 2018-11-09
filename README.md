@@ -20,4 +20,7 @@
 
 #### External Resources
 
-* Our prototype builds on the [Eclipse Modeling Framework](https://eclipse.org/modeling/emf/) and the [Xtext framework](https://eclipse.org/Xtext/) 
+* [Eclipse Modeling Framework](https://eclipse.org/modeling/emf/)
+* [Xtext](https://eclipse.org/Xtext/) 
+* [Epsilon](https://www.eclipse.org/epsilon/)
+* [XMLIntellEdit](https://github.com/patrickneubauer/XMLIntellEdit)
