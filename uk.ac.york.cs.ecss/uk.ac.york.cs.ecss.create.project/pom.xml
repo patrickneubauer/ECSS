@@ -59,6 +59,11 @@
 			<artifactId>org.eclipse.emf.mwe2.launch</artifactId>
 			<version>${emf-mwe2-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.common.types</artifactId>
+			<version>${xtextVersion}</version>
+		</dependency>
 		<!-- for maven invokation in source code -->
 		<dependency>
 			<groupId>io.takari</groupId>

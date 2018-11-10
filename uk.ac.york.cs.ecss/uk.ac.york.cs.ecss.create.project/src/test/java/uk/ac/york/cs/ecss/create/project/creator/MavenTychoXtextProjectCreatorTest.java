@@ -1,7 +1,7 @@
 /**
  * 
  */
-package uk.ac.york.cs.ecss.create.language.project.creator;
+package uk.ac.york.cs.ecss.create.project.creator;
 
 import static org.junit.Assert.fail;
 
@@ -18,46 +18,52 @@ import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
  *
  */
 public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTest {
-	
+
 	// run the following in shell to determine maven home directory: echo $M2_HOME
 	private static String MAVEN_HOME = "/usr/local/Cellar/maven/3.5.0/libexec"; // macOS homebrew
-	
+
 	@Test
 	public void testHeroLanguage_1() {
 		String languageShortName = "HeroLanguage_1";
-		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX; 
+		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX;
 		String languageName = LANGUAGE_GRAMMAR_URI_PREFIX + "." + languageShortName;
-		
-		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName + INPUT_FILE_EXTENSION;
+
+		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName
+				+ INPUT_FILE_EXTENSION;
 		String outputLocation = EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH + Path.SEPARATOR + languageShortName;
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
-		
+
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
+			projectCreator.runWorkflow();
 //			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testRouterLanguage() {
 		String languageShortName = "Router";
-		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX; 
+		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX;
 		String languageName = LANGUAGE_GRAMMAR_URI_PREFIX + "." + languageShortName;
-		
-		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName + INPUT_FILE_EXTENSION;
+
+		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName
+				+ INPUT_FILE_EXTENSION;
 		String outputLocation = EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH + Path.SEPARATOR + languageShortName;
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
-		
+
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
+			projectCreator.runWorkflow();
 //			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());

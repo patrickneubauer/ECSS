@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher;
 import org.eclipse.xtext.XtextStandaloneSetup;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.util.Strings;
@@ -39,6 +40,7 @@ public class BaseXtextProjectCreator {
 	protected String reportFile;
 	protected ResourceSet emfResourceSet;
 	protected XtextResourceSet xtextResourceSet;
+	protected Mwe2Launcher mwe2launcher;
 
 	/**
 	 * 
@@ -69,6 +71,7 @@ public class BaseXtextProjectCreator {
 		emfResourceSet = new ResourceSetImpl();
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+		mwe2launcher = new Mwe2Launcher();
 
 		logger.info("... finished initializing creator.");
 	}
@@ -91,13 +94,13 @@ public class BaseXtextProjectCreator {
 			throw new Exception("Xtext project configuration incomplete and/or invalid. Check configured project wizard.");
 		}
 		String uniqueShortLanguageName = projectConfiguration.getWizardConfiguration().getLanguage().getSimpleName();
-		String targetProjectRootLocation = targetProjectLocation + Path.SEPARATOR
+		String targetRootLocation = targetProjectLocation + Path.SEPARATOR
 				+ projectConfiguration.getProjectConfiguratorName();
 
 		logger.info(
 				"Generating Xtext skeleton projects for " + uniqueShortLanguageName + " ...");
 
-		projectConfiguration.setRootLocation(targetProjectRootLocation);
+		projectConfiguration.setRootLocation(targetRootLocation);
 
 		// create skeleton projects
 		CliProjectsCreator cliProjectsCreator = new CliProjectsCreator();
@@ -147,6 +150,43 @@ public class BaseXtextProjectCreator {
 			e.printStackTrace();
 		}
 		logger.info("Successfully replaced workflow in file " + targetFile.getName());
+	}
+	
+	/**
+	 * Runs the language project workflow based on the previously specified project
+	 * configuration
+	 * 
+	 * (!) requires {@code BaseXtextProjectConfiguration} to be set beforehand
+	 * 
+	 * (!) Limited by means of choosing the first mwe2 workflow found rather than a specific one
+	 * 
+	 * @throws Exception 
+	 */
+	@SuppressWarnings("static-access")
+	public void runWorkflow() throws Exception {
+		if (!projectConfiguration.isComplete() || !projectConfiguration.isValid()) {
+			throw new Exception("Xtext project configuration incomplete and/or invalid. Check configured project wizard.");
+		}
+		String uniqueShortLanguageName = projectConfiguration.getWizardConfiguration().getLanguage().getSimpleName();
+		String targetProjectRootLocation = "";
+		
+		if ( projectConfiguration.getWizardConfiguration().getParentProject().isEnabled() ) {
+			// for Maven and Tycho-based projects
+			targetProjectRootLocation = projectConfiguration.getWizardConfiguration().getParentProject().getLocation() ;
+		} else if ( !projectConfiguration.getWizardConfiguration().getParentProject().isEnabled() ) {
+			// for projects that do not have a parent project
+			targetProjectRootLocation = projectConfiguration.getWizardConfiguration().getRootLocation();
+		}
+		
+		logger.info(
+				"Running MWE2 workflow for " + uniqueShortLanguageName + " ...");
+
+		// run mwe2 workflow
+		File targetFile = FileUtils.findFirstFileByExtension(new File(targetProjectRootLocation), "mwe2");
+		mwe2launcher.main(new String[]{targetFile.getCanonicalPath(), "-p", "rootPath="+targetProjectRootLocation});
+
+		logger.info(
+				"... finished running MWE2 workflow for " + uniqueShortLanguageName);
 	}
 
 	public CharSequence obtainDefaultGrammar(String sourceFileLocation) {
