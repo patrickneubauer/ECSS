@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="spacetransportationservice" nsURI="http://ecss.me/examples/spacetransportationservice"
+    nsPrefix="sts">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Spacecraft" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stages" upperBound="-1"
+        eType="#//Stage" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="launchSites" upperBound="-1"
+        eType="#//LaunchSite"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functions" upperBound="-1"
+        eType="#//Function"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="manufacturer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryOfOrigin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relaunchCostInMioUSD" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physicalProperties" upperBound="-1"
+        eType="#//PhysicalProperty" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LaunchSite" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="locationLatitude" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="locationLongitude" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numberOfLaunchpads" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physicalProperties" upperBound="-1"
+        eType="#//PhysicalProperty" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operational" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Stage" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="engineType" lowerBound="1"
+        eType="#//EngineType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="engineAmount" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="physicalProperties" upperBound="-1"
+        eType="#//PhysicalProperty" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PhysicalProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//PhysicalPropertyType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Function">
+    <eLiterals name="MARS_COLONIZATION"/>
+    <eLiterals name="EARTH_LUNAR_TRANSPORT" value="1"/>
+    <eLiterals name="MULTIPLANETARY_TRANSPORT" value="2"/>
+    <eLiterals name="INTERCONTINENTAL_TRANSPORT" value="3"/>
+    <eLiterals name="ORBITAL_LAUNCHER" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PhysicalPropertyType">
+    <eLiterals name="LENGTH"/>
+    <eLiterals name="WIDTH" value="1"/>
+    <eLiterals name="DIAMETER" value="2"/>
+    <eLiterals name="PERIMETER" value="3"/>
+    <eLiterals name="AREA" value="4"/>
+    <eLiterals name="VOLUME" value="5"/>
+    <eLiterals name="MASS" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EngineType" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fuelKind" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpaceTransportationService">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="launchSites" upperBound="-1"
+        eType="#//LaunchSite" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="engineTypes" upperBound="-1"
+        eType="#//EngineType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="spacecrafts" upperBound="-1"
+        eType="#//Spacecraft" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>
