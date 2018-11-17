@@ -1,0 +1,71 @@
+package uk.ac.york.cs.ecss.ecss2xtext;
+
+import com.google.inject.Injector;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.XtextStandaloneSetup;
+import org.eclipse.xtext.resource.XtextResourceSet;
+import uk.ac.york.cs.ecss.language.EcssLanguageStandaloneSetup;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+
+public class ConvertToXmi {
+	
+
+	public static Resource getPropLResource(File ecsslFile) throws IOException {
+		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
+		return ecsslResource; 
+	} 
+
+
+	public static Resource getEcoreResource(File ecsslFile) throws IOException {
+		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
+		return ecsslResource; 
+	} 
+	
+	public static Resource getEcsslResource(File ecsslFile) throws IOException {
+		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
+		return ecsslResource; 
+	}
+	
+	public static void main(String[] args) throws IOException {
+		
+		File ecsslFile = new File("C:\\Users\\Robert\\Documents\\eclipse-modeling-neon-2-win32-x86_64\\eclipse\\workspacePatrickMaven\\runtime-EclipseApplication\\TestXtext\\cartest.ecss");
+		
+		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
+		Resource ecsslResourceXmi = rs.createResource(URI.createFileURI(ecsslFile.getCanonicalPath()+".xmi"));
+		ecsslResourceXmi.getContents().addAll(ecsslResource.getContents());
+		ecsslResourceXmi.save(Collections.emptyMap());
+	}
+
+
+	public static Resource getNewXtextResource(File file) throws IOException {
+		Injector injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
+		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+		Resource xtextResource = rs.createResource(URI.createFileURI(file.getCanonicalPath()));
+		return xtextResource;
+	}
+	
+	 public static Resource getOrCreateXtextResource(File file) throws IOException {
+		  Injector injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
+		  XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+		  if (file.exists()) {
+		   Resource ecsslResource = rs.getResource(URI.createFileURI(file.getCanonicalPath()), true);
+		   return ecsslResource;
+		  } else {
+		   Resource ecsslResource = rs.createResource(URI.createFileURI(file.getCanonicalPath()));
+		   return ecsslResource;
+		  }
+		 } 
+
+}
