@@ -1,11 +1,40 @@
 package uk.ac.york.cs.ecss.newproc;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.eclipse.emf.common.util.EList;
 import org.joor.Reflect;
-import uk.ac.york.cs.ecss.language.ecssLanguage.*;
 
-import java.lang.reflect.*;
-import java.util.*;
+import uk.ac.york.cs.ecss.language.ecssLanguage.EvaluationCall;
+import uk.ac.york.cs.ecss.language.ecssLanguage.ForEachExpression;
+import uk.ac.york.cs.ecss.language.ecssLanguage.IfExpression;
+import uk.ac.york.cs.ecss.language.ecssLanguage.LocalEvaluationCall;
+import uk.ac.york.cs.ecss.language.ecssLanguage.LocalOrValueCall;
+import uk.ac.york.cs.ecss.language.ecssLanguage.SlotCall;
+import uk.ac.york.cs.ecss.language.ecssLanguage.StaticTemplateRulePart;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateDef;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateFunctionCall;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateGeneratorRule;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateParameterValue;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateRule;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateRuleOrDef;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TemplateRulePart;
+import uk.ac.york.cs.ecss.language.ecssLanguage.TypeDef;
 
 public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 	
