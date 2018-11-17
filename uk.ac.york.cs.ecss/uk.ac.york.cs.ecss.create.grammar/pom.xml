@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -31,7 +32,8 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
-		<!-- XMLIntellEdit dependency (directly taken from Github repo via JitPack ) -->
+		<!-- XMLIntellEdit dependency (directly taken from Github repo via JitPack 
+			) -->
 		<dependency>
 			<groupId>com.github.patrickneubauer</groupId>
 			<artifactId>XMLIntellEdit</artifactId>
@@ -200,14 +202,14 @@
 		<!-- Java compiler -->
 
 
-		<!-- dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-native</artifactId>
-			<version>0.9.1</version> <classifier>linux-x86_64-avx2</classifier> </dependency>
-			<dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-native</artifactId>
-			<version>0.9.1</version> <classifier>macosx-x86_64-avx2</classifier> </dependency>
-			<dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-native</artifactId>
+		<!-- dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-native</artifactId> 
+			<version>0.9.1</version> <classifier>linux-x86_64-avx2</classifier> </dependency> 
+			<dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-native</artifactId> 
+			<version>0.9.1</version> <classifier>macosx-x86_64-avx2</classifier> </dependency> 
+			<dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-native</artifactId> 
 			<version>0.9.1</version> <classifier>windows-x86_64-avx2</classifier> </dependency -->
 
-		<!-- dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-cuda-7.5</artifactId>
+		<!-- dependency> <groupId>org.nd4j</groupId> <artifactId>nd4j-cuda-7.5</artifactId> 
 			<version>0.9.1</version> </dependency -->
 
 		<!-- Another Search framework -->
@@ -224,7 +226,7 @@
 			<version>1.0</version>
 		</dependency>
 
-		<!-- dependency> <groupId>org.deeplearning4j</groupId> <artifactId>deeplearning4j-ui_2.11</artifactId>
+		<!-- dependency> <groupId>org.deeplearning4j</groupId> <artifactId>deeplearning4j-ui_2.11</artifactId> 
 			<version>0.9.1</version> </dependency -->
 	</dependencies>
 
@@ -253,33 +255,51 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtextVersion}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>src/main/xtend-gen</outputDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
 
-		<profiles>
-			<profile>
-				<id>windows-profile</id>
-				<activation>
-					<os>
-						<family>Windows</family>
-					</os>
-				</activation>
-				<properties>
-					<toolsjar>${java.home}/../lib/tools.jar</toolsjar>
-				</properties>
-			</profile>
-			<profile>
-				<id>unix-profile</id>
-				<activation>
-					<os>
-						<family>unix</family>
-					</os>
-				</activation>
-				<properties>
-					<toolsjar>${java.home}/../Classes/classes.jar</toolsjar>
-				</properties>
-			</profile>
-		</profiles>
+	<profiles>
+		<profile>
+			<id>windows-profile</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<toolsjar>${java.home}/../lib/tools.jar</toolsjar>
+			</properties>
+		</profile>
+		<profile>
+			<id>unix-profile</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<properties>
+				<toolsjar>${java.home}/../Classes/classes.jar</toolsjar>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
