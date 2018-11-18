@@ -1,0 +1,3 @@
+LANG		 PROD	 VAR	 TERM	 LAB	 VOC	
+SimpleCarModel.bgf	3	3	67	0	73
+WML_6.bgf	61	33	92	0	186

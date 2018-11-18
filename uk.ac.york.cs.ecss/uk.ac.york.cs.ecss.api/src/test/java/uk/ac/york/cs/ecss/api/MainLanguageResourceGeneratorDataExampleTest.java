@@ -1,5 +1,7 @@
 package uk.ac.york.cs.ecss.api;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Arrays;
@@ -19,14 +21,14 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import uk.ac.york.cs.ecss.analysis.ecoreanalysis.learning.relation.EcoreKeywordConfig;
-import uk.ac.york.cs.ecss.analysis.ecoreanalysis.learning.relation.EcoreNameRelation;
 import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
-import uk.ac.york.cs.ecss.basicdistance.EcoreNameRelationDistanceManager;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
+import uk.ac.york.cs.ecss.migrated.EcoreKeywordConfig;
+import uk.ac.york.cs.ecss.migrated.EcoreNameRelation;
+import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
+import uk.ac.york.cs.ecss.migrated.EcoreResourceLoader;
+import uk.ac.york.cs.ecss.migrated.ResourceResolver;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
-import uk.ac.york.cs.ecss.loader.EcoreResourceLoader;
-import uk.ac.york.cs.ecss.optimize.ResourceResolver;
 
 //@Ignore("to be executed manually")
 @RunWith(Parameterized.class)
@@ -68,8 +70,7 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 		languageFileExtensions.add("mydsl");
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
 
-		File analysisModelFile = new File(INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION);
-		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), analysisModelFile.toString(),
+		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), 
 				languageProjectBaseName, "", languageFileExtensions);
 		ResourceResolver ecssResolver = ResourceResolver.get(new File(INPUT_DATA_FOLDER+OUTPUT_PATH),
 				"","ecss", true);
@@ -207,6 +208,7 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 	 * ecore --> specific ecss-based xtext grammar (optimized)
 	 */
 	@Test
+	@Ignore("grammar file optimization not supported in this framework version")
 	public void _4specific_testGenerateOptimizedGrammarFileFile() {
 		logger.info("RUNNING: _4specific_testGenerateOptimizedGrammarFileFile: " + uniqueLanguageId);
 
@@ -231,6 +233,16 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 			logger.error(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void _5_testGenerateLanguageProjectAndRunWorkflow() {
+		try {
+			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+			projectCreator.runWorkflow();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
 
 	@Test
 	@Ignore("temporarily")
@@ -240,7 +252,7 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -268,7 +280,7 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator
 					.generateEnhancedLanguageProject(outputPath.toFile());
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

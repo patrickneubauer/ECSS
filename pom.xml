@@ -31,6 +31,7 @@
         <maven.eclipse.plugin>2.10</maven.eclipse.plugin>
         <eclipse-xsd>2.12.0</eclipse-xsd>
         <eclipse-core-runtime>3.15.0</eclipse-core-runtime>
+		<eclipse-core-resources>3.13.100</eclipse-core-resources>
         <eclipse-xtext-ui>2.10.0</eclipse-xtext-ui>
         <eclipse-equinox-common>3.10.0</eclipse-equinox-common>
         
@@ -41,6 +42,7 @@
 
         <!-- EMF PROPERTIES -->
         <emf-version>2.12.0</emf-version>
+        <emf-codegen-version>2.14.0</emf-codegen-version>
         
     	<!-- XTEXT PROPERTIES (beware that these properties are also defined in language module(s) and should always be kept in sync) -->
         <tycho-version>1.2.0</tycho-version>

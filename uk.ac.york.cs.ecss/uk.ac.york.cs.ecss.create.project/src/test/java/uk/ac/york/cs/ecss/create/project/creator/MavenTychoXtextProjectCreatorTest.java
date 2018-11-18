@@ -69,5 +69,77 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 			fail(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void testSimpleCarModelLanguage() {
+		String languageShortName = "SimpleCarModel";
+		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX;
+		String languageName = LANGUAGE_GRAMMAR_URI_PREFIX + "." + languageShortName;
+
+		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName
+				+ INPUT_FILE_EXTENSION;
+		String outputLocation = EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH + Path.SEPARATOR + languageShortName;
+		List<String> fileExtensions = new LinkedList<String>();
+		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
+
+		try {
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
+			projectCreator.prepareDestination(outputLocation);
+			projectCreator.create(outputLocation);
+			projectCreator.runWorkflow();
+//			projectCreator.build();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testWML_6Language() {
+		String languageShortName = "WML_6";
+		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX;
+		String languageName = LANGUAGE_GRAMMAR_URI_PREFIX + "." + languageShortName;
+
+		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName
+				+ INPUT_FILE_EXTENSION;
+		String outputLocation = EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH + Path.SEPARATOR + languageShortName;
+		List<String> fileExtensions = new LinkedList<String>();
+		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
+
+		try {
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
+			projectCreator.prepareDestination(outputLocation);
+			projectCreator.create(outputLocation);
+			projectCreator.runWorkflow();
+//			projectCreator.build();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testYangLanguage() {
+		String languageShortName = "Yang";
+		String projectBaseName = LANGUAGE_GRAMMAR_URI_PREFIX;
+		String languageName = LANGUAGE_GRAMMAR_URI_PREFIX + "." + languageShortName;
+
+		String inputFile = EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH + Path.SEPARATOR + languageShortName
+				+ INPUT_FILE_EXTENSION;
+		String outputLocation = EXAMPLE_DATA_FOLDER + TRANSFORMATION_OUTPUT_PATH + Path.SEPARATOR + languageShortName;
+		List<String> fileExtensions = new LinkedList<String>();
+		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
+
+		try {
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
+			projectCreator.prepareDestination(outputLocation);
+			projectCreator.create(outputLocation);
+			projectCreator.runWorkflow();
+//			projectCreator.build();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
 
 }

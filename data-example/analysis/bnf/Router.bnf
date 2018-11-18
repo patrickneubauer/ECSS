@@ -1,0 +1,24 @@
+CopperCable:
+        "CopperCable" ID "{" (("source" ID) ("speed" INT) ("target" ID)) "}"
+Router:
+        "Router" ID "{" (("incoming" ID*) ("maxSpeed" INT) ("outgoing" Cable*)) "}"
+GlassFiberCable:
+        "GlassFiberCable" ID "{" (("source" ID) ("speed" INT) ("target" ID)) "}"
+Device:
+        (Server | Computer | Router)
+Agent:
+        (Provider | Consumer)
+Consumer:
+        "Consumer" ID "{" (("rightcomp" ID) ("speed" INT)) "}"
+Computer:
+        "Computer" ID "{" (("consumer" ID) ("incoming" ID*) ("outgoing" Cable*)) "}"
+Provider:
+        "Provider" ID "{" (("rightserv" ID) ("speed" INT)) "}"
+Cable:
+        (CopperCable | GlassFiberCable)
+Container:
+        "Container" "{" (("agents" Agent*) ("devices" Device*)) "}"
+Server:
+        "Server" ID "{" (("incoming" ID*) ("outgoing" Cable*) ("provider" ID?)) "}"
+ID:
+        (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_") (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))*

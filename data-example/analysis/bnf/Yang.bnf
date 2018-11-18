@@ -1,0 +1,474 @@
+WS:
+        (" " | "\u0009" | "\u000d" | "\u000a")+
+ML_COMMENT:
+        "/*" !"*/"
+SL_COMMENT:
+        "//" !("\u000a" | "\u000d") ("\u000d"? "\u000a")?
+YangFile:
+        Module
+        SubModule
+Module:
+        "module" STRINGARG "{" ModuleStatement* "}"
+ModuleStatement:
+        NamespaceStatement
+        PrefixStatement
+        YangVersionStatement
+        OrganizationStatement
+        ContactStatement
+        DescriptionStatement
+        ImportStatement
+        IncludeStatement
+        RevisionStatement
+        ExtensionStatement
+        FeatureStatement
+        IdentityStatement
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        AugmentStatement
+        RpcStatement
+        NotificationStatement
+        DeviationStatement
+        UnknownStatement
+SubModule:
+        "submodule" STRINGARG "{" SubmoduleStatement* "}"
+SubmoduleStatement:
+        YangVersionStatement
+        OrganizationStatement
+        ContactStatement
+        DescriptionStatement
+        ImportStatement
+        IncludeStatement
+        RevisionStatement
+        BelongsToStatement
+        ExtensionStatement
+        FeatureStatement
+        IdentityStatement
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        AugmentStatement
+        RpcStatement
+        NotificationStatement
+        DeviationStatement
+        UnknownStatement
+DatadefStatement:
+        ContainerStatement
+        LeafStatement
+        LeafListStatement
+        ListStatement
+        ChoiceStatement
+        AnyxmlStatement
+        UsesStatement
+YangVersionStatement:
+        "yang-version" STRINGARG (";" | ("{" UnknownStatement* "}"))
+OrganizationStatement:
+        "organization" STRINGARG (";" | ("{" UnknownStatement* "}"))
+ContactStatement:
+        "contact" STRINGARG (";" | ("{" UnknownStatement* "}"))
+DescriptionStatement:
+        "description" STRINGARG (";" | ("{" UnknownStatement* "}"))
+ReferenceStatement:
+        "reference" STRINGARG (";" | ("{" UnknownStatement* "}"))
+NamespaceStatement:
+        "namespace" STRINGARG (";" | ("{" UnknownStatement* "}"))
+PrefixStatement:
+        "prefix" STRINGARG (";" | ("{" UnknownStatement* "}"))
+RequireInstanceStatement:
+        "require-instance" STRINGARG (";" | ("{" UnknownStatement* "}"))
+PathStatement:
+        "path" STRINGARG (";" | ("{" UnknownStatement* "}"))
+PositionStatement:
+        "position" STRINGARG (";" | ("{" UnknownStatement* "}"))
+ValueStatement:
+        "value" STRINGARG (";" | ("{" UnknownStatement* "}"))
+ErrorAppTagStatement:
+        "error-app-tag" STRINGARG (";" | ("{" UnknownStatement* "}"))
+ErrorMessageStatement:
+        "error-message" STRINGARG (";" | ("{" UnknownStatement* "}"))
+UnitsStatement:
+        "units" STRINGARG (";" | ("{" UnknownStatement* "}"))
+DefaultStatement:
+        "default" STRINGARG (";" | ("{" UnknownStatement* "}"))
+StatusStatement:
+        "status" STRINGARG (";" | ("{" UnknownStatement* "}"))
+RevisionDateStatement:
+        "revision-date" STRINGARG (";" | ("{" UnknownStatement* "}"))
+UniqueStatement:
+        "unique" STRINGARG (";" | ("{" UnknownStatement* "}"))
+KeyStatement:
+        "key" (STRINGARG | STRINGARG2) (";" | ("{" UnknownStatement* "}"))
+OrderedbyStatement:
+        "ordered-by" STRINGARG (";" | ("{" UnknownStatement* "}"))
+PresenceStatement:
+        "presence" STRINGARG (";" | ("{" UnknownStatement* "}"))
+MandatoryStatement:
+        "mandatory" STRINGARG (";" | ("{" UnknownStatement* "}"))
+ConfigStatement:
+        "config" STRINGARG (";" | ("{" UnknownStatement* "}"))
+FractionDigitsStatement:
+        "fraction-digits" STRINGARG (";" | ("{" UnknownStatement* "}"))
+IfFeatureStatement:
+        "if-feature" (STRINGARG ":")? ID (";" | ("{" UnknownStatement* "}"))
+BaseStatement:
+        "base" (STRINGARG ":")? ID (";" | ("{" UnknownStatement* "}"))
+YinElementStatement:
+        "yin-element" STRINGARG (";" | ("{" UnknownStatement* "}"))
+MinElementsStatement:
+        "min-elements" STRINGARG (";" | ("{" UnknownStatement* "}"))
+MaxElementsStatement:
+        "max-elements" STRINGARG (";" | ("{" UnknownStatement* "}"))
+UnknownStatement:
+        STRINGARG ":" STRINGARG STRINGARG? (";" | ("{" UnknownSubstatements* "}"))
+UnknownSubstatements:
+        (STRINGARG ":")? STRINGARG STRINGARG? (";" | ("{" UnknownSubstatements* "}"))
+RangeStatement:
+        "range" STRINGARG (";" | ("{" MultipleSubstatement* "}"))
+PatternStatement:
+        "pattern" STRINGARG (";" | ("{" MultipleSubstatement* "}"))
+LengthStatement:
+        "length" STRINGARG (";" | ("{" MultipleSubstatement* "}"))
+MustStatement:
+        "must" STRINGARG (";" | ("{" MultipleSubstatement* "}"))
+MultipleSubstatement:
+        DescriptionStatement
+        ReferenceStatement
+        ErrorAppTagStatement
+        ErrorMessageStatement
+        UnknownStatement
+RpcStatement:
+        "rpc" STRINGARG "{" RpcSubstatement* "}"
+RpcSubstatement:
+        IfFeatureStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        TypedefStatement
+        GroupingStatement
+        InputStatement
+        OutputStatement
+        UnknownStatement
+InputStatement:
+        "input" "{" InputSubstatement+ "}"
+InputSubstatement:
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        UnknownStatement
+OutputStatement:
+        "output" "{" OutputSubstatement+ "}"
+OutputSubstatement:
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        UnknownStatement
+NotificationStatement:
+        "notification" STRINGARG (";" | ("{" NotificationSubstatement* "}"))
+NotificationSubstatement:
+        IfFeatureStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        UnknownStatement
+ContainerStatement:
+        "container" STRINGARG (";" | ("{" ContainerSubstatement* "}"))
+ContainerSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        MustStatement
+        PresenceStatement
+        ConfigStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        UnknownStatement
+ListStatement:
+        "list" STRINGARG (";" | ("{" ListSubstatement* "}"))
+ListSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        MustStatement
+        KeyStatement
+        UniqueStatement
+        ConfigStatement
+        MinElementsStatement
+        MaxElementsStatement
+        OrderedbyStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        UnknownStatement
+GroupingStatement:
+        "grouping" STRINGARG (";" | ("{" GroupingSubstatement* "}"))
+GroupingSubstatement:
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        TypedefStatement
+        GroupingStatement
+        DatadefStatement
+        UnknownStatement
+LeafStatement:
+        "leaf" STRINGARG (";" | ("{" LeafSubstatement* "}"))
+LeafSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        TypeStatement
+        UnitsStatement
+        MustStatement
+        DefaultStatement
+        ConfigStatement
+        MandatoryStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+LeafListStatement:
+        "leaf-list" STRINGARG (";" | ("{" LeafListSubstatement* "}"))
+LeafListSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        TypeStatement
+        UnitsStatement
+        MustStatement
+        DefaultStatement
+        ConfigStatement
+        MinElementsStatement
+        MaxElementsStatement
+        OrderedbyStatement
+        StatusStatement
+        DescriptionStatement
+        UnknownStatement
+ChoiceStatement:
+        "choice" STRINGARG (";" | ("{" ChoiceSubstatement* "}"))
+ChoiceSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        DefaultStatement
+        ConfigStatement
+        MandatoryStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        CaseStatement
+        ContainerStatement
+        LeafStatement
+        LeafListStatement
+        ListStatement
+        AnyxmlStatement
+        UnknownStatement
+CaseStatement:
+        "case" STRINGARG (";" | ("{" CaseSubstatement* "}"))
+CaseSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        DatadefStatement
+        UnknownStatement
+AnyxmlStatement:
+        "any-xml" STRINGARG (";" | ("{" AnyxmlSubstatement* "}"))
+AnyxmlSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        MustStatement
+        ConfigStatement
+        MandatoryStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+UsesStatement:
+        "uses" (STRINGARG ":")? ID (";" | ("{" UsesSubstatement* "}"))
+UsesSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        RefineStatement
+        AugmentUsesStatement
+        UnknownStatement
+AugmentUsesStatement:
+        "augment" STRINGARG (";" | ("{" AugmentSubstatement* "}"))
+AugmentStatement:
+        "augment" STRINGARG (";" | ("{" AugmentSubstatement* "}"))
+AugmentSubstatement:
+        WhenStatement
+        IfFeatureStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        DatadefStatement
+        CaseStatement
+        UnknownStatement
+RefineStatement:
+        "refine" STRINGARG (";" | ("{" RefineSubstatement* "}"))
+RefineSubstatement:
+        MustStatement
+        DefaultStatement
+        PresenceStatement
+        ConfigStatement
+        MandatoryStatement
+        MinElementsStatement
+        MaxElementsStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+DeviationStatement:
+        "deviation" STRINGARG (";" | ("{" DeviationSubstatement* "}"))
+DeviationSubstatement:
+        DeviateStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+DeviateStatement:
+        "deviate" STRINGARG (";" | ("{" DeviateSubstatement* "}"))
+DeviateSubstatement:
+        UniqueStatement
+        MustStatement
+        UnitsStatement
+        DefaultStatement
+        ConfigStatement
+        MandatoryStatement
+        MinElementsStatement
+        MaxElementsStatement
+        UnknownStatement
+ExtensionStatement:
+        "extension" STRINGARG (";" | ("{" ExtensionSubstatement* "}"))
+ExtensionSubstatement:
+        ArgumentStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+ArgumentStatement:
+        "argument" STRINGARG (";" | ("{" ArgumentSubstatement* "}"))
+ArgumentSubstatement:
+        YinElementStatement
+        UnknownStatement
+IdentityStatement:
+        "identity" STRINGARG (";" | ("{" IdentitySubstatement* "}"))
+IdentitySubstatement:
+        BaseStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+FeatureStatement:
+        "feature" STRINGARG (";" | ("{" FeatureSubstatement* "}"))
+FeatureSubstatement:
+        IfFeatureStatement
+        StatusStatement
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+BelongsToStatement:
+        "belongs-to" STRINGARG "{" BelongsToSubstatement* "}"
+BelongsToSubstatement:
+        PrefixStatement
+        UnknownStatement
+TypedefStatement:
+        "typedef" STRINGARG "{" TypedefSubstatement* "}"
+TypedefSubstatement:
+        TypeStatement
+        DescriptionStatement
+        ReferenceStatement
+        DefaultStatement
+        StatusStatement
+        UnitsStatement
+        UnknownStatement
+TypeStatement:
+        "type" (BuiltInType | ((STRINGARG ":")? ID)) (";" | ("{" TypeSubStatement* "}"))
+TypeSubStatement:
+        BitStatement
+        FractionDigitsStatement
+        DefaultStatement
+        BaseStatement
+        EnumStatement
+        LengthStatement
+        PathStatement
+        PatternStatement
+        RangeStatement
+        RequireInstanceStatement
+        TypeStatement
+        UnknownStatement
+BitStatement:
+        "bit" STRINGARG (";" | ("{" BitSubstatement* "}"))
+BitSubstatement:
+        DescriptionStatement
+        ReferenceStatement
+        StatusStatement
+        PositionStatement
+        UnknownStatement
+EnumStatement:
+        "enum" STRINGARG (";" | ("{" EnumSubstatement* "}"))
+EnumSubstatement:
+        DescriptionStatement
+        ReferenceStatement
+        StatusStatement
+        ValueStatement
+        UnknownStatement
+ImportStatement:
+        "import" STRINGARG (";" | ("{" ImportSubstatements* "}"))
+ImportSubstatements:
+        PrefixStatement
+        RevisionDateStatement
+        UnknownStatement
+IncludeStatement:
+        "include" STRINGARG (";" | ("{" IncludeSubstatements* "}"))
+IncludeSubstatements:
+        RevisionDateStatement
+        UnknownStatement
+WhenStatement:
+        "when" STRINGARG (";" | ("{" WhenSubstatements* "}"))
+WhenSubstatements:
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+RevisionStatement:
+        "revision" STRINGARG (";" | ("{" RevisionSubstatements* "}"))
+RevisionSubstatements:
+        DescriptionStatement
+        ReferenceStatement
+        UnknownStatement
+BuiltInType:
+        "binary"
+        "bits"
+        "boolean"
+        "decimal64"
+        "empty"
+        "enumeration"
+        "identityref"
+        "instance-identifier"
+        "int8"
+        "int16"
+        "int32"
+        "int64"
+        "leafref"
+        "string"
+        "uint8"
+        "uint16"
+        "uint32"
+        "uint64"
+        "union"
+CUSTOMSTRING:
+        INT ("+" INT)*
+STRINGARG:
+        ID
+        CUSTOMSTRING
+        "default"
+STRINGARG2:
+        ID ":" ID
+ID:
+        (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | "-" | "." | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))+

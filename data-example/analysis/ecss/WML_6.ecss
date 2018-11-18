@@ -1,0 +1,281 @@
+class WMLRoot : Expressions_4 = § ""
+;
+
+class WMLTag : ( plus = § "" name_2 = § "" Expressions_3 = § "" endName_3 = §
+	"" ']' )
+;
+
+class WMLKey : ( name_5 = § "" values = § "" eol = § "" )
+;
+
+class WMLMacroCall : ( point = § "" relative = § "" name_3 = § "" Parameters =
+	§ "" '}' )
+;
+
+class WMLArrayCall : value = § ""
+;
+
+class WMLMacroDefine : ( name_6 = § "" Expressions_2 = § "" endName_2 = § "" )
+;
+
+class WMLPreprocIF : ( name = § "" Expressions = § "" ( Elses = § ""
+	ElseExpressions = § "" ) ? endName = § "" )
+;
+
+class WMLTextdomain : name_4 = § ""
+;
+
+class WMLLuaCode : value_2 = § ""
+;
+
+class WMLValue : value_4 = § ""
+;
+
+class MacroTokens : value_3 = § ""
+;
+
+terminal LUA_CODE : ( '<<' -> '>>' ) ;
+terminal IFHAVE : ( '#ifhave' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal IFNHAVE : ( '#ifnhave' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal IFDEF : ( '#ifdef' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal IFNDEF : ( '#ifndef' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal ELSE : ( '#else' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal ENDIF : ( '#endif' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal DEFINE : ( '#define' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal ENDDEF : ( '#enddef' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal TEXTDOMAIN : ( '#textdomain' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+terminal STRING : ( '"' ( ( '\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '"' | '\'' |
+'\\' ) ) | ! ( '\\' | '"' ) ) * '"' ) ;
+terminal ID : ( "a" .. "z" | "A" .. "Z" | "0" .. "9" | '_' | '-' | ',' ) + ;
+terminal EOL : ( '\r' ? '\n' ) ;
+terminal WS : ( ' ' | '\t' ) + ;
+terminal ANY_OTHER : . ;
+terminal SL_COMMENT : ( '#' ! ( '\n' | '\r' ) ( '\r' ? '\n' ) ? ) ;
+attribute Expressions : bound = @ WMLValuedExpression *
+;
+
+attribute Elses : bound = # @ ELSE
+;
+
+attribute endName : bound = # @ ENDIF
+;
+
+attribute relative : bound = '~' ?
+;
+
+attribute name : bound = ( # @ IFDEF | # @ IFNDEF | # @ IFHAVE | # @ IFNHAVE )
+;
+
+attribute values : '=' bound = @ WMLKeyValue * ( # @ EOL ? '+' # @ EOL ? bound
+	= @ WMLKeyValue + ) *
+;
+
+attribute endName_2 : bound = # @ ENDDEF
+;
+
+attribute name_2 : bound = # @ ID
+;
+
+attribute eol : bound = ( # @ EOL | # @ SL_COMMENT )
+;
+
+attribute name_3 : bound = # @ ID
+;
+
+attribute value : ( '[' bound = @ WMLValue + ']' )
+;
+
+attribute ElseExpressions : bound = @ WMLValuedExpression +
+;
+
+attribute value_2 : bound = # @ LUA_CODE
+;
+
+attribute Expressions_2 : bound = @ WMLValuedExpression *
+;
+
+attribute Parameters : bound = @ WMLMacroCallParameter *
+;
+
+attribute name_4 : bound = # @ TEXTDOMAIN
+;
+
+attribute Expressions_3 : ']' bound = @ WMLExpression *
+;
+
+attribute value_3 : bound = ( '=' | '[' | ']' | '+' | '[/' )
+;
+
+attribute value_4 : bound = ( # @ ID | # @ STRING | '_' | '~' | '.' | './' |
+	'$' | '/' | '(' | ')' | # @ ANY_OTHER )
+;
+
+attribute endName_3 : '[/' bound = # @ ID
+;
+
+attribute plus : '[' bound = '+' ?
+;
+
+attribute name_5 : bound = # @ ID
+;
+
+attribute Expressions_4 : bound = @ WMLRootExpression *
+;
+
+attribute name_6 : bound = # @ DEFINE
+;
+
+attribute point : '{' bound = './' ?
+;
+
+WMLPreprocIF Expressions "*" {
+	Expressions : 2 ;
+}
+
+WMLPreprocIF Elses "*" {
+	Elses : 2 ;
+}
+
+WMLPreprocIF endName "*" {
+	endName : 2 ;
+}
+
+WMLMacroCall relative "*" {
+	relative : 2 ;
+}
+
+WMLPreprocIF name "*" {
+	name : 2 ;
+}
+
+WMLKey values "*" {
+	values : 2 ;
+}
+
+WMLMacroDefine endName {
+	endName_2 : 2 ;
+}
+
+WMLMacroDefine endName "*" {
+	endName_2 : 2 ;
+}
+
+WMLTag name {
+	name_2 : 2 ;
+}
+
+WMLTag name "*" {
+	name_2 : 2 ;
+}
+
+WMLKey eol "*" {
+	eol : 2 ;
+}
+
+WMLMacroCall name {
+	name_3 : 2 ;
+}
+
+WMLMacroCall name "*" {
+	name_3 : 2 ;
+}
+
+WMLArrayCall value "*" {
+	value : 2 ;
+}
+
+WMLPreprocIF ElseExpressions "*" {
+	ElseExpressions : 2 ;
+}
+
+WMLLuaCode value {
+	value_2 : 2 ;
+}
+
+WMLLuaCode value "*" {
+	value_2 : 2 ;
+}
+
+WMLMacroDefine Expressions {
+	Expressions_2 : 2 ;
+}
+
+WMLMacroDefine Expressions "*" {
+	Expressions_2 : 2 ;
+}
+
+WMLMacroCall Parameters "*" {
+	Parameters : 2 ;
+}
+
+WMLTextdomain name {
+	name_4 : 2 ;
+}
+
+WMLTextdomain name "*" {
+	name_4 : 2 ;
+}
+
+WMLTag Expressions {
+	Expressions_3 : 2 ;
+}
+
+WMLTag Expressions "*" {
+	Expressions_3 : 2 ;
+}
+
+MacroTokens value {
+	value_3 : 2 ;
+}
+
+MacroTokens value "*" {
+	value_3 : 2 ;
+}
+
+WMLValue value {
+	value_4 : 2 ;
+}
+
+WMLValue value "*" {
+	value_4 : 2 ;
+}
+
+WMLTag endName {
+	endName_3 : 2 ;
+}
+
+WMLTag endName "*" {
+	endName_3 : 2 ;
+}
+
+WMLTag plus "*" {
+	plus : 2 ;
+}
+
+WMLKey name {
+	name_5 : 2 ;
+}
+
+WMLKey name "*" {
+	name_5 : 2 ;
+}
+
+WMLRoot Expressions {
+	Expressions_4 : 2 ;
+}
+
+WMLRoot Expressions "*" {
+	Expressions_4 : 2 ;
+}
+
+WMLMacroDefine name {
+	name_6 : 2 ;
+}
+
+WMLMacroDefine name "*" {
+	name_6 : 2 ;
+}
+
+WMLMacroCall point "*" {
+	point : 2 ;
+}

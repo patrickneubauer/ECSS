@@ -1,0 +1,1951 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext"
+    name="org.xtext.editor.yang.Yang" definesHiddenTokens="true" hiddenTokens="#//@rules.111 #//@rules.109 #//@rules.110">
+  <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" ePackage="http://www.xtext.org/editor/yang/Yang#/"
+      name="yang"/>
+  <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" ePackage="http://www.eclipse.org/emf/2002/Ecore#/"
+      alias="ecore"/>
+  <rules xsi:type="xtext:ParserRule" name="YangFile">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//YangFile"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.1"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.3"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Module">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//Module"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="module"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ModuleStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ModuleStatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.12"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.6"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.7"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.8"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.95"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.97"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.101"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.77"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.83"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.81"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.69"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.42"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.48"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.73"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="SubModule">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//SubModule"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="submodule"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.4"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="SubmoduleStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//SubmoduleStatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.6"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.7"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.8"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.95"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.97"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.101"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.85"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.77"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.83"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.81"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.69"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.42"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.48"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.73"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DatadefStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DatadefStatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.50"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.56"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.58"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.52"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.60"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.64"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.66"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="YangVersionStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//YangVersionStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="yang-version"/>
+      <elements xsi:type="xtext:Assignment" feature="version" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="yangversionunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="OrganizationStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//OrganizationStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="organization"/>
+      <elements xsi:type="xtext:Assignment" feature="organization" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="organizationunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ContactStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ContactStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="contact"/>
+      <elements xsi:type="xtext:Assignment" feature="contact" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="contactunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DescriptionStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DescriptionStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="description"/>
+      <elements xsi:type="xtext:Assignment" feature="description" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="descriptionunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ReferenceStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ReferenceStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="reference"/>
+      <elements xsi:type="xtext:Assignment" feature="reference" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="referenceunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="NamespaceStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//NamespaceStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="namespace"/>
+      <elements xsi:type="xtext:Assignment" feature="uri" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="namespaceunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="PrefixStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//PrefixStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="prefix"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="prefixunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RequireInstanceStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RequireInstanceStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="require-instance"/>
+      <elements xsi:type="xtext:Assignment" feature="require" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="requireunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="PathStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//PathStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="path"/>
+      <elements xsi:type="xtext:Assignment" feature="path" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="pathunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="PositionStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//PositionStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="position"/>
+      <elements xsi:type="xtext:Assignment" feature="intarg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="positionunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ValueStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ValueStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="value"/>
+      <elements xsi:type="xtext:Assignment" feature="intarg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="valueunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ErrorAppTagStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ErrorAppTagStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="error-app-tag"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="erroraunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ErrorMessageStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ErrorMessageStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="error-message"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="errormunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="UnitsStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//UnitsStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="units"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="unitsunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DefaultStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DefaultStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="default"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="defaultunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="StatusStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//StatusStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="status"/>
+      <elements xsi:type="xtext:Assignment" feature="status" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="statusunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RevisionDateStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RevisionDateStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="revision-date"/>
+      <elements xsi:type="xtext:Assignment" feature="date" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="revisiondateunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="UniqueStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//UniqueStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="unique"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="uniqueunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="KeyStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//KeyStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="key"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+          <elements xsi:type="xtext:RuleCall" rule="#//@rules.106"/>
+        </terminal>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="keyunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="OrderedbyStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//OrderedbyStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="ordered-by"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="orderedbyunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="PresenceStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//PresenceStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="presence"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="presenceunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="MandatoryStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//MandatoryStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="mandatory"/>
+      <elements xsi:type="xtext:Assignment" feature="boolarg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="mandatoryunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ConfigStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ConfigStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="config"/>
+      <elements xsi:type="xtext:Assignment" feature="boolarg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="configunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="FractionDigitsStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//FractionDigitsStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="fraction-digits"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="fractiondigitsunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="IfFeatureStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//IfFeatureStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="if-feature"/>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Assignment" feature="pref" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="ident" operator="=">
+        <terminal xsi:type="xtext:CrossReference">
+          <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//FeatureStatement"/>
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+        </terminal>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="iffeatureunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="BaseStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//BaseStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="base"/>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Assignment" feature="pref" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="ident" operator="=">
+        <terminal xsi:type="xtext:CrossReference">
+          <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//IdentityStatement"/>
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+        </terminal>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="baseunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="YinElementStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//YinElementStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="yin-element"/>
+      <elements xsi:type="xtext:Assignment" feature="boolarg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="yinelementunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="MinElementsStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//MinElementsStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="min-elements"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="minelementsunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="MaxElementsStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//MaxElementsStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="max-elements"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="maxelementsunknownstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="UnknownStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//UnknownStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Assignment" feature="pref" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value=":"/>
+      <elements xsi:type="xtext:Assignment" feature="namestat" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="argument" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="unknownsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.36"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="UnknownSubstatements">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//UnknownSubstatements"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Assignment" feature="pref" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="namestat" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="argument" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="unknownsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.36"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RangeStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RangeStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="range"/>
+      <elements xsi:type="xtext:Assignment" feature="range" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="rangesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.41"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="PatternStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//PatternStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="pattern"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="patternsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.41"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="LengthStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//LengthStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="length"/>
+      <elements xsi:type="xtext:Assignment" feature="length" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="lengthsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.41"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="MustStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//MustStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="must"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="mustsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.41"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="MultipleSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//MultipleSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.17"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.18"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RpcStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RpcStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="rpc"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="*" feature="rpcsubstatements"
+          operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.43"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RpcSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RpcSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.44"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.46"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="InputStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//InputStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="input"/>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="+" feature="inputsubstatements"
+          operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.45"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="InputSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//InputSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="OutputStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//OutputStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="output"/>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="+" feature="outputsubstatements"
+          operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.47"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="OutputSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//OutputSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="NotificationStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//NotificationStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="notification"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="notificationsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.49"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="NotificationSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//NotificationSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ContainerStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ContainerStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="container"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="containersubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.51"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ContainerSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ContainerSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.26"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ListStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ListStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="list"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="listsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.53"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ListSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ListSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.24"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.23"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.33"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.34"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.25"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="GroupingStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//GroupingStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="grouping"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="groupingsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.55"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="GroupingSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//GroupingSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.87"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.54"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="LeafStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//LeafStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="leaf"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="leafsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.57"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="LeafSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//LeafSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.89"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.19"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.27"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="LeafListStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//LeafListStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="leaf-list"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="leaflistsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.59"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="LeafListSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//LeafListSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.89"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.19"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.33"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.34"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.25"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ChoiceStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ChoiceStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="choice"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="choicesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.61"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ChoiceSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ChoiceSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.27"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.62"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.50"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.56"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.58"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.52"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.64"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="CaseStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//CaseStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="case"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="casesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.63"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="CaseSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//CaseSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="AnyxmlStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//AnyxmlStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="any-xml"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="anyxmlsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.65"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="AnyxmlSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//AnyxmlSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.27"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="UsesStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//UsesStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="uses"/>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Assignment" feature="pre" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:CrossReference">
+          <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//GroupingStatement"/>
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+        </terminal>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="usessubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.67"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="UsesSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//UsesSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.71"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.68"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="AugmentUsesStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//AugmentUsesStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="augment"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="augmentsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.70"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="AugmentStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//AugmentStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="augment"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="augmentsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.70"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="AugmentSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//AugmentSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.99"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.62"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RefineStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RefineStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="refine"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="refinesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.72"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RefineSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RefineSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.26"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.27"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.33"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.34"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DeviationStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DeviationStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="deviation"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="deviationsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.74"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DeviationSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DeviationSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.75"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DeviateStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DeviateStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="deviate"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="deviatesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.76"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="DeviateSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//DeviateSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.23"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.40"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.19"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.28"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.27"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.33"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.34"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ExtensionStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ExtensionStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="extension"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="extensionsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.78"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ExtensionSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ExtensionSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.79"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ArgumentStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ArgumentStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="argument"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="argumentsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.80"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ArgumentSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ArgumentSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.32"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="IdentityStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//IdentityStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="identity"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="identitysubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.82"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="IdentitySubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//IdentitySubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.31"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="FeatureStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//FeatureStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="feature"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="featuresubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.84"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="FeatureSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//FeatureSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.30"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="BelongsToStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//BelongsToStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="belongs-to"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="*" feature="belongstosubstatement"
+          operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.86"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="BelongsToSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//BelongsToSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.12"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="TypedefStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//TypedefStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="typedef"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Assignment" cardinality="*" feature="typedefsubstatemnet"
+          operator="+=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.88"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="TypedefSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//TypedefSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.89"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.19"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="TypeStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//TypeStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="type"/>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="#//@rules.103"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Assignment" feature="pre" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+            </elements>
+            <elements xsi:type="xtext:Keyword" value=":"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="importtype" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//TypedefStatement"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+            </terminal>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="typesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.90"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="TypeSubStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//TypeSubStatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.91"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.29"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.20"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.31"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.93"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.39"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.14"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.38"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.37"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.13"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.89"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="BitStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//BitStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="bit"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="bitsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.92"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="BitSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//BitSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.15"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EnumStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//EnumStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="enum"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="enumsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.94"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EnumSubstatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//EnumSubstatement"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.21"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.16"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ImportStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ImportStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="import"/>
+      <elements xsi:type="xtext:Assignment" feature="importURI" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="importsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.96"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="ImportSubstatements">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//ImportSubstatements"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.12"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.22"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="IncludeStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//IncludeStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="include"/>
+      <elements xsi:type="xtext:Assignment" feature="importURI" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="includesubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.98"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="IncludeSubstatements">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//IncludeSubstatements"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.22"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="WhenStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//WhenStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="when"/>
+      <elements xsi:type="xtext:Assignment" feature="arg" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="whensubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.100"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="WhenSubstatements">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//WhenSubstatements"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RevisionStatement">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RevisionStatement"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="revision"/>
+      <elements xsi:type="xtext:Assignment" feature="date" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.105"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="revisionsubstatements"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.102"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="RevisionSubstatements">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//RevisionSubstatements"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.9"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.35"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="BuiltInType">
+    <type metamodel="#//@metamodelDeclarations.0" classifier="ecore:EClass http://www.xtext.org/editor/yang/Yang#//BuiltInType"/>
+    <alternatives xsi:type="xtext:Assignment" feature="btype" operator="=">
+      <terminal xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value="binary"/>
+        <elements xsi:type="xtext:Keyword" value="bits"/>
+        <elements xsi:type="xtext:Keyword" value="boolean"/>
+        <elements xsi:type="xtext:Keyword" value="decimal64"/>
+        <elements xsi:type="xtext:Keyword" value="empty"/>
+        <elements xsi:type="xtext:Keyword" value="enumeration"/>
+        <elements xsi:type="xtext:Keyword" value="identityref"/>
+        <elements xsi:type="xtext:Keyword" value="instance-identifier"/>
+        <elements xsi:type="xtext:Keyword" value="int8"/>
+        <elements xsi:type="xtext:Keyword" value="int16"/>
+        <elements xsi:type="xtext:Keyword" value="int32"/>
+        <elements xsi:type="xtext:Keyword" value="int64"/>
+        <elements xsi:type="xtext:Keyword" value="leafref"/>
+        <elements xsi:type="xtext:Keyword" value="string"/>
+        <elements xsi:type="xtext:Keyword" value="uint8"/>
+        <elements xsi:type="xtext:Keyword" value="uint16"/>
+        <elements xsi:type="xtext:Keyword" value="uint32"/>
+        <elements xsi:type="xtext:Keyword" value="uint64"/>
+        <elements xsi:type="xtext:Keyword" value="union"/>
+      </terminal>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="CUSTOMSTRING">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.107"/>
+      <elements xsi:type="xtext:Group" cardinality="*">
+        <elements xsi:type="xtext:Keyword" value="+"/>
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.107"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="STRINGARG">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.104"/>
+      <elements xsi:type="xtext:Keyword" value="default"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="STRINGARG2">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+      <elements xsi:type="xtext:Keyword" value=":"/>
+      <elements xsi:type="xtext:RuleCall" rule="#//@rules.108"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="STRING">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="&quot;"/>
+        <elements xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="&quot;"/>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="'"/>
+        <elements xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="'"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="ID">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Alternatives" cardinality="+">
+      <elements xsi:type="xtext:CharacterRange">
+        <left value="a"/>
+        <right value="z"/>
+      </elements>
+      <elements xsi:type="xtext:CharacterRange">
+        <left value="A"/>
+        <right value="Z"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="_"/>
+      <elements xsi:type="xtext:Keyword" value="-"/>
+      <elements xsi:type="xtext:Keyword" value="."/>
+      <elements xsi:type="xtext:CharacterRange">
+        <left value="0"/>
+        <right value="9"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="/*"/>
+      <elements xsi:type="xtext:UntilToken">
+        <terminal xsi:type="xtext:Keyword" value="*/"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="SL_COMMENT">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" value="//"/>
+      <elements xsi:type="xtext:NegatedToken" cardinality="*">
+        <terminal xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+          <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+        </terminal>
+      </elements>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="WS">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Alternatives" cardinality="+">
+      <elements xsi:type="xtext:Keyword" value=" "/>
+      <elements xsi:type="xtext:Keyword" value="&#x9;"/>
+      <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+      <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+    </alternatives>
+  </rules>
+</xtext:Grammar>

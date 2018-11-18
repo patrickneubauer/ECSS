@@ -1,0 +1,720 @@
+--------------------SimpleCarModel.bgf :: justOneChain()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: abstractSyntax()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsDisjunction()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: modifiers()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: mixedCaseLax()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: justSLStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketSLStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: fakeSL()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: abstractNormalForm()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsFailure()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bottom()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: mixedCase()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsEpsilon()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: singleton()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+Wheel ::= "Wheel" ID "{" "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: keywords()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsSLStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: exprLowestLayer()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: exprPrefixLayer()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: words()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: yaccPlusLeft()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: chomskyNormalForm()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: keyword()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsBoolean()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracket()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketOptional()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: zigzag()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: fakeSLPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketFakeSLStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: camelCase()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+Wheel ::= "Wheel" ID "{" "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: justPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: distinguished()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: operator()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: horizontal()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: root()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: yaccStarRight()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: justEmpty()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: literalSimple()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: yaccStarLeft()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: fakeSLStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: elementAccess()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: chainOrTerminal()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsSequence()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+Wheel ::= "Wheel" ID "{" "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: justSLPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsOptional()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: containsInteger()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: preterminal()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: justChains()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: justStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsSelector()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: justFailure()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: greibachNormalForm()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: literalNumeric()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: leaf()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: range()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: simpleStatement()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: camelCaseLax()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+Wheel ::= "Wheel" ID "{" "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketSLPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: multiroot()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketStar()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: tokens()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: disallowed()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: yaccPlusRight()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: constructors()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: pureSequence()--------------------
+Wheel ::= "Wheel" ID "{" "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: delimited()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: vertical()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: exprInfixLayer()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: fakeOptional()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: reflexiveChain()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: top()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+==========================================================
+--------------------SimpleCarModel.bgf :: containsLabel()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: literalFirstRest()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: miltiwordLax()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketSelf()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: upperCase()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: containsSLPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: lowerCaseLax()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: chainsAndTerminals()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: lowerCase()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: exprPostfixLayer()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: upperCaseLax()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: containsStar()--------------------
+Car ::= "Car" ID "{" "next" ID? "numWheels" integer()? "wheel" Wheel* "}" ;
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: containsString()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: bracketFakeSLPlus()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: miltiword()--------------------
+ID ::= ("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | "_" | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"))* ;
+==========================================================
+--------------------SimpleCarModel.bgf :: operators()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: containsUniversal()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: operatorsMixed()--------------------
+==========================================================
+--------------------SimpleCarModel.bgf :: justOptional()--------------------
+==========================================================
+--------------------WML_6.bgf :: justOneChain()--------------------
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLLuaCode ::= LUA_CODE ;
+==========================================================
+--------------------WML_6.bgf :: abstractSyntax()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLLuaCode ::= LUA_CODE ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WMLRoot ::= WMLRootExpression* ;
+ANY_OTHER ::= α ;
+==========================================================
+--------------------WML_6.bgf :: containsDisjunction()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WS ::= (" " | "\u0009")+ ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: modifiers()--------------------
+==========================================================
+--------------------WML_6.bgf :: mixedCaseLax()--------------------
+==========================================================
+--------------------WML_6.bgf :: justSLStar()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracketSLStar()--------------------
+==========================================================
+--------------------WML_6.bgf :: fakeSL()--------------------
+==========================================================
+--------------------WML_6.bgf :: abstractNormalForm()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLLuaCode ::= LUA_CODE ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WMLRoot ::= WMLRootExpression* ;
+ANY_OTHER ::= α ;
+==========================================================
+--------------------WML_6.bgf :: containsFailure()--------------------
+==========================================================
+--------------------WML_6.bgf :: bottom()--------------------
+==========================================================
+--------------------WML_6.bgf :: mixedCase()--------------------
+==========================================================
+--------------------WML_6.bgf :: containsEpsilon()--------------------
+==========================================================
+--------------------WML_6.bgf :: singleton()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLTextdomain ::= TEXTDOMAIN ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLLuaCode ::= LUA_CODE ;
+WS ::= (" " | "\u0009")+ ;
+ANY_OTHER ::= α ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLRoot ::= WMLRootExpression* ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+==========================================================
+--------------------WML_6.bgf :: keywords()--------------------
+==========================================================
+--------------------WML_6.bgf :: containsSLStar()--------------------
+==========================================================
+--------------------WML_6.bgf :: exprLowestLayer()--------------------
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLLuaCode ::= LUA_CODE ;
+==========================================================
+--------------------WML_6.bgf :: exprPrefixLayer()--------------------
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLLuaCode ::= LUA_CODE ;
+==========================================================
+--------------------WML_6.bgf :: words()--------------------
+==========================================================
+--------------------WML_6.bgf :: yaccPlusLeft()--------------------
+==========================================================
+--------------------WML_6.bgf :: chomskyNormalForm()--------------------
+==========================================================
+--------------------WML_6.bgf :: keyword()--------------------
+==========================================================
+--------------------WML_6.bgf :: containsBoolean()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracket()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracketOptional()--------------------
+==========================================================
+--------------------WML_6.bgf :: zigzag()--------------------
+==========================================================
+--------------------WML_6.bgf :: fakeSLPlus()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracketFakeSLStar()--------------------
+==========================================================
+--------------------WML_6.bgf :: camelCase()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLLuaCode ::= LUA_CODE ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WS ::= (" " | "\u0009")+ ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLRoot ::= WMLRootExpression* ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: justPlus()--------------------
+==========================================================
+--------------------WML_6.bgf :: distinguished()--------------------
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WS ::= (" " | "\u0009")+ ;
+==========================================================
+--------------------WML_6.bgf :: operator()--------------------
+==========================================================
+--------------------WML_6.bgf :: horizontal()--------------------
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: root()--------------------
+WMLRoot ::= WMLRootExpression* ;
+==========================================================
+--------------------WML_6.bgf :: yaccStarRight()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracketPlus()--------------------
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+==========================================================
+--------------------WML_6.bgf :: justEmpty()--------------------
+==========================================================
+--------------------WML_6.bgf :: literalSimple()--------------------
+==========================================================
+--------------------WML_6.bgf :: yaccStarLeft()--------------------
+==========================================================
+--------------------WML_6.bgf :: fakeSLStar()--------------------
+==========================================================
+--------------------WML_6.bgf :: elementAccess()--------------------
+==========================================================
+--------------------WML_6.bgf :: chainOrTerminal()--------------------
+==========================================================
+--------------------WML_6.bgf :: containsSequence()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+==========================================================
+--------------------WML_6.bgf :: justSLPlus()--------------------
+==========================================================
+--------------------WML_6.bgf :: containsOptional()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+==========================================================
+--------------------WML_6.bgf :: containsInteger()--------------------
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: preterminal()--------------------
+EOL ::= "\u000d"? "\u000a" ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+WS ::= (" " | "\u0009")+ ;
+==========================================================
+--------------------WML_6.bgf :: justChains()--------------------
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+==========================================================
+--------------------WML_6.bgf :: justStar()--------------------
+WMLRoot ::= WMLRootExpression* ;
+==========================================================
+--------------------WML_6.bgf :: containsSelector()--------------------
+==========================================================
+--------------------WML_6.bgf :: justFailure()--------------------
+==========================================================
+--------------------WML_6.bgf :: greibachNormalForm()--------------------
+==========================================================
+--------------------WML_6.bgf :: literalNumeric()--------------------
+==========================================================
+--------------------WML_6.bgf :: leaf()--------------------
+EOL ::= "\u000d"? "\u000a" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WS ::= (" " | "\u0009")+ ;
+ANY_OTHER ::= α ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+==========================================================
+--------------------WML_6.bgf :: range()--------------------
+==========================================================
+--------------------WML_6.bgf :: simpleStatement()--------------------
+==========================================================
+--------------------WML_6.bgf :: camelCaseLax()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLLuaCode ::= LUA_CODE ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WS ::= (" " | "\u0009")+ ;
+ANY_OTHER ::= α ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLRoot ::= WMLRootExpression* ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: bracketSLPlus()--------------------
+==========================================================
+--------------------WML_6.bgf :: multiroot()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracketStar()--------------------
+==========================================================
+--------------------WML_6.bgf :: tokens()--------------------
+==========================================================
+--------------------WML_6.bgf :: disallowed()--------------------
+==========================================================
+--------------------WML_6.bgf :: yaccPlusRight()--------------------
+==========================================================
+--------------------WML_6.bgf :: containsPlus()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+WS ::= (" " | "\u0009")+ ;
+==========================================================
+--------------------WML_6.bgf :: constructors()--------------------
+==========================================================
+--------------------WML_6.bgf :: pureSequence()--------------------
+==========================================================
+--------------------WML_6.bgf :: delimited()--------------------
+==========================================================
+--------------------WML_6.bgf :: vertical()--------------------
+==========================================================
+--------------------WML_6.bgf :: exprInfixLayer()--------------------
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLLuaCode ::= LUA_CODE ;
+==========================================================
+--------------------WML_6.bgf :: fakeOptional()--------------------
+==========================================================
+--------------------WML_6.bgf :: reflexiveChain()--------------------
+==========================================================
+--------------------WML_6.bgf :: top()--------------------
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WS ::= (" " | "\u0009")+ ;
+==========================================================
+--------------------WML_6.bgf :: containsLabel()--------------------
+==========================================================
+--------------------WML_6.bgf :: literalFirstRest()--------------------
+==========================================================
+--------------------WML_6.bgf :: miltiwordLax()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLLuaCode ::= LUA_CODE ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WS ::= (" " | "\u0009")+ ;
+ANY_OTHER ::= α ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLRoot ::= WMLRootExpression* ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: bracketSelf()--------------------
+==========================================================
+--------------------WML_6.bgf :: upperCase()--------------------
+EOL ::= "\u000d"? "\u000a" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WS ::= (" " | "\u0009")+ ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+==========================================================
+--------------------WML_6.bgf :: containsSLPlus()--------------------
+==========================================================
+--------------------WML_6.bgf :: lowerCaseLax()--------------------
+==========================================================
+--------------------WML_6.bgf :: chainsAndTerminals()--------------------
+==========================================================
+--------------------WML_6.bgf :: lowerCase()--------------------
+==========================================================
+--------------------WML_6.bgf :: exprPostfixLayer()--------------------
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLLuaCode ::= LUA_CODE ;
+==========================================================
+--------------------WML_6.bgf :: upperCaseLax()--------------------
+EOL ::= "\u000d"? "\u000a" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WS ::= (" " | "\u0009")+ ;
+ANY_OTHER ::= α ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+==========================================================
+--------------------WML_6.bgf :: containsStar()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+WMLRoot ::= WMLRootExpression* ;
+==========================================================
+--------------------WML_6.bgf :: containsString()--------------------
+==========================================================
+--------------------WML_6.bgf :: bracketFakeSLPlus()--------------------
+==========================================================
+--------------------WML_6.bgf :: miltiword()--------------------
+WMLPreprocIF ::= IFDEF | IFNDEF | IFHAVE | IFNHAVE WMLValuedExpression* (ELSE WMLValuedExpression+)? ENDIF ;
+EOL ::= "\u000d"? "\u000a" ;
+WMLTag ::= "[" "+"? ID "]" WMLExpression* "[/" ID "]" ;
+IFHAVE ::= "#ifhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+WMLTextdomain ::= TEXTDOMAIN ;
+WMLKey ::= ID "=" WMLKeyValue* (EOL? "+" EOL? WMLKeyValue+)* EOL | SL_COMMENT ;
+ENDDEF ::= "#enddef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLGrammarElement ::= WMLRoot | WMLValuedExpression | WMLKeyValue | WMLMacroCallParameter ;
+WMLExpression ::= WMLRootExpression | WMLKey ;
+WMLLuaCode ::= LUA_CODE ;
+WMLRootExpression ::= WMLTag | WMLMacroCall | WMLMacroDefine | WMLTextdomain | WMLPreprocIF ;
+WMLMacroParameter ::= WMLValue | MacroTokens ;
+WMLMacroCallParameter ::= WMLMacroParameter | WMLMacroCall ;
+WS ::= (" " | "\u0009")+ ;
+ANY_OTHER ::= α ;
+WMLValuedExpression ::= WMLExpression | WMLValue ;
+WMLArrayCall ::= "[" WMLValue+ "]" ;
+WMLKeyValue ::= WMLValue | WMLMacroCall | WMLLuaCode | WMLArrayCall ;
+IFDEF ::= "#ifdef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+TEXTDOMAIN ::= "#textdomain" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLMacroDefine ::= DEFINE WMLValuedExpression* ENDDEF ;
+WMLMacroCall ::= "{" "./"? "~"? ID WMLMacroCallParameter* "}" ;
+LUA_CODE ::= "<<" ¬">>" ;
+IFNDEF ::= "#ifndef" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLRoot ::= WMLRootExpression* ;
+ENDIF ::= "#endif" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ELSE ::= "#else" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+SL_COMMENT ::= "#" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+IFNHAVE ::= "#ifnhave" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+ID ::= (("a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y") | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y") | ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8") | "_" | "-" | ",")+ ;
+DEFINE ::= "#define" ¬("\u000a" | "\u000d") ("\u000d"? "\u000a")? ;
+WMLValue ::= ID | integer() | "_" | "~" | "." | "./" | "$" | "/" | "(" | ")" | ANY_OTHER ;
+==========================================================
+--------------------WML_6.bgf :: operators()--------------------
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+==========================================================
+--------------------WML_6.bgf :: containsUniversal()--------------------
+ANY_OTHER ::= α ;
+==========================================================
+--------------------WML_6.bgf :: operatorsMixed()--------------------
+MacroTokens ::= "=" | "[" | "]" | "+" | "[/" ;
+==========================================================
+--------------------WML_6.bgf :: justOptional()--------------------
+==========================================================

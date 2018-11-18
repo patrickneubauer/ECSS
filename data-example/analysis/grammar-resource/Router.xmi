@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext"
+    name="router.Router">
+  <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" ePackage="http://www.eclipse.org/2008/Xtext#/"
+      alias="xtext"/>
+  <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" ePackage="http://www.eclipse.org/emf/2002/Ecore#/"
+      alias="ep"/>
+  <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="myEcore"/>
+  <rules xsi:type="xtext:ParserRule" name="CopperCable">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="CopperCable"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="source"/>
+          <elements xsi:type="xtext:Assignment" feature="source" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="speed"/>
+          <elements xsi:type="xtext:Assignment" feature="speed" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.13"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="target"/>
+          <elements xsi:type="xtext:Assignment" feature="target" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Router">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="Router"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="incoming"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="incoming"
+              operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="maxSpeed"/>
+          <elements xsi:type="xtext:Assignment" feature="maxSpeed" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.13"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="outgoing"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="outgoing"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.8"/>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="GlassFiberCable">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="GlassFiberCable"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="source"/>
+          <elements xsi:type="xtext:Assignment" feature="source" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="speed"/>
+          <elements xsi:type="xtext:Assignment" feature="speed" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.13"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="target"/>
+          <elements xsi:type="xtext:Assignment" feature="target" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Device">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.10"/>
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.6"/>
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.1"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Agent">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.7"/>
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.5"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Consumer">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="Consumer"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="rightcomp"/>
+          <elements xsi:type="xtext:Assignment" feature="rightcomp" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="speed"/>
+          <elements xsi:type="xtext:Assignment" feature="speed" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.13"/>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Computer">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="Computer"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="consumer"/>
+          <elements xsi:type="xtext:Assignment" feature="consumer" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="incoming"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="incoming"
+              operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="outgoing"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="outgoing"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.8"/>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Provider">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="Provider"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="rightserv"/>
+          <elements xsi:type="xtext:Assignment" feature="rightserv" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="speed"/>
+          <elements xsi:type="xtext:Assignment" feature="speed" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.13"/>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Cable">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.0"/>
+        <elements xsi:type="xtext:RuleCall" rule="#//@rules.2"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Container">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="Container"/>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="agents"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="agents" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.4"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="devices"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="devices"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.3"/>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="Server">
+    <type metamodel="#//@metamodelDeclarations.2"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="#//@metamodelDeclarations.2"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="Server"/>
+      <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="{"/>
+      <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="incoming"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="incoming"
+              operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="outgoing"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="outgoing"
+              operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="#//@rules.8"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="provider"/>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider"
+              operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="#//@metamodelDeclarations.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="#//@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="}"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="ID">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="a"/>
+          <right value="z"/>
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="A"/>
+          <right value="Z"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="_"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives" cardinality="*">
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="a"/>
+          <right value="z"/>
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="A"/>
+          <right value="Z"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="_"/>
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="0"/>
+          <right value="9"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="INT">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:CharacterRange">
+      <left value="0"/>
+      <right value="9"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="STRING">
+    <type metamodel="#//@metamodelDeclarations.1" classifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Keyword" cardinality="?" value="^"/>
+      <elements xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="a"/>
+          <right value="z"/>
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="A"/>
+          <right value="Z"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="_"/>
+      </elements>
+      <elements xsi:type="xtext:Alternatives" cardinality="*">
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="a"/>
+          <right value="z"/>
+        </elements>
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="A"/>
+          <right value="Z"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="_"/>
+        <elements xsi:type="xtext:CharacterRange">
+          <left value="0"/>
+          <right value="9"/>
+        </elements>
+      </elements>
+    </alternatives>
+  </rules>
+</xtext:Grammar>

@@ -8,6 +8,24 @@ SpaceTransportationService:
 	launchSites+=LaunchSite)*)? (engineTypes+=EngineType ("," engineTypes+=EngineType)*)? (spacecrafts+=Spacecraft (","
 	spacecrafts+=Spacecraft)*)? "}";
 
+Spacecraft:
+	{Spacecraft} "Spacecraft" name=super::ID? "{" (stages+=Stage ("," stages+=Stage)*)? (launchSites+=[LaunchSite] (","
+	launchSites+=[LaunchSite])*)? (functions+=Function ("," functions+=Function)*)? manufacturer=ESTRING?
+	countryOfOrigin=ESTRING? relaunchCostInMioUSD=EINT (physicalProperties+=PhysicalProperty (","
+	physicalProperties+=PhysicalProperty)*)? "}";
+
+PhysicalProperty:
+	{PhysicalProperty} "PhysicalProperty" "{" type=PhysicalPropertyType unit=ESTRING? value=EDOUBLEDT "}";
+
+terminal ESTRING:
+	"\"" ("\\" . | !("\\" | "\""))* "\"" | "\'" ("\\" . | !("\\" | "\'"))* "\'";
+
+EDOUBLEDT returns ecore::EDouble:
+	EINT | EDOUBLE;
+
+enum PhysicalPropertyType:
+	LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS;
+
 LaunchSite:
 	{LaunchSite} "LaunchSite" name=super::ID? "{" locationLatitude=EDOUBLEDT locationLongitude=EDOUBLEDT operator=ESTRING?
 	numberOfLaunchpads=EINT (physicalProperties+=PhysicalProperty ("," physicalProperties+=PhysicalProperty)*)?
@@ -19,33 +37,15 @@ terminal EBOOLEAN returns ecore::EBoolean:
 terminal EINT returns ecore::EInt:
 	"0".."9"+;
 
-PhysicalProperty:
-	{PhysicalProperty} "PhysicalProperty" "{" type=PhysicalPropertyType unit=ESTRING? value=EDOUBLEDT "}";
-
-terminal ESTRING:
-	"\"" ("\\" . | !("\\" | "\""))* "\"" | "\'" ("\\" . | !("\\" | "\'"))* "\'";
-
-enum PhysicalPropertyType:
-	LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS;
-
-EDOUBLEDT returns ecore::EDouble:
-	EINT | EDOUBLE;
-
-EngineType:
-	{EngineType} "EngineType" name=super::ID? "{" fuelKind=ESTRING "}";
-
-Spacecraft:
-	{Spacecraft} "Spacecraft" name=super::ID? "{" (stages+=Stage ("," stages+=Stage)*)? (launchSites+=[LaunchSite] (","
-	launchSites+=[LaunchSite])*)? (functions+=Function ("," functions+=Function)*)? manufacturer=ESTRING?
-	countryOfOrigin=ESTRING? relaunchCostInMioUSD=EINT (physicalProperties+=PhysicalProperty (","
-	physicalProperties+=PhysicalProperty)*)? "}";
+enum Function:
+	MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER;
 
 Stage:
 	{Stage} "Stage" name=super::ID? "{" engineType=[EngineType] engineAmount=EINT (physicalProperties+=PhysicalProperty
 	("," physicalProperties+=PhysicalProperty)*)? "}";
 
-enum Function:
-	MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER;
+EngineType:
+	{EngineType} "EngineType" name=super::ID? "{" fuelKind=ESTRING "}";
 
 terminal EDOUBLE returns ecore::EDouble:
 	"0".."9"+ ("." "0".."9"+)?;

@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtext.XtextStandaloneSetup;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -21,16 +22,14 @@ import org.eclipse.xtext.xtext.GrammarResource;
 import com.google.common.io.Files;
 import com.google.inject.Injector;
 
-import uk.ac.york.cs.ecss.analysis.grammaranalysis.SimpleResourceHandler;
-import uk.ac.york.cs.ecss.analysis.grammaranalysis.XtextToDefaultEcoreTransformer;
-import uk.ac.york.cs.ecss.basicdistance.EcoreNameRelationDistanceManager;
 import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
-import uk.ac.york.cs.ecss.ecssal.EcssalPackage;
-import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
 import uk.ac.york.cs.ecss.language.EcssLanguageStandaloneSetup;
-import uk.ac.york.cs.ecss.loader.EcoreResourceLoader;
-import uk.ac.york.cs.ecss.optimize.ResourceResolver;
+import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
+import uk.ac.york.cs.ecss.migrated.EcoreResourceLoader;
+import uk.ac.york.cs.ecss.migrated.ResourceResolver;
+import uk.ac.york.cs.ecss.migrated.SimpleResourceHandler;
+import uk.ac.york.cs.ecss.migrated.XtextToDefaultEcoreTransformer;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 public class MainLanguageResourcesGenerator implements LanguageResourcesGenerator {
@@ -106,30 +105,9 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	protected XtextResourceSet xtextResourceSet;
 	
 	protected Resource analysisModelResource;
-
-	/**
-	 * Initialize {@link MainLanguageResourcesGenerator} with use of analysis model (enables enhanced optimization).
-	 * 
-	 * @param reportFile file where to report the console output to
-	 * @param analysisModelFileLocation analysis model (conforming to ecssal.ecore) file location
-	 * @param outputPath location where to place generated resources
-	 * @param languageProjectBaseName example: me.ecss.language
-	 * @param languageName example: me.ecss.language.MyDsl
-	 * @param languageFileExtensions example: mydsl
-	 */
-	public MainLanguageResourcesGenerator(File reportFile, Path outputPath, String analysisModelFileLocation, String languageProjectBaseName, String languageName,
-			List<String> languageFileExtensions) {
-		this.reportFile = reportFile;
-		this.outputPath = outputPath;
-		this.languageProjectBaseName = languageProjectBaseName;
-		this.languageName = languageName;
-		this.languageFileExtensions = languageFileExtensions;		
-		this.analysisModelFileLocation = analysisModelFileLocation;
-		init();
-	}
 	
 	/**
-	 * Initialize {@link MainLanguageResourcesGenerator} without use of analysis model (disables enhanced optimization).
+	 * Initialize {@link MainLanguageResourcesGenerator} 
 	 * 
 	 * @param reportFile file where to report the console output to
 	 * @param outputPath location where to place generated resources
@@ -139,8 +117,12 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	 */
 	public MainLanguageResourcesGenerator(File reportFile, Path outputPath, String languageProjectBaseName, String languageName,
 			List<String> languageFileExtensions) {
-		this(reportFile, outputPath, AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING, languageProjectBaseName, languageName, languageFileExtensions);
-		
+		this.reportFile = reportFile;
+		this.outputPath = outputPath;
+		this.languageProjectBaseName = languageProjectBaseName;
+		this.languageName = languageName;
+		this.languageFileExtensions = languageFileExtensions;		
+		init();
 	}
 
 	@Deprecated
@@ -225,7 +207,7 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	public Resource generateMetamodel(File grammarFile) {
 		File targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(grammarFile.toString()) + "." + METAMODEL_FILE_EXTENSION);
 
-		SimpleResourceHandler transformer = new XtextToDefaultEcoreTransformer(reportFile.toString(), analysisModelFileLocation);
+		SimpleResourceHandler transformer = new XtextToDefaultEcoreTransformer(reportFile.toString());
 
         transformer.handle( grammarFile, targetFile );
         Resource metamodelResource = emfResourceSet.createResource(URI.createFileURI( targetFile.toString()));
@@ -260,10 +242,9 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	protected void init() {
 		logger.info("Initializing " + this.getClass().getName() + " ...");
 
-		// emf xmi and ecssal
+		// emf xmi
 		emfResourceSet = new ResourceSetImpl();
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		EPackage.Registry.INSTANCE.put(EcssalPackage.eNS_URI, EcssalPackage.eINSTANCE);
 
 		// xtext
 		Injector xtextInjector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -273,17 +254,6 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		Injector ecssInjector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
 		ecssResourceSet = ecssInjector.getInstance(XtextResourceSet.class);
 		
-		if ( !analysisModelFileLocation.equals(AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING) ) {
-			analysisModelResource = emfResourceSet.getResource(URI.createFileURI(analysisModelFileLocation), true);
-	
-		    try {
-				analysisModelResource.load(null);
-		    } catch (IOException e) {
-				logger.error("Failed to load model resource from " + analysisModelFileLocation);
-				logger.error(e.getMessage());
-			}
-		}
-
 		logger.info("... finished initializing " + this.getClass().getName());
 		
 	}

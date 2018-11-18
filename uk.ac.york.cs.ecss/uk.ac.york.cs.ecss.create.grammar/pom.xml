@@ -40,29 +40,7 @@
 			<version>v0.0.1-alpha</version>
 		</dependency>
 
-		<!-- PROVIDED BY LIBS FOLDER -->
-		<dependency>
-			<groupId>org.eclipse.emf.compare</groupId>
-			<artifactId>emf.compare</artifactId>
-			<version>3.3.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare.source_3.3.1.201608311750.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.emf.compare</groupId>
-			<artifactId>emf.compare</artifactId>
-			<version>3.3.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare_3.3.1.201608311750.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.olduvai.treejuxtaposer</groupId>
-			<artifactId>net.sourceforge.olduvai.treejuxtaposer</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/net.sourceforge.olduvai.treejuxtaposer.jar</systemPath>
-		</dependency>
-
+		
 		<!-- EXTERNAL DEPENDENCIES -->
 		<!-- ... ADD HERE ... -->
 

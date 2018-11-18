@@ -1,5 +1,7 @@
 package uk.ac.york.cs.ecss.api;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +22,6 @@ import org.junit.runners.Parameterized.Parameters;
 import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
-import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
 
 @Ignore("to be executed manually -- takes too long on Travis and thus causing erroneous build")
 @RunWith(Parameterized.class)
@@ -63,7 +64,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
 
 		//File analysisModelFile = new File(INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION);
-		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING,
+		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), 
 				languageProjectBaseName, "", languageFileExtensions);
 	}
 
@@ -192,6 +193,16 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 			logger.error(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void _5_testGenerateLanguageProjectAndRunWorkflow() {
+		try {
+			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+			projectCreator.runWorkflow();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
 
 	@Test
 	@Ignore("temporarily")
@@ -201,7 +212,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -229,7 +240,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator
 					.generateEnhancedLanguageProject(outputPath.toFile());
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

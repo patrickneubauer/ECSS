@@ -20,7 +20,6 @@ import uk.ac.york.cs.ecss.api.LanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
-import uk.ac.york.cs.ecss.helper.AnalysisModelHelper;
 
 @Ignore("to be executed manually")
 @RunWith(Parameterized.class)
@@ -70,7 +69,7 @@ public class MainLanguageResourceGeneratorPreEvaluationTest extends BaseLanguage
 		languageFileExtensions.add("mydsl");
 
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
-		generator = new MainLanguageResourcesGenerator(reportFile, outputPath, AnalysisModelHelper.UNDEFINED_ANALYSIS_MODEL_LOCATION_PLACEHOLDER_STRING,
+		generator = new MainLanguageResourcesGenerator(reportFile, outputPath,
 				languageProjectBaseName, languageName, languageFileExtensions);
 	}
 	
@@ -82,7 +81,7 @@ public class MainLanguageResourceGeneratorPreEvaluationTest extends BaseLanguage
 	 */
 	@Test
 	@Ignore("to be executed manually")
-	public void testGenerateAndBuildLanguageProject() {
+	public void testGenerateAndBuildAndRunWorkflowLanguageProject() {
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
 			
@@ -92,7 +91,8 @@ public class MainLanguageResourceGeneratorPreEvaluationTest extends BaseLanguage
 
 			projectCreator.replaceGrammar(targetProjectRootLocation, grammarCharSequence);
 			projectCreator.replaceWorkflow(targetProjectRootLocation, workflowCharSequence);
-			projectCreator.build();
+			projectCreator.runWorkflow();
+//			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}

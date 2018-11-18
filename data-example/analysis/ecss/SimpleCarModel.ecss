@@ -1,0 +1,85 @@
+class AnyClass: 
+	(booleanAttribute='')* ##@CLASSNAME (name='')? ##@PAROPEN
+		(otherAttribute='')*
+	##@PARCLOSE
+;
+
+attribute booleanAttribute:
+	(bound=##@ATTRNAME)?
+;
+
+attribute name:
+	(bound=#@ID)
+;
+
+attribute otherAttributeOptional:
+	##@FEATURENAME (bound=#TYPETERMINAL)?
+;
+
+attribute otherAttributeSingle:
+	##@FEATURENAME (bound=#TYPETERMINAL)
+;
+
+attribute otherAttributeMany:
+	##@FEATURENAME (bound=#TYPETERMINAL)+
+;
+
+attribute otherAttributeManyOptional:
+	##@FEATURENAME (bound=#TYPETERMINAL)*
+;
+
+terminal ID:
+	("a" .. "z"|"A" .. "Z"|"_") ("a".."z"|"A".."Z"|"_"|"0".."9")* 
+;
+
+terminal STRING:
+	('^')? ("a" .. "z"|"A" .. "Z"|"_") ("a".."z"|"A".."Z"|"_"|"0".."9")* 
+;
+
+terminal INT:
+	("0".."9")*
+;
+
+
+booleanAttribute {
+	this["(feature().eType.name = 'Boolean' or feature().eType.name = 'boolean') and not feature().many"]: 1.5;
+	this["not (feature().eType.name = 'Boolean' or feature().eType.name = 'boolean')"]: 0.0;
+}
+
+name {
+	this["feature().name <> 'name'"]: 0.0;
+	this["feature().name = 'name'"]: 2.0;
+}
+
+
+
+otherAttributeOptional {
+	this["feature().lowerBound = 0 and not feature().many"]: 1.2;
+}
+
+otherAttributeSingle {
+	this["feature().lowerBound > 0 and not feature().many"]: 1.2;
+}
+
+otherAttributeMany {
+	this["feature().lowerBound > 0 and feature().many"]: 1.2;
+}
+
+otherAttributeManyOptional {
+	this["feature().lowerBound = 0 and feature().many"]: 1.2;
+}
+
+otherAttribute {
+	this:1.1;
+}
+
+* {
+	PAROPEN: "{";
+	PARCLOSE: "}";
+	CLASSNAME: ocl "element().name";
+	FEATURENAME: ocl "feature().name";
+	TYPETERMINAL: "STRING" ;
+	TYPETERMINAL["not feature().oclAsType(ecore::EReference).containment"]: "ID" priority(1.2);
+	TYPETERMINAL["feature().eType.name = 'EInt'"]: "INT"  priority(1.2);
+	
+}

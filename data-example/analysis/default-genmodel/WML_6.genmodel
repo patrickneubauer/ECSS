@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" prefix="Wml" disposableProviderFactory="true" ecorePackage="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#/">
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLRoot">
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLRoot/Expressions"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLGrammarElement"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLTag">
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLTag/plus"/>
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLTag/Expressions"/>
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLTag/endName"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLKey">
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLKey/values"/>
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLKey/eol"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLKeyValue"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroCall">
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroCall/point"/>
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroCall/relative"/>
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroCall/Parameters"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroCallParameter"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLArrayCall">
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLArrayCall/value"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroDefine">
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroDefine/Expressions"/>
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroDefine/endName"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLPreprocIF">
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLPreprocIF/Expressions"/>
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLPreprocIF/Elses"/>
+    <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLPreprocIF/ElseExpressions"/>
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLPreprocIF/endName"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLRootExpression"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLExpression">
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLExpression/name"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLValuedExpression"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLTextdomain"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLLuaCode">
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLLuaCode/value"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroParameter">
+    <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLMacroParameter/value"/>
+  </genClasses>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//WMLValue"/>
+  <genClasses ecoreClass="file:/Users/blizzfire/REPOS/ECSS/ecss-framework/analysis-grammaranalysis/../../data-example/analysis/default-ecore/WML_6.ecore#//MacroTokens"/>
+</genmodel:GenPackage>

@@ -1,0 +1,55 @@
+import "common.ecss";
+
+class AnyClass: 
+    if ["element().name = 'Car'"] then 'ABeautifulCar' else NOTHING endif
+	booleanAttribute='':* ##@CLASSNAME name='':? ##@PAROPEN
+		otherAttribute={this: 0.51;}'':*
+	##@PARCLOSE
+;
+
+attribute booleanAttribute {
+	this["(feature().eType.name = 'Boolean' or feature().eType.name = 'boolean') and not feature().many"]: 0.7;
+	this["not (feature().eType.name = 'Boolean' or feature().eType.name = 'boolean')"]: 0.0;
+}:
+	(bound=##@ATTRNAME)?
+;
+
+attribute name {
+	this["feature().name <> 'name'"]: 0.0;
+	this["feature().name = 'name'"]: 0.8;
+}:
+	(bound=#@ID)
+;
+
+attribute otherAttributeOptional  {
+	this["feature().lowerBound = 0 and not feature().many"]: 0.6;
+}:
+	(##@FEATURENAME bound=#TYPETERMINAL)?
+;
+
+attribute otherAttributeSingle {
+	this["feature().lowerBound > 0 and not feature().many"]: 0.6;
+}:
+	##@FEATURENAME (bound=#TYPETERMINAL)
+;
+
+attribute otherAttributeMany {
+	this["feature().lowerBound > 0 and feature().many"]: 0.6;
+}:
+	##@FEATURENAME (bound=#TYPETERMINAL)+
+;
+
+attribute otherAttributeManyOptional {
+	this["feature().lowerBound = 0 and feature().many"]: 0.6;
+}:
+	##@FEATURENAME (bound=#TYPETERMINAL)*
+;
+
+* {
+	PAROPEN: "[[";
+	PARCLOSE: "]]";
+	TYPETERMINAL: "STRING" ;
+	TYPETERMINAL["not feature().oclAsType(ecore::EReference).containment"]: "ID" priority(1.2);
+	TYPETERMINAL["Set{'EInt','EBigInteger'}->includes(feature().eType.name)"]: "INT"  priority(1.2);
+	
+}

@@ -1,0 +1,23 @@
+terminal ID:
+	("a" .. "z"|"A" .. "Z"|"_") ("a".."z"|"A".."Z"|"_"|"0".."9")* 
+;
+
+terminal STRING:
+	('^')? ("a" .. "z"|"A" .. "Z"|"_") ("a".."z"|"A".."Z"|"_"|"0".."9")* 
+;
+
+terminal INT:
+	("0".."9")*
+;
+
+
+* {
+	PAROPEN: "[[";
+	PARCLOSE: "]]";
+	CLASSNAME: ocl "element().name";
+	FEATURENAME: ocl "feature().name";
+	ESCCLASSNAME: ocl "'\"'+element().name+'\"'";
+	ESCFEATURENAME: ocl "'\"'+feature().name+'\"'";
+	TYPETERMINAL: "STRING" ;
+	TYPETERMINAL["Set{'EInt','EBigInteger'}->includes(feature().eType.name)"]: "INT"  priority(1.2);
+}

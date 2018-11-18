@@ -18,6 +18,11 @@
 		<!-- EXTERNAL DEPENDENCIES -->
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.codegen</artifactId>
+			<version>${emf-codegen-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.codegen.ecore</artifactId>
 			<version>${emf-version}</version>
 		</dependency>
@@ -25,6 +30,12 @@
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 			<version>${emf-version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.6</version>
 		</dependency>
 
 		<!-- required for org.eclipse.emf.codegen.util.ImportManager -->
@@ -46,6 +57,41 @@
 			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/libs/ws4j-1.0.1.jar</systemPath>
+		</dependency>
+		
+		<!-- WEKA machine learning tool -->
+		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>weka-stable</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<!-- Eclipse -->
+		<dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.core.resources</artifactId>
+			<version>${eclipse-core-resources}</version>
+		</dependency>
+		<!-- for distributed analysis processing, see e.g. EMFCompareRelation -->
+		<dependency>
+			<groupId>com.squareup.okhttp</groupId>
+			<artifactId>okhttp-urlconnection</artifactId>
+			<version>2.7.5</version>
+		</dependency>
+		
+		<!-- PROVIDED BY LIBS FOLDER -->
+		<dependency>
+			<groupId>org.eclipse.emf.compare</groupId>
+			<artifactId>emf.compare</artifactId>
+			<version>3.3.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare.source_3.3.1.201608311750.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.compare</groupId>
+			<artifactId>emf.compare</artifactId>
+			<version>3.3.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare_3.3.1.201608311750.jar</systemPath>
 		</dependency>
 
 	</dependencies>

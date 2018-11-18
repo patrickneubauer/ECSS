@@ -22,7 +22,6 @@ public class BaseLanguageResourcesGeneratorTest {
 	protected static final String XTEXT_INPUT_PATH = "/search/";
 	protected static final String OUTPUT_PATH = "/generated/";
 
-	protected static final String ECSSAL_MODEL_FILE_LOCATION = "/analysis/ecssal-analysis-model.xmi";
 	protected static final String REPORT_FILE_LOCATION = "/analysis/language-resources-generator-report.txt";
 	
 	protected static final String METAMODEL_FILE_EXTENSION = "ecore";

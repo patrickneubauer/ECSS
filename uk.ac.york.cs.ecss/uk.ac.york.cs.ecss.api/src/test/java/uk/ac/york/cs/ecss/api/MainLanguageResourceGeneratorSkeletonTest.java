@@ -14,14 +14,14 @@ import uk.ac.york.cs.ecss.api.LanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 
-public class MainLanguageResourcesGeneratorWMLTest extends BaseLanguageResourcesGeneratorTest {
+@Ignore("SKELETON TO CREATE INDIVIDUAL TESTS ONLY")
+public class MainLanguageResourceGeneratorSkeletonTest extends BaseLanguageResourcesGeneratorTest {
 
-	protected static final String INPUT_DATA_FOLDER = "../../data-example";
+	protected static final String INPUT_DATA_FOLDER = "../../data";
 	
-	private static final String UNIQUE_LANGUAGE_ID = "WML_6"; // <== specify unique language name here
+	private static final String UNIQUE_LANGUAGE_ID = "SKELETON"; // <== specify unique language name here
 
-	private static final Path outputPath = new Path(
-			INPUT_DATA_FOLDER + OUTPUT_PATH + Path.SEPARATOR + UNIQUE_LANGUAGE_ID);
+	private static final Path outputPath = new Path(INPUT_DATA_FOLDER + OUTPUT_PATH);
 	private static final String languageName = LANGUAGE_NAME_PREFIX + "." + UNIQUE_LANGUAGE_ID;
 
 	private static LanguageResourcesGenerator generator;
@@ -31,7 +31,7 @@ public class MainLanguageResourcesGeneratorWMLTest extends BaseLanguageResources
 		languageFileExtensions.add("mydsl");
 
 		generator = new MainLanguageResourcesGenerator(new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION), outputPath,
-				INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION, languageProjectBaseName, languageName,
+				languageProjectBaseName, languageName,
 				languageFileExtensions);
 	}
 
@@ -103,10 +103,21 @@ public class MainLanguageResourcesGeneratorWMLTest extends BaseLanguageResources
 	}
 
 	@Test
+	public void testGenerateLanguageProjectAndRunWorkflow() {
+		try {
+			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+			projectCreator.runWorkflow();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	@Ignore("remove @Ignore when feature implemented")
 	public void testGenerateAndBuildLanguageProject() {
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -139,7 +150,7 @@ public class MainLanguageResourcesGeneratorWMLTest extends BaseLanguageResources
 		try {
 			MavenTychoXtextProjectCreator projectCreator = generator
 					.generateEnhancedLanguageProject(outputPath.toFile());
-			projectCreator.build();
+//			projectCreator.build();
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
