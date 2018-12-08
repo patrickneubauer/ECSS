@@ -1,0 +1,28 @@
+HUTN-BASED GRAMMAR NOTES
+------------------------
+
+Most notables differences in comparison with Xtext default grammar:
+(a) identifier specification by the use of Strings in quotes (rather than without quotes)
+(b) identifier referencing by the use of type/class followed by String in quotes
+(c) use of colon for specification of primitive values or references
+(d) syntax of enumerations is equal to those of identifiers, i.e. Strings in quotes
+(e) arbitrary order of properties
+
+Ad (b):
+Although the generated default Xtext content assist suggests references
+that are specified as Strings in quotes, selecting such a content assist suggestion
+will result in a String without quotes, which introduces validation errors.
+
+Ad (e):
+See p.19 in [4] for how to implement this in Xtext. It requires disabling code-assist
+and the implementation of a custom validator for duplicate single-valued properties to prevent overriding.
+
+Example of grammar with arbitrary order:
+( singleValuedProperty = Rule1 | muliValuedProperty += Rule2 )*
+
+
+SOURCES / REFERENCES:
+[1] https://www.eclipse.org/epsilon/doc/articles/hutn-basic/
+[2] https://www.omg.org/spec/HUTN
+[3] https://de.wikipedia.org/wiki/Human-Usable_Textual_Notation
+[4] https://www.eclipsecon.org/na2015/sites/default/files/slides/RepreZen%20DSL%20Xtext%20Day%20(EclipseCon%20Website).pdf

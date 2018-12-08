@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/spacetransportationservice/src" modelPluginID="spacetransportationservice"
+    modelName="Spacetransportationservice" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>spacetransportationservice.ecore</foreignModel>
+  <genPackages prefix="Spacetransportationservice" disposableProviderFactory="true"
+      ecorePackage="spacetransportationservice.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="spacetransportationservice.ecore#//Function">
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/MARS_COLONIZATION"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/EARTH_LUNAR_TRANSPORT"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/MULTIPLANETARY_TRANSPORT"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/INTERCONTINENTAL_TRANSPORT"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/ORBITAL_LAUNCHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="spacetransportationservice.ecore#//PhysicalPropertyType">
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/LENGTH"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/WIDTH"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/DIAMETER"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/PERIMETER"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/AREA"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/VOLUME"/>
+      <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//PhysicalPropertyType/MASS"/>
+    </genEnums>
+    <genClasses ecoreClass="spacetransportationservice.ecore#//Spacecraft">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//Spacecraft/stages"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//Spacecraft/launchSites"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//Spacecraft/functions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//Spacecraft/manufacturer"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//Spacecraft/countryOfOrigin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//Spacecraft/relaunchCostInMioUSD"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//Spacecraft/physicalProperties"/>
+    </genClasses>
+    <genClasses ecoreClass="spacetransportationservice.ecore#//LaunchSite">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//LaunchSite/locationLatitude"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//LaunchSite/locationLongitude"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//LaunchSite/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//LaunchSite/numberOfLaunchpads"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//LaunchSite/physicalProperties"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//LaunchSite/operational"/>
+    </genClasses>
+    <genClasses ecoreClass="spacetransportationservice.ecore#//Stage">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//Stage/engineType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//Stage/engineAmount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//Stage/physicalProperties"/>
+    </genClasses>
+    <genClasses ecoreClass="spacetransportationservice.ecore#//PhysicalProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//PhysicalProperty/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//PhysicalProperty/unit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//PhysicalProperty/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="spacetransportationservice.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="spacetransportationservice.ecore#//EngineType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute spacetransportationservice.ecore#//EngineType/fuelKind"/>
+    </genClasses>
+    <genClasses ecoreClass="spacetransportationservice.ecore#//SpaceTransportationService">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//SpaceTransportationService/launchSites"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//SpaceTransportationService/engineTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference spacetransportationservice.ecore#//SpaceTransportationService/spacecrafts"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

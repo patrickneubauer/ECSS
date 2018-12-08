@@ -1,0 +1,68 @@
+SpaceTransportationService {
+	
+	engineTypes {
+		EngineType Merlin1D {
+			fuelKind "Subcooled LOX / Chilled RP-1"	
+		},
+		EngineType Merlin1DVacuum {
+			fuelKind "LOX / RP-1"	
+		}		
+	}
+	
+	spacecraft {
+		
+		Spacecraft FalconHeavy {
+			
+			functions {
+				ORBITAL_LAUNCHER
+			}
+			
+			manufacturer "SpaceX"
+			countryOfOrigin "USA"
+			relaunchCostInMioUSD 90
+			launchSites ( KennedySpaceCenter, SpaceXSouthTexas )
+			
+			stages {
+				
+				Stage FirstStage {
+					engineAmount 9
+					engineType Merlin1D
+				},// FirstStage stage
+				
+				Stage SecondStage {
+					engineAmount 1
+					engineType Merlin1DVacuum
+				}// SecondStage stage					
+			
+			}// stages
+			
+			physicalProperties {
+				
+				PhysicalProperty {
+					type LENGTH
+					unit m
+					value 70.0
+				},
+				PhysicalProperty {
+					type DIAMETER
+					unit m
+					value 3.66
+				},
+				PhysicalProperty {
+					type WIDTH 
+					unit m
+					value 12.2
+				},
+				PhysicalProperty {
+					type MASS 
+					unit kg
+					value 1420788.0
+				}
+								
+			}// physicalProperties FalconHeavy
+						
+		}// FalconHeavy spacecraft
+		
+	}// spacecrafts	
+	
+}// Model

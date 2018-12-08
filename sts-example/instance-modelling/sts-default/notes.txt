@@ -1,0 +1,20 @@
+DEFAULT GRAMMAR NOTES
+---------------------
+
+EClass with EBoolean attribute produces grammar that is unable to capture values for the attribute.
+
+RESULT:
+LaunchSite returns LaunchSite:
+	operational?='operational'
+	'LaunchSite'
+	...
+	
+DESIRED RESULT:
+LaunchSite returns LaunchSite:
+	'LaunchSite'
+	name=EString
+	'{'
+		...
+		('operational' operational=EBoolean)?
+		...
+	'}';

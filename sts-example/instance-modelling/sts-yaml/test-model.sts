@@ -1,0 +1,54 @@
+SpaceTransportationService:
+
+	engineTypes: 
+		-  Raptor:
+			fuelKind: Subcooled_CH4_LO
+			
+	launchSites:
+		-  KennedySpaceCenter:
+		    locationLatitude: 28.524058
+		    locationLongitude: 80.65085
+		    operator: NASA
+		    numberOfLaunchpads: 3
+		    operational: true
+		    physicalProperties:
+		    	- WIDTH		    
+		    		value: 9.7
+		    		unit: km
+		    	- LENGTH
+		    		value: 55.0
+		    		unit: km
+		    	- AREA
+		    		value: 570.0
+		    		unit: km2 
+		-  SpaceXSouthTexas:
+			locationLatitude: 25.991389
+			locationLongitude: 97.183611
+			operator: SpaceX
+			numberOfLaunchpads: 1 
+			operational: false
+ 			
+	spacecrafts: 
+		-  BigFalconRocket:
+      		functions: 
+          		- EARTH_LUNAR_TRANSPORT
+          		- INTERCONTINENTAL_TRANSPORT
+          		- MARS_COLONIZATION
+          		- MULTIPLANETARY_TRANSPORT
+          		- ORBITAL_LAUNCHER 
+      		manufacturer: SpaceX
+      		countryOfOrigin: USA
+      		relaunchCostInMioUSD: 5
+      		launchSites:
+      			- SpaceXSouthTexas
+      			- KennedySpaceCenter
+      		stages:
+  				-  Booster:
+	  				engineAmount: 31
+	  				engineType: Raptor
+	  				physicalProperties:
+	  					- WIDTH
+		  					value: 58.0
+		  					unit: s
+		  				
+	  				

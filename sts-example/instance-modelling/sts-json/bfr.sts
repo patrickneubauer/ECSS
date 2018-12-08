@@ -1,0 +1,91 @@
+{
+  "Model": {
+    "engineTypes": [
+      {
+        "name": "Raptor",
+        "fuelKind": "Subcooled CH4/LOX"
+      }
+    ],
+    "spacecrafts": [
+      {
+        "name": "BigFalconRocket",
+        "functions": [
+          "EARTH_LUNAR_TRANSPORT",
+          "INTERCONTINENTAL_TRANSPORT",
+          "MARS_COLONIZATION",
+          "MULTIPLANETARY_TRANSPORT",
+          "ORBITAL_LAUNCHER"
+        ],
+        "manufacturer": "SpaceX",
+        "countryOfOrigin": "USA",
+        "launchSites": [
+          "KennedySpaceCenter",
+          "SpaceXSouthTexas"
+        ],
+        "stages": [
+          {
+            "name": "Booster",
+            "engineAmount": 31,
+            "engineType": "Raptor",
+            "physicalProperties": [
+              {
+                "type": "LENGTH",
+                "unit": "m",
+                "value": 58.0
+              },
+              {
+                "type": "DIAMETER",
+                "unit": "m",
+                "value": 9.0
+              },
+              {
+                "type": "MASS",
+                "unit": "kg",
+                "value": 3065000.0
+              }
+            ]
+          },
+          {
+            "name": "Spaceship",
+            "engineAmount": 7,
+            "engineType": "Raptor",
+            "physicalProperties": [
+              {
+                "type": "LENGTH",
+                "unit": "m",
+                "value": 48.0
+              },
+              {
+                "type": "DIAMETER",
+                "unit": "m",
+                "value": 9.0
+              },
+              {
+                "type": "MASS",
+                "unit": "kg",
+                "value": 1335000.0
+              }
+            ]
+          }
+        ],
+        "physicalProperties": [
+          {
+            "type": "LENGTH",
+            "unit": "m",
+            "value": 106.0
+          },
+          {
+            "type": "DIAMETER",
+            "unit": "m",
+            "value": 9.0
+          },
+          {
+            "type": "MASS",
+            "unit": "kg",
+            "value": 4400000.0
+          }
+        ]
+      }
+    ]
+  }
+}

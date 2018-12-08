@@ -1,0 +1,18 @@
+SpaceTransportationService {
+	
+	launchSites {
+		operational LaunchSite KennedySpaceCenter {
+			locationLatitude 28.524058
+			locationLongitude -80.65085
+			operator NASA
+			numberOfLaunchpads 3
+		},
+		operational LaunchSite SpaceXSouthTexas {
+			locationLatitude 25.991389
+			locationLongitude -97.183611
+			operator SpaceX
+			numberOfLaunchpads -1 // under construction
+		}
+	}
+	
+}

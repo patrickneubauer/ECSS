@@ -1,0 +1,8 @@
+JSON-BASED GRAMMAR NOTES
+------------------------
+
+Used an online JSON to YAML tool [1] to construct valid YAML and then copied the equivalent JSON result.
+
+
+SOURCES / REFERENCES:
+[1] https://www.json2yaml.com

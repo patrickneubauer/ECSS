@@ -1,0 +1,112 @@
+SpaceTransportationService {
+	
+	launchSites {
+		operational LaunchSite KennedySpaceCenter {
+			locationLatitude 28.524058
+			locationLongitude -80.65085
+			operator NASA
+			numberOfLaunchpads 3
+		},
+		operational LaunchSite SpaceXSouthTexas {
+			locationLatitude 25.991389
+			locationLongitude -97.183611
+			operator SpaceX
+			numberOfLaunchpads -1 // under construction
+		}
+	}
+	
+	engineTypes { 
+		EngineType Raptor {
+			fuelKind Subcooled_CH4_LO
+		}
+	}
+	
+	spacecraft {
+		
+		Spacecraft BigFalconRocket {
+			functions {
+				EARTH_LUNAR_TRANSPORT,
+				INTERCONTINENTAL_TRANSPORT,
+				MARS_COLONIZATION,
+				MULTIPLANETARY_TRANSPORT,
+				ORBITAL_LAUNCHER
+			}
+			
+			manufacturer "SpaceX"
+			countryOfOrigin "USA"
+			relaunchCostInMioUSD 7
+			launchSites ( KennedySpaceCenter, SpaceXSouthTexas )
+			
+			stages {
+				
+				Stage Booster {
+					engineAmount 31
+					engineType Raptor
+					physicalProperties {
+						PhysicalProperty {
+							type LENGTH
+							unit m
+							value 58.0
+						},
+						PhysicalProperty {
+							type DIAMETER
+							unit m
+							value 9.0
+						},
+						PhysicalProperty {
+							type MASS
+							unit kg
+							value 3065000.0
+						}
+					}// physicalProperties
+				},// Booster	 stage	
+				
+				Stage Spaceship {
+					engineAmount 7
+					engineType Raptor
+					physicalProperties {
+						PhysicalProperty {
+							type LENGTH 
+							unit m
+							value 48.0
+						},
+						PhysicalProperty {
+							type DIAMETER
+							unit m
+							value 9.0
+						},
+						PhysicalProperty {
+							type MASS
+							unit kg
+							value 1335000.0
+						}
+					}// physicalProperties
+				}// Spaceship stage					
+			
+			}// stages
+			
+			physicalProperties {
+				
+				PhysicalProperty {
+					type LENGTH
+					unit m
+					value 106.0
+				},
+				PhysicalProperty {
+					type DIAMETER
+					unit m
+					value 9.0
+				},
+				PhysicalProperty {
+					type MASS 
+					unit kg
+					value 4400000.0
+				}
+								
+			}// physicalProperties BigFalconRocket
+						
+		}// BigFalconRocket spacecraft
+		
+	}// spacecrafts	
+	
+}

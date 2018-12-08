@@ -1,0 +1,91 @@
+SpaceTransportationService {
+	
+	engineTypes:
+		EngineType "Raptor" {
+			fuelKind "Subcooled CH4/LOX"	
+		}
+	
+	spacecrafts:
+		
+		Spacecraft "BigFalconRocket" {
+			
+			functions:
+				"EARTH_LUNAR_TRANSPORT",
+				"INTERCONTINENTAL_TRANSPORT",
+				"MARS_COLONIZATION",
+				"MULTIPLANETARY_TRANSPORT",
+				"ORBITAL_LAUNCHER"
+			
+			manufacturer "SpaceX"
+			countryOfOrigin "USA"
+			relaunchCostInMioUSD 7
+			launchSites: LaunchSite "KennedySpaceCenter", LaunchSite "SpaceXSouthTexas"
+			
+			stages:
+				
+				Stage "Booster" {
+					engineAmount 31
+					engineType "Raptor"
+					physicalProperties:
+						PhysicalProperty {
+							type "LENGTH"
+							unit "m"
+							value 58.0
+						},
+						PhysicalProperty {
+							type "DIAMETER"
+							unit "m"
+							value 9.0
+						},
+						PhysicalProperty {
+							type "MASS"
+							unit "kg"
+							value 3065000.0
+						}
+
+				},// Booster	 stage	
+				
+				Stage "Spaceship" {
+					engineAmount 7
+					engineType "Raptor"
+					physicalProperties:
+						PhysicalProperty {
+							type "LENGTH"
+							unit "m"
+							value 48.0
+						},
+						PhysicalProperty {
+							type "DIAMETER"
+							unit "m"
+							value 9.0
+						},
+						
+						PhysicalProperty {
+							type "MASS"
+							unit "kg"
+							value 1335000.0
+						}
+
+				}// Spaceship stage					
+			
+			physicalProperties:
+				
+				PhysicalProperty {
+					type "LENGTH"
+					unit "m"
+					value 106.0
+				},
+				PhysicalProperty {
+					type "DIAMETER"
+					unit "m"
+					value 9.0
+				},
+				PhysicalProperty {
+					type "MASS" 
+					unit "kg"
+					value 4400000.0
+				}
+						
+		}// BigFalconRocket spacecraft
+	
+}// SpaceTransportationService

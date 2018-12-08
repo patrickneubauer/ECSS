@@ -1,0 +1,18 @@
+YAML-BASED GRAMMAR NOTES
+------------------------
+
+Most notables differences in comparison with Xtext default grammar:
+(a) Indentation-based like Python
+
+Ad (a):
+Requires use of synthetic tokens (Xtext supports them) and changes to some generated classes, 
+such as the formatter (see slide 72 in [2]).
+
+The created YAML files in this folder are valid according to several YAML online validators [3,4,5].
+
+SOURCES / REFERENCES:
+[1] http://yaml.org/spec/1.2/spec.html#id2759572
+[2] https://www.eclipsecon.org/na2015/session/reprezen-dsl-pushing-limits-language-usability-xtext.html
+[3] https://www.json2yaml.com
+[4] http://www.yamllint.com
+[5] https://codebeautify.org/yaml-validator
