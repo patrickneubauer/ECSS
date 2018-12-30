@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -93,6 +94,7 @@ public class XtextToDefaultEcoreTransformer extends SimpleResourceHandler {
 	 * @param targetFile empty ecore file
 	 */
 	public void handle(File sourceFile, File targetFile) {
+		logger.info("Handling resource transformation ...");
 		//Don't go in output dir
 //		File test = targetFile.getAbsoluteFile().getParentFile();
 //		while (test != null) {
@@ -144,7 +146,7 @@ public class XtextToDefaultEcoreTransformer extends SimpleResourceHandler {
 			}
 			Resource sourceResource = xtextResourceSet.getResource(URI.createFileURI(sourceFile.getAbsolutePath()), true);
 			try {
-				sourceResource.load(null);
+				sourceResource.load(Collections.emptyMap());
 			} catch (IOException e) {
 				logger.error("Error when loading source resource from " + sourceResource.getURI());
 				logger.error(e.getMessage());
@@ -176,7 +178,7 @@ public class XtextToDefaultEcoreTransformer extends SimpleResourceHandler {
 //					transformer.transform(); //Not necessary, it seems to do that anyway on loading
 				}
 				
-				for (EPackage pkg: Xtext2EcoreTransformer.doGetGeneratedPackages(sourceResourceGrammar)) {
+				for (EPackage pkg: Xtext2EcoreTransformer.doGetGeneratedPackages(sourceResourceGrammar)) { // TODO: deal with grammar.getMetamodelDeclarations() of type org.eclipse.xtext.impl.ReferencedMetamodelImpl
 					targetResource.getContents().add(pkg);
 					Grammar corr = epkgToGrammar.get(pkg.getNsURI());
 					if (corr == null) {

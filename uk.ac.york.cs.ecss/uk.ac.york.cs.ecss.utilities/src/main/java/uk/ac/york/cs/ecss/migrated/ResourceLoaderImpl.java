@@ -3,9 +3,9 @@ package uk.ac.york.cs.ecss.migrated;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-public class EcoreResourceLoader extends ResourceLoader {
+public class ResourceLoaderImpl extends ResourceLoader {
 
-	public EcoreResourceLoader(ResourceResolver resolver) {
+	public ResourceLoaderImpl(ResourceResolver resolver) {
 		super(resolver);
 	}
 

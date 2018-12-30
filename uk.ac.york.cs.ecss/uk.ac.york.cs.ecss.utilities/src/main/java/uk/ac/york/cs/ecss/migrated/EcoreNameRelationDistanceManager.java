@@ -8,15 +8,15 @@ import java.util.Map;
 
 public class EcoreNameRelationDistanceManager implements BasicDistanceManager {
 	
-	private EcoreResourceLoader resourceLoader;
+	private ResourceLoaderImpl resourceLoader;
 	private EcoreNameRelation relation;
 	
-	public EcoreNameRelationDistanceManager(EcoreResourceLoader loader, EcoreNameRelation relation) {
+	public EcoreNameRelationDistanceManager(ResourceLoaderImpl loader, EcoreNameRelation relation) {
 		this.resourceLoader = loader;
 		this.relation = relation;
 	}
 	
-	public void setResourceLoader(EcoreResourceLoader loader) {
+	public void setResourceLoader(ResourceLoaderImpl loader) {
 		this.resourceLoader = loader;
 	}
 

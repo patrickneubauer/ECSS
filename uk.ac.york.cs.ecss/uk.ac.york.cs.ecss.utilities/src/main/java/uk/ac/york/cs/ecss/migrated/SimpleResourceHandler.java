@@ -34,7 +34,7 @@ public class SimpleResourceHandler implements ResourceHandler {
 	List<FileProblems> fileProblems = new ArrayList<FileProblems>();
 	protected String analysisModelFileLocation = null;
 	protected Resource analysisModelResource;
-	protected ResourceSet emfResourceSet;
+//	protected ResourceSet emfResourceSet;
 	protected XtextResourceSet xtextResourceSet;
 
 	protected interface Problem {
@@ -163,9 +163,9 @@ public class SimpleResourceHandler implements ResourceHandler {
 
 		Injector i = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
 		xtextResourceSet = i.getInstance(XtextResourceSet.class);
-		emfResourceSet = new ResourceSetImpl();
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+//		emfResourceSet = new ResourceSetImpl();
+//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 	    
 		logger.info("... finished initializing transformer.");
 

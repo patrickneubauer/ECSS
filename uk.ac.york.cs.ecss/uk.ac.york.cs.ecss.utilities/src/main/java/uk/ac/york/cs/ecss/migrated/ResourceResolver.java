@@ -14,6 +14,22 @@ public class ResourceResolver {
 	private boolean addFolder;
 	private File basePath;
 	private String extension;
+	public boolean isAddFolder() {
+		return addFolder;
+	}
+
+	public File getBasePath() {
+		return basePath;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public String getPostfix() {
+		return postfix;
+	}
+
 	private String postfix;
 	
 	public ResourceResolver(File basePath, String postfix, String extension, boolean addFolder) {
@@ -34,7 +50,7 @@ public class ResourceResolver {
 	public List<File> getAllFiles(FileFilter fileFilter) {
 		List<File> ret = new ArrayList<>();
 		for (File file: basePath.listFiles()) {
-			if (addFolder) {
+			if (addFolder && file.isDirectory()) {
 				File subFile = new File(file.getAbsolutePath()+File.separator+file.getName()+postfix+"."+extension);
 				if (!subFile.isDirectory() && subFile.exists() && fileFilter.accept(subFile)) {
 					ret.add(subFile);

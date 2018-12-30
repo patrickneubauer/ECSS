@@ -5,14 +5,19 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
-import com.google.common.io.Files;
+import org.eclipse.emf.ecore.resource.Resource;
 
 public class FileUtils {
 	private static final Logger logger = LogManager.getLogger(FileUtils.class);
@@ -76,20 +81,53 @@ public class FileUtils {
 	
 	public static void save(CharSequence charSequence, File targetFile, Charset encoding) throws Exception {
 		try {
-			Files.createParentDirs(targetFile);
-			Files.write(charSequence, targetFile, encoding);
+			Files.createDirectories(targetFile.toPath().getParent());
+			Files.write(targetFile.toPath(), charSequence.toString().getBytes(encoding), StandardOpenOption.CREATE);
 		} catch (IOException e) {
 			throw new Exception("Unable to save file " + targetFile.getAbsolutePath() + " --- " + e.getMessage());
 		}
 	}
 	
+	public static CharSequence read(File sourceFile, Charset encoding) throws Exception {
+		try {
+			byte[] readResult = Files.readAllBytes(sourceFile.toPath());
+			return new String(readResult, encoding);
+		} catch (IOException e) {
+			throw new Exception("Unable to read file " + sourceFile.getAbsolutePath() + " --- " + e.getMessage());
+		}
+	}
+	
 	public static File[] getListOfAcceptedFiles(File sourceFilePath, String acceptedFileExtension) {
-		File[] files = sourceFilePath.listFiles(new FilenameFilter() {
-		    public boolean accept(File dir, String name) {
-		        return name.toLowerCase().endsWith(acceptedFileExtension);
+		if ( acceptedFileExtension.startsWith(".") )
+			return sourceFilePath.listFiles((d, name) -> name.endsWith(acceptedFileExtension));
+		else 
+			return sourceFilePath.listFiles((d, name) -> name.endsWith("." + acceptedFileExtension));
+	}
+	
+	public static void serializeEmfResource(Resource resource) {
+			logger.info("Serializing model: " + resource.getURI());
+
+			try {
+				resource.save(Collections.emptyMap());
+			} catch (IOException e) {
+				logger.error("Unable to serialize/save model: " + resource.getURI());
+				e.printStackTrace();
+			}
+			logger.info("... finished serializing model: " + resource.getURI());
+		}
+	
+	public static void deleteDirectory(Path directory) {
+		deleteDirectory(directory.toFile());
+	}
+	
+	public static void deleteDirectory(File directory) {
+		    File[] allContents = directory.listFiles();
+		    if (allContents != null) {
+		        for (File file : allContents) {
+		            deleteDirectory(file);
+		        }
 		    }
-		});
-		return files;
+		    directory.delete();
 	}
 
 }
