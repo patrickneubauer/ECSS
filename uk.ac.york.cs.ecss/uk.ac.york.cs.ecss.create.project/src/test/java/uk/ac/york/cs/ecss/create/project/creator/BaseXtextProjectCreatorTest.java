@@ -2,6 +2,7 @@ package uk.ac.york.cs.ecss.create.project.creator;
 
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
+import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
+import uk.ac.york.cs.ecss.migrated.ResourceResolver;
 
+/**
+ * Note that these tests will produce projects containing Xtext sample grammar only.
+ * See {@code uk.ac.york.cs.ecss.create.grammar} and {@code uk.ac.york.cs.ecss.api} for ECSS-based Xtext grammar generation.
+ * 
+ * @author blizzfire
+ *
+ */
 public class BaseXtextProjectCreatorTest {
 
 	protected static final String LANGUAGE_GRAMMAR_URI_PREFIX = "me.ecss.language";
@@ -28,6 +38,8 @@ public class BaseXtextProjectCreatorTest {
 	protected static String TRANSFORMATION_OUTPUT_PATH = "generated";
 
 	protected static final String INPUT_FILE_EXTENSION = ".ecore";
+	
+	protected ResourceLoaderImpl ecoreResourceLoader;
 
 	public BaseXtextProjectCreatorTest() {
 		super();
@@ -38,7 +50,10 @@ public class BaseXtextProjectCreatorTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		ResourceResolver resolver = new ResourceResolver(new File(EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH), "", "ecore", true);
+		ecoreResourceLoader = new ResourceLoaderImpl(resolver);
 	}
+	
 
 	/**
 	 * @throws java.lang.Exception
@@ -59,7 +74,7 @@ public class BaseXtextProjectCreatorTest {
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
 				projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -82,7 +97,7 @@ public class BaseXtextProjectCreatorTest {
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
 				projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -105,7 +120,7 @@ public class BaseXtextProjectCreatorTest {
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
 				projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -128,7 +143,7 @@ public class BaseXtextProjectCreatorTest {
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
 				projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -151,7 +166,7 @@ public class BaseXtextProjectCreatorTest {
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION,
 				projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {

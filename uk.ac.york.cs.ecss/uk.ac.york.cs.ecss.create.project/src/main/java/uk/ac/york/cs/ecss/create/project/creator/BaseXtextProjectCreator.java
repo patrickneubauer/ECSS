@@ -30,6 +30,7 @@ import com.google.inject.Injector;
 
 import uk.ac.york.cs.ecss.create.project.Ecore2XtextConfigurationHelper;
 import uk.ac.york.cs.ecss.create.project.configuration.BaseXtextProjectConfiguration;
+import uk.ac.york.cs.ecss.migrated.ResourceLoader;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 public class BaseXtextProjectCreator {
@@ -38,9 +39,10 @@ public class BaseXtextProjectCreator {
 	
 	protected BaseXtextProjectConfiguration projectConfiguration;
 	protected String reportFile;
-	protected ResourceSet emfResourceSet;
 	protected XtextResourceSet xtextResourceSet;
 	protected Mwe2Launcher mwe2launcher;
+
+	private ResourceLoader resourceLoader;
 
 	/**
 	 * 
@@ -53,8 +55,9 @@ public class BaseXtextProjectCreator {
 	 * @param fileExtensions
 	 *            example: mydsl
 	 */
-	public BaseXtextProjectCreator(String reportFileLocation, String projectBaseName, String languageName,
+	public BaseXtextProjectCreator(ResourceLoader resourceLoader, String reportFileLocation, String projectBaseName, String languageName,
 			List<String> fileExtensions) {
+		this.resourceLoader = resourceLoader;
 		this.reportFile = reportFileLocation;
 		init();
 
@@ -68,9 +71,8 @@ public class BaseXtextProjectCreator {
 
 		Injector i = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
 		xtextResourceSet = i.getInstance(XtextResourceSet.class);
-		emfResourceSet = new ResourceSetImpl();
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+//		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 		mwe2launcher = new Mwe2Launcher();
 
 		logger.info("... finished initializing creator.");
@@ -111,7 +113,7 @@ public class BaseXtextProjectCreator {
 				"... finished generating Xtext skeleton projects for " + uniqueShortLanguageName);
 
 	}
-
+		
 	/**
 	 * replace grammar by looking for file with extension "xtext" as each creator
 	 * places it somewhere different
@@ -188,10 +190,10 @@ public class BaseXtextProjectCreator {
 		logger.info(
 				"... finished running MWE2 workflow for " + uniqueShortLanguageName);
 	}
-
-	public CharSequence obtainDefaultGrammar(String sourceFileLocation) {
-		File sourceFile = new File(sourceFileLocation);
-		Resource sourceResource = emfResourceSet.getResource(URI.createFileURI(sourceFile.getAbsolutePath()), true);
+	
+	public CharSequence obtainDefaultGrammar(String languageMetaModelFileLocation) {
+		File sourceFile = new File(languageMetaModelFileLocation);
+		Resource sourceResource = resourceLoader.getResourceSet().getResource(URI.createFileURI(sourceFile.getAbsolutePath()), true);
 
 		try {
 			sourceResource.load(Collections.emptyMap());

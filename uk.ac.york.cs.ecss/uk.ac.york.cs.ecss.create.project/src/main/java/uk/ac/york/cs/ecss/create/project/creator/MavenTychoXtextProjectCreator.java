@@ -21,8 +21,10 @@ import org.apache.maven.wrapper.Installer;
 //import org.apache.maven.shared.invoker.Invoker;
 //import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.apache.maven.wrapper.WrapperExecutor;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import uk.ac.york.cs.ecss.create.project.configuration.MavenTychoXtextProjectConfiguration;
+import uk.ac.york.cs.ecss.migrated.ResourceLoader;
 
 public class MavenTychoXtextProjectCreator extends BaseXtextProjectCreator {
 	
@@ -33,8 +35,8 @@ public class MavenTychoXtextProjectCreator extends BaseXtextProjectCreator {
 	private static final String DEFAULT_BUILD_COMMAND = "clean install";
 //	private Invoker invoker;
 
-	public MavenTychoXtextProjectCreator(String reportFileLocation, String baseName, String languageName, List<String> fileExtensions) throws Exception {
-		super(reportFileLocation, baseName, languageName, fileExtensions);
+	public MavenTychoXtextProjectCreator(ResourceLoader resourceLoader, String reportFileLocation, String baseName, String languageName, List<String> fileExtensions) throws Exception {
+		super(resourceLoader, reportFileLocation, baseName, languageName, fileExtensions);
 		logger.info("Initiating " + this.getClass().getCanonicalName() + " at " + LocalDateTime.now());
 		
 		projectConfiguration = new MavenTychoXtextProjectConfiguration(baseName);

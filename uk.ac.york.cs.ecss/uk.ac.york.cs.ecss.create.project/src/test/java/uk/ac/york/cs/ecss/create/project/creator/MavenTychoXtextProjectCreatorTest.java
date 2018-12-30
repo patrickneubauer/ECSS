@@ -14,6 +14,9 @@ import org.junit.Test;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 
 /**
+ * Note that these tests will produce projects containing Xtext sample grammar only.
+ * See {@code uk.ac.york.cs.ecss.create.grammar} and {@code uk.ac.york.cs.ecss.api} for ECSS-based Xtext grammar generation.
+ * 
  * @author blizzfire
  *
  */
@@ -35,7 +38,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(ecoreResourceLoader, 
 					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
@@ -59,7 +62,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(ecoreResourceLoader, 
 					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
@@ -83,7 +86,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(ecoreResourceLoader, 
 					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
@@ -107,7 +110,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(ecoreResourceLoader, 
 					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);
@@ -131,7 +134,7 @@ public class MavenTychoXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
 		try {
-			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(
+			MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(ecoreResourceLoader, 
 					EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 			projectCreator.prepareDestination(outputLocation);
 			projectCreator.create(outputLocation);

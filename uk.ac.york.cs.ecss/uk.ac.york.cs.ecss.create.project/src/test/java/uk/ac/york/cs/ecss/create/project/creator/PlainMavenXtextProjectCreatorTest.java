@@ -15,6 +15,9 @@ import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
 import uk.ac.york.cs.ecss.create.project.creator.PlainMavenXtextProjectCreator;
 
 /**
+ * Note that these tests will produce projects containing Xtext sample grammar only.
+ * See {@code uk.ac.york.cs.ecss.create.grammar} and {@code uk.ac.york.cs.ecss.api} for ECSS-based Xtext grammar generation.
+ * 
  * @author blizzfire
  *
  */
@@ -32,7 +35,7 @@ public class PlainMavenXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(
+		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(ecoreResourceLoader, 
 				EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -55,7 +58,7 @@ public class PlainMavenXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(
+		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(ecoreResourceLoader, 
 				EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -78,7 +81,7 @@ public class PlainMavenXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(
+		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(ecoreResourceLoader, 
 				EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -101,7 +104,7 @@ public class PlainMavenXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(
+		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(ecoreResourceLoader, 
 				EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
@@ -124,7 +127,7 @@ public class PlainMavenXtextProjectCreatorTest extends BaseXtextProjectCreatorTe
 		List<String> fileExtensions = new LinkedList<String>();
 		fileExtensions.add(LANGUAGE_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(
+		BaseXtextProjectCreator projectCreator = new PlainMavenXtextProjectCreator(ecoreResourceLoader, 
 				EXAMPLE_DATA_FOLDER + REPORT_FILE_LOCATION, projectBaseName, languageName, fileExtensions);
 		projectCreator.prepareDestination(outputLocation);
 		try {
