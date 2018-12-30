@@ -37,13 +37,13 @@ public class MainLanguageResourceGeneratorSkeletonTest extends BaseLanguageResou
 
 	@Test
 	public void testGenerateGrammarFile() {
-		Resource xtextGrammar = generator.generateGrammar(
+		Resource xtextGrammar = generator.generateAndSerializeGrammar(
 				new File(INPUT_DATA_FOLDER + ECORE_PATH + UNIQUE_LANGUAGE_ID + "." + METAMODEL_FILE_EXTENSION));
 	}
 
 	@Test
 	public void testGenerateGrammarFileFile() {
-		Resource xtextGrammar = generator.generateGrammar(
+		Resource xtextGrammar = generator.generateAndSerializeGrammar(
 				new File(INPUT_DATA_FOLDER + ECORE_PATH + UNIQUE_LANGUAGE_ID + "." + METAMODEL_FILE_EXTENSION),
 				new File(INPUT_DATA_FOLDER + ECSS_PATH + UNIQUE_LANGUAGE_ID + ".ecss"));
 	}
@@ -126,7 +126,7 @@ public class MainLanguageResourceGeneratorSkeletonTest extends BaseLanguageResou
 	@Test
 	public void testGenerateDefaultGrammar() {
 		try {
-			Resource xtextGrammar = generator.generateDefaultGrammar(
+			Resource xtextGrammar = generator.generateAndSerialiseDefaultGrammarResource(
 					new File(INPUT_DATA_FOLDER + ECORE_PATH + UNIQUE_LANGUAGE_ID + "." + METAMODEL_FILE_EXTENSION));
 		} catch (Exception e) {
 			fail(e.getMessage());

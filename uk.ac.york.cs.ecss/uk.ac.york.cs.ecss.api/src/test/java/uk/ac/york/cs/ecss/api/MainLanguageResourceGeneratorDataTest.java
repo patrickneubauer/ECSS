@@ -43,7 +43,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 	@Parameters
 	public static List<File> data() {
 		File dataFolder = new File(INPUT_DATA_FOLDER + Path.SEPARATOR + XTEXT_INPUT_PATH);
-		File[] dataFolderFileArray = FileUtils.getListOfAcceptedFiles(dataFolder, GRAMMAR_FILE_EXTENSION);
+		File[] dataFolderFileArray = FileUtils.getListOfAcceptedFiles(dataFolder, "." + GRAMMAR_FILE_EXTENSION);
 		return Arrays.asList(dataFolderFileArray);
 	}
 
@@ -96,7 +96,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		logger.info("RUNNING: _2_testGenerateDefaultGrammar: " + uniqueLanguageId);
 
 		try {
-			Resource xtextGrammar = generator.generateDefaultGrammar(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
+			Resource xtextGrammar = generator.generateAndSerialiseDefaultGrammarResource(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
 					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -159,7 +159,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 	public void _4default_testGenerateGrammarFile() {
 		logger.info("RUNNING: _4default_testGenerateGrammarFile: " + uniqueLanguageId);
 		try {
-			Resource xtextGrammar = generator.generateGrammar(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
 					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -176,7 +176,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		File metamodelFile = new File(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + Path.SEPARATOR
 				+ uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION);
 		try {
-			Resource xtextGrammar = generator.generateGrammar(metamodelFile, new File(INPUT_DATA_FOLDER + OUTPUT_PATH
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(INPUT_DATA_FOLDER + OUTPUT_PATH
 					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + STYLE_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());

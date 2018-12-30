@@ -15,7 +15,7 @@ import org.junit.After;
 public class BaseLanguageResourcesGeneratorTest {
 
 	protected static final String languageProjectBaseName = "me.ecss.language";
-	protected static final String LANGUAGE_NAME_PREFIX = "me.ecss.language";
+	protected static final String LANGUAGE_NAME_PREFIX = languageProjectBaseName;
 	
 	protected static final String ECORE_PATH = "/analysis/default-ecore/";
 	protected static final String ECSS_PATH = "/analysis/ecss/";

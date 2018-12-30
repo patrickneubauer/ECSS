@@ -19,7 +19,7 @@ public interface LanguageResourcesGenerator {
 	 *            language metamodel of language for which to produce grammar
 	 * @return {@link GrammarResource} applying ECSS default style
 	 */
-	GrammarResource generateGrammar(File languageMetamodelFile);
+	GrammarResource generateAndSerializeGrammar(File languageMetamodelFile);
 	
 	/**
 	 * Generates {@link GrammarResource} from language metamodel that applies an ECSS style. 
@@ -46,7 +46,7 @@ public interface LanguageResourcesGenerator {
 	 *            style model conforming to language metamodel
 	 * @return {@link GrammarResource} applying provided ECSS style
 	 */
-	GrammarResource generateGrammar(File languageMetamodelFile, File languageModelFile);
+	GrammarResource generateAndSerializeGrammar(File languageMetamodelFile, File languageModelFile);
 
 	/**
 	 * Generates {@link GrammarResource} from language metamodel that applies the
@@ -58,10 +58,10 @@ public interface LanguageResourcesGenerator {
 	 * @return {@link GrammarResource} applying Xtext default style
 	 * @throws Exception 
 	 */
-	GrammarResource generateDefaultGrammar(File languageMetamodelFile) throws Exception;
+	GrammarResource generateAndSerialiseDefaultGrammarResource(File languageMetamodelFile) throws Exception;
 	
 	/**
-	 * Generates and returns non-optimized ECSS model.
+	 * Generates and returns non-optimized ECSS model from given language meta-model.
 	 * 
 	 * @param languageMetamodelFile
 	 *            language metamodel of language for which to produce style model
@@ -71,7 +71,7 @@ public interface LanguageResourcesGenerator {
 	Resource generateStyleModel(File languageMetamodelFile) throws Exception;
 
 	/**
-	 * Generates and returns (optimized) ECSS model.
+	 * Generates and returns (optimized) ECSS model from given language meta-model.
 	 * 
 	 * If {@code optimize} is set to {@code true}, then an optimized style model
 	 * is returned (enhanced optimization requires analysis style model to be
