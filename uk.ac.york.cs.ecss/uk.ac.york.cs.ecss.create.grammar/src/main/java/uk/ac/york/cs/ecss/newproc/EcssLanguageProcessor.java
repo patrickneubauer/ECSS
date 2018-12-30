@@ -84,8 +84,8 @@ public class EcssLanguageProcessor {
 	
 	public static void main(String[] args) throws IOException {
 	
-		process(new File("../../styles/test.ecss"),new File("../../data-example/spacetransportationservice.ecore"),
-				new File("../../data-example/stsecoreout.xtext"));
+		process(new File("../../styles/test.ecss"),new File("../../sts-example/meta-modelling/spacetransportationservice/model/spacetransportationservice.ecore"),
+				new File("../../sts-example/generated/sts-ecss-based.xtext"));
 	}
 
 }
