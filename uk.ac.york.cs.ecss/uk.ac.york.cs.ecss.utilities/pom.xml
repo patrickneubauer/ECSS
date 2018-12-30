@@ -14,6 +14,13 @@
 	<name>uk.ac.york.cs.ecss.utilities</name>
 
 	<dependencies>
+	
+	<!-- INTERNAL DEPENDENCIES -->
+		<dependency>
+			<groupId>uk.ac.york.cs.ecss.language</groupId>
+			<artifactId>uk.ac.york.cs.ecss.language</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 
 		<!-- EXTERNAL DEPENDENCIES -->
 		<dependency>
