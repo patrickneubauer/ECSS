@@ -88,13 +88,7 @@ public class CompleteManager {
 	}
 
 	public String getGrammarName() {
-		return grammarName;
-//		if (grammarName == null) {
-//			return "someGrammar";
-//		} else {
-//			return grammarName;
-//		}
-	
+		return grammarName;	
 	}
 
 	/**
@@ -105,7 +99,6 @@ public class CompleteManager {
 	public String generateHeader() {
 		StringBuilder builder = new StringBuilder();
 		if ( grammarName == null ) {
-//			setGrammarName("someGrammar");
 			setDefaultGrammarName();
 		}
 		
