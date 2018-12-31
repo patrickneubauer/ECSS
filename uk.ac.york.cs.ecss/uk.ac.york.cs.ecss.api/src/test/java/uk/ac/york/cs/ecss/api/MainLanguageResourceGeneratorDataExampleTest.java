@@ -144,7 +144,7 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 	 * ecore --> specific xtext grammar-based ecss style (optimized)
 	 */
 	@Test
-//	@Ignore("remove @Ignore when feature implemented")
+	@Ignore("remove @Ignore when feature implemented")
 	public void _3optimized_testGenerateStyleModelFileBooleanTrue() {
 		logger.info(
 				"RUNNING: _3optimized_testGenerateStyleModelFileBooleanTrue: " + uniqueLanguageId);
