@@ -533,7 +533,7 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 		}
 		String fullName = getQN(classSimpleName);
 		String content = rg.getClassContent();
-		System.out.println("Generated class " + fullName + ":\n" + content);
+		//System.out.println("Generated class " + fullName + ":\n" + content);
 		Reflect compile = Reflect.compile(fullName, content);
 		try {
 			return compile.get();
