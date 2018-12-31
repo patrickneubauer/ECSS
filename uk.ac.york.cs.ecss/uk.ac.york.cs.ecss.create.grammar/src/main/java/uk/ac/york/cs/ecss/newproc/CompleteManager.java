@@ -3,8 +3,10 @@ package uk.ac.york.cs.ecss.newproc;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -12,12 +14,15 @@ import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Grammar;
 import uk.ac.york.cs.ecss.language.ecssLanguage.*;
 import uk.ac.york.cs.ecss.postproc.regexp.RegexpManager;
+import util.GrammarUtils;
 import util.XtextSerialization;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CompleteManager {
 
@@ -83,16 +88,29 @@ public class CompleteManager {
 	}
 
 	public String getGrammarName() {
-		if (grammarName == null) {
-			return "someGrammar";
-		} else {
-			return grammarName;
-		}
+		return grammarName;
+//		if (grammarName == null) {
+//			return "someGrammar";
+//		} else {
+//			return grammarName;
+//		}
+	
 	}
 
+	/**
+	 * Side effect: will (!) set grammar name if null.
+	 * 
+	 * @return
+	 */
 	public String generateHeader() {
 		StringBuilder builder = new StringBuilder();
+		if ( grammarName == null ) {
+//			setGrammarName("someGrammar");
+			setDefaultGrammarName();
+		}
+		
 		builder.append("grammar " + getGrammarName() + " with org.eclipse.xtext.common.Terminals \n");
+		builder.append("\n");
 		if (mainEcoreFile == null) {
 
 			String uri = "http://" + getGrammarName().replace('.', '/');
@@ -103,6 +121,23 @@ public class CompleteManager {
 		}
 		builder.append("import \"http://www.eclipse.org/emf/2002/Ecore\" as ecore\n\n");
 		return builder.toString();
+	}
+
+	/**
+	 * Sets default grammar name derived from Ns URI in language meta-model
+	 */
+	private void setDefaultGrammarName() {
+		if ( mainEcoreFile != null ) {
+			for ( EObject eObject : mainEcoreFile.getContents() ) {
+				if ( eObject instanceof EPackageImpl ) {
+					EPackageImpl ePackage = (EPackageImpl) eObject;
+					grammarName = GrammarUtils.extractGrammarUriFromNsURI(ePackage.getNsURI());						
+					String languageName = ePackage.getName().substring(0, 1).toUpperCase() + ePackage.getName().substring(1);
+					languageName += "Language" + ""; // TODO (eventually): add ecss model file name, e.g. hutn.ecss (= LanguageHutn)
+					grammarName += "." + languageName;
+				}
+			}
+		}
 	}
 
 	public static class GenerationOutput<T> {
@@ -164,7 +199,7 @@ public class CompleteManager {
 			}
 			String newRet = XtextSerialization.getString(gr, dataTypeNames);
 			
-			if (newRet != null) {
+			if (newRet != null && !newRet.isEmpty()) {
 				preRet = newRet;
 			}
 		}
