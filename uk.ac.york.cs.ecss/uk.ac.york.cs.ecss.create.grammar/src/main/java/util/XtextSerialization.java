@@ -7,8 +7,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.XtextFactory;
 import org.eclipse.xtext.XtextStandaloneSetup;
+import org.eclipse.xtext.impl.GrammarImpl;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.xtext.xtext.GrammarResource;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,7 +55,12 @@ public class XtextSerialization {
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			regExpResource.save(out, Collections.emptyMap());
+			if ( regExpResource instanceof GrammarResource && ((GrammarResource)regExpResource).getContents().get(0) instanceof GrammarImpl) {
+				GrammarImpl grammarImpl = (GrammarImpl)((GrammarResource)regExpResource).getContents().get(0);
+				if ( grammarImpl.getRules().size() != 0 ) {
+					regExpResource.save(out, Collections.emptyMap());
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
