@@ -1,10 +1,15 @@
 package uk.ac.york.cs.ecss.newproc;
 
 import org.eclipse.emf.ecore.*;
+
+import uk.ac.york.cs.ecss.migrated.ResourceLoader;
+import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
+import uk.ac.york.cs.ecss.migrated.ResourceResolver;
 import uk.ac.york.cs.ecss.newproc.PropState.DynamicValuator;
 import uk.ac.york.cs.ecss.newproc.PropState.PropertyStore;
 import uk.ac.york.cs.ecss.priority.rigen.SlotAssignmentProblem.Slot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -106,7 +111,11 @@ public class TestXtendRule extends AbstractEcssXtendRule {
 	
 	public static void main(String[] args) {
 		TestXtendRule rule = getTestRule();
-		CompleteManager cm = new CompleteManager();
+		File basePath = new File("");
+		String postfix = "";
+		String extension = "xtend";
+		boolean addFolder = true;
+		CompleteManager cm = new CompleteManager(new ResourceLoaderImpl(new ResourceResolver(basePath, postfix, extension, addFolder)));
 		SubSelector<CurrentRuleSelectionState> ss = new SubSelector<CurrentRuleSelectionState>() {
 			
 			@Override
