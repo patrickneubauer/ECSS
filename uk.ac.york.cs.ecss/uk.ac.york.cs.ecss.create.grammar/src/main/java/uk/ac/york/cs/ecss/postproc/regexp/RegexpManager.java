@@ -16,10 +16,6 @@ import java.util.*;
 
 public class RegexpManager {
 	
-	private static XtextStandaloneSetup xtextSetup = new XtextStandaloneSetup();
-	private static Injector xtextInjector = xtextSetup.createInjectorAndDoEMFRegistration();
-	private static XtextFactory xfact = XtextFactory.eINSTANCE;
-	
 	static {
 		
 	}
@@ -362,7 +358,14 @@ public class RegexpManager {
 		return ret;
 	}
 	
-	public static void testXtext() {
+	/**
+	 * not supposed to be used by anything other than main() for testing
+	 */
+	private static void testXtext() {
+		XtextStandaloneSetup xtextSetup = new XtextStandaloneSetup();
+		Injector xtextInjector = xtextSetup.createInjectorAndDoEMFRegistration();
+		XtextFactory xfact = XtextFactory.eINSTANCE;
+		
 		XtextResourceSet xrs = xtextInjector.getInstance(XtextResourceSet.class);
 		File file = new File("C:\\Users\\Robert\\Documents\\AME\\ECSS\\ecss-framework\\uk.ac.york.simpleregexp.simplereg\\src\\uk\\ac\\york\\simpleregexp\\simplereg\\SimpleReg.xtext");
 		if (!file.exists()) {
