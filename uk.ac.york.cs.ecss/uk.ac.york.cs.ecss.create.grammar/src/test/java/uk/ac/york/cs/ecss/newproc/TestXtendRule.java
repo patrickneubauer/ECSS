@@ -5,6 +5,7 @@ import org.eclipse.emf.ecore.*;
 import uk.ac.york.cs.ecss.migrated.ResourceLoader;
 import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
 import uk.ac.york.cs.ecss.migrated.ResourceResolver;
+import uk.ac.york.cs.ecss.migrated.SingleExtensionResourceResolver;
 import uk.ac.york.cs.ecss.newproc.PropState.DynamicValuator;
 import uk.ac.york.cs.ecss.newproc.PropState.PropertyStore;
 import uk.ac.york.cs.ecss.priority.rigen.SlotAssignmentProblem.Slot;
@@ -115,7 +116,7 @@ public class TestXtendRule extends AbstractEcssXtendRule {
 		String postfix = "";
 		String extension = "xtend";
 		boolean addFolder = true;
-		CompleteManager cm = new CompleteManager(new ResourceLoaderImpl(new ResourceResolver(basePath, postfix, extension, addFolder)));
+		CompleteManager cm = new CompleteManager(new ResourceLoaderImpl(new SingleExtensionResourceResolver(basePath, postfix, extension, addFolder)));
 		SubSelector<CurrentRuleSelectionState> ss = new SubSelector<CurrentRuleSelectionState>() {
 			
 			@Override

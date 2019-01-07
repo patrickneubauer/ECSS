@@ -14,6 +14,7 @@ import org.junit.Test;
 import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
 import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
 import uk.ac.york.cs.ecss.migrated.ResourceResolver;
+import uk.ac.york.cs.ecss.migrated.SingleExtensionResourceResolver;
 
 /**
  * Note that these tests will produce projects containing Xtext sample grammar only.
@@ -50,7 +51,7 @@ public class BaseXtextProjectCreatorTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		ResourceResolver resolver = new ResourceResolver(new File(EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH), "", "ecore", true);
+		ResourceResolver resolver = new SingleExtensionResourceResolver(new File(EXAMPLE_DATA_FOLDER + TRANSFORMATION_INPUT_PATH), "", "ecore", true);
 		ecoreResourceLoader = new ResourceLoaderImpl(resolver);
 	}
 	
