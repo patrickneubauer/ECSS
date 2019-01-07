@@ -210,7 +210,7 @@ public class CompleteManager {
 		String preRet = ret.toString();
 //		System.out.println("PreRet: "+preRet);
 		// Now first read the model
-		Grammar gr = XtextSerialization.getGrammar(resourceLoader, preRet);
+		Grammar gr = XtextSerialization.getGrammar(preRet);
 		if (gr != null) {
 
 			Set<String> dataTypeNames = new HashSet<String>();
@@ -219,7 +219,7 @@ public class CompleteManager {
 				gr.getRules().clear();
 				gr.getRules().addAll(newRules);
 			}
-			String newRet = XtextSerialization.getString(resourceLoader, gr, dataTypeNames);
+			String newRet = XtextSerialization.getString(gr, dataTypeNames);
 			
 			if (newRet != null && !newRet.isEmpty()) {
 				preRet = newRet;

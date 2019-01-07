@@ -1,27 +1,30 @@
 package util;
 
-import com.google.inject.Injector;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.Grammar;
-import org.eclipse.xtext.XtextFactory;
 import org.eclipse.xtext.XtextStandaloneSetup;
 import org.eclipse.xtext.impl.GrammarImpl;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.xtext.GrammarResource;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.*;
+import com.google.inject.Injector;
 
 public class XtextSerialization {
 
 	private static XtextStandaloneSetup xtextSetup = new XtextStandaloneSetup();
 	private static Injector xtextInjector = xtextSetup.createInjectorAndDoEMFRegistration();
-	private static XtextFactory xfact = XtextFactory.eINSTANCE;
 	
 	public static Grammar getGrammar(String fullGrammar) {
 		XtextResourceSet rs = xtextInjector.getInstance(XtextResourceSet.class);
@@ -42,8 +45,9 @@ public class XtextSerialization {
 
 	public static String getString(Grammar gr, Collection<String> dataTypeNames) {
 		XtextResourceSet rs = xtextInjector.getInstance(XtextResourceSet.class);
-		//rs.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+		rs.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 		Resource regExpResource = rs.createResource(URI.createURI("file:/grammar.xtext"));
+
 		gr = EcoreUtil.copy(gr);
 		//TODO: Why doesn't this work??
 		List<String> usedGrammars = new ArrayList<String>();
