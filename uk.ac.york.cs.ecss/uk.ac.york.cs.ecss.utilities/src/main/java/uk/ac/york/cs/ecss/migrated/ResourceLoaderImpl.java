@@ -2,6 +2,7 @@ package uk.ac.york.cs.ecss.migrated;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.xtext.resource.XtextResourceSet;
 
 public class ResourceLoaderImpl extends ResourceLoader {
 
@@ -12,7 +13,7 @@ public class ResourceLoaderImpl extends ResourceLoader {
 
 	@Override
 	protected ResourceSet initResourceSet() {
-		return new ResourceSetImpl();
+		return new XtextResourceSet();
 	}
 
 

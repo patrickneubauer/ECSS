@@ -27,60 +27,123 @@ public abstract class ResourceLoader {
 	protected ResourceSet rs;
 	protected ResourceResolver resolver;
 	
+	/**
+	 * Create ResourceLoader and register all known factories (Ecore, Xtext, XtextBin, Ecss, Xmi, Xml, Default).
+	 * 
+	 * @param resolver
+	 */
 	public ResourceLoader(ResourceResolver resolver) {
-		this.resolver = resolver;
-		this.rs = initResourceSet();
-		register();
+		this(resolver, false);
 	}
 	
-	private void register() {
-		switch (resolver.getExtension()) {
-		
+	/**
+	 * Create ResourceLoader and register single or all known factories
+	 * 
+	 * @param resolver 
+	 * @param registerSingle if true, only single extension factory (based on ResourceResolver) is registered.
+	 */
+	public ResourceLoader(ResourceResolver resolver, boolean registerSingle) {
+		this.resolver = resolver;
+		this.rs = initResourceSet();
+		if ( registerSingle ) {
+			registerSingle();
+		} else {
+			registerAll();
+		}
+	}
+	
+	/**
+	 * Register all extension factories (default).
+	 */
+	private void registerAll() {
+		registerEcoreExtensionFactory();
+		TerminalsStandaloneSetup.doSetup(); 
+		registerXtextExtensionFactory();
+		registerXtextBinExtensionFactory();
+		registerEcssExtensionFactory();
+		registerXmiExtensionFactory();
+		registerXmlExtensionFactory();
+		registerDefaultExtensionFactory();
+	}
+	
+	private void registerSingle() {
+		if ( resolver instanceof SingleExtensionResourceResolver ) {
+			switch (((SingleExtensionResourceResolver)resolver).getExtension()) {
+			
 			case "ecore": 
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				("ecore", new EcoreResourceFactoryImpl());
+				registerEcoreExtensionFactory();
 				break;
 				
 			case "xtext":
-				TerminalsStandaloneSetup.doSetup();
-		        Injector xtextInjector = Guice.createInjector(new XtextRuntimeModule());
-		        IResourceFactory xtextResourceFactory = xtextInjector.getInstance(IResourceFactory.class);
-//		        IResourceServiceProvider xtextServiceProvider = xtextInjector.getInstance(IResourceServiceProvider.class);
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				("xtext", xtextResourceFactory);
+				TerminalsStandaloneSetup.doSetup(); 
+				registerXtextExtensionFactory();
 				break;
 				
 			case "xtextbin":
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				("xtextbin", new BinaryGrammarResourceFactoryImpl());
+				TerminalsStandaloneSetup.doSetup(); 
+				registerXtextBinExtensionFactory();
 				break;
 								
 			case "ecss":
-				TerminalsStandaloneSetup.doSetup();
-		        Injector ecssInjector = Guice.createInjector(new EcssLanguageRuntimeModule());
-		        IResourceFactory ecssResourceFactory = ecssInjector.getInstance(IResourceFactory.class);
-//		        IResourceServiceProvider ecssServiceProvider = ecssInjector.getInstance(IResourceServiceProvider.class);
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				("ecss", ecssResourceFactory);
+				TerminalsStandaloneSetup.doSetup(); 
+				registerEcssExtensionFactory();
 				break;
 				
 			case "xmi":
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				("xmi", new XMIResourceFactoryImpl());
+				registerXmiExtensionFactory();
 				break;
 				
 			case "xml":
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				("xml", new XMLResourceFactoryImpl());
+				registerXmlExtensionFactory();
 				break;
 				
 			default: 
-				rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
-				(Resource.Factory.Registry.DEFAULT_EXTENSION, 
-				 new XMIResourceFactoryImpl());
+				registerDefaultExtensionFactory();
 				break;
+			}
 		}
-		
+	}
+
+	private void registerDefaultExtensionFactory() {
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		(Resource.Factory.Registry.DEFAULT_EXTENSION, 
+		 new XMIResourceFactoryImpl());
+	}
+
+	private void registerXmlExtensionFactory() {
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		("xml", new XMLResourceFactoryImpl());
+	}
+
+	private void registerXmiExtensionFactory() {
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		("xmi", new XMIResourceFactoryImpl());
+	}
+
+	private void registerEcssExtensionFactory() {
+		Injector ecssInjector = Guice.createInjector(new EcssLanguageRuntimeModule());
+		IResourceFactory ecssResourceFactory = ecssInjector.getInstance(IResourceFactory.class);
+//		        IResourceServiceProvider ecssServiceProvider = ecssInjector.getInstance(IResourceServiceProvider.class);
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		("ecss", ecssResourceFactory);
+	}
+
+	private void registerXtextBinExtensionFactory() {
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		("xtextbin", new BinaryGrammarResourceFactoryImpl());
+	}
+
+	private void registerXtextExtensionFactory() {
+		Injector xtextInjector = Guice.createInjector(new XtextRuntimeModule());
+		IResourceFactory xtextResourceFactory = xtextInjector.getInstance(IResourceFactory.class);
+//		        IResourceServiceProvider xtextServiceProvider = xtextInjector.getInstance(IResourceServiceProvider.class);
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		("xtext", xtextResourceFactory);
+	}
+
+	private void registerEcoreExtensionFactory() {
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+		("ecore", new EcoreResourceFactoryImpl());
 	}
 	
 
