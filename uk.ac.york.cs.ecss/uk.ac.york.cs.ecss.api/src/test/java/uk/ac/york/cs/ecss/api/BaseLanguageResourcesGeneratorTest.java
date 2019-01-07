@@ -31,6 +31,7 @@ public class BaseLanguageResourcesGeneratorTest {
 	protected static final String DEFAULT_POSTFIX = "_DEFAULT";
 	protected static final String ENHANCED_POSTFIX = "_ENHANCED";
 	protected static final String DEFAULT_ECSS_POSTFIX = "_ECSS_DEFAULT";
+	protected static final String ECSS_LANGUAGE_OTHER_MODELS_PATH = "../uk.ac.york.cs.ecss.language.parent/uk.ac.york.cs.ecss.language/model/other/";
 
 	protected static List<String> languageFileExtensions = new LinkedList<String>();
 	

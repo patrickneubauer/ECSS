@@ -4,6 +4,8 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -40,6 +42,11 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 	private static final Logger logger = LogManager.getLogger(MainLanguageResourceGeneratorDataExampleTest.class);
 
 	protected static final String INPUT_DATA_FOLDER = "../../data-example";
+	protected static final String STYLES_FOLDER = "../../styles/";
+	protected static final String DEFAULT_STYLE_NAME = "default.ecss";
+	
+	protected static final String ECORE_PATH = INPUT_DATA_FOLDER + "/analysis/default-ecore/";
+
 
 	private String uniqueLanguageId;
 
@@ -52,7 +59,7 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 
 	@Parameters
 	public static List<File> data() {
-		File dataFolder = new File(INPUT_DATA_FOLDER + "/" + XTEXT_INPUT_PATH);
+		File dataFolder = new File(INPUT_DATA_FOLDER + XTEXT_INPUT_PATH);
 		File[] dataFolderFileArray = FileUtils.getListOfAcceptedFiles(dataFolder, GRAMMAR_FILE_EXTENSION);
 		return Arrays.asList(dataFolderFileArray);
 	}
@@ -60,9 +67,16 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 	public MainLanguageResourceGeneratorDataExampleTest(File inputFile) {
 		uniqueLanguageId = com.google.common.io.Files.getNameWithoutExtension(inputFile.toString());
 		languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
-		outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId);
-
+		outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + "/");
+		try {
+			Files.createDirectories(outputPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		generator.setLanguageName(languageName);
+		generator.setLanguageId(uniqueLanguageId);
 		generator.setOutputPath(outputPath);
 
 		logger.info("Running " + this.getClass().getName() + "( " + uniqueLanguageId + " )");
@@ -70,6 +84,12 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 
 	@BeforeClass
 	public static void setUp() throws Exception {
+		// prepare destination (wipe previously generated; re-create generation target location)
+		FileUtils.deleteDirectory(Paths.get(INPUT_DATA_FOLDER+OUTPUT_PATH));
+		Files.createDirectories(Paths.get(INPUT_DATA_FOLDER+OUTPUT_PATH));
+		// copy language language meta-model to generation target location, i.e. used by ResourceResolver
+//		Files.copy(Paths.get(ECORE_PATH+ECORE_FILE_NAME), Paths.get(INPUT_DATA_FOLDER+OUTPUT_PATH+ECORE_FILE_NAME));
+		
 		languageFileExtensions.add("mydsl");
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
 
@@ -78,8 +98,9 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 		List<File> basePaths = new LinkedList<File>();
 		basePaths.add(new File(INPUT_DATA_FOLDER+OUTPUT_PATH));
 		basePaths.add(new File(ECORE_PATH));
+		basePaths.add(new File(ECSS_LANGUAGE_OTHER_MODELS_PATH));
 		generator.setResourceResolver(MultiExtensionResourceResolver.get(basePaths,
-				"", true, "ecore", "ecss"));
+				"", true, "ecore", "ecss", "xtext"));
 		generator.getResourceLoader().loadAll();
 		EcoreKeywordConfig config = new EcoreKeywordConfig();
 		config.useKeywords = true;
@@ -87,7 +108,6 @@ public class MainLanguageResourceGeneratorDataExampleTest extends BaseLanguageRe
 				generator.getResourceLoader().getResourceSet(), config);
 		EcoreNameRelationDistanceManager man = new EcoreNameRelationDistanceManager(generator.getResourceLoader(), relation);
 		generator.initEcoreUtil(generator.getResourceLoader(), man);
-		
 	}
 
 	@Test

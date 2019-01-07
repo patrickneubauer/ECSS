@@ -50,8 +50,6 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	protected static final String INPUT_DATA_FOLDER = "../../sts-example";
 	protected static final String XTEXT_INPUT_PATH = "/grammar-variations/";
 	protected static final String ECORE_PATH = INPUT_DATA_FOLDER + "/meta-modelling/spacetransportationservice/model/";
-	protected static final String ECSS_LANGUAGE_OTHER_MODELS_PATH = "../uk.ac.york.cs.ecss.language.parent/uk.ac.york.cs.ecss.language/model/other/";
-	
 	protected static final String STYLES_FOLDER = "../../styles/";
 	protected static final String DEFAULT_STYLE_NAME = "default.ecss";
 	
