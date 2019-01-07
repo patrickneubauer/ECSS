@@ -15,23 +15,23 @@ public class ConvertToXmi {
 	
 
 	public static Resource getPropLResource(File ecsslFile) throws IOException {
-		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
-		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+//		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
 		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
 		return ecsslResource; 
 	} 
 
 
 	public static Resource getEcoreResource(File ecsslFile) throws IOException {
-		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
-		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+//		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
 		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
 		return ecsslResource; 
 	} 
 	
 	public static Resource getEcsslResource(File ecsslFile) throws IOException {
-		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
-		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+//		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
 		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
 		return ecsslResource; 
 	}
@@ -40,8 +40,8 @@ public class ConvertToXmi {
 		
 		File ecsslFile = new File("C:\\Users\\Robert\\Documents\\eclipse-modeling-neon-2-win32-x86_64\\eclipse\\workspacePatrickMaven\\runtime-EclipseApplication\\TestXtext\\cartest.ecss");
 		
-		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
-		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//		Injector injector = new EcssLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+//		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
 		Resource ecsslResource = rs.getResource(URI.createFileURI(ecsslFile.getCanonicalPath()), true);
 		Resource ecsslResourceXmi = rs.createResource(URI.createFileURI(ecsslFile.getCanonicalPath()+".xmi"));
 		ecsslResourceXmi.getContents().addAll(ecsslResource.getContents());
@@ -50,15 +50,15 @@ public class ConvertToXmi {
 
 
 	public static Resource getNewXtextResource(File file) throws IOException {
-		Injector injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
-		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//		Injector injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
+//		XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
 		Resource xtextResource = rs.createResource(URI.createFileURI(file.getCanonicalPath()));
 		return xtextResource;
 	}
 	
 	 public static Resource getOrCreateXtextResource(File file) throws IOException {
-		  Injector injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
-		  XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//		  Injector injector = new XtextStandaloneSetup().createInjectorAndDoEMFRegistration();
+//		  XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
 		  if (file.exists()) {
 		   Resource ecsslResource = rs.getResource(URI.createFileURI(file.getCanonicalPath()), true);
 		   return ecsslResource;
