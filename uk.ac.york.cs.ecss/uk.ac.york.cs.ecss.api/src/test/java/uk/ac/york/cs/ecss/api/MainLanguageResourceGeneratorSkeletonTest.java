@@ -3,8 +3,9 @@ package uk.ac.york.cs.ecss.api;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -21,7 +22,7 @@ public class MainLanguageResourceGeneratorSkeletonTest extends BaseLanguageResou
 	
 	private static final String UNIQUE_LANGUAGE_ID = "SKELETON"; // <== specify unique language name here
 
-	private static final Path outputPath = new Path(INPUT_DATA_FOLDER + OUTPUT_PATH);
+	private static final Path outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH);
 	private static final String languageName = LANGUAGE_NAME_PREFIX + "." + UNIQUE_LANGUAGE_ID;
 
 	private static LanguageResourcesGenerator generator;

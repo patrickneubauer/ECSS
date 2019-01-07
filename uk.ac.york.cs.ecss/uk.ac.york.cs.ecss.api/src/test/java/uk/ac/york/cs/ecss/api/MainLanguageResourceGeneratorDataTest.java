@@ -3,12 +3,13 @@ package uk.ac.york.cs.ecss.api;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -42,7 +43,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 
 	@Parameters
 	public static List<File> data() {
-		File dataFolder = new File(INPUT_DATA_FOLDER + Path.SEPARATOR + XTEXT_INPUT_PATH);
+		File dataFolder = new File(INPUT_DATA_FOLDER + "/" + XTEXT_INPUT_PATH);
 		File[] dataFolderFileArray = FileUtils.getListOfAcceptedFiles(dataFolder, "." + GRAMMAR_FILE_EXTENSION);
 		return Arrays.asList(dataFolderFileArray);
 	}
@@ -50,7 +51,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 	public MainLanguageResourceGeneratorDataTest(File inputFile) {
 		uniqueLanguageId = com.google.common.io.Files.getNameWithoutExtension(inputFile.toString());
 		languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
-		outputPath = new Path(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId);
+		outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId);
 
 		generator.setLanguageName(languageName);
 		generator.setOutputPath(outputPath);
@@ -64,7 +65,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
 
 		//File analysisModelFile = new File(INPUT_DATA_FOLDER + ECSSAL_MODEL_FILE_LOCATION);
-		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), 
+		generator = new MainLanguageResourcesGenerator(reportFile, Paths.get(""), 
 				languageProjectBaseName, "", languageFileExtensions);
 	}
 
@@ -97,7 +98,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 
 		try {
 			Resource xtextGrammar = generator.generateAndSerialiseDefaultGrammarResource(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -114,7 +115,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 
 		try {
 			Resource ecssModel = generator.generateStyleModel(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -131,7 +132,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 
 		try {
 			Resource ecssModel = generator.generateStyleModel(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION), true);
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION), true);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -146,7 +147,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 
 		try {
 			Resource ecssModel = generator.generateStyleModel(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION), false);
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION), false);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -160,7 +161,7 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 		logger.info("RUNNING: _4default_testGenerateGrammarFile: " + uniqueLanguageId);
 		try {
 			Resource xtextGrammar = generator.generateAndSerializeGrammar(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -173,11 +174,11 @@ public class MainLanguageResourceGeneratorDataTest extends BaseLanguageResources
 	public void _4specific_testGenerateGrammarFileFile() {
 		logger.info("RUNNING: _4specific_testGenerateGrammarFileFile: " + uniqueLanguageId);
 
-		File metamodelFile = new File(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + Path.SEPARATOR
+		File metamodelFile = new File(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + "/"
 				+ uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION);
 		try {
 			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + STYLE_FILE_EXTENSION));
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + STYLE_FILE_EXTENSION));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
