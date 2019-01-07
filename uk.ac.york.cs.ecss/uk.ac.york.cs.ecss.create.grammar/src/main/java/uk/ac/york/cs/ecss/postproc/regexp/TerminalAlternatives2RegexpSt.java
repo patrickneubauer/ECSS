@@ -1,6 +1,7 @@
 package uk.ac.york.cs.ecss.postproc.regexp;
 
 import org.eclipse.xtext.*;
+import org.eclipse.xtext.impl.ActionImpl;
 
 public class TerminalAlternatives2RegexpSt {
 	
@@ -83,6 +84,7 @@ public class TerminalAlternatives2RegexpSt {
 	
 
 	public static  String convert(AbstractElement ae, int prec) {
+		// skip if ae.elements == ae.elements.RullCallImpl.elements
 		String card = ae.getCardinality();
 		StringBuilder builder = new StringBuilder();
 		boolean didWrap = false;
@@ -175,6 +177,15 @@ public class TerminalAlternatives2RegexpSt {
 			}
 		} else if (ae instanceof UnorderedGroup) {
 			throw new UnsupportedOperationException("I think it should not occur");
+			
+		} else if (ae instanceof Action) {
+			System.out.println("Encountered 'Action'.");
+			// TODO: ???
+			
+		} else if (ae instanceof Assignment) {
+			System.out.println("Encountered 'Assignment'.");
+			// TODO: ???
+			
 		} else {
 			throw new UnsupportedOperationException("Cannot support "+ae);
 			
