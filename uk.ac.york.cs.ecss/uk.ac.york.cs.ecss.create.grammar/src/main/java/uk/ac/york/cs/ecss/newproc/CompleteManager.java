@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Grammar;
 import uk.ac.york.cs.ecss.language.ecssLanguage.*;
+import uk.ac.york.cs.ecss.migrated.ResourceLoader;
 import uk.ac.york.cs.ecss.postproc.regexp.RegexpManager;
 import util.GrammarUtils;
 import util.XtextSerialization;
@@ -25,6 +26,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CompleteManager {
+	
+	private ResourceLoader resourceLoader;
+
+	public CompleteManager(ResourceLoader loader) {
+		this.resourceLoader = loader;
+	}
 
 	private Set<SubSelector<? super CurrentRuleSelectionState>> propertyRules = new HashSet<>();
 	private TemplateManager tm = new TemplateManager(this);
@@ -92,17 +99,33 @@ public class CompleteManager {
 	}
 
 	/**
-	 * Side effect: will (!) set grammar name if null.
+	 * Generate header w/o use of 'org.eclipse.xtext.common.Terminals'.
 	 * 
 	 * @return
 	 */
 	public String generateHeader() {
+		return generateHeader(false);
+	}
+	
+	/**
+	 * 	Generate header w/ or w/o use of 'org.eclipse.xtext.common.Terminals'.
+	 * 
+	 * Side effect: will (!) set grammar name if null.
+	 * 
+	 * @param useXtextCommonTerminals 
+	 * @return
+	 */
+	public String generateHeader(boolean useXtextCommonTerminals) {
 		StringBuilder builder = new StringBuilder();
 		if ( grammarName == null ) {
 			setDefaultGrammarName();
 		}
 		
-		builder.append("grammar " + getGrammarName() + " with org.eclipse.xtext.common.Terminals \n");
+		if ( useXtextCommonTerminals ) {
+			builder.append("grammar " + getGrammarName() + " with org.eclipse.xtext.common.Terminals \n");			
+		} else {
+			builder.append("grammar " + getGrammarName() + " \n");			
+		}
 		builder.append("\n");
 		if (mainEcoreFile == null) {
 
@@ -113,20 +136,24 @@ public class CompleteManager {
 			builder.append("import mylang \"" + uri + "\"\n");
 		}
 		builder.append("import \"http://www.eclipse.org/emf/2002/Ecore\" as ecore\n\n");
+		//builder.append("import \"http://www.eclipse.org/2008/Xtext\"\n\n");
+				
 		return builder.toString();
 	}
 
 	/**
 	 * Sets default grammar name derived from Ns URI in language meta-model
+	 * 
+	 * (!) BEWARE: if a resource with the same name already exists in the ResourceSet, the serialization of an equally named Resource will fail !
 	 */
 	private void setDefaultGrammarName() {
 		if ( mainEcoreFile != null ) {
 			for ( EObject eObject : mainEcoreFile.getContents() ) {
 				if ( eObject instanceof EPackageImpl ) {
 					EPackageImpl ePackage = (EPackageImpl) eObject;
-					grammarName = GrammarUtils.extractGrammarUriFromNsURI(ePackage.getNsURI());						
+					grammarName = GrammarUtils.extractGrammarUriPartFromNsURI(ePackage.getNsURI());						
 					String languageName = ePackage.getName().substring(0, 1).toUpperCase() + ePackage.getName().substring(1);
-					languageName += "Language" + ""; // TODO (eventually): add ecss model file name, e.g. hutn.ecss (= LanguageHutn)
+					languageName += "Language";// + styleName; // TODO (eventually): add ecss model file name, e.g. hutn.ecss (= LanguageHutn)
 					grammarName += "." + languageName;
 				}
 			}
@@ -175,13 +202,15 @@ public class CompleteManager {
 			String generated = generatedRule.getString();
 			ret.append(generated+"\n\n");
 		}
+		
+		lateRet.append("terminal ID returns ecore::EString: '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;");
 
 		ret.append(lateRet);
 
 		String preRet = ret.toString();
-		System.out.println("PreRet: "+preRet);
+//		System.out.println("PreRet: "+preRet);
 		// Now first read the model
-		Grammar gr = XtextSerialization.getGrammar(preRet);
+		Grammar gr = XtextSerialization.getGrammar(resourceLoader, preRet);
 		if (gr != null) {
 
 			Set<String> dataTypeNames = new HashSet<String>();
@@ -190,7 +219,7 @@ public class CompleteManager {
 				gr.getRules().clear();
 				gr.getRules().addAll(newRules);
 			}
-			String newRet = XtextSerialization.getString(gr, dataTypeNames);
+			String newRet = XtextSerialization.getString(resourceLoader, gr, dataTypeNames);
 			
 			if (newRet != null && !newRet.isEmpty()) {
 				preRet = newRet;
@@ -285,6 +314,7 @@ public class CompleteManager {
 	}
 
 	private Set<Resource> haveImported = new HashSet<Resource>();
+//	private String styleName;
 
 	public void read(Resource baseRes, Model m) {
 		Config cfg = m.getConfig();
@@ -331,6 +361,7 @@ public class CompleteManager {
 	}
 
 	public void read(Resource r) {
+		//styleName = GrammarUtils.getStyleName(r.getURI().segment(r.getURI().segmentCount()-1));
 		r.getContents().forEach(x -> {
 			if (x instanceof Model) {
 				read(r, (Model) x);
