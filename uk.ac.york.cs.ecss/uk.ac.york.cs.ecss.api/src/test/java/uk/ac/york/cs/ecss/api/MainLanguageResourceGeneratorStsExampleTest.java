@@ -4,17 +4,20 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.mwe.utils.DirectoryCleaner;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -29,7 +32,7 @@ import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.migrated.EcoreKeywordConfig;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelation;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
-import uk.ac.york.cs.ecss.migrated.ResourceResolver;
+import uk.ac.york.cs.ecss.migrated.MultiExtensionResourceResolver;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 //@Ignore("to be executed manually")
@@ -47,7 +50,8 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	protected static final String INPUT_DATA_FOLDER = "../../sts-example";
 	protected static final String XTEXT_INPUT_PATH = "/grammar-variations/";
 	protected static final String ECORE_PATH = INPUT_DATA_FOLDER + "/meta-modelling/spacetransportationservice/model/";
-
+	protected static final String ECSS_LANGUAGE_OTHER_MODELS_PATH = "../uk.ac.york.cs.ecss.language.parent/uk.ac.york.cs.ecss.language/model/other/";
+	
 	protected static final String STYLES_FOLDER = "../../styles/";
 	protected static final String DEFAULT_STYLE_NAME = "default.ecss";
 	
@@ -70,9 +74,16 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	public MainLanguageResourceGeneratorStsExampleTest(File inputFile) {
 		uniqueLanguageId = com.google.common.io.Files.getNameWithoutExtension(inputFile.toString());
 		languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
-		outputPath = new Path(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId);
-
+		outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + "/");
+		try {
+			Files.createDirectories(outputPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		generator.setLanguageName(languageName);
+		generator.setLanguageId(uniqueLanguageId);
 		generator.setOutputPath(outputPath);
 
 		logger.info("Running " + this.getClass().getName() + "( " + uniqueLanguageId + " )");
@@ -89,19 +100,21 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 		languageFileExtensions.add(LANGUAGE_FILE_EXTENSION);
 		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
 
-		generator = new MainLanguageResourcesGenerator(reportFile, new Path(""), 
+		generator = new MainLanguageResourcesGenerator(reportFile, Paths.get(""), 
 				languageProjectBaseName, "", languageFileExtensions);
-		generator.setEcssResolver(ResourceResolver.get(new File(INPUT_DATA_FOLDER+OUTPUT_PATH),
-				"","ecss", true));
-		generator.setEcoreResolver(ResourceResolver.get(new File(ECORE_PATH),
-				"","ecore", true));
-		generator.getEcoreLoader().loadAll();
+		List<File> basePaths = new LinkedList<File>();
+		basePaths.add(new File(INPUT_DATA_FOLDER+OUTPUT_PATH));
+		basePaths.add(new File(ECORE_PATH));
+		basePaths.add(new File(ECSS_LANGUAGE_OTHER_MODELS_PATH));
+		generator.setResourceResolver(MultiExtensionResourceResolver.get(basePaths,
+				"", true, "ecore", "ecss", "xtext"));
+		generator.getResourceLoader().loadAll();
 		EcoreKeywordConfig config = new EcoreKeywordConfig();
 		config.useKeywords = true;
-		EcoreNameRelation relation = new EcoreNameRelation(reportFile.getAbsolutePath(), generator.getEcoreLoader().getResources(), 
-				generator.getEcoreLoader().getResourceSet(), config);
-		EcoreNameRelationDistanceManager man = new EcoreNameRelationDistanceManager(generator.getEcoreLoader(), relation);
-		generator.initEcoreUtil(generator.getEcoreLoader(), man);
+		EcoreNameRelation relation = new EcoreNameRelation(reportFile.getAbsolutePath(), generator.getResourceLoader().getResources(), 
+				generator.getResourceLoader().getResourceSet(), config);
+		EcoreNameRelationDistanceManager man = new EcoreNameRelationDistanceManager(generator.getResourceLoader(), relation);
+		generator.initEcoreUtil(generator.getResourceLoader(), man);
 		
 	}
 
@@ -113,6 +126,8 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 			Resource ecoreMetamodel = generator.generateMetamodel(
 					new File(INPUT_DATA_FOLDER + XTEXT_INPUT_PATH + uniqueLanguageId + "." + GRAMMAR_FILE_EXTENSION));
 			ecoreMetamodel.save(Collections.emptyMap());
+			
+			generator.getResourceLoader().getResources().remove(ecoreMetamodel);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -127,6 +142,7 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 			Resource ecoreMetamodel = generator.generateEnhancedMetamodel(new File(INPUT_DATA_FOLDER + XTEXT_INPUT_PATH
 					+ uniqueLanguageId + ENHANCED_POSTFIX + "." + GRAMMAR_FILE_EXTENSION));
 
+			generator.getResourceLoader().getResources().remove(ecoreMetamodel);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -139,6 +155,8 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 
 		try {
 			Resource xtextGrammar = generator.generateAndSerialiseDefaultGrammarResource(new File(ECORE_PATH + ECORE_FILE_NAME));
+	
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -156,8 +174,9 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 
 		try {
 			Resource ecssModel = generator.generateStyleModel(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION));
 
+			generator.getResourceLoader().getResources().remove(ecssModel);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -174,7 +193,9 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 
 		try {
 			Resource ecssModel = generator.generateStyleModel(new File(INPUT_DATA_FOLDER + OUTPUT_PATH
-					+ uniqueLanguageId + Path.SEPARATOR + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION), true);
+					+ uniqueLanguageId + "/" + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION), true);
+	
+			generator.getResourceLoader().getResources().remove(ecssModel);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -185,11 +206,14 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	 * ecore --> specific xtext grammar-based ecss style (non-optimized)
 	 */
 	@Test
+	@Ignore("remove @Ignore when feature implemented")
 	public void _3_testGenerateStyleModelFileBooleanFalse() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
 		try {
 			Resource ecssModel = generator.generateStyleModel(new File(ECORE_PATH + ECORE_FILE_NAME), false);
+			
+			generator.getResourceLoader().getResources().remove(ecssModel);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -202,8 +226,12 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	@Test
 	public void _4default_testGenerateAndSerializeGrammarFile() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
+		
+		File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
 		try {
-			Resource xtextGrammar = generator.generateAndSerializeGrammar(new File(ECORE_PATH + ECORE_FILE_NAME));
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile);
+	
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -214,12 +242,15 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	 * ecore --> specific ecss-based xtext grammar
 	 */
 	@Test
+	@Ignore("TEMP")
 	public void _4specific_testGenerateAndSerializeGrammarFileFile() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
 		File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
 		try {
-			Resource xtextGrammar = generator.generateAndSerializeGrammar(new File(ECORE_PATH + ECORE_FILE_NAME), new File(STYLES_FOLDER + DEFAULT_STYLE_NAME));
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + DEFAULT_STYLE_NAME));
+		
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -235,11 +266,13 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	public void _4specific_testGenerateOptimizedGrammarFileFile() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
-		File metamodelFile = new File(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + Path.SEPARATOR
+		File metamodelFile = new File(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + "/"
 				+ uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION);
 		try {
 			Resource xtextGrammar = generator.generateGrammar(metamodelFile, true);
 			xtextGrammar.save(new FileOutputStream(metamodelFile.getAbsolutePath()+".xtext"), Collections.emptyMap());
+		
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -248,6 +281,7 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	}
 
 	@Test
+	@Ignore("TEMP")
 	public void _5_testGenerateLanguageProject() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
