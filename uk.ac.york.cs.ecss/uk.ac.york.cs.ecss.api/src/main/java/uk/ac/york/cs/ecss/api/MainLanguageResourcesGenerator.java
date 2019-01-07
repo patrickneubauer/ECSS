@@ -3,11 +3,11 @@ package uk.ac.york.cs.ecss.api;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xtext.GrammarResource;
@@ -16,7 +16,6 @@ import com.google.common.io.Files;
 import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
-import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
 import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
 import uk.ac.york.cs.ecss.migrated.ResourceResolver;
 import uk.ac.york.cs.ecss.migrated.XtextToDefaultEcoreTransformer;
@@ -36,11 +35,16 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	protected String STYLE_LANGUAGE_FILE_EXTENSION = "ecss";
 	protected String DEFAULT_STYLE_GRAMMAR_FILE_NAME_POSTFIX = "_ECSS_DEFAULT";
 	
-	private ResourceResolver ecssResolver;
-	private ResourceResolver ecoreResolver;
-	
-	private ResourceLoaderImpl ecoreResourceLoader;
-	private ResourceLoaderImpl ecssResourceLoader;
+	private ResourceResolver resourceResolver;
+	private ResourceLoaderImpl resourceLoader;
+
+	public ResourceResolver getResourceResolver() {
+		return resourceResolver;
+	}
+
+	public ResourceLoaderImpl getResourceLoader() {
+		return resourceLoader;
+	}
 
 	private EcoreNameRelationDistanceManager distanceManager;
 	
@@ -55,24 +59,14 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		return outputPath;
 	}
 
-	public ResourceLoaderImpl getEcoreLoader() {
-		return ecoreResourceLoader;
-	}
-	
 	public void setOutputPath(Path outputPath) {
 		this.outputPath = outputPath;
 	}
 	
-	public void setEcssResolver(ResourceResolver resolver) {
-		this.ecssResolver = resolver; 
-		if ( ecssResourceLoader == null ) 
-			ecssResourceLoader = new ResourceLoaderImpl(ecssResolver);
-	}
-	
-	public void setEcoreResolver(ResourceResolver resolver) {
-		this.ecoreResolver = resolver;
-		if ( ecoreResourceLoader == null ) 
-			ecoreResourceLoader = new ResourceLoaderImpl(ecoreResolver);
+	public void setResourceResolver(ResourceResolver resolver) {
+		this.resourceResolver = resolver; 
+		if ( resourceLoader == null ) 
+			resourceLoader = new ResourceLoaderImpl(resourceResolver);
 	}
 	
 	public void initEcoreUtil(ResourceLoaderImpl loader, EcoreNameRelationDistanceManager man) {
@@ -81,11 +75,11 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		this.distanceManager.generateInstances();
 	}
 	
-	public void loadEcoreModelsAndDistances() {
-		if ( ecoreResourceLoader == null ) {
-			logger.error("CANNOT LOAD ECORE MODELS AND GENERATE DISTANCES --- EcoreLoader has not been initialized. Call setEcoreResolver(..) first!");
+	public void loadModelsAndDistances() {
+		if ( resourceLoader == null ) {
+			logger.error("CANNOT LOAD MODELS AND GENERATE DISTANCES --- ResourceLoader has not been initialized. Call setResourceResolver(..) first!");
 		} else { 
-			ecoreResourceLoader.loadAll();
+			resourceLoader.loadAll();
 			this.distanceManager.generateInstances();			
 		}
 	}
@@ -115,6 +109,8 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	protected List<String> languageFileExtensions;
 	
 	protected Resource analysisModelResource;
+
+	private String languageId;
 	
 	/**
 	 * Initialize {@link MainLanguageResourcesGenerator} 
@@ -139,41 +135,36 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	}
 
 	public GrammarResource generateAndSerializeGrammar(File ecoreMetamodelFile, File ecssModelFile) {
-		File targetFile;
-		if (ecssModelFile.equals(DEFAULT_STYLE_MODEL_FILE)) {
-			targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(ecoreMetamodelFile.toString()) + DEFAULT_STYLE_GRAMMAR_FILE_NAME_POSTFIX + "." + GRAMMAR_FILE_EXTENSION);
-		} else {
-			targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(ecoreMetamodelFile.toString()) + "." + GRAMMAR_FILE_EXTENSION);
-		}
+		File targetFile = new File(outputPath.toString() + "/" + languageId + "." + GRAMMAR_FILE_EXTENSION);
 
-		Resource ecoreResource = ecoreResourceLoader.getResourceSet().getResource(URI.createFileURI(ecoreMetamodelFile.getAbsolutePath()), true);
+		Resource ecoreResource = resourceLoader.getResourceSet().getResource(URI.createFileURI(ecoreMetamodelFile.getAbsolutePath()), true);
 		
 		/* TODO is ResourceLoaderImpl capable of loading ecss models?  */
-		Resource ecssResource = ecssResourceLoader.getResourceSet().getResource(URI.createFileURI(ecssModelFile.getAbsolutePath()), true);
+		Resource ecssResource = resourceLoader.getResourceSet().getResource(URI.createFileURI(ecssModelFile.getAbsolutePath()), true);
 		
-		CompleteManager cm = new CompleteManager();
+		CompleteManager cm = new CompleteManager(resourceLoader);
+		cm.setGrammarName(languageName);
 		cm.read(ecssResource);
 		
 		cm.prepareFor(ecoreResource);
 		cm.getTemplateManager().addTemplate(EnumXtendRule.class, "enumRules");
 		cm.getTemplateManager().addTemplate(TerminalXtendRule.class, "terminalRules");
 		
-		/* TODO is ResourceLoaderImpl capable of loading ecss models?  */
-		Resource newXtextResource = ecssResourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
+		Resource newXtextResource = resourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
 		cm.saveInResource(newXtextResource);	
 		
 		// create resource by loading from disk
-		GrammarResource grammarResource = (GrammarResource) ecssResourceLoader.getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);
+		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);
 		
 		return grammarResource;
 	}
 	
 	private File getOptimizedEcssFile(Resource ecoreFile) {
-		return ecssResolver.resolveFromOther(ecoreFile,"","_optimized");
+		return resourceResolver.resolveFromOther(ecoreFile,"","_optimized");
 	}
 	
 	public Resource getBestMatch(File ecoreMetamodelFile) throws IOException {
-		Resource res = ecoreResourceLoader.getResourceSet().getResource(URI.createFileURI(ecoreMetamodelFile.getCanonicalPath()),true);
+		Resource res = resourceLoader.getResourceSet().getResource(URI.createFileURI(ecoreMetamodelFile.getCanonicalPath()),true);
 		double[] val = new double[1];
 		Resource ret = distanceManager.getBestMatch(res, val);
 		logger.info("Best match for "+ecoreMetamodelFile.getName()+" is "+ret.getURI()+" with value "+val[0]);
@@ -204,8 +195,8 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	 */
 	@Deprecated
 	public Resource generateStyleModel(File ecoreMetamodelFile, boolean optimize) throws Exception {
-		File grammarFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(ecoreMetamodelFile.toString()) + "." + GRAMMAR_FILE_EXTENSION);
-		File styleModelFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(ecoreMetamodelFile.toString()) + "." + STYLE_LANGUAGE_FILE_EXTENSION);
+		File grammarFile = new File(outputPath.toString() + "/" + Files.getNameWithoutExtension(ecoreMetamodelFile.toString()) + "." + GRAMMAR_FILE_EXTENSION);
+		File styleModelFile = new File(outputPath.toString() + "/" + Files.getNameWithoutExtension(ecoreMetamodelFile.toString()) + "." + STYLE_LANGUAGE_FILE_EXTENSION);
 
 		if (optimize) {
 			// case: w/ style model optimization
@@ -224,7 +215,7 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		}
 
 		// create resource by loading from disk
-		Resource styleModelResource =  ecssResourceLoader.getResourceSet().createResource(URI.createFileURI(styleModelFile.toString()));
+		Resource styleModelResource =  resourceLoader.getResourceSet().createResource(URI.createFileURI(styleModelFile.toString()));
 	
 		return styleModelResource;
 	}
@@ -233,27 +224,27 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		// TODO implement use of XMLIntellEdit for enhanced ecore metamodel generation
 		return null;
 	}
-
+	
 	public Resource generateMetamodel(File grammarFile) {
-		File targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(grammarFile.toString()) + "." + METAMODEL_FILE_EXTENSION);
+		File targetFile = new File(outputPath.toString() + "/" + Files.getNameWithoutExtension(grammarFile.toString()) + "." + METAMODEL_FILE_EXTENSION);
 
 		XtextToDefaultEcoreTransformer transformer = new XtextToDefaultEcoreTransformer(reportFile.toString());
 
         transformer.handle( grammarFile, targetFile );
-        Resource metamodelResource = ecoreResourceLoader.getResourceSet().createResource(URI.createFileURI( targetFile.toString()));
+        Resource metamodelResource = resourceLoader.getResourceSet().createResource(URI.createFileURI( targetFile.toString()));
        
         return metamodelResource;
 	}
-
+	
 	public MavenTychoXtextProjectCreator generateLanguageProject(File parentProjectLocationPath) throws Exception {
-		MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(ecoreResourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
+		MavenTychoXtextProjectCreator projectCreator = new MavenTychoXtextProjectCreator(resourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
 	
 		projectCreator.prepareDestination(parentProjectLocationPath);
 		projectCreator.create(parentProjectLocationPath.toString());
 		
 		return projectCreator;
 	}
-
+	
 	/**
 	 * Generates and returns default Xtext grammar based on given Ecore meta-model.
 	 * 
@@ -262,9 +253,9 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	 * @throws Exception
 	 */
 	public CharSequence generateDefaultGrammarCharSequence(File languageMetamodelFile) throws Exception {
-		File targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(languageMetamodelFile.toString()) + "_DEFAULT." + GRAMMAR_FILE_EXTENSION);
+		File targetFile = new File(outputPath.toString() + "/" + languageId + "_XTEXT_DEFAULT." + GRAMMAR_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(resourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
 		return projectCreator.obtainDefaultGrammar(languageMetamodelFile.toString());	
 	}
 	
@@ -276,16 +267,16 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	 * @throws Exception
 	 */
 	public GrammarResource generateAndSerialiseDefaultGrammarResource(File languageMetamodelFile) throws Exception {
-		File targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(languageMetamodelFile.toString()) + "_DEFAULT." + GRAMMAR_FILE_EXTENSION);
+		File targetFile = new File(outputPath.toString() + "/" + Files.getNameWithoutExtension(languageMetamodelFile.toString()) + "_DEFAULT." + GRAMMAR_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(resourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
 		CharSequence grammarCharSequence = projectCreator.obtainDefaultGrammar(languageMetamodelFile.toString());
 		
 		// save result to disk
 		FileUtils.save(grammarCharSequence, targetFile, DEFAULT_ENCODING);
 		
 		// create resource by loading from disk
-		GrammarResource grammarResource = (GrammarResource) ecssResourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
+		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
 		
 		return grammarResource;
 	}
@@ -298,13 +289,13 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	 * @throws Exception
 	 */
 	public GrammarResource generateDefaultGrammarResource(File languageMetamodelFile) throws Exception {
-		File targetFile = new File(outputPath.toString() + Path.SEPARATOR + Files.getNameWithoutExtension(languageMetamodelFile.toString()) + "_DEFAULT." + GRAMMAR_FILE_EXTENSION);
+		File targetFile = new File(outputPath.toString() + "/" + Files.getNameWithoutExtension(languageMetamodelFile.toString()) + "_DEFAULT." + GRAMMAR_FILE_EXTENSION);
 
-		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(ecoreResourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
+		BaseXtextProjectCreator projectCreator = new BaseXtextProjectCreator(resourceLoader, reportFile.toString(), languageProjectBaseName, languageName, languageFileExtensions);
 		CharSequence grammarCharSequence = projectCreator.obtainDefaultGrammar(languageMetamodelFile.toString());
 		
 		// create resource by loading from disk
-		GrammarResource grammarResource = (GrammarResource) ecssResourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
+		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
 		
 		return grammarResource;
 	}
@@ -312,6 +303,14 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	public MavenTychoXtextProjectCreator generateEnhancedLanguageProject(File parentProjectLocationPath) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void setLanguageId(String uniqueLanguageId) {
+		this.languageId = uniqueLanguageId;		
+	}
+
+	public String getLanguageId() {
+		return languageId;
 	}
 
 }
