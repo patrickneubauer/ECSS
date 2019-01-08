@@ -2,6 +2,7 @@
 # Ecore Concrete Syntax Specification Framework
 
 #### Setup:
+* Oracle Java Development Kit 1.8.0 151 (jdk-8u151)
 * Eclipse Modeling Tools Photon Release (4.8.0) Build id: 20180619-1200 - [eclipse.org download page](http://www.eclipse.org/downloads/packages/release/2018-09/r/eclipse-modeling-tools)
 * Xtext Complete SDK version 2.15.0.v20180916-1232 - [eclipse.org update site](http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/)
 * m2e - Maven Integration for Eclipse (includes Incubating components) version 1.9.0.20180606-2036 - [eclipse.org update site](http://download.eclipse.org/technology/m2e/releases)
