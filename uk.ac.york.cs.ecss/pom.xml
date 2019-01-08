@@ -14,14 +14,13 @@
     <name>uk.ac.york.cs.ecss</name>
 
     <modules>
+    
+        <!-- STYLE LANGUAGE MODULE (independent) -->
+        <!-- Xtext-based style language -->
+        <!-- Also an Eclipse-plugin; offers web integration and has LSP support -->
+        <module>uk.ac.york.cs.ecss.language.parent</module>
 
-        <!-- FRAMEWORK UTILITIES MODULE (independent) -->
-        <module>uk.ac.york.cs.ecss.utilities</module>
-
-        <!-- XTEXT LANGUAGE PROJECTS-CREATOR (independent) -->
-        <!--  IN: (XTEXT | ECORE)  ==>  OUT: XTEXT LANGUAGE PROJECTS  -->
-        <!-- TODO (low priority): merge with "uk.ac.york.cs.ecss.utilities" module -->
-        <module>uk.ac.york.cs.ecss.create.project</module>
+		<!-- /////////////////////////////////////////////////////////////// -->
 
         <!-- SIMPLEREG LANGUAGE MODULE (independent) -->
         <!-- Xtext-based language to capture regular expressions defined as part of style models -->
@@ -29,12 +28,17 @@
         <module>uk.ac.york.cs.ecss.simpleregexp.simplereg.parent</module>
 
         <!-- /////////////////////////////////////////////////////////////// -->
+        
+        <!-- FRAMEWORK UTILITIES MODULE (depends on "uk.ac.york.cs.ecss.language" module only) -->
+        <module>uk.ac.york.cs.ecss.utilities</module>
+        
+        <!-- /////////////////////////////////////////////////////////////// -->
 
-        <!-- STYLE LANGUAGE MODULE (depends on "uk.ac.york.cs.ecss.simpleregexp.simplereg" module only) -->
-        <!-- Xtext-based style language -->
-        <!-- Also an Eclipse-plugin; offers web integration and has LSP support -->
-        <module>uk.ac.york.cs.ecss.language.parent</module>
-
+        <!-- XTEXT LANGUAGE PROJECTS-CREATOR (independent) -->
+        <!--  IN: (XTEXT | ECORE)  ==>  OUT: XTEXT LANGUAGE PROJECTS  -->
+        <!-- TODO (low priority): merge with "uk.ac.york.cs.ecss.utilities" module -->
+        <module>uk.ac.york.cs.ecss.create.project</module>
+        
         <!-- /////////////////////////////////////////////////////////////// -->
 
         <!-- STYLE-CREATOR FOR XTEXT GRAMMAR MODULE (depends on "uk.ac.york.cs.ecss.language" module only) -->
