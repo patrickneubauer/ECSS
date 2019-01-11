@@ -67,6 +67,7 @@ public class MavenTychoXtextProjectCreator extends BaseXtextProjectCreator {
 			    */
 	}
 	
+	// TODO: implement MavenTychoXtextProjectCreator.build() by use of build-in maven JAR instead of OS-installed maven
 //	/**
 //	 * builds the created project
 //	 * 
