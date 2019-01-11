@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -69,6 +70,18 @@ public class FileUtils {
 	 * @param fileLocation file location where to look for 
 	 * @param fileName file name to look for
 	 */
+	public static boolean containsFileByName(File fileLocation, String fileName) {
+		if ( findFirstFileByExtension(fileLocation, fileName ) != null ) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param fileLocation file location where to look for 
+	 * @param fileName file name to look for
+	 */
 	public static File findFirstFileByName(File fileLocation, String fileName) {
 
 	        for ( File f : listFileTree(fileLocation) ) {
@@ -88,6 +101,24 @@ public class FileUtils {
 		}
 	}
 	
+	/**
+	 * Return file content as CharSequence by reading it using default character set
+	 * 
+	 * @param sourceFile
+	 * @return
+	 * @throws Exception
+	 */
+	public static CharSequence read(File sourceFile) throws Exception {
+		return read(sourceFile, Charset.defaultCharset());
+	}
+	
+	/**
+	 * Return file content as CharSequence by reading it using specified character set
+	 * 
+	 * @param sourceFile
+	 * @return
+	 * @throws Exception
+	 */
 	public static CharSequence read(File sourceFile, Charset encoding) throws Exception {
 		try {
 			byte[] readResult = Files.readAllBytes(sourceFile.toPath());
