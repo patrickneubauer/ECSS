@@ -156,6 +156,9 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		// create resource by loading from disk
 		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);
 		
+		// TODO: SERIALIZE ecoreMetamodelFile and ADD it as referencedResource in MWE2 workflow !!!
+		// Otherwise, runWorkflow() will not succeed !
+		
 		return grammarResource;
 	}
 	

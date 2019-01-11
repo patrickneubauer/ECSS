@@ -1,17 +1,23 @@
 package uk.ac.york.cs.ecss.api;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -52,6 +58,10 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	protected static final String ECORE_PATH = INPUT_DATA_FOLDER + "/meta-modelling/spacetransportationservice/model/";
 	protected static final String STYLES_FOLDER = "../../styles/";
 	protected static final String DEFAULT_STYLE_NAME = "default.ecss";
+	protected static final String YAML_STYLE_NAME = "yaml.ecss";
+	protected static final String HUTN_STYLE_NAME = "hutn.ecss";
+	protected static final String WSAWARE_STYLE_NAME = "wsaware.ecss";
+
 	
 	private String uniqueLanguageId;
 
@@ -74,6 +84,7 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 		languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
 		outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + "/");
 		try {
+			FileUtils.deleteDirectory(outputPath);
 			Files.createDirectories(outputPath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -152,8 +163,13 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
 		try {
-			Resource xtextGrammar = generator.generateAndSerialiseDefaultGrammarResource(new File(ECORE_PATH + ECORE_FILE_NAME));
-	
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+			File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", "_DEFAULT.xtext"));
+
+			assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
+			Resource xtextGrammar = generator.generateAndSerialiseDefaultGrammarResource(metamodelFile);
+			assertTrue( Files.exists( Paths.get( xtextGrammar.getURI().toString() ) ) );
+			
 			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
 		} catch (Exception e) {
@@ -219,15 +235,19 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	}
 
 	/**
-	 * ecore --> default ecss-based xtext grammar
+	 * Tests the generation of Xtext grammar from given ecore (by using default ecss)
 	 */
 	@Test
 	public void _4default_testGenerateAndSerializeGrammarFile() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 		
-		File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
 		try {
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+			File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", ".xtext"));
+
+			assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
 			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile);
+			assertTrue( Files.exists( Paths.get( xtextGrammar.getURI().toString() ) ) );
 	
 			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
@@ -237,17 +257,86 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	}
 
 	/**
-	 * ecore --> specific ecss-based xtext grammar
+	 * Tests the generation of Xtext grammar from given ecore + default ecss
 	 */
 	@Test
-	@Ignore("TEMP")
-	public void _4specific_testGenerateAndSerializeGrammarFileFile() {
+	public void _4specific_testGenerateAndSerializeGrammarFileFileDefaultStyle() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
-		File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
 		try {
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+			File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", ".xtext"));
+
+			assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
 			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + DEFAULT_STYLE_NAME));
-		
+			assertTrue( Files.exists( Paths.get( xtextGrammar.getURI().toString() ) ) );
+			
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
+			logger.info("test completed!");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Tests the generation of Xtext grammar from given ecore + YAML-based ecss
+	 */
+	@Test
+	public void _4specific_testGenerateAndSerializeGrammarFileFileYamlStyle() {
+		logger.info("Running test on " + uniqueLanguageId + " ...");
+
+		try {
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+			File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", ".xtext"));
+
+			assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + YAML_STYLE_NAME));
+			assertTrue( Files.exists( Paths.get( xtextGrammar.getURI().toString() ) ) );
+			
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
+			logger.info("test completed!");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Tests the generation of Xtext grammar from given ecore + HUTN-based ecss
+	 */
+	@Test
+	public void _4specific_testGenerateAndSerializeGrammarFileFileHutnStyle() {
+		logger.info("Running test on " + uniqueLanguageId + " ...");
+
+		try {
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+			File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", ".xtext"));
+
+			assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + HUTN_STYLE_NAME));
+			assertTrue( Files.exists( Paths.get( xtextGrammar.getURI().toString() ) ) );		
+			
+			generator.getResourceLoader().getResources().remove(xtextGrammar);
+			logger.info("test completed!");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Tests the generation of Xtext grammar from given ecore + WsAware-based ecss
+	 */
+	@Test
+	public void _4specific_testGenerateAndSerializeGrammarFileFileWsAwareStyle() {
+		logger.info("Running test on " + uniqueLanguageId + " ...");
+
+		try {
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+			File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", ".xtext"));
+
+			assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + WSAWARE_STYLE_NAME));
+			assertTrue( Files.exists( Paths.get( xtextGrammar.getURI().toString() ) ) );
+			
 			generator.getResourceLoader().getResources().remove(xtextGrammar);
 			logger.info("test completed!");
 		} catch (Exception e) {
@@ -277,25 +366,45 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 			logger.error(e.getMessage());
 		}
 	}
+	
+	
 
+	
+	/**
+	 * Tests the generation of Maven Tycho Xtext project skeleton containing MWE2 and Xtext file
+	 */
 	@Test
-	@Ignore("TEMP")
-	public void _5_testGenerateLanguageProject() {
+	public void _5_testGenerateLanguageProjectSkeleton() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
 		try {
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
+		
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+			
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
+			
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
 	
+	/**
+	 * Tests the execution of MWE2 workflow producing [languageName]StandaloneSetupGenerated.java (among others)
+	 */
 	@Test
 	public void _5_testGenerateLanguageProjectAndRunWorkflow() {
 		try {
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
+
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
 			projectCreator.runWorkflow();
+			
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
+			
 			logger.info("test completed!");
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -303,7 +412,7 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	}
 
 	@Test
-	@Ignore("temporarily")
+	@Ignore("implement MavenTychoXtextProjectCreator.build() by use of build-in maven JAR instead of OS-installed maven")
 	public void _5withBuild_testGenerateAndBuildLanguageProject() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
 
@@ -348,19 +457,63 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 	@Test
 	public void _6_testGenerateDefaultGrammarAndLanguageProjectWithGrammarReplacement() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
-	
+			
 		try {
-			CharSequence xtextGrammar = generator.generateDefaultGrammarCharSequence(new File(ECORE_PATH + ECORE_FILE_NAME));
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
+			
 			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+			CharSequence skeletonGrammar = FileUtils.read( FileUtils.findFirstFileByName(outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext") );
+
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + DEFAULT_STYLE_NAME));
+			projectCreator.replaceGrammar(outputPath.toString(), xtextGrammar); // <====
+			CharSequence nonSkeletonGrammar = FileUtils.read( FileUtils.findFirstFileByName(outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext") );
 			
-			projectCreator.replaceGrammar(outputPath.toString(), xtextGrammar);
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
+			assertFalse( skeletonGrammar.equals( nonSkeletonGrammar ) ); 
 			
+			generator.getResourceLoader().getResources().remove(xtextGrammar);		
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
 
+	@Test
+	@Ignore("TODO: SERIALIZE ecoreMetamodelFile and ADD it as referencedResource in MWE2 workflow !!!\n" + 
+			"Otherwise, runWorkflow() will not succeed ! See MainLanguageResourceGenerator.generateAndSerializeGrammar(..)")
+	public void _6_testGenerateDefaultGrammarAndLanguageProjectWithGrammarReplacementAndRunWorkflow() {
+		logger.info("Running test on " + uniqueLanguageId + " ...");
+			
+		try {
+			File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
+
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
+			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
+			
+			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+			CharSequence skeletonGrammar = FileUtils.read( FileUtils.findFirstFileByName(outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext") );
+
+			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + DEFAULT_STYLE_NAME));
+			projectCreator.replaceGrammar(outputPath.toString(), xtextGrammar);
+			projectCreator.runWorkflow(); // <====
+			CharSequence nonSkeletonGrammar = FileUtils.read( FileUtils.findFirstFileByName(outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext") );
+			
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
+			assertFalse( skeletonGrammar.equals( nonSkeletonGrammar ) ); 
+			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
+			
+			generator.getResourceLoader().getResources().remove(xtextGrammar);		
+			logger.info("test completed!");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 	public static void main(String args[]) {
 		org.junit.runner.JUnitCore.main("uk.ac.york.cs.ecss.api.MainLanguageResourceGeneratorStsExampleTest");
 	}
