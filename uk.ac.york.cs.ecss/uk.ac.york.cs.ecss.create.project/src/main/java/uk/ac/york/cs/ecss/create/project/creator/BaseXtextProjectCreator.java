@@ -1,16 +1,21 @@
 package uk.ac.york.cs.ecss.create.project.creator;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -18,9 +23,16 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.XtextStandaloneSetup;
+import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.impl.Serializer;
+import org.eclipse.xtext.serializer.sequencer.ContextFinder;
+import org.eclipse.xtext.serializer.sequencer.IContextFinder;
 import org.eclipse.xtext.util.Strings;
+import org.eclipse.xtext.xtext.GrammarResource;
 import org.eclipse.xtext.xtext.wizard.Ecore2XtextConfiguration;
 import org.eclipse.xtext.xtext.wizard.cli.CliProjectsCreator;
 import org.eclipse.xtext.xtext.wizard.ecore2xtext.Ecore2XtextGrammarCreator;
@@ -132,6 +144,24 @@ public class BaseXtextProjectCreator {
 			e.printStackTrace();
 		}
 		logger.info("Successfully replaced grammar in file " + targetFile.getName());
+	}
+	
+	/**
+	 * replace grammar by looking for file with extension "xtext" as each creator
+	 * places it somewhere different
+	 * 
+	 * @param targetProjectRootLocation
+	 * @param xtextGrammar
+	 */
+	public void replaceGrammar(String targetProjectRootLocation, Resource xtextGrammar) {
+		try {
+			OutputStream outputStream = new ByteArrayOutputStream();
+			xtextGrammar.save(outputStream, SaveOptions.newBuilder().format().getOptions().toOptionsMap());
+			replaceGrammar(targetProjectRootLocation, outputStream.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error("FAILED TO REPLACE GRAMMAR: " + e.getMessage());
+		}	
 	}
 
 	/**
