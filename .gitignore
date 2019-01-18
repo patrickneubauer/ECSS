@@ -6,7 +6,7 @@ bin/
 
 # classpath and eclipse project files
 #*.classpath
-#.project
+*.project
 
 # settings and configurations
 .settings/
