@@ -4,8 +4,9 @@ bin/
 *.xtendbin
 *.class
 
-# classpath files
-*.classpath
+# classpath and eclipse project files
+#*.classpath
+#.project
 
 # settings and configurations
 .settings/
@@ -39,7 +40,6 @@ xtend-gen/
 *.rar
 
 # OS-specific, IDE, and analysis artifacts
-.project
 *.DS_Store
 .fseventsd/
 *dependency-graph.dot
