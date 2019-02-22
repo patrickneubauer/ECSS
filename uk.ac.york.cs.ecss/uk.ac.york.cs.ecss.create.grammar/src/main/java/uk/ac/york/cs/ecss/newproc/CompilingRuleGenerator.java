@@ -534,17 +534,17 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 		}
 		for (TemplateRulePart trp: rule.getIdPart()) {
 			rg.process(ID_NAME, trp);
-		}
+		} 
 		String fullName = getQN(classSimpleName);
 		String content = rg.getClassContent();
 		//System.out.println("Generated class " + fullName + ":\n" + content);
 		File tempGen = new File("temp-gen"+File.separator+fullName.replace(".",File.separator));
-		tempGen.getParentFile().mkdirs();
+		tempGen.getParentFile().mkdirs(); 
 		try (FileOutputStream fos = new FileOutputStream(tempGen.getAbsolutePath()+".java")) {
 			fos.write(content.getBytes());
 			fos.flush();
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e1.printStackTrace();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
