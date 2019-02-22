@@ -28,7 +28,8 @@ public interface TemplateCreator<T extends AbstractEcssXtendRule> {
 					T newInstance = con.newInstance(parameters);
 					ret.add(newInstance);
 				} catch (Exception e) {
-
+					e.printStackTrace();
+					System.err.println("Cannot generate: "+e.getMessage());
 				}
 			}
 			return ret;

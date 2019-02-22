@@ -244,7 +244,8 @@ public class CompleteManager {
 					e.printStackTrace();
 				}
 			} 
-			if (!saved) {
+			//TODO: Postprocessing wird dann nicht aufgerufen!
+			if (true || !saved) {
 				FileOutputStream fos = new FileOutputStream(r.getURI().toFileString());
 				fos.write(generated.string.getBytes());
 				fos.flush();

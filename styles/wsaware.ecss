@@ -1,17 +1,19 @@
 template attributeTemplate : uk.ac.york.cs.ecss.newproc.AttributeXtendRule;
 template singleAttributeTemplate : uk.ac.york.cs.ecss.newproc.SingleAttributeXtendRule;
 template classTemplate : uk.ac.york.cs.ecss.newproc.AbstractClassBasedXtendRule;
+template beginTemplate : uk.ac.york.cs.ecss.newproc.SyntheticBegin;
+template endTemplate : uk.ac.york.cs.ecss.newproc.SyntheticEnd;
 templateGen attributeGenTemplate extends attributeTemplate;
 templateGen singleAttributeGenTemplate extends singleAttributeTemplate;  
 templateGen classGenTemplate extends classTemplate; 
 
-//javarule attributeTemplate attributeRule :: attributeRules;
-//javarule classTemplate classRule :: classRules;
+javarule beginTemplate beginRule :: BEGIN;
+javarule endTemplate endRule :: END;
  
  /*
 rule attributeGenTemplate attributeRule :: attributeRules:	
 	#"for (org.eclipse.emf.ecore.EStructuralFeature esf: features) {"
-		$featname " " $#"esf.getName()" " "
+		$featname " " $#"esf.getName()" " " 
 	#"}"
 ;
 
@@ -25,13 +27,20 @@ rule attributeGenTemplate attributeRule2 :: attributeRules:
 rule classGenTemplate defaultClassRule :: classRules:
 	$class.name " returns " $class.name ":"
 	#"if (loc_subClasses.isEmpty()) {"
-		"{" $class.name "}" "'" $class.name "'" $booleanDistRules(§optional[ 0 .. 99]) $nameDistRules(§name[ 0 .. 1]) "'{'"
+	"{" $class.name "}"	
+	#"if (slot_name.getValues().isEmpty()) {"
+		" '" $class.name "' "	" ':' "
+	#"} else {"
+		$nameDistRules(§name[ 0 .. 1])
+	#"}"
+	$@BEGIN() " ("
 			$attributeDistRules(§other[ 0 .. 99]) 
-		"'}'"
+		")"
+	$@END() 
 	#"} else { "
 	for subCl: loc_subClasses join " | " {
 			$@classRules(subCl)
-	}
+	}	
 	#"}" ';'
 ;
 
@@ -43,37 +52,55 @@ rule attributeGenTemplate defaultAttributeDistr :: attributeDistRules:
 
 
 rule attributeGenTemplate arbitraryAttributeDistr :: attributeDistRules:
-	"("
-	for esf: features join ") | (" {
-		$attributeRule(esf)
-		#"List<EStructuralFeature> smallerFeatures = new ArrayList(features);"
-		#"smallerFeatures.remove(esf);\nboolean first = true;"
-		"(("
-		for EStructuralFeature sub: smallerFeatures join ") & (" {
-			"','" $attributeRule(sub)
-		} "))"
-	} ")"
+	#"List<EStructuralFeature> sortedFeatures = new ArrayList<>(features);"
+	#"sortedFeatures.sort((x,y)->-Boolean.compare(x.isRequired(),y.isRequired()));"
+	for esf: sortedFeatures join ' & ' {
+		"(" $attributeRule(esf) ")" 
+	} 
 ;
-
+/*
 rule attributeGenTemplate booleanAttributeDistr :: booleanDistRules:
 	for esf: features {
-		"(" $#"esf.getName()" "?= \"" $#"esf.getName()" "\")?"	
+		"( " $#"esf.getName()" " ?= \"" $#"esf.getName()" "\" )?"	
 	}
-;
+;*/
 
 
 rule attributeGenTemplate nameAttributeDistr :: nameDistRules:
 	for esf: features {
-		"(" $#"esf.getName()" " = ID)?" 
+		" '" $#"esf.getName()" "' " " ':' "  $#"esf.getName()" " = " 
+		#"if (esf.getEType() != null && esf.getEType().getInstanceClass() == String.class) {"
+			"ID "
+		#"} else {"
+			$sensibleTerminal(esf) " "
+		#"}"
 	}
 ;
 
 rule singleAttributeGenTemplate defaultAttribute :: attributeRule:
 	#"if (feature.getLowerBound() == 0) {" "(" #"}"
-		" " $feature.name " " $xtextOperator " " $sensibleTerminal(feature) " "
+		" '" $feature.name "' " " ':' " 
+		#"if (feature instanceof EReference) {"
+			$@BEGIN() " "
+		#"if (!((EReference)feature).isContainment()) {"
+			" '- ' "
+		#"}"	
+		#"}" " "
+		 $feature.name $xtextOperator " " $sensibleTerminal(feature) " "
 	#"if (feature.isMany()) {"
-		"( ',' " $feature.name " " $xtextOperator " " $sensibleTerminal(feature) ")*"
+		"(" 
+		#"if (feature instanceof EReference) {"
+		#"if (!((EReference)feature).isContainment()) {"
+			" '- ' "
+		#"}"	
+		#"}"
+//		" ',' "
+		$feature.name $xtextOperator " " $sensibleTerminal(feature) " "
+		 ")*"
 	#"}" 
+	#"if (feature instanceof EReference) {"
+			$@END() " "
+		#"}"
 	#"if (feature.getLowerBound() == 0) {" ")?" #"}"
 ;
 
@@ -87,19 +114,20 @@ rule singleAttributeGenTemplate defaultTerminal :: sensibleTerminal:
 			"[" $@classRules("feature.getEType()") "]"
 		#"}" 
 	#"} else { if (feature.getEType() instanceof EEnum) {"
-		//Some terminal - just take the etype
+		//Some terminal - just take the etype 
 		$@enumRules("feature.getEType()")
-	#"} else {"
+	#"} else {" 
 		$@terminalRules("feature.getEType()")
 	#"}}"
 ;
 
 * {
 	slot(name, name): 2.0;
+	slot(*["eType.oclIsKindOf(EEnum)"], name): 2.0;
 	slot(*,other): 0.5;
 	slot(*["(not many) and ( eType.name = 'Boolean' or eType.name = 'boolean')"],optional): 2.0;
-	template(arbitraryAttributeDistr): -1.5;
-	template(defaultAttributeDistr): 1.5;
+	template(arbitraryAttributeDistr): 1.5;
+	template(defaultAttributeDistr): -1.5;
 	template(attributeRule): -0.5;
 	//template(attributeRule): 1.5;
 	a: "out";	

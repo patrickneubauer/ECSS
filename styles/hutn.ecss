@@ -24,6 +24,7 @@ rule attributeGenTemplate attributeRule2 :: attributeRules:
 
 rule classGenTemplate defaultClassRule :: classRules:
 	$class.name " returns " $class.name ":"
+	
 	#"if (loc_subClasses.isEmpty()) {"
 		"{" $class.name "}" "'" $class.name "'" $booleanDistRules(§optional[ 0 .. 99]) $nameDistRules(§name[ 0 .. 1]) "'{'"
 			$attributeDistRules(§other[ 0 .. 99]) 

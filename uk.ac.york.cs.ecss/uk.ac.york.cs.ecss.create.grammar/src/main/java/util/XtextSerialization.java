@@ -101,7 +101,7 @@ public class XtextSerialization {
 	// ----------- MOVED FROM GrammarCreator START ---------------
 	public static void postProcessStrings(List<String> str) {
 		for (int i = 0; i < str.size(); ++i) {
-			String line = str.get(i);
+			String line = str.get(i).replace("\r", "");
 			if (line.isEmpty()) {continue;}
 			if (Character.isWhitespace(line.charAt(0))) {
 				continue;

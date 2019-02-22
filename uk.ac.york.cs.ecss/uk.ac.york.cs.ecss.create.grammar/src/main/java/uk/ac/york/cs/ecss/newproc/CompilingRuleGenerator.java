@@ -1,5 +1,9 @@
 package uk.ac.york.cs.ecss.newproc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -259,15 +263,15 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 				String value = ec.getName();
 				EList<TemplateParameterValue> parValue = ec.getParValue();
 				StringBuilder functionCall = new StringBuilder();
-				functionCall.append("callRule"+(ec.isIsReference()?"Ref":"")+"(\"" + value + "\",");
+				functionCall.append("callRule"+(ec.isIsReference()?"Ref":"")+"(\"" + value + "\"");
 				{
 					boolean first = true;
 					for (TemplateParameterValue tpv : parValue) {
-						if (first) {
-							first = false;
-						} else {
+//						if (first) {
+//							first = false;
+//						} else {
 							functionCall.append(",");
-						}
+//						}
 						
 						functionCall.append(getContent(tpv));
 					}
@@ -534,6 +538,18 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 		String fullName = getQN(classSimpleName);
 		String content = rg.getClassContent();
 		//System.out.println("Generated class " + fullName + ":\n" + content);
+		File tempGen = new File("temp-gen"+File.separator+fullName.replace(".",File.separator));
+		tempGen.getParentFile().mkdirs();
+		try (FileOutputStream fos = new FileOutputStream(tempGen.getAbsolutePath()+".java")) {
+			fos.write(content.getBytes());
+			fos.flush();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Reflect compile = Reflect.compile(fullName, content);
 		try {
 			return compile.get();

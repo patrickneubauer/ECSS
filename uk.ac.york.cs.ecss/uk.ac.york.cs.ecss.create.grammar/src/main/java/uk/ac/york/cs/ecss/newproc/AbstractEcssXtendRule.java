@@ -6,6 +6,9 @@ import uk.ac.york.cs.ecss.priority.rigen.SlotAssignmentProblem.Slot;
 import util.NamedElement;
 
 import javax.annotation.Nonnull;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import java.math.BigDecimal;
 import java.util.*;
 
