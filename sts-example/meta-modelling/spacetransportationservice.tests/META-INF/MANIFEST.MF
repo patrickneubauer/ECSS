@@ -12,5 +12,6 @@ Export-Package: spacetransportationservice.tests
 Require-Bundle: org.eclipse.core.runtime,
  spacetransportationservice;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
- org.junit;visibility:=reexport
+ org.junit;visibility:=reexport,
+ org.eclipse.emf.common
 Bundle-ActivationPolicy: lazy

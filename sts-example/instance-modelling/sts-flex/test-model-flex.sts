@@ -1,0 +1,20 @@
+spacetransp {
+	engineTypes {
+		EngineType a {
+			fuelKind x
+		}
+	}
+	spacecra {
+		Spacecraft s1 {
+			countryOfOrigin USA
+			relaunchCostInMioUSD 123
+		}
+	}
+	launchSites {
+		operational LaunchSite l1 {
+			numberOfLaunchpads 4
+			locationLongitude 321.321
+			locationLatitude 123.123
+		}
+	}
+}

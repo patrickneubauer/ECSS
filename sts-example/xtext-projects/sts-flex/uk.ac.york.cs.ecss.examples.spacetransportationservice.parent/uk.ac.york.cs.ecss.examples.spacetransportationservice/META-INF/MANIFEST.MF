@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: uk.ac.york.cs.ecss.examples.spacetransportationservice
+Bundle-ManifestVersion: 2
+Bundle-Name: uk.ac.york.cs.ecss.examples.spacetransportationservice
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: uk.ac.york.cs.ecss.examples.spacetransportationservice; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: spacetransportationservice,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: uk.ac.york.cs.ecss.examples.spacetransportationservice.parser.antlr,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.serializer,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.formatting2,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.services,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.parser.antlr.internal,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.generator,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.scoping,
+ uk.ac.york.cs.ecss.examples.spacetransportationservice.validation
+Import-Package: org.apache.log4j
