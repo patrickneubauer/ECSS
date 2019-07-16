@@ -32,20 +32,20 @@ rule defaultClassRule: classGenTemplate :: classRules:
 	for subCl: loc_subClasses join " | " {
 			::classRules(subCl)
 	}
-	[% }" ';'
+	[% } %] ';'
 ;
 
-rule attributeGenTemplate defaultAttributeDistr :: attributeDistRules:
+rule defaultAttributeDistr: attributeGenTemplate :: attributeDistRules:
 	for esf: features {
-		$attributeRule(esf)
+		[%= attributeRule(esf) %]
 	}
 ;
 
 
-rule attributeGenTemplate arbitraryAttributeDistr :: attributeDistRules:
+rule arbitraryAttributeDistrattributeGenTemplate  :: attributeDistRules:
 	"("
 	for esf: features join ") | (" {
-		$attributeRule(esf)
+		[%= attributeRule(esf) %]
 		[% List<EStructuralFeature> smallerFeatures = new ArrayList(features); %]
 		[% smallerFeatures.remove(esf);\nboolean first = true; %]
 		"(("
@@ -57,40 +57,40 @@ rule attributeGenTemplate arbitraryAttributeDistr :: attributeDistRules:
 
 rule booleanAttributeDistr: attributeGenTemplate :: booleanDistRules:
 	for esf: features {
-		"(" $#"esf.getName()" "?= \"" $#"esf.getName()" "\")?"	
+		"(" [%= esf.getName() %] "?= \"" [%= esf.getName() %] "\")?"	
 	}
 ;
 
 
-rule attributeGenTemplate nameAttributeDistr :: nameDistRules:
+rule nameAttributeDistr: attributeGenTemplate :: nameDistRules:
 	for esf: features {
-		"(" $#"esf.getName()" " = ID)?" 
+		"(" [%= esf.getName() %] " = ID)?" 
 	}
 ;
 
-rule singleAttributeGenTemplate defaultAttribute :: attributeRule:
+rule defaultAttribute: singleAttributeGenTemplate :: attributeRule:
 	[% if (feature.getLowerBound() == 0) {" "(" [% } %]
-		" " $feature.name " " $xtextOperator " " $sensibleTerminal(feature) " "
+		" " [%= feature.name %] " " [%= xtextOperator %] " " [%= sensibleTerminal(feature) %] " "
 	[% if (feature.isMany()) { %]
-		"( ',' " $feature.name " " $xtextOperator " " $sensibleTerminal(feature) ")*"
+		"( ',' " [%= feature.name %] " " [%= xtextOperator %] " " [%= sensibleTerminal(feature) %] ")*"
 	[% } %]
 	[% if (feature.getLowerBound() == 0) {" ")?" [% } %]
 ;
 
-rule singleAttributeGenTemplate defaultTerminal :: sensibleTerminal:
+rule defaultTerminal: singleAttributeGenTemplate :: sensibleTerminal:
 	[% if (feature instanceof EReference) { %]
 		[% if (((EReference)feature).isContainment()) {"
 			//Just the class name
 			::classRules("feature.getEType()")
 		[% } else { %]
 			//A reference to the class name
-			"[" $@classRules("feature.getEType()") "]"
+			"[" ::classRules("feature.getEType()") "]"
 		[% } %]
 	[% } else { if (feature.getEType() instanceof EEnum) {"
 		//Some terminal - just take the etype
 		::enumRules("feature.getEType()")
 	[% } else { %]
-		$@terminalRules("feature.getEType()")
+		::terminalRules("feature.getEType()")
 	[% }} %]
 ;
 

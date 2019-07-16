@@ -12,16 +12,16 @@ javarule endTemplate endRule :: END;
  
  /*
 rule attributeGenTemplate attributeRule :: attributeRules:	
-	[% for (org.eclipse.emf.ecore.EStructuralFeature esf: features) {"
-		$featname " " $[% esf.getName()" " " 
-	[% }"
+	[% for (org.eclipse.emf.ecore.EStructuralFeature esf: features) { %]
+		[%= featname %] " " [%= esf.getName() %] " " 
+	[% } %]
 ;
 
  
 rule attributeGenTemplate attributeRule2 :: attributeRules:	
-	[% for (org.eclipse.emf.ecore.EStructuralFeature esf: features) {"
-		$featname "..." $[% esf.getName()" " "
-	[% }"
+	[% for (org.eclipse.emf.ecore.EStructuralFeature esf: features) { %]
+		[%= featname %] "..." [%= esf.getName() %] " "
+	[% } %]
 ;*/
 
 rule defaultClassRule: classGenTemplate :: classRules:
@@ -61,14 +61,14 @@ rule arbitraryAttributeDistr: attributeGenTemplate :: attributeDistRules:
 /*
 rule attributeGenTemplate booleanAttributeDistr :: booleanDistRules:
 	for esf: features {
-		"( " $[% esf.getName()" " ?= \"" $[% esf.getName()" "\" )?"	
+		"( " [%= esf.getName() %] " ?= \"" [%= esf.getName() %] "\" )?"	
 	}
 ;*/
 
 
 rule nameAttributeDistr: attributeGenTemplate :: nameDistRules:
 	for esf: features {
-		" '" $#"esf.getName()" "' " " ':' "  $#"esf.getName()" " = " 
+		" '" [%= esf.getName() %] "' " " ':' "  [%= esf.getName() %] " = " 
 		[% if (esf.getEType() != null && esf.getEType().getInstanceClass() == String.class) { %]
 			"ID "
 		[% } else { %]
@@ -101,7 +101,7 @@ rule defaultAttribute: singleAttributeGenTemplate :: attributeRule:
 	[% if (feature instanceof EReference) { %]
 			::END() " "
 		[% } %]
-	[% if (feature.getLowerBound() == 0) {" ")?" [% } %]
+	[% if (feature.getLowerBound() == 0) { %] ")?" [% } %]
 ;
 
 rule defaultTerminal: singleAttributeGenTemplate :: sensibleTerminal:
@@ -113,9 +113,9 @@ rule defaultTerminal: singleAttributeGenTemplate :: sensibleTerminal:
 			//A reference to the class name
 			"[" ::classRules("feature.getEType()") "]"
 		[% } %]
-	[% } else { if (feature.getEType() instanceof EEnum) {"
+	[% } else { if (feature.getEType() instanceof EEnum) { %]
 		//Some terminal - just take the etype 
-		$@enumRules("feature.getEType()")
+		::enumRules("feature.getEType()")
 	[% } else { %]
 		::terminalRules("feature.getEType()")
 	[% }} %]
