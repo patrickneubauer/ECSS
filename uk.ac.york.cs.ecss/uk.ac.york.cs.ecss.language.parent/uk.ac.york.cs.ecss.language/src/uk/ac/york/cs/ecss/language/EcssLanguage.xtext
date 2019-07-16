@@ -55,11 +55,11 @@ TemplateRule:
 	BasicTemplateRule | TemplateGeneratorRule;
 
 BasicTemplateRule:
-	'javarule' type=[TemplateDef|ID] (name=ID) ('::' (groups+=ID)+)? ';'
+	'javarule'  type=[TemplateDef|ID] (name=ID)  ('::' (groups+=ID)+)? ';'
 ;
 
 TemplateGeneratorRule:
-	'rule' (type=[TemplateGenDef|ID]) (name=ID) ('::' (groups+=ID)+)? ('with' (typeDef+= TypeDef (',' typeDef+=TypeDef)*))?  ('id' (
+	'rule' (name=ID) ':' (type=[TemplateGenDef|ID]) ('::' (groups+=ID)+)? ('with' (typeDef+= TypeDef (',' typeDef+=TypeDef)*))?  ('id' (
 		idPart+=TemplateRulePart
 	)|('{'
 		(idPart+=TemplateRulePart)+
@@ -97,29 +97,40 @@ StaticTemplateRulePart:
 ;
 
 TemplateFunctionCall:
-	'$'(isReference?='@')?(name=ID)'(' (parValue+=TemplateParameterValue (',' parValue+= TemplateParameterValue)*)? ')'
+	(isReference?='::')?(name=ID)'(' (parValue+=TemplateParameterValue (',' parValue+= TemplateParameterValue)*)? ')'
 ;
 
 SlotCall:
-	'§'(name=ID) ('[' minValue=INT ('..' maxValue=INT) ']')?
+	//'~'
+	(name=ID) ('[' minValue=INT ('..' maxValue=INT) ']')
 ;
 
 LocalOrValueCall:
-	'$'(name=ID|name=QUALIFIEDNAME)
+	//'~'
+	(name=ID|name=QUALIFIEDNAME)
 ;
 
 
 LocalEvaluationCall:
-	'$#' value=STRING
+	value=EC_TERM1
 ;
 
 TemplateParameterValue:
-	('$' propName=ID) | (varName=ID) | ('§' slotName=ID  ('[' minValue=INT ('..' maxValue=INT) ']')?) | (direct=STRING)
+	('~' propName=ID) | (varName=ID) | (/*'~'*/ slotName=ID  ('[' minValue=INT ('..' maxValue=INT) ']')) | (direct=STRING)
 ;
 
 EvaluationCall:
-	'#' value=STRING
+	 value=EC_TERM2
 ;
+
+terminal EC_TERM1:
+ '[%=' -> '%]';
+ 	 
+ 	 
+terminal EC_TERM2:
+  '[%' !'='	 -> '%]';
+  	 
+
 
 PropertyRule:
 	{PropertyRule}

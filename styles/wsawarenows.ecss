@@ -1,0 +1,78 @@
+template attributeTemplate : uk.ac.york.cs.ecss.newproc.AttributeXtendRule;
+template singleAttributeTemplate : uk.ac.york.cs.ecss.newproc.SingleAttributeXtendRule;
+template classTemplate : uk.ac.york.cs.ecss.newproc.AbstractClassBasedXtendRule;
+template beginTemplate : uk.ac.york.cs.ecss.newproc.SyntheticBegin;
+template endTemplate : uk.ac.york.cs.ecss.newproc.SyntheticEnd;
+templateGen attributeGenTemplate extends attributeTemplate;
+templateGen singleAttributeGenTemplate extends singleAttributeTemplate;  
+templateGen classGenTemplate extends classTemplate; 
+
+javarule beginTemplate beginRule :: BEGIN;
+javarule endTemplate endRule :: END;
+ 
+rule defaultClassRule: classGenTemplate  :: classRules:
+	class.name " returns " class.name ":"
+	[% if (loc_subClasses.isEmpty()) {%]
+		"{" class.name "}" "'" class.name "'" booleanDistRules(optional[ 0 .. 99]) nameDistRules(name[ 0 .. 1]) "'{'"
+			attributeDistRules(other[ 0 .. 99]) 
+		"'}'"
+	[% } else { %]
+	for subCl: loc_subClasses join " | " {
+			::classRules(subCl)
+	}
+	[% }%] ';'
+;
+
+rule defaultAttributeDistr: attributeGenTemplate  :: attributeDistRules:
+	for esf: features {
+		attributeRule(esf)
+	}
+;
+
+
+
+rule nameAttributeDistr: attributeGenTemplate  :: nameDistRules:
+	for esf: features {
+		" '" [%= esf.getName()%] "' " " ':' "  [%= esf.getName()%] " = " 
+		[% if (esf.getEType() != null && esf.getEType().getInstanceClass() == String.class) {%]
+			"ID "
+		[% } else {%]
+			sensibleTerminal(esf) " "
+		[% }%]
+	}
+;
+
+rule defaultAttribute: singleAttributeGenTemplate  :: attributeRule:
+	[% if (feature.getLowerBound() == 0) {%] "(" [% }%]
+		" " feature.name " " xtextOperator " " sensibleTerminal(feature) " "
+	[% if (feature.isMany()) {%]
+		"( ',' " feature.name " " xtextOperator " " sensibleTerminal(feature) ")*"
+	[% }%] 
+	[% if (feature.getLowerBound() == 0) {%] ")?" [% }%]
+;
+
+rule defaultTerminal: singleAttributeGenTemplate  :: sensibleTerminal:
+	[% if (feature instanceof EReference) {%]
+		[% if (((EReference)feature).isContainment()) {%]
+			//Just the class name
+			::classRules("feature.getEType()")
+		[% } else {%]
+			//A reference to the class name
+			"[" ::classRules("feature.getEType()") "]"
+		[% }%] 
+	[% } else { if (feature.getEType() instanceof EEnum) {%]
+		//Some terminal - just take the etype 
+		::enumRules("feature.getEType()")
+	[% } else {%] 
+		::terminalRules("feature.getEType()")
+	[% }}%]
+;
+
+* {
+	slot(name, name): 2.0;
+	slot(*["eType.oclIsKindOf(EEnum)"], name): 2.0;
+	slot(*,other): 0.5;
+	slot(*["(not many) and ( eType.name = 'Boolean' or eType.name = 'boolean')"],optional): 2.0;
+	template(attributeRule): -0.5;
+	classname: ocl "rule.class.name";
+}  

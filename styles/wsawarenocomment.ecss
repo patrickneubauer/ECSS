@@ -1,0 +1,22 @@
+import "wsAware.ecss";
+
+template attributeTemplate : uk.ac.york.cs.ecss.newproc.AttributeXtendRule;
+templateGen attributeGenTemplate extends attributeTemplate;
+
+rule arbitraryAttributeDistr: attributeGenTemplate    :: attributeDistRules:
+	"("
+	for esf: features join ") | (" {
+		attributeRule(esf)
+		[% List<EStructuralFeature> smallerFeatures = new ArrayList(features); %]
+		[% smallerFeatures.remove(esf);\nboolean first = true; %]
+		"(("
+		for EStructuralFeature sub: smallerFeatures join ") & (" {
+			"','" attributeRule(sub)
+		} "))"
+	} ")"
+;
+
+* {
+	template(arbitraryAttributeDistr): 1.5;
+	template(defaultAttributeDistr): -1.5;
+}  

@@ -10,88 +10,88 @@ templateGen classGenTemplate extends classTemplate;
  
  /*
 rule attributeGenTemplate attributeRule :: attributeRules:	
-	#"for (org.eclipse.emf.ecore.EStructuralFeature esf: features) {"
-		$featname " " $#"esf.getName()" " "
-	#"}"
+	[% for (org.eclipse.emf.ecore.EStructuralFeature esf: features) { %]
+		[%= featname %] " " $# "esf.getName()" " "
+	[% } %]
 ;
 
  
 rule attributeGenTemplate attributeRule2 :: attributeRules:	
-	#"for (org.eclipse.emf.ecore.EStructuralFeature esf: features) {"
-		$featname "..." $#"esf.getName()" " "
-	#"}"
+	[% for (org.eclipse.emf.ecore.EStructuralFeature esf: features) { %]
+		[%= featname %] "..." $# "esf.getName()" " "
+	[% } %]
 ;*/
 
-rule classGenTemplate defaultClassRule :: classRules:
-	$class.name " returns " $class.name ":"
-	#"if (loc_subClasses.isEmpty()) {"
-		"{" $class.name "}" "'" $class.name "'" $booleanDistRules(§optional[ 0 .. 99]) $nameDistRules(§name[ 0 .. 1]) "'{'"
-			$attributeDistRules(§other[ 0 .. 99]) 
+rule defaultClassRule: classGenTemplate  :: classRules:
+	[%= class.name %]" returns " [%= class.name %] ":"
+	[% if (loc_subClasses.isEmpty()) { %]
+		"{" [%= class.name %] "}" "'" [%= class.name %]"'" [%= booleanDistRules(optional[ 0 .. 99]) %] [%= nameDistRules(name[ 0 .. 1]) %] "'{'"
+			[%= attributeDistRules(other[ 0 .. 99]) %]
 		"'}'"
-	#"} else { "
+	[% } else { %]
 	for subCl: loc_subClasses join " | " {
-			$@classRules(subCl)
+			::classRules(subCl)
 	}
-	#"}" ';'
+	[% } %] ';'
 ;
 
-rule attributeGenTemplate defaultAttributeDistr :: attributeDistRules:
+rule defaultAttributeDistr: attributeGenTemplate :: attributeDistRules:
 	for esf: features {
-		$attributeRule(esf)
+		[%= attributeRule(esf) %]
 	}
 ;
 
 
-rule attributeGenTemplate arbitraryAttributeDistr :: attributeDistRules:
+rule arbitraryAttributeDistr: attributeGenTemplate :: attributeDistRules:
 	"("
 	for esf: features join ") | (" {
-		$attributeRule(esf)
-		#"List<EStructuralFeature> smallerFeatures = new ArrayList(features);"
-		#"smallerFeatures.remove(esf);\nboolean first = true;"
+		[%= attributeRule(esf) %]
+		[% List<EStructuralFeature> smallerFeatures = new ArrayList(features); %]
+		[% smallerFeatures.remove(esf);\nboolean first = true; %]
 		"(("
 		for EStructuralFeature sub: smallerFeatures join ") & (" {
-			"','" $attributeRule(sub)
+			"','" [%= attributeRule(sub) %]
 		} "))"
 	} ")"
 ;
 
-rule attributeGenTemplate booleanAttributeDistr :: booleanDistRules:
+rule booleanAttributeDistr: attributeGenTemplate :: booleanDistRules:
 	for esf: features {
-		"(" $#"esf.getName()" "?= \"" $#"esf.getName()" "\")?"	
+		"(" $# "esf.getName()" "?= \"" $# "esf.getName()" "\")?"	
 	}
 ;
 
 
 rule attributeGenTemplate nameAttributeDistr :: nameDistRules:
 	for esf: features {
-		"(" $#"esf.getName()" " = ID)?" 
+		"(" $# "esf.getName()" " = ID)?" 
 	}
 ;
 
 rule singleAttributeGenTemplate defaultAttribute :: attributeRule:
-	#"if (feature.getLowerBound() == 0) {" "(" #"}"
+	[% if (feature.getLowerBound() == 0) {" "(" [% } %]
 		" " $feature.name " " $xtextOperator " " $sensibleTerminal(feature) " "
-	#"if (feature.isMany()) {"
+	[% if (feature.isMany()) { %]
 		"( ',' " $feature.name " " $xtextOperator " " $sensibleTerminal(feature) ")*"
-	#"}" 
-	#"if (feature.getLowerBound() == 0) {" ")?" #"}"
+	[% } %]
+	[% if (feature.getLowerBound() == 0) {" ")?" [% } %]
 ;
 
 rule singleAttributeGenTemplate defaultTerminal :: sensibleTerminal:
-	#"if (feature instanceof EReference) {"
-		#"if (((EReference)feature).isContainment()) {"
+	[% if (feature instanceof EReference) { %]
+		[% if (((EReference)feature).isContainment()) { %]
 			//Just the class name
-			$@classRules("feature.getEType()")
-		#"} else {"
+			::classRules("feature.getEType()")
+		[% } else { %]
 			//A reference to the class name
 			"[" $@classRules("feature.getEType()") "]"
-		#"}" 
-	#"} else { if (feature.getEType() instanceof EEnum) {"
+		[% } %]
+	[% } else { if (feature.getEType() instanceof EEnum) { %]
 		//Some terminal - just take the etype
-		$@enumRules("feature.getEType()")
-	#"} else {"
+		::enumRules("feature.getEType()")
+	[% } else { %]
 		$@terminalRules("feature.getEType()")
-	#"}}"
+	[% }} %]
 ;
 
 * {
