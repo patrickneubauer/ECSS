@@ -1,8 +1,6 @@
 package uk.ac.york.cs.ecss.api;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -10,20 +8,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.mwe.utils.DirectoryCleaner;
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -33,7 +27,6 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.migrated.EcoreKeywordConfig;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelation;

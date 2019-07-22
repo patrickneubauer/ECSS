@@ -11,8 +11,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import uk.ac.york.cs.ecss.api.LanguageResourcesGenerator;
-import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 
 @Ignore("SKELETON TO CREATE INDIVIDUAL TESTS ONLY")

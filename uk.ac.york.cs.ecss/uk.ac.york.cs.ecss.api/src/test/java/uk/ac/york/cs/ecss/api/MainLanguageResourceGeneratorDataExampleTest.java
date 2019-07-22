@@ -25,14 +25,11 @@ import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import uk.ac.york.cs.ecss.api.MainLanguageResourcesGenerator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.migrated.EcoreKeywordConfig;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelation;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
 import uk.ac.york.cs.ecss.migrated.MultiExtensionResourceResolver;
-import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
-import uk.ac.york.cs.ecss.migrated.ResourceResolver;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 //@Ignore("to be executed manually")
