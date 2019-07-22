@@ -98,7 +98,8 @@
 			<artifactId>emf.compare</artifactId>
 			<version>3.3.1</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare_3.3.1.201608311750.jar</systemPath>
+			<!-- <systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare_3.3.1.201608311750.jar</systemPath>-->
+			<systemPath>${project.basedir}/../common-resources/libs/org.eclipse.emf.compare_3.5.3.201905300200.jar</systemPath>
 		</dependency>
 
 	</dependencies>
