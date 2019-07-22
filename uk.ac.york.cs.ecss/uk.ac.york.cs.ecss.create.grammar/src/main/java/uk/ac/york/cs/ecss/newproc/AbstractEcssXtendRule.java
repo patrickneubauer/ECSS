@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -32,6 +33,9 @@ public abstract class AbstractEcssXtendRule implements NamedElement {
 	
 	public void initParent(AbstractEcssXtendRule parentRule) {
 		this.parentRule = parentRule;
+		if (this.manager != null) {
+			this.manager.register(this);
+		}
 		this.manager.getCompleteManager().addCompoundDependentRule(parentRule, this);
 		
 		if (parentRule != null) {
@@ -130,12 +134,45 @@ public abstract class AbstractEcssXtendRule implements NamedElement {
 	
 	public Map<Object, Map<Slot, Double>> objectToSlotMap = new HashMap<>();
 	
-	/**Does everything from initialization to string generation*/
-	public String generateString(TemplateManager manager, AbstractEcssXtendRule parentRule) {
+	private boolean generated = false;
+	private boolean initialized = false;
+	
+	public void initForGeneration(TemplateManager manager, AbstractEcssXtendRule parentRule) {
+		if (initialized) {return;}
+		initialized = true;
 		initManager(manager);
 		initParent(parentRule);
 		afterInit();
-		return cachedString=getString();
+		
+	}
+	
+	/**Does everything from initialization to string generation*/
+	public String generateString(TemplateManager manager, AbstractEcssXtendRule parentRule) {
+		if (generated) {
+			//Already generated
+			return cachedString==null?"":cachedString;
+		}
+		initForGeneration(manager, parentRule);
+		generated = true;
+		System.out.println("Generating string for "+getClass().getName());
+		try {
+			Class<?> cl = this.getClass();
+			while (cl != Object.class) {
+			for (Field field: cl.getDeclaredFields()) {
+				if (field.getName().startsWith("loc_")) {
+					field.setAccessible(true);
+					System.out.println("\t"+field.getName()+": "+field.get(this));
+				}
+			} cl = cl.getSuperclass();
+			}
+		} catch (Exception e) {
+			System.err.println("Cannot print attribute "+e.getMessage());
+			e.printStackTrace();
+		}
+		//List<Runnable> postProcessings = new ArrayList<Runnable>();
+		cachedString=getString(/*postProcessings*/);
+		//manager.addPostProcessings(postProcessings);
+		return cachedString;
 	}
 	
 	/**For things like slot value processing*/
@@ -238,6 +275,7 @@ public abstract class AbstractEcssXtendRule implements NamedElement {
 		return id;
 	}
 	
+	/**Must be able to called after the normal initialization, before getString()*/
 	public abstract String getSubName();
 
 	public  AbstractEcssXtendRule getParentRule() {

@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class EClassInfo extends EClassifierInfo {
 	
@@ -49,12 +50,30 @@ public class EClassInfo extends EClassifierInfo {
 			}
 			return obj;
 		}
+		
+		public boolean equals(Object o) {
+			if (o instanceof ConversionInfo) {
+				ConversionInfo ci = (ConversionInfo)o;
+				if (feat.getEType() == ci.feat.getEType()) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public int hashCode() {
+			return feat.getEType().hashCode();
+		}
 	}
 	
 	public EClassInfo(EClass eclass, Map<String, ConversionInfo> fields) {
 		super(eclass);
 		this.eclass = eclass;
 		this.fields = fields;
+		this.hashCode = 0;
+		for (Entry<String,ConversionInfo> entry: fields.entrySet()) {
+			this.hashCode+= entry.getKey().hashCode() * entry.getValue().hashCode();
+		}
 	}
 	
 	private EClass eclass;
@@ -81,5 +100,29 @@ public class EClassInfo extends EClassifierInfo {
 	
 	public EClass getEClass() {
 		return eclass;
+	}
+	
+	public int hashCode;
+	
+	public int hashCode() {
+		return hashCode;
+	}
+	
+	public boolean equals(Object o) {
+		if (o instanceof EClassInfo) {
+			EClassInfo eci = (EClassInfo)o;
+
+			if (!fields.keySet().equals(eci.fields.keySet())) {
+				return false;
+			}
+			for (Entry<String, ConversionInfo> entr: fields.entrySet()) {
+				ConversionInfo other = eci.fields.get(entr.getKey());
+				if (!entr.getValue().equals(other)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 }

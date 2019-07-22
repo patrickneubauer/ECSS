@@ -29,4 +29,8 @@ public class SlotContainer {
 	public Slot getSlot() {
 		return slot;
 	}
+	
+	public boolean isEmpty() {
+		return curValues.isEmpty();
+	}
 }

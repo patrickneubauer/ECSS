@@ -108,14 +108,15 @@ public class TemplateManager {
 				TemplateGeneratorRule tgr = (TemplateGeneratorRule)tr;
 				TemplateGenDef tgd = tgr.getType();
 				Class<? extends AbstractXtendRuleGenerator> gencl = getClass(tgd);
+				String className = "?"+name;
 				try {
 					AbstractXtendRuleGenerator gen = gencl.newInstance();
-					String className = getNewName(name);
+					className = getNewName(name);
 					cl = gen.generate(this, tgr, className);
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.err.println("Generators must have an empty constructor!");
-					System.err.println("Error in class "+cl.getName());
+					System.err.println("Error in class "+gencl.getName()+"::"+className);
 				}
 			} else {
 				System.err.println("Unimplemented rule type: "+tr);
@@ -207,6 +208,30 @@ public class TemplateManager {
 
 	public void setMinImprovement(double doubleValue) {
 		this.minImprovement = doubleValue;
+	}
+	/*
+	private List<Runnable> postProcessings = new ArrayList<Runnable>();
+
+	public void addPostProcessings(List<Runnable> postProcessings) {
+		this.postProcessings.addAll(postProcessings);
+	}
+	
+	public void afterGenerating() {
+		while (!postProcessings.isEmpty()) {
+			new ArrayList<>(postProcessings).forEach(x->x.run());
+		}
+	}*/
+
+	private List<AbstractEcssXtendRule> rules = new ArrayList<AbstractEcssXtendRule>();
+	
+	public void register(AbstractEcssXtendRule abstractEcssXtendRule) {
+		rules.add(abstractEcssXtendRule);
+	}
+	
+	public void afterGenerating() {
+		for (AbstractEcssXtendRule ar: new ArrayList<>(rules)) {
+			ar.getString();
+		}
 	}
 	
 }

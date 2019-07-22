@@ -83,6 +83,11 @@ public class CurrentRuleSelectionState {
 	public ProcessingState getProcessingState() {
 		return pstate;
 	}
+
+
+	public AbstractEcssXtendRule getRule() {
+		return rule;
+	}
 	
 
 }

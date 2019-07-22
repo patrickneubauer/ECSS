@@ -193,14 +193,23 @@ public class CompleteManager {
 		String str = rootRule.getString();
 		ret.append(str + "\n\n");
 		
-
-		List<AbstractEcssXtendRule> allDependentRules = getAllDependentRules(rootRule);
-		for (AbstractEcssXtendRule generatedRule : allDependentRules) {
-			if (generatedRule == rootRule) {
-				continue;
+		Set<AbstractEcssXtendRule> allDepSet = new HashSet<>();
+		allDepSet.add(rootRule);
+		for(;;) {
+			List<AbstractEcssXtendRule> allDependentRules = getAllDependentRules(rootRule);
+			allDependentRules = new ArrayList<AbstractEcssXtendRule>(allDependentRules);
+			allDependentRules.removeAll(allDepSet);
+			allDepSet.addAll(allDependentRules);
+			if (allDependentRules.isEmpty()) {
+				break;
 			}
-			String generated = generatedRule.getString();
-			ret.append(generated+"\n\n");
+			for (AbstractEcssXtendRule generatedRule : allDependentRules) {
+				if (generatedRule == rootRule) {
+					continue;
+				}
+				String generated = generatedRule.getString();
+				ret.append(generated+"\n\n");
+			}
 		}
 		
 		lateRet.append("terminal ID returns ecore::EString: '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;");
@@ -419,7 +428,10 @@ public class CompleteManager {
 	public String getChildIdentificator(AbstractEcssXtendRule parent, AbstractEcssXtendRule child) {
 		dependentRules.computeIfAbsent(parent, x -> new HashMap<>()).put(child,true);
 		// Generate child, just to be sure
-		child.getOrCreateString(getTemplateManager(), parent);
+		//Don't do it, it may give more problems 
+		// child.getOrCreateString(getTemplateManager(), parent);
+		child.initForGeneration(getTemplateManager(), parent);
+		//TODO: ... what needs to be done?
 		return child.getIdentificator().getSimpleName();
 	}
 
@@ -495,9 +507,12 @@ public class CompleteManager {
 
 		//A root class should contain as many other classes as possible (primary point)
 		//and should be contained by as little other classes as possible (secondary point)
-		int maxContains = 0;
+		int maxContains = -1;
 		int minContained = Integer.MAX_VALUE;
 		EClass rootClass = null;
+		for (EClass ecl: possibleClasses) {
+			containedClasses.putIfAbsent(ecl, new HashSet<>());
+		}
 		for (Entry<EClass, Set<EClass>> entr: containedClasses.entrySet()) {
 
 			EClass possibleRoot = entr.getKey();

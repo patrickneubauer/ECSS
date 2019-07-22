@@ -39,7 +39,11 @@ public class BasicInjector {
 			field.setAccessible(true);
 			fieldDescs.add(new FieldDesc(field));
 		}
-		
+		fieldDescs.sort((x,y)->{
+			boolean sl = !x.getName().startsWith("loc_");
+			boolean sr = !y.getName().startsWith("loc_");
+			return Boolean.compare(sl, sr);
+		});
 		return fieldDescs;
 	}
 	
@@ -283,6 +287,7 @@ public class BasicInjector {
 		
 		
 		List<FieldDesc> fds = getFieldDescs(obj.getClass());
+
 		for (FieldDesc fd: fds) {
 			if (fd.shouldInjectRuleCall()) {
 				Object curValue = fd.get(obj);
@@ -308,6 +313,7 @@ public class BasicInjector {
 				if (curValue == null) {
 					Object value = getValue(fd);
 					if (value != null) {
+						System.out.println("Injecting "+value+" into "+obj+"."+fd.getName());
 						fd.set(obj, value);
 					}
 				}

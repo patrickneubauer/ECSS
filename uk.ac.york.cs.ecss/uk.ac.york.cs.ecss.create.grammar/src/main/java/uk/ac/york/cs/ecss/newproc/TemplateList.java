@@ -45,7 +45,7 @@ public class TemplateList {
 			if (selectors.isEmpty()) {
 				//Take any
 				if (!specialRules.isEmpty()) {
-					bestRule = rules.iterator().next();
+					bestRule = specialRules.iterator().next();
 				} else if (!rules.isEmpty()) {
 					bestRule = rules.iterator().next();
 				}

@@ -15,24 +15,22 @@ public class DynamicEClassConverter {
 			new WeakHashMap<Object, EObject>();
 
 	public static EObject convertDynamic(Object o) {
+		return convertDynamic(o, new EClassInfo[1]);
+	}
+	
+	public static EObject convertDynamic(Object o, EClassInfo[] normalizedInfo) {
 		if (o == null) {return null;}
 		EObject ret = dynamicEObjects.get(o);
 		if (ret != null) {
 			return ret;
 		}
 		
-		return createDynamic(o);
+		return createDynamic(o, normalizedInfo);
 		
 	}
 	
-	private static EObject createDynamic(Object obj) {
-		if (obj instanceof EObject) {
-			return ((EObject)obj);
-		}
-		if (obj == null) {
-			return null;
-		}
-		Class<?> objClass = obj.getClass();
+	private static EClassInfo createEClass(Class<?> objClass, Object obj) {
+		EClass retCl = EcoreFactory.eINSTANCE.createEClass();
 
 		List<Field> allfields = new ArrayList<>();
 		Map<String, ConversionInfo> fieldsMap = new HashMap<>();
@@ -44,11 +42,7 @@ public class DynamicEClassConverter {
 			}
 			curclass = curclass.getSuperclass();
 		}
-		WrapperEObject ret = new WrapperEObject();
-		dynamicEObjects.put(obj, ret);
-		EClass retCl = EcoreFactory.eINSTANCE.createEClass();
 		EClassInfo retInfo = new EClassInfo(retCl, fieldsMap );
-		ret.init(obj, retInfo);
 		retCl.setName(objClass.getSimpleName());
 		retCl.setInstanceClass(objClass);
 		for (Field field: allfields) {
@@ -71,7 +65,32 @@ public class DynamicEClassConverter {
 				fieldsMap.put(esf.getName(), new ConversionInfo(field, esf));
 			}
 		}
+		return retInfo;
+	}
+	
+	private static Map<EClassInfo, EClassInfo> normalizedInfo = new HashMap<>();
+	
+	private static EObject createDynamic(Object obj) {
+		return createDynamic(obj, new EClassInfo[1]);
+	}
+	
+	private static EObject createDynamic(Object obj, EClassInfo[] normalizedInfo) {
+		if (obj instanceof EObject) {
+			return ((EObject)obj);
+		}
+		if (obj == null) {
+			return null;
+		}
 		
+		
+		Class<?> objClass = obj.getClass();
+		EClassInfo retInfo = createEClass(objClass, obj);
+		retInfo = DynamicEClassConverter.normalizedInfo.computeIfAbsent(retInfo, x->x);
+		normalizedInfo[0] = retInfo;
+		WrapperEObject ret = new WrapperEObject();
+		ret.init(obj, retInfo);
+		
+			
 		return ret;
 		
 	}

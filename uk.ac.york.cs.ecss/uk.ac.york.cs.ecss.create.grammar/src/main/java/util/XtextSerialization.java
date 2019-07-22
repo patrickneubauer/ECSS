@@ -113,6 +113,9 @@ public class XtextSerialization {
 				continue;
 			}
 			String[] split = line.split(" ",2);
+			if (split.length == 1 || split[1].trim().equals(":")) {
+				continue;
+			}
 			str.set(i, split[0]+((split.length>1)?(" returns "+split[1]):""));
 		}
 	}

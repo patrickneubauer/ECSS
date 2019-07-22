@@ -55,19 +55,24 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 
 	private static final Map<Class<?>, Map<String, Field>> allFields = new HashMap<>();
 
-	private static final Map<String, Field> getAllFields(Class<?> forClass) {
-		return allFields.computeIfAbsent(forClass, cl -> {
+	private static synchronized final Map<String, Field> getAllFields(Class<?> forClass) {
+		Map<String, Field> map = allFields.get(forClass);
+		if (map == null) {
+			Class<?> cl = forClass;
 			if (cl == AbstractEcssXtendRule.class || cl == Object.class || cl == null) {
-				return Collections.emptyMap();
+				Map<String, Field> preMap = preMap = Collections.emptyMap();
+				allFields.put(forClass, map = preMap);
+			} else {
+				Map<String, Field> preMap = new HashMap<>(getAllFields(cl.getSuperclass()));
+				for (Field f : forClass.getDeclaredFields()) {
+					f.setAccessible(true);
+					preMap.put(f.getName(), f);
+				}
+				allFields.put(forClass, map = preMap);
 			}
-			Map<String, Field> preMap = new HashMap<>(getAllFields(cl.getSuperclass()));
-			for (Field f : forClass.getDeclaredFields()) {
-				f.setAccessible(true);
-				preMap.put(f.getName(), f);
-			}
-
-			return preMap;
-		});
+			
+		}
+		return map;
 	}
 
 	public static class RuleGenerator {
@@ -183,11 +188,23 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 			if (trp instanceof EvaluationCall) {
 				EvaluationCall ec = (EvaluationCall) trp;
 				String value = ec.getValue();
+				if (value.endsWith("%]")) {
+					value = value.substring(0,value.length()-"%]".length());
+				}
+				if (value.startsWith("[%")) {
+					value = value.substring("[%".length()).trim();
+				}
 				// Directly add!
 				addToMain(key, value, true);
 			}  else if (trp instanceof LocalEvaluationCall) {
 				LocalEvaluationCall ec = (LocalEvaluationCall) trp;
 				String value = ec.getValue();
+				if (value.endsWith("%]")) {
+					value = value.substring(0,value.length()-"%]".length());
+				}
+				if (value.startsWith("[%=")) {
+					value = value.substring("[%=".length()).trim();
+				}
 				// Directly add!
 				addToMain(key, value, false);
 			} else if (trp instanceof LocalOrValueCall) {
@@ -354,18 +371,30 @@ public class CompilingRuleGenerator implements AbstractXtendRuleGenerator {
 				fee.getVariable();
 			} else if (trp instanceof IfExpression) {
 				IfExpression ifExp = (IfExpression)trp;
-				//Get type
-				String propName = getVarFieldName(ifExp.getVal());
-				addToMain(key, "if (isTrue("+propName+")) {", true);
-				for (TemplateRulePart strp: ifExp.getThen()) {
-					process(key, strp);
+				if (ifExp.getVal() != null) {
+					//Get type
+					String propName = getVarFieldName(ifExp.getVal());
+					addToMain(key, "if (isTrue("+propName+")) {", true);
+					for (TemplateRulePart strp: ifExp.getThen()) {
+						process(key, strp);
+					}
+					addToMain(key, "} else {", true);
+					for (TemplateRulePart strp: ifExp.getElse()) {
+						process(key, strp);
+					}
+					addToMain(key, "}", true);
+				} else {
+					String slotName= ifExp.getSlot();
+					addToMain(key, "if (!slot_"+slotName+".isEmpty())) {", true);
+					for (TemplateRulePart strp: ifExp.getThen()) {
+						process(key, strp);
+					}
+					addToMain(key, "} else {", true);
+					for (TemplateRulePart strp: ifExp.getElse()) {
+						process(key, strp);
+					}
+					addToMain(key, "}", true);
 				}
-				addToMain(key, "} else {", true);
-				for (TemplateRulePart strp: ifExp.getElse()) {
-					process(key, strp);
-				}
-				addToMain(key, "}", true);
-				
 			}
 		}
 

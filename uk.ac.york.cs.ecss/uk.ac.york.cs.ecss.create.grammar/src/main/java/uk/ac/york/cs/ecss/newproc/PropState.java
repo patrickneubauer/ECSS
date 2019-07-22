@@ -240,7 +240,7 @@ public class PropState {
 	}
 	
 	public void addValuator(String key, DynamicValuator valuator) {
-		getOrCreateNextStore(key).addValuator(valuator);
+		getOrCreateNextStoreImmediately(key).addValuator(valuator);
 	}
 
 	public Collection<TemplateMatchSelector> getTemplateMatchSelectors() {
@@ -281,6 +281,16 @@ public class PropState {
 
 	public PropState(PropState parent) {
 		this.parent = parent;
+		if (getHeight() > 50) {
+			System.err.println("High heihgt!");
+		}
+	}
+	
+	public int getHeight() {
+		if (parent == null) {
+			return 1;
+		}
+		return parent.getHeight()+1;
 	}
 
 	private PropertyStore getNextStore(String key) {
@@ -294,6 +304,21 @@ public class PropState {
 		return null;
 	}
 
+
+	private PropertyStore getNextStoreNonNull(String key) {
+		PropertyStore myStore = properties.get(key);
+		//TODO: ...
+		//TODO: Ich bräuchte etwas, das deutlich schneller ist
+		if (myStore != null && myStore.getHighest() != null) {
+			return myStore;
+		}
+		if (parent != null) {
+			return parent.getNextStoreNonNull(key);
+		}
+		return null;
+	}
+
+	
 	private PropertyStore getOrCreateNextStore(String key) {
 		PropertyStore myStore = getNextStore(key);
 		if (myStore == null) {
@@ -304,8 +329,20 @@ public class PropState {
 		return myStore;
 	}
 
+
+	private PropertyStore getOrCreateNextStoreImmediately(String key) {
+		PropertyStore myStore = properties.get(key);
+		if (myStore == null) {
+			properties.put(key, myStore = new PropertyStore());
+			// Default?!
+			// myStore.importance = 1.0;
+		}
+		return myStore;
+	}
+
+	
 	public String getStringValue(String key) {
-		PropertyStore store = getNextStore(key);
+		PropertyStore store = getNextStoreNonNull(key);
 		if (store == null) {
 			return null;
 		}
@@ -314,7 +351,7 @@ public class PropState {
 	}
 
 	public double getValue(String key, String property) {
-		PropertyStore store = getNextStore(key);
+		PropertyStore store = getNextStoreNonNull(key);
 		if (store != null) {
 			return store.getValue(property);
 		}
@@ -322,7 +359,7 @@ public class PropState {
 	}
 
 	public RulePropertyValue getRPV(String key) {
-		PropertyStore store = getNextStore(key);
+		PropertyStore store = getNextStoreNonNull(key);
 		if (store != null) {
 			return store.getRPV();
 		}
