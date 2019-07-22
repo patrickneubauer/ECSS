@@ -24,7 +24,7 @@ cache:
   - $HOME/.m2/repository
 install: /bin/true
 script:
-- mvn clean install # -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+- mvn clean install -q # -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 #- mvn clean install -DskipTests
 #- mvn clean install -Prun-tests
 
