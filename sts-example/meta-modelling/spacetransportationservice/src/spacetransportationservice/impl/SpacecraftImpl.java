@@ -170,6 +170,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Stage> getStages() {
 		if (stages == null) {
 			stages = new EObjectContainmentEList<Stage>(Stage.class, this, SpacetransportationservicePackage.SPACECRAFT__STAGES);
@@ -182,6 +183,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<LaunchSite> getLaunchSites() {
 		if (launchSites == null) {
 			launchSites = new EObjectResolvingEList<LaunchSite>(LaunchSite.class, this, SpacetransportationservicePackage.SPACECRAFT__LAUNCH_SITES);
@@ -194,6 +196,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Function> getFunctions() {
 		if (functions == null) {
 			functions = new EDataTypeUniqueEList<Function>(Function.class, this, SpacetransportationservicePackage.SPACECRAFT__FUNCTIONS);
@@ -206,6 +209,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getManufacturer() {
 		return manufacturer;
 	}
@@ -215,6 +219,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setManufacturer(String newManufacturer) {
 		String oldManufacturer = manufacturer;
 		manufacturer = newManufacturer;
@@ -227,6 +232,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getCountryOfOrigin() {
 		return countryOfOrigin;
 	}
@@ -236,6 +242,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCountryOfOrigin(String newCountryOfOrigin) {
 		String oldCountryOfOrigin = countryOfOrigin;
 		countryOfOrigin = newCountryOfOrigin;
@@ -248,6 +255,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getRelaunchCostInMioUSD() {
 		return relaunchCostInMioUSD;
 	}
@@ -257,6 +265,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRelaunchCostInMioUSD(int newRelaunchCostInMioUSD) {
 		int oldRelaunchCostInMioUSD = relaunchCostInMioUSD;
 		relaunchCostInMioUSD = newRelaunchCostInMioUSD;
@@ -269,6 +278,7 @@ public class SpacecraftImpl extends NamedElementImpl implements Spacecraft {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<PhysicalProperty> getPhysicalProperties() {
 		if (physicalProperties == null) {
 			physicalProperties = new EObjectContainmentEList<PhysicalProperty>(PhysicalProperty.class, this, SpacetransportationservicePackage.SPACECRAFT__PHYSICAL_PROPERTIES);

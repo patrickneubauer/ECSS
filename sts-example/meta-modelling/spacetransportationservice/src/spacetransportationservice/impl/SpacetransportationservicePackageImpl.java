@@ -158,6 +158,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSpacecraft() {
 		return spacecraftEClass;
 	}
@@ -167,6 +168,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSpacecraft_Stages() {
 		return (EReference)spacecraftEClass.getEStructuralFeatures().get(0);
 	}
@@ -176,6 +178,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSpacecraft_LaunchSites() {
 		return (EReference)spacecraftEClass.getEStructuralFeatures().get(1);
 	}
@@ -185,6 +188,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSpacecraft_Functions() {
 		return (EAttribute)spacecraftEClass.getEStructuralFeatures().get(2);
 	}
@@ -194,6 +198,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSpacecraft_Manufacturer() {
 		return (EAttribute)spacecraftEClass.getEStructuralFeatures().get(3);
 	}
@@ -203,6 +208,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSpacecraft_CountryOfOrigin() {
 		return (EAttribute)spacecraftEClass.getEStructuralFeatures().get(4);
 	}
@@ -212,6 +218,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSpacecraft_RelaunchCostInMioUSD() {
 		return (EAttribute)spacecraftEClass.getEStructuralFeatures().get(5);
 	}
@@ -221,6 +228,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSpacecraft_PhysicalProperties() {
 		return (EReference)spacecraftEClass.getEStructuralFeatures().get(6);
 	}
@@ -230,6 +238,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLaunchSite() {
 		return launchSiteEClass;
 	}
@@ -239,6 +248,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchSite_LocationLatitude() {
 		return (EAttribute)launchSiteEClass.getEStructuralFeatures().get(0);
 	}
@@ -248,6 +258,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchSite_LocationLongitude() {
 		return (EAttribute)launchSiteEClass.getEStructuralFeatures().get(1);
 	}
@@ -257,6 +268,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchSite_Operator() {
 		return (EAttribute)launchSiteEClass.getEStructuralFeatures().get(2);
 	}
@@ -266,6 +278,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchSite_NumberOfLaunchpads() {
 		return (EAttribute)launchSiteEClass.getEStructuralFeatures().get(3);
 	}
@@ -275,6 +288,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLaunchSite_PhysicalProperties() {
 		return (EReference)launchSiteEClass.getEStructuralFeatures().get(4);
 	}
@@ -284,6 +298,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchSite_Operational() {
 		return (EAttribute)launchSiteEClass.getEStructuralFeatures().get(5);
 	}
@@ -293,6 +308,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStage() {
 		return stageEClass;
 	}
@@ -302,6 +318,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getStage_EngineType() {
 		return (EReference)stageEClass.getEStructuralFeatures().get(0);
 	}
@@ -311,6 +328,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStage_EngineAmount() {
 		return (EAttribute)stageEClass.getEStructuralFeatures().get(1);
 	}
@@ -320,6 +338,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getStage_PhysicalProperties() {
 		return (EReference)stageEClass.getEStructuralFeatures().get(2);
 	}
@@ -329,6 +348,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPhysicalProperty() {
 		return physicalPropertyEClass;
 	}
@@ -338,6 +358,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPhysicalProperty_Type() {
 		return (EAttribute)physicalPropertyEClass.getEStructuralFeatures().get(0);
 	}
@@ -347,6 +368,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPhysicalProperty_Unit() {
 		return (EAttribute)physicalPropertyEClass.getEStructuralFeatures().get(1);
 	}
@@ -356,6 +378,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPhysicalProperty_Value() {
 		return (EAttribute)physicalPropertyEClass.getEStructuralFeatures().get(2);
 	}
@@ -365,6 +388,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getNamedElement() {
 		return namedElementEClass;
 	}
@@ -374,6 +398,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getNamedElement_Name() {
 		return (EAttribute)namedElementEClass.getEStructuralFeatures().get(0);
 	}
@@ -383,6 +408,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getEngineType() {
 		return engineTypeEClass;
 	}
@@ -392,6 +418,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getEngineType_FuelKind() {
 		return (EAttribute)engineTypeEClass.getEStructuralFeatures().get(0);
 	}
@@ -401,6 +428,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSpaceTransportationService() {
 		return spaceTransportationServiceEClass;
 	}
@@ -410,6 +438,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSpaceTransportationService_LaunchSites() {
 		return (EReference)spaceTransportationServiceEClass.getEStructuralFeatures().get(0);
 	}
@@ -419,6 +448,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSpaceTransportationService_EngineTypes() {
 		return (EReference)spaceTransportationServiceEClass.getEStructuralFeatures().get(1);
 	}
@@ -428,6 +458,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSpaceTransportationService_Spacecrafts() {
 		return (EReference)spaceTransportationServiceEClass.getEStructuralFeatures().get(2);
 	}
@@ -437,6 +468,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getFunction() {
 		return functionEEnum;
 	}
@@ -446,6 +478,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getPhysicalPropertyType() {
 		return physicalPropertyTypeEEnum;
 	}
@@ -455,6 +488,7 @@ public class SpacetransportationservicePackageImpl extends EPackageImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SpacetransportationserviceFactory getSpacetransportationserviceFactory() {
 		return (SpacetransportationserviceFactory)getEFactoryInstance();
 	}

@@ -102,6 +102,7 @@ public class StageImpl extends NamedElementImpl implements Stage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EngineType getEngineType() {
 		if (engineType != null && engineType.eIsProxy()) {
 			InternalEObject oldEngineType = (InternalEObject)engineType;
@@ -128,6 +129,7 @@ public class StageImpl extends NamedElementImpl implements Stage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEngineType(EngineType newEngineType) {
 		EngineType oldEngineType = engineType;
 		engineType = newEngineType;
@@ -140,6 +142,7 @@ public class StageImpl extends NamedElementImpl implements Stage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getEngineAmount() {
 		return engineAmount;
 	}
@@ -149,6 +152,7 @@ public class StageImpl extends NamedElementImpl implements Stage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEngineAmount(int newEngineAmount) {
 		int oldEngineAmount = engineAmount;
 		engineAmount = newEngineAmount;
@@ -161,6 +165,7 @@ public class StageImpl extends NamedElementImpl implements Stage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<PhysicalProperty> getPhysicalProperties() {
 		if (physicalProperties == null) {
 			physicalProperties = new EObjectContainmentEList<PhysicalProperty>(PhysicalProperty.class, this, SpacetransportationservicePackage.STAGE__PHYSICAL_PROPERTIES);

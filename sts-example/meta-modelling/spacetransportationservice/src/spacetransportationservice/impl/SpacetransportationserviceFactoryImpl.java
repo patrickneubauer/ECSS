@@ -107,6 +107,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Spacecraft createSpacecraft() {
 		SpacecraftImpl spacecraft = new SpacecraftImpl();
 		return spacecraft;
@@ -117,6 +118,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LaunchSite createLaunchSite() {
 		LaunchSiteImpl launchSite = new LaunchSiteImpl();
 		return launchSite;
@@ -127,6 +129,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Stage createStage() {
 		StageImpl stage = new StageImpl();
 		return stage;
@@ -137,6 +140,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PhysicalProperty createPhysicalProperty() {
 		PhysicalPropertyImpl physicalProperty = new PhysicalPropertyImpl();
 		return physicalProperty;
@@ -147,6 +151,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EngineType createEngineType() {
 		EngineTypeImpl engineType = new EngineTypeImpl();
 		return engineType;
@@ -157,6 +162,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SpaceTransportationService createSpaceTransportationService() {
 		SpaceTransportationServiceImpl spaceTransportationService = new SpaceTransportationServiceImpl();
 		return spaceTransportationService;
@@ -207,6 +213,7 @@ public class SpacetransportationserviceFactoryImpl extends EFactoryImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SpacetransportationservicePackage getSpacetransportationservicePackage() {
 		return (SpacetransportationservicePackage)getEPackage();
 	}

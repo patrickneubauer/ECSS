@@ -69,6 +69,7 @@ public class EngineTypeImpl extends NamedElementImpl implements EngineType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getFuelKind() {
 		return fuelKind;
 	}
@@ -78,6 +79,7 @@ public class EngineTypeImpl extends NamedElementImpl implements EngineType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setFuelKind(String newFuelKind) {
 		String oldFuelKind = fuelKind;
 		fuelKind = newFuelKind;

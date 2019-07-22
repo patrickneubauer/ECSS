@@ -113,6 +113,7 @@ public class PhysicalPropertyImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PhysicalPropertyType getType() {
 		return type;
 	}
@@ -122,6 +123,7 @@ public class PhysicalPropertyImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setType(PhysicalPropertyType newType) {
 		PhysicalPropertyType oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
@@ -134,6 +136,7 @@ public class PhysicalPropertyImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getUnit() {
 		return unit;
 	}
@@ -143,6 +146,7 @@ public class PhysicalPropertyImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setUnit(String newUnit) {
 		String oldUnit = unit;
 		unit = newUnit;
@@ -155,6 +159,7 @@ public class PhysicalPropertyImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getValue() {
 		return value;
 	}
@@ -164,6 +169,7 @@ public class PhysicalPropertyImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setValue(double newValue) {
 		double oldValue = value;
 		value = newValue;

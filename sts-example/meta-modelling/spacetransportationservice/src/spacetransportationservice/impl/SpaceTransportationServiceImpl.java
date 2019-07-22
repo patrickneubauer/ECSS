@@ -92,6 +92,7 @@ public class SpaceTransportationServiceImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<LaunchSite> getLaunchSites() {
 		if (launchSites == null) {
 			launchSites = new EObjectContainmentEList<LaunchSite>(LaunchSite.class, this, SpacetransportationservicePackage.SPACE_TRANSPORTATION_SERVICE__LAUNCH_SITES);
@@ -104,6 +105,7 @@ public class SpaceTransportationServiceImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EngineType> getEngineTypes() {
 		if (engineTypes == null) {
 			engineTypes = new EObjectContainmentEList<EngineType>(EngineType.class, this, SpacetransportationservicePackage.SPACE_TRANSPORTATION_SERVICE__ENGINE_TYPES);
@@ -116,6 +118,7 @@ public class SpaceTransportationServiceImpl extends MinimalEObjectImpl.Container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Spacecraft> getSpacecrafts() {
 		if (spacecrafts == null) {
 			spacecrafts = new EObjectContainmentEList<Spacecraft>(Spacecraft.class, this, SpacetransportationservicePackage.SPACE_TRANSPORTATION_SERVICE__SPACECRAFTS);

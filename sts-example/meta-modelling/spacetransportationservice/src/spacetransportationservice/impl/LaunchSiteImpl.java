@@ -174,6 +174,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getLocationLatitude() {
 		return locationLatitude;
 	}
@@ -183,6 +184,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLocationLatitude(double newLocationLatitude) {
 		double oldLocationLatitude = locationLatitude;
 		locationLatitude = newLocationLatitude;
@@ -195,6 +197,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public double getLocationLongitude() {
 		return locationLongitude;
 	}
@@ -204,6 +207,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLocationLongitude(double newLocationLongitude) {
 		double oldLocationLongitude = locationLongitude;
 		locationLongitude = newLocationLongitude;
@@ -216,6 +220,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getOperator() {
 		return operator;
 	}
@@ -225,6 +230,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setOperator(String newOperator) {
 		String oldOperator = operator;
 		operator = newOperator;
@@ -237,6 +243,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getNumberOfLaunchpads() {
 		return numberOfLaunchpads;
 	}
@@ -246,6 +253,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setNumberOfLaunchpads(int newNumberOfLaunchpads) {
 		int oldNumberOfLaunchpads = numberOfLaunchpads;
 		numberOfLaunchpads = newNumberOfLaunchpads;
@@ -258,6 +266,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<PhysicalProperty> getPhysicalProperties() {
 		if (physicalProperties == null) {
 			physicalProperties = new EObjectContainmentEList<PhysicalProperty>(PhysicalProperty.class, this, SpacetransportationservicePackage.LAUNCH_SITE__PHYSICAL_PROPERTIES);
@@ -270,6 +279,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isOperational() {
 		return operational;
 	}
@@ -279,6 +289,7 @@ public class LaunchSiteImpl extends NamedElementImpl implements LaunchSite {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setOperational(boolean newOperational) {
 		boolean oldOperational = operational;
 		operational = newOperational;
