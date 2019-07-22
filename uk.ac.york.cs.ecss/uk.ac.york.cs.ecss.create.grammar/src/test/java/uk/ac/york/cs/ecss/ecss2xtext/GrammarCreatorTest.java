@@ -142,6 +142,7 @@ public class GrammarCreatorTest {
 	}
 	
 	@Test
+	@Ignore("requires cloned ECSS-DATA repository")
 	public void generateGrammarFolderTest() throws Exception {
 		String ecssFileName = "hutn";
 		String inputEcore = DATA_FOLDER+"/PREPARED/PP_1/TOP-25-COMBINED/";

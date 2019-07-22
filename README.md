@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/patrickneubauer/ECSS.png?token=qyMyP4Lpgf4tBCDzoRsa&branch=master)](https://travis-ci.com/patrickneubauer/ECSS)
+[![Build Status](https://travis-ci.org/patrickneubauer/ECSS.svg?branch=master)](https://travis-ci.org/patrickneubauer/ECSS)
 # Ecore Concrete Syntax Specification Framework
 
 #### Setup (tested):
