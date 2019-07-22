@@ -26,8 +26,8 @@ rule defaultClassRule: classGenTemplate :: classRules:
 	[%= class.name %]" returns " [%= class.name %] ":"
 	
 	[% "if (loc_subClasses.isEmpty()) {" %]
-		"{" [%= class.name  %]"}" "'" [%= class.name  %]"'" [%= booleanDistRules(optional[ 0 .. 99]) %] [%= nameDistRules(name[ 0 .. 1])  %]"'{'"
-			[%= attributeDistRules(other[ 0 .. 99]) %]
+		"{" [%= class.name  %]"}" "'" [%= class.name  %]"'" [%= booleanDistRules(~optional[ 0 .. 99]) %] [%= nameDistRules(name[ 0 .. 1])  %]"'{'"
+			[%= attributeDistRules(~other[ 0 .. 99]) %]
 		"'}'"
 	[% "} else { " %]
 	for subCl: loc_subClasses join " | " {

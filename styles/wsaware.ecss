@@ -31,10 +31,10 @@ rule defaultClassRule: classGenTemplate :: classRules:
 	[% if (slot_name.getValues().isEmpty()) { %]
 		" '" [%= class.name %] "' "	" ':' "
 	[% } else { %]
-		[%= nameDistRules(name[ 0 .. 1]) %]
+		[%= nameDistRules(~name[ 0 .. 1]) %]
 	[% } %]
 	::BEGIN() " ("
-			[%= attributeDistRules(other[ 0 .. 99]) %]
+			[%= attributeDistRules(~other[ 0 .. 99]) %]
 		")"
 	::END() 
 	[% } else { %]
