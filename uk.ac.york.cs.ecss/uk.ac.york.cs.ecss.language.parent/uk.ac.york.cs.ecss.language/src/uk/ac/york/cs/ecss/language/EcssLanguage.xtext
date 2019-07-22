@@ -85,7 +85,7 @@ ForEachExpression:
 ;
 
 IfExpression:
-	'if' '(' val=ID ')' '{'
+	'if' '(' (val=ID | ('~' slot=ID)) ')' '{'
 		(then+=TemplateRulePart)*
 	'}' ('else' '{'
 			(else+=TemplateRulePart)*
@@ -101,12 +101,10 @@ TemplateFunctionCall:
 ;
 
 SlotCall:
-	//'~'
-	(name=ID) ('[' minValue=INT ('..' maxValue=INT) ']')
+	'~'(name=ID) ('[' minValue=INT ('..' maxValue=INT) ']')
 ;
 
 LocalOrValueCall:
-	//'~'
 	(name=ID|name=QUALIFIEDNAME)
 ;
 
@@ -116,7 +114,7 @@ LocalEvaluationCall:
 ;
 
 TemplateParameterValue:
-	('~' propName=ID) | (varName=ID) | (/*'~'*/ slotName=ID  ('[' minValue=INT ('..' maxValue=INT) ']')) | (direct=STRING)
+	('~' propName=ID) | (varName=ID) | ('~' slotName=ID  ('[' minValue=INT ('..' maxValue=INT) ']')) | (direct=STRING)
 ;
 
 EvaluationCall:
@@ -144,7 +142,7 @@ Selector:
 ;
 
 SingleSelector:
-	((allTypes?='*') | (referredName=(ID|STRING)))
+	((allTypes?='*') | (referredName=(ID|STRING) (andSubtypes?='+')?))
 	(condition=Condition)?
 ;
 
