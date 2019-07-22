@@ -1,0 +1,28 @@
+template singleAttributeTemplate : uk.ac.york.cs.ecss.newproc.SingleAttributeXtendRule;
+template classTemplate : uk.ac.york.cs.ecss.newproc.AbstractClassBasedXtendRule;
+template attributeTemplate : uk.ac.york.cs.ecss.newproc.AttributeXtendRule;
+
+templateGen attrDGen extends attributeTemplate;
+templateGen attrGen extends singleAttributeTemplate;
+templateGen classGen extends classTemplate; 
+
+rule defaultClass: classGen :: classRules:
+	class.name ":" "'" classname "'" attrD(~name[ 0 .. 1])
+		 "'" opener "'" attrD(~other[ 0 .. 99]) "'" closer "'" ';' ; 
+
+rule defaultAttrD: attrDGen  :: attrD:
+	for esf: features {attr(esf) "\n"};
+
+rule nameAttr: attrGen  :: attr: feature.name " = ID";
+
+rule defaultAttr: attrGen  :: attr: feature.name " = STRING" ;
+
+name { template(nameAttr): 2.0; }
+
+Window { opener: "[" priority(2.0); closer: "]" priority(2.0); }
+
+* {
+	slot(name,name): 2.0; slot(title,name): 1.5;
+	classname: ocl "rule.class.name.toUpperCase()";
+	opener: "{"; closer: "}";
+}

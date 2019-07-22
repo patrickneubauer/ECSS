@@ -22,76 +22,76 @@ rule attributeGenTemplate attributeRule2 :: attributeRules:
 	#"}"
 ;*/
 
-rule defaultClassRule: classGenTemplate :: classRules:
-	[%= class.name %] " returns " [%= class.name %] ":"
+rule defaultClassRule : classGenTemplate :: classRules:
+	class.name " returns " class.name ":"
 	[% if (loc_subClasses.isEmpty()) { %]
-		"{" [%= class.name %] "}" "'" [%= class.name %] "'" [%= booleanDistRules(optional[ 0 .. 99]) %] [%= nameDistRules(name[ 0 .. 1]) %] "'{'"
-			[%= attributeDistRules(other[ 0 .. 99]) %]
+		"{" class.name "}" "'" class.name "'" booleanDistRules(~optional[ 0 .. 99]) nameDistRules(~name[ 0 .. 1]) "'{'"
+			attributeDistRules(~other[ 0 .. 99]) 
 		"'}'"
 	[% } else { %]
 	for subCl: loc_subClasses join " | " {
 			::classRules(subCl)
 	}
-	[% } %] ';'
+	[% "}" %] ';'
 ;
 
 rule defaultAttributeDistr: attributeGenTemplate :: attributeDistRules:
 	for esf: features {
-		[%= attributeRule(esf) %]
+		attributeRule(esf)
 	}
 ;
 
 
-rule arbitraryAttributeDistrattributeGenTemplate  :: attributeDistRules:
+rule arbitraryAttributeDistr: attributeGenTemplate  :: attributeDistRules:
 	"("
 	for esf: features join ") | (" {
-		[%= attributeRule(esf) %]
-		[% List<EStructuralFeature> smallerFeatures = new ArrayList(features); %]
-		[% smallerFeatures.remove(esf);\nboolean first = true; %]
+		attributeRule(esf)
+		[%List<EStructuralFeature> smallerFeatures = new ArrayList(features); %]
+		[%smallerFeatures.remove(esf);\nboolean first = true; %]
 		"(("
 		for EStructuralFeature sub: smallerFeatures join ") & (" {
-			"','" [%= attributeRule(sub) %]
+			"','" attributeRule(sub)
 		} "))"
 	} ")"
 ;
 
-rule booleanAttributeDistr: attributeGenTemplate :: booleanDistRules:
+rule booleanAttributeDistr: attributeGenTemplate  :: booleanDistRules:
 	for esf: features {
-		"(" [%= esf.getName() %] "?= \"" [%= esf.getName() %] "\")?"	
+		"(" [%= esf.getName()%] "?= \"" [%= esf.getName() %] "\")?"	
 	}
 ;
 
 
-rule nameAttributeDistr: attributeGenTemplate :: nameDistRules:
+rule nameAttributeDistr: attributeGenTemplate  :: nameDistRules:
 	for esf: features {
 		"(" [%= esf.getName() %] " = ID)?" 
 	}
 ;
 
-rule defaultAttribute: singleAttributeGenTemplate :: attributeRule:
-	[% if (feature.getLowerBound() == 0) {" "(" [% } %]
-		" " [%= feature.name %] " " [%= xtextOperator %] " " [%= sensibleTerminal(feature) %] " "
-	[% if (feature.isMany()) { %]
-		"( ',' " [%= feature.name %] " " [%= xtextOperator %] " " [%= sensibleTerminal(feature) %] ")*"
-	[% } %]
-	[% if (feature.getLowerBound() == 0) {" ")?" [% } %]
+rule defaultAttribute: singleAttributeGenTemplate  :: attributeRule:
+	[% if (feature.getLowerBound() == 0) { %] "(" [% } %]
+		" " feature.name " " xtextOperator " " sensibleTerminal(feature) " "
+	[%if (feature.isMany()) { %]
+		"( ',' " feature.name " " xtextOperator " " sensibleTerminal(feature) ")*"
+	[%} 
+	if (feature.getLowerBound() == 0) {%] ")?" [% } %]
 ;
 
-rule defaultTerminal: singleAttributeGenTemplate :: sensibleTerminal:
+rule defaultTerminal: singleAttributeGenTemplate  :: sensibleTerminal:
 	[% if (feature instanceof EReference) { %]
-		[% if (((EReference)feature).isContainment()) {"
+		[% if (((EReference)feature).isContainment()) {%]
 			//Just the class name
 			::classRules("feature.getEType()")
-		[% } else { %]
+		[% } else {%]
 			//A reference to the class name
 			"[" ::classRules("feature.getEType()") "]"
-		[% } %]
-	[% } else { if (feature.getEType() instanceof EEnum) {"
+		[% }%] 
+	[% } else { if (feature.getEType() instanceof EEnum) {%]
 		//Some terminal - just take the etype
 		::enumRules("feature.getEType()")
-	[% } else { %]
+	[% } else {%]
 		::terminalRules("feature.getEType()")
-	[% }} %]
+	[% }}%]
 ;
 
 * {
