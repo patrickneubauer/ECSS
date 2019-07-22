@@ -10,51 +10,54 @@ templateGen classGenTemplate extends classTemplate;
 javarule beginTemplate beginRule :: BEGIN;
 javarule endTemplate endRule :: END;
  
+ 
 rule whitespaceClassRule :classGenTemplate :: classRules:
 	class.name " returns " class.name ":"
-	[% if (loc_subClasses.isEmpty()) { %]
+	[% if (loc_subClasses.isEmpty()) {%] 
 	"{" class.name "}"	
-	[% if (slot_name.getValues().isEmpty()) { %]
-		" '" class.name "' "	" ':' "
-	[% } else { %]
-		nameDistRules(name[ 0 .. 1])
-	[% } %]
+	[% if (slot_name.getValues().isEmpty()) {%]
+		" '" classname "' "	" ':' "
+	[% } else {%]
+		nameDistRules(~name[ 0 .. 1])
+	[% }%]
 	::BEGIN() " ("
-			attributeDistRules(other[ 0 .. 99]) 
+			attributeDistRules(~other[ 0 .. 99]) 
 		")"
 	::END() 
-	[% } else {  %]
+	[% } else { %]
 	for subCl: loc_subClasses join " | " {
 			::classRules(subCl)
 	}	 
-	[% } %] ';'
-;
+	[% }%] ';'
+; 
 
 rule whitespaceAttribute : singleAttributeGenTemplate :: attributeRule:
-	[% if (feature.getLowerBound() == 0) { %] "(" [% } %]
+	[% if (feature.getLowerBound() == 0) {%] "(" [% }%]
 		" '" feature.name "' " " ':' " 
-		[% if (feature instanceof EReference) { %]
+		[% if (feature instanceof EReference) {%]
 			::BEGIN() " "
-		[% if (!((EReference)feature).isContainment()) { %]
+		[% if (!((EReference)feature).isContainment()) {%]
 			" '- ' "
-		[% } %]
-		[% }  %] " "
+		[% }%]
+		[% } %] " "
 		 feature.name xtextOperator " " sensibleTerminal(feature) " "
-	[% if (feature.isMany()) { %]
+	[% if (feature.isMany()) {%]
 		"(" 
-		[% if (feature instanceof EReference) { %]
-		[% if (!((EReference)feature).isContainment()) { %]
+		[% if (feature instanceof EReference) {%]
+		[% if (!((EReference)feature).isContainment()) {%]
 			" '- ' "
-		[% } %]	
-		[% } %]
+		[% }%]	
+		[% }%]
+//		" ',' "
 		feature.name xtextOperator " " sensibleTerminal(feature) " "
 		 ")*"
-	[% } %] 
-	[% if (feature instanceof EReference) { %]
+	[% }%] 
+	[% if (feature instanceof EReference) {%]
 			::END() " "
-		[% } %]
-	[% if (feature.getLowerBound() == 0) { %] ")?" [% } %]
+		[% }%]
+	[% if (feature.getLowerBound() == 0) {%] ")?" [% }%]
 ;
+
 
 * {
 	template(whitespaceAttribute): 1.5;
