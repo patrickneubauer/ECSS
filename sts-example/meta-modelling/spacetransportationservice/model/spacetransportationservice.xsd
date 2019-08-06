@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.ocl.import="http://www.eclipse.org/OCL/Import" xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ecore:nsPrefix="sts" ecore:package="spacetransportationservice" targetNamespace="http://cs.york.ac.uk/ecss/examples/spacetransportationservice">
+<xsd:schema xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cs.york.ac.uk/ecss/examples/spacetransportationservice">
   <xsd:element name="Spacecraft" type="sts:Spacecraft"/>
   <xsd:element name="LaunchSite" type="sts:LaunchSite"/>
   <xsd:element name="Stage" type="sts:Stage"/>
@@ -15,11 +15,17 @@
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="functions" type="sts:Function"/>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
         </xsd:sequence>
-        <xsd:attribute ecore:reference="sts:LaunchSite" name="launchSites">
+        
+        <!-- reference to (multiple) instances of LaunchSite (below) -->
+        <xsd:element name="launchSites">
+          <xsd:data type="xsd:IDREFS"/>
+        </xsd:element>
+        <!-- <xsd:attribute ecore:reference="sts:LaunchSite" name="launchSites">
           <xsd:simpleType>
             <xsd:list itemType="xsd:anyURI"/>
           </xsd:simpleType>
-        </xsd:attribute>
+        </xsd:attribute> -->
+        
         <xsd:attribute name="manufacturer" type="xsd:string"/>
         <xsd:attribute name="countryOfOrigin" type="xsd:string"/>
         <xsd:attribute name="relaunchCostInMioUSD" type="xsd:integer" use="required"/>
@@ -29,6 +35,12 @@
   <xsd:complexType name="LaunchSite">
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
+      
+        <!-- identifier for LaunchSite (below) -->
+      	<xsd:attribute name="identifier">
+      	  <xsd:data type="xsd:ID"/>
+      	</xsd:attribute>
+      	
         <xsd:sequence>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
         </xsd:sequence>
@@ -46,7 +58,15 @@
         <xsd:sequence>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
         </xsd:sequence>
-        <xsd:attribute ecore:reference="sts:EngineType" name="engineType" type="xsd:anyURI" use="required"/>
+        
+        <!-- identifier for EngineType (below) -->
+        <xsd:element name="engineType">
+          <xsd:attribute name="ref">
+            <xsd:data type="xsd:IDREF"/>
+          </xsd:attribute>
+        </xsd:element>
+        <!-- <xsd:attribute ecore:reference="sts:EngineType" name="engineType" type="xsd:anyURI" use="required"/> -->
+        
         <xsd:attribute name="engineAmount" type="xsd:integer" use="required"/>
       </xsd:extension>
     </xsd:complexContent>
@@ -84,6 +104,12 @@
       <xsd:extension base="sts:NamedElement">
         <xsd:attribute name="fuelKind" type="xsd:string" use="required"/>
       </xsd:extension>
+      
+      <!-- identifier for EngineType (below) -->
+      <xsd:attribute name="identifier">
+        <xsd:data type="xsd:ID"/>
+      </xsd:attribute>
+      
     </xsd:complexContent>
   </xsd:complexType>
   <xsd:complexType name="SpaceTransportationService">
@@ -93,4 +119,23 @@
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="spacecrafts" type="sts:Spacecraft"/>
     </xsd:sequence>
   </xsd:complexType>
+  
+  <!-- restricting type for identifier reference (below) -->
+  <xsd:simpleType name="IDREF" id="IDREF">
+    <xsd:restriction base="xsd:anyURI"/>
+  </xsd:simpleType>
+  
+    <!-- restricting type for list of identifier references (below) -->
+	<xsd:simpleType name="IDREFS" id="IDREFS">
+	  <xsd:restriction>
+	    <xsd:simpleType>
+	      <xsd:list>
+	        <xsd:simpleType>
+	          <xsd:restriction base="xsd:anyURI"/>
+	        </xsd:simpleType>
+	      </xsd:list>
+	    </xsd:simpleType>
+	  </xsd:restriction>
+	</xsd:simpleType>
+	
 </xsd:schema>
