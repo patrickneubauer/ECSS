@@ -4,9 +4,19 @@
     modelName="Spacetransportationservice" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
+  <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/exporter/org.eclipse.xsd.ecore.exporter">
+    <genAnnotations source="selectedPackages">
+      <details key="http://cs.york.ac.uk/ecss/examples/spacetransportationservice"
+          value="spacetransportationservice.xsd"/>
+    </genAnnotations>
+    <details key="directoryURI" value="."/>
+  </genAnnotations>
   <foreignModel>spacetransportationservice.ecore</foreignModel>
   <genPackages prefix="Spacetransportationservice" disposableProviderFactory="true"
       ecorePackage="spacetransportationservice.ecore#/">
+    <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/exporter/org.eclipse.xsd.ecore.exporter">
+      <genAnnotations source="spacetransportationservice.xsd"/>
+    </genAnnotations>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="spacetransportationservice.ecore#//Function">
       <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/MARS_COLONIZATION"/>
       <genEnumLiterals ecoreEnumLiteral="spacetransportationservice.ecore#//Function/EARTH_LUNAR_TRANSPORT"/>
