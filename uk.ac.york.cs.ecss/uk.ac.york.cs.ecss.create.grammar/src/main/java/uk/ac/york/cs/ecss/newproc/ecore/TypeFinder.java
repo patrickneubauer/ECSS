@@ -63,14 +63,17 @@ public class TypeFinder {
 				ParameterizedType pt = (ParameterizedType)type;
 				Type[] args = pt.getActualTypeArguments();
 				if (args.length != 1) {
-					System.err.println("Don't know how to handle "+type+"!");
+					System.out.println("Don't know how to handle "+type+"!");
 					subType = Object.class;
 				} else {
 					Type st = args[0];
+					if (st instanceof ParameterizedType) {
+						st = ((ParameterizedType)st).getRawType();
+						}
 					if (st instanceof Class) {
 						subType = (Class)st;
 					} else {
-						System.err.println("Don't know how to handle subtype "+st+"!");
+						System.out.println("Don't know how to handle subtype "+st+"!");
 						subType = Object.class;
 					}
 				}

@@ -159,7 +159,7 @@ public class BasicInjector {
 			if (fieldName.startsWith("loc_")) {
 				return false;
 			}
-			if (List.class.isAssignableFrom(cl) || EObject.class.isAssignableFrom(cl)) {
+			if (Map.class.isAssignableFrom(cl) || List.class.isAssignableFrom(cl) || EObject.class.isAssignableFrom(cl)) {
 				//Not a value
 				return false;
 			}

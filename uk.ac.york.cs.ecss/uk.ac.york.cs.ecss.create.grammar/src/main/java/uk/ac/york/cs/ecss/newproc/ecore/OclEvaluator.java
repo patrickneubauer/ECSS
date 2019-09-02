@@ -60,8 +60,8 @@ public class OclEvaluator {
 						query = oclHelper.createQuery(expr);
 						return new OCLExpression[] {query};
 					}  catch (ParserException e) {
-						System.err.println("Could not parse " + expr+ " for " + o + ": " + e.getMessage());
-						e.printStackTrace();
+						System.out.println("Could not parse " + expr+ " for " + o + ": " + e.getMessage() + "; returning empty OCLExpression.");
+						//e.printStackTrace();
 						return new OCLExpression[0];
 					}
 					
