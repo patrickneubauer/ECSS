@@ -1,0 +1,37 @@
+import "wsawarenoao.ecss";
+
+template attributeTemplate : uk.ac.york.cs.ecss.newproc.AttributeXtendRule;
+templateGen attributeGenTemplate extends attributeTemplate;
+
+// first change
+NamedElement+ {
+	classname: ocl "'!' + rule.class.name" priority(2.0);
+}
+
+* { 
+slot(*["eType.oclIsKindOf(EEnum)"], name): 2.0; // second change
+}
+
+
+/*
+rule arbitraryAttributeDistr: attributeGenTemplate  :: attributeDistRules:
+	[% List<EStructuralFeature> sortedFeatures = new ArrayList<>(features);%]
+	[% sortedFeatures.sort((x,y)->-Boolean.compare(x.isRequired(),y.isRequired()));%]
+	"("
+	for esf: sortedFeatures join ' & ' {
+		"(" $attributeRule(esf) ")" 
+	} 
+	")" 
+;*/
+
+rule arbitraryAttributeDistr: attributeGenTemplate    :: attributeDistRules:
+	"("
+	for esf: features join ") & (" {
+		attributeRule(esf) "';'"
+	} ")"
+;
+
+* {
+	template(arbitraryAttributeDistr): 1.5;
+	template(defaultAttributeDistr): -1.5;
+}  
