@@ -1,0 +1,27 @@
+import "wsawarenoao.ecss";
+
+template attributeTemplate : uk.ac.york.cs.ecss.newproc.AttributeXtendRule;
+templateGen attributeGenTemplate extends attributeTemplate;
+
+/*
+rule arbitraryAttributeDistr: attributeGenTemplate  :: attributeDistRules:
+	[% List<EStructuralFeature> sortedFeatures = new ArrayList<>(features);%]
+	[% sortedFeatures.sort((x,y)->-Boolean.compare(x.isRequired(),y.isRequired()));%]
+	"("
+	for esf: sortedFeatures join ' & ' {
+		"(" $attributeRule(esf) ")" 
+	} 
+	")" 
+;*/
+
+rule arbitraryAttributeDistr: attributeGenTemplate    :: attributeDistRules:
+	"("
+	for esf: features join ") & (" {
+		attributeRule(esf) "';'"
+	} ")"
+;
+
+* {
+	template(arbitraryAttributeDistr): 1.5;
+	template(defaultAttributeDistr): -1.5;
+}  

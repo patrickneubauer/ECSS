@@ -4,15 +4,26 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.AbstractElement;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.EnumRule;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.UnorderedGroup;
 import org.eclipse.xtext.xtext.GrammarResource;
 
 import com.google.common.io.Files;
+
 import uk.ac.york.cs.ecss.create.project.creator.BaseXtextProjectCreator;
 import uk.ac.york.cs.ecss.create.project.creator.MavenTychoXtextProjectCreator;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
@@ -151,10 +162,40 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		cm.getTemplateManager().addTemplate(TerminalXtendRule.class, "terminalRules");
 		
 		Resource newXtextResource = resourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
-		cm.saveInResource(newXtextResource);	
+		cm.saveInResource(newXtextResource);
 		
 		// create resource by loading from disk
 		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);
+		
+		grammarResource.getContents().forEach(x->{
+			if (x instanceof Grammar) {
+				Grammar g = (Grammar)x;
+				Normalizer.moveSort(g.getRules(),(a,b)->{
+					int aVal = 0;
+					int bVal = 0;
+					if (a instanceof TerminalRule) {
+						aVal = 2;
+					}
+					if (a instanceof EnumRule) {
+						aVal = 1;
+					}
+					if (b instanceof TerminalRule) {
+						bVal = 2;
+					}
+					if (b instanceof EnumRule) {
+						bVal = 1;
+					}
+					return Integer.compare(aVal, bVal);
+				});
+				g.eAllContents().forEachRemaining(cont->{
+					if (cont instanceof Alternatives) {
+						Normalizer.moveSort(((Alternatives)cont).getElements(), null);						
+					} else if (cont instanceof UnorderedGroup) {
+						Normalizer.moveSort(((UnorderedGroup)cont).getElements(), null);
+					} 
+				});
+			}
+		});
 		
 		// TODO: SERIALIZE ecoreMetamodelFile and ADD it as referencedResource in MWE2 workflow !!!
 		// Otherwise, runWorkflow() will not succeed !

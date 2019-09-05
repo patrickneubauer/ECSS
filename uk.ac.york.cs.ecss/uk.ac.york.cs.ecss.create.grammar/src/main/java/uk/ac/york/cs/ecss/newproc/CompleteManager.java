@@ -22,8 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CompleteManager {
 	
@@ -513,10 +511,8 @@ public class CompleteManager {
 		for (EClass ecl: possibleClasses) {
 			containedClasses.putIfAbsent(ecl, new HashSet<>());
 		}
-		for (Entry<EClass, Set<EClass>> entr: containedClasses.entrySet()) {
-
-			EClass possibleRoot = entr.getKey();
-			int curContains = entr.getValue().size();
+		for (EClass possibleRoot: possibleClasses) {
+			int curContains = containedClasses.getOrDefault(possibleRoot,Collections.emptySet()).size();
 			if (curContains >= maxContains) {
 				int curContained = 0;
 				for (Set<EClass> cl: containedClasses.values()) {
@@ -524,7 +520,7 @@ public class CompleteManager {
 						++curContained;
 					}
 				}
-				if (curContains > maxContains || curContained < minContained) {
+				if (curContained < minContained || (curContained == minContained && curContains > maxContains)) {
 					maxContains = curContains;
 					minContained = curContained;
 					rootClass = possibleRoot;
