@@ -28,7 +28,7 @@ public class ExampleCaseWsBasicSQ {
 		final String ECORE_FILE_NAME = "spacetransportationservice.ecore";
 		File ecssModelFile = new File(STYLE_PATH + "wsawarebasicsq.ecss");
 		File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
-		File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", "_GENNOAO_"+new Date().getTime()+".xtext"));
+		File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", "_GENBASICSQ_"+new Date().getTime()+".xtext"));
 
 		assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
 		MainLanguageResourcesGenerator mlrc = new MainLanguageResourcesGenerator(new File("report"), new File("op").toPath(), "opLang", "opL", Arrays.asList("ol"));
