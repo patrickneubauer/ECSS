@@ -13,10 +13,10 @@ javarule endTemplate endRule :: END;
  
 rule whitespaceClassRule :classGenTemplate :: classRules:
 	class.name " returns " class.name ":"
+		" '" classname "' "	" ':' "
 	[% if (loc_subClasses.isEmpty()) {%] 
 	"{" class.name "}"	
 	[% if (slot_name.getValues().isEmpty()) {%]
-		" '" classname "' "	" ':' "
 	[% } else {%]
 		nameDistRules(~name[ 0 .. 1])
 	[% }%]

@@ -5,7 +5,7 @@ templateGen attributeGenTemplate extends attributeTemplate;
 
 // first change
 NamedElement+ {
-	classname: ocl "'!' + rule.class.name" priority(2.0);
+	classname: ocl "rule.class.name.toUpperCase()" priority(2.0);
 }
 
 * { 

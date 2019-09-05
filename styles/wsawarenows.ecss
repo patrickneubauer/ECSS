@@ -104,11 +104,13 @@ rule defaultEnumValue: singleLiteralGenTemplate  :: sensibleEnumValue:
 	wrappostfix: "";
 }  
 
+/*
 NamedElement+ {
 	// if class extends NamedElement (EClass) 
 	// then "name" value must be preceded by an exclamation point like "!Falcon9"	
 	classname: ocl "'!' + rule.class.name" priority(2.0);
 }
+*/
 
 EngineType fuelKind {
 	wrapprefix: "'<' " priority(2.0);
