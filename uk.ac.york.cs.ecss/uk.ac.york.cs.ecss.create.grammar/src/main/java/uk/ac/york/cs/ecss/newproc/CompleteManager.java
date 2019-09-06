@@ -1,5 +1,6 @@
 package uk.ac.york.cs.ecss.newproc;
 
+import org.bouncycastle.jce.provider.JDKKeyFactory.EC;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -22,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CompleteManager {
 	
@@ -459,24 +462,44 @@ public class CompleteManager {
 
 	// ----------- MOVED FROM GrammarCreator START ---------------
 	public EClass getBestRootClass(List<EClass> possibleClasses) {
-		Map<EClass, Set<EClass>> containedClasses = new HashMap<>();
+		Map<EClass, Map<EClass,Double>> containedClasses = new HashMap<>();
+		Map<EClass, Set<EClass>> reallyContainedClasses = new HashMap<>();
 		Map<EClass, Set<EClass>> subTypes = getSubtypes(possibleClasses);
 		Map<EClass, Set<EClass>> superTypes = getSupertypes(possibleClasses);
 		Set<EReference> containment = new HashSet<EReference>();
+		Map<EClass,Double> classWeight = new HashMap<>();
 		for (EClass cl: possibleClasses) {
 			for (EReference ref: cl.getEReferences()) {
 				if (ref.isContainment()) {
 					containment.add(ref);
 				}
 			}
+			classWeight.put(cl, 0.0+cl.getEAllAttributes().size() + (int)cl.getEAllReferences().stream().filter(x->!x.isContainment()).count());
 			//Superclasses are 'containers' for this purpose
 			for (EClass supCl: cl.getEAllSuperTypes()) {
-				Set<EClass> cls = containedClasses.get(supCl);
+				Map<EClass,Double> cls = containedClasses.get(supCl);
 				if (cls == null) {
-					containedClasses.put(supCl, cls = new HashSet<EClass>());
+					containedClasses.put(supCl, cls = new HashMap<>());
 				}
-				cls.add(cl);
+				cls.merge(cl,1.0,(a,b)->a+b);
 			}
+		}
+		//The more, the less weight
+		containedClasses.entrySet().forEach(e->e.getValue().entrySet().forEach(e2->e2.setValue(1.0/e.getValue().size())));
+		//Weight of a class is determined by its content
+		for (int i = 0; i < 4; ++i) {
+			Map<EClass,Double> nextWeight = new HashMap<>();
+			for (EClass cl: possibleClasses) {
+				double weight = classWeight.get(cl);
+				for (EReference ref: cl.getEAllContainments()) {
+					double add = ref.getUpperBound()==-1?1:1.0/(1.0+ref.getUpperBound());
+					double mult = ref.getLowerBound()+
+							add;
+					weight+= mult;
+				}
+				nextWeight.put(cl, weight);
+			}
+			classWeight = nextWeight;
 		}
 		for (EReference ref: containment) {
 			EClass containing = ref.getEContainingClass();
@@ -491,41 +514,58 @@ public class CompleteManager {
 			Collection<EClass> subContained = subTypes.getOrDefault(type, Collections.singleton(type));
 			for (EClass subC: subContaining) {
 				for (EClass subCont: subContained) {
-					Set<EClass> cur = containedClasses.get(subC);
-					if (cur == null) {
-						containedClasses.put(subC, cur = new HashSet<EClass>());
+					{
+						Map<EClass,Double> cur = containedClasses.computeIfAbsent(subC, x->new HashMap<>());
+						cur.merge(subCont,1.0/subContained.size(),(a,b)->a+b);
 					}
-					cur.add(subCont);
+					{
+						Set<EClass> cur = reallyContainedClasses.computeIfAbsent(subC, x->new HashSet<>());
+						cur.add(subCont);
+					}
+
 				}
 			}
 		}
 
 		//recursively calculate
-		fixPoint(containedClasses);
+		fixPointD(containedClasses);
+		
+		System.out.println(containedClasses);
 
 		//A root class should contain as many other classes as possible (primary point)
 		//and should be contained by as little other classes as possible (secondary point)
-		int maxContains = -1;
-		int minContained = Integer.MAX_VALUE;
+		double maxContains = -1;
+		int minReallyContained = Integer.MAX_VALUE;
+		double  minContained = Integer.MAX_VALUE;
 		EClass rootClass = null;
 		for (EClass ecl: possibleClasses) {
-			containedClasses.putIfAbsent(ecl, new HashSet<>());
+			containedClasses.putIfAbsent(ecl, new HashMap<>());
 		}
 		for (EClass possibleRoot: possibleClasses) {
-			int curContains = containedClasses.getOrDefault(possibleRoot,Collections.emptySet()).size();
-			if (curContains >= maxContains) {
-				int curContained = 0;
-				for (Set<EClass> cl: containedClasses.values()) {
+			double curContains = 0.0;
+			for (Entry<EClass,Double> entry: containedClasses.getOrDefault(possibleRoot,Collections.emptyMap()).entrySet()) {
+				EClass cl = entry.getKey();
+				curContains+= entry.getValue()*classWeight.computeIfAbsent(cl, x->0.0+cl.getEAllAttributes().size() + (int)cl.getEAllReferences().stream().filter(y->!y.isContainment()).count());
+			}
+			//if (curContains >= maxContains) {
+				double curContained = 0;
+				for (Map<EClass,Double> cl: containedClasses.values()) {
+					curContained+= cl.getOrDefault(possibleRoot, 0.0);
+				}
+				int curReallyContained = 0;
+				for (Set<EClass> cl: reallyContainedClasses.values()) {
 					if (cl.contains(possibleRoot)) {
-						++curContained;
+						++curReallyContained;
 					}
 				}
-				if (curContained < minContained || (curContained == minContained && curContains > maxContains)) {
+				System.out.println("For "+possibleRoot.getName()+": "+curReallyContained+"/"+curContained+"/"+curContains);
+				if (curReallyContained < minReallyContained || (curReallyContained == minReallyContained && (curContained < minContained || (curContained == minContained && curContains > maxContains)))) {
 					maxContains = curContains;
 					minContained = curContained;
+					minReallyContained = curReallyContained;
 					rootClass = possibleRoot;
 				}
-			}
+			//}
 		}
 		if (rootClass == null) {
 			rootClass = EcoreFactory.eINSTANCE.createEClass();
@@ -581,6 +621,34 @@ public class CompleteManager {
 					add.addAll(ref);
 				}
 				if (entr.getValue().addAll(add)) {
+					changed = true;
+				}
+			}
+		} while (changed);
+	}
+	
+	public static<T> void fixPointD(Map<T, Map<T,Double>> map) {
+		boolean changed = false;
+		do {
+			changed = false;
+			for (Entry<T,Map<T,Double>> entr: map.entrySet()) {
+				Map<T,Double> add = new HashMap<>();
+				for (Entry<T,Double> t: entr.getValue().entrySet()) {
+					Map<T,Double> ref = map.getOrDefault(t.getKey(), Collections.emptyMap());
+					ref.forEach((ss,d)->add.merge(ss,d,(a,b)->Math.max(a,b)));
+				}
+				Map<T,Double> entrMap = entr.getValue();
+				int[] changeCount = new int[1];
+				for (Entry<T,Double> addEntr: add.entrySet()) {
+					++changeCount[0];
+					entrMap.merge(addEntr.getKey(), addEntr.getValue(), (x,y)->{
+						if (x >= y) {
+							--changeCount[0];
+						}
+						return Math.max(x, y);
+					});
+				}
+				if (changeCount[0] > 0) {
 					changed = true;
 				}
 			}
