@@ -11,6 +11,10 @@
 * Import projects as Maven projects into new workspace and wait for automated build to complete
 * Run [clean-install-all.launch](https://github.com/patrickneubauer/ECSS/blob/master/eclipse-launch/clean-install-all.launch) Eclipse launch configuration
 
+#### Research:
+* [Presentation slides](https://www-users.cs.york.ac.uk/neubauer/OCL2019-slides.pdf)
+* [Paper](https://www-users.cs.york.ac.uk/neubauer/OCL2019-paper.pdf)
+
 #### Development notes:
 * Add dependencies by looking them up on [The Central Repository](https://search.maven.org) and adding them to `pom.xml`; in case not available or specific, place the jar file inside the `libs` folder (create if non-existing) at the root of the module intending to use the dependency and commit it by means of `git add -f *.jar` to force addition, i.e. ignore `.gitignore`.
 
