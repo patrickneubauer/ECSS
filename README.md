@@ -12,8 +12,8 @@
 * Run [clean-install-all.launch](https://github.com/patrickneubauer/ECSS/blob/master/eclipse-launch/clean-install-all.launch) Eclipse launch configuration
 
 #### Research:
-* [Presentation slides](https://www-users.cs.york.ac.uk/neubauer/OCL2019-slides.pdf)
-* [Paper](https://www-users.cs.york.ac.uk/neubauer/OCL2019-paper.pdf)
+* [Presentation slides](https://drive.google.com/file/d/1qbTFwqxPVER3AP6XdXBLCJc3Lu9B1Crf/view?usp=sharing)
+* [Paper](https://drive.google.com/file/d/15ge3atCXZZePzwW7YPFGxgE0zKGfCZkB/view?usp=sharing)
 
 #### Development notes:
 * Add dependencies by looking them up on [The Central Repository](https://search.maven.org) and adding them to `pom.xml`; in case not available or specific, place the jar file inside the `libs` folder (create if non-existing) at the root of the module intending to use the dependency and commit it by means of `git add -f *.jar` to force addition, i.e. ignore `.gitignore`.
