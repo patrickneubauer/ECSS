@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Reusable Textual Styles for Domain-Specific Modeling Languages</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #82667D">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html#page-top">ECSS</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="index.html#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#status">Status</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#about">About</a>
+                    </li>
+					<li class="page-scroll">
+                        <a href="index.html#features">Features</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#gettingstarted">Getting Started</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="index.html#authors">Authors</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+
+				   <!-- <object data="img/ECSSlogo.svg" type="image/svg+xml" width="200" >
+						<img src="img/ECSSlogo.png" />
+						<img src="img/ECSSlogo.png" /> -->
+					</object>
+
+                    <div class="intro-text">
+                        <!-- <span class="name">ECSS</span> -->
+                        <span class="skills">Ecore Concrete Syntax Specification</span>
+                      </br>
+                      <span class="skills" style="font-style:bold">( ECSS )</span>
+
+                        <hr class="star-light">
+                        <span class="skills">Reusable&mdash;Textual&mdash;Styles</span>
+                      </br>
+
+                        <span class="skills" style="font-size: 1.5em;font-style:italic">for</span>
+                      </br>
+                        <span class="skills" style="font-size: 1.5em">Ecore-based modeling languages</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Status Grid Section -->
+    <section id="status">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Status</h2>
+                    <hr class="star-primary">
+					<span class="skills" style="font-size: 1.75em">
+					<p>
+					<A target="_blank" href="http://patrickneubauer.github.io/ecss/OCL2019-paper.pdf">Published</A> at <A target="_blank" href="http://oclworkshop.github.io">19th International Workshop in OCL and Textual Modeling, 2019, Munich, Germany (OCL 2019)</A>.
+					</p>
+					<p>
+					Research prototype and application examples are available on <A target="_blank" href="https://github.com/patrickneubauer/ECSS">GitHub</A>.
+					</p>
+					<p>
+					<A target="_blank" href="OCL2019-paper.pdf">Paper preprint</A>
+					and <A target="_blank" href="OCL2019-presentation.pdf">presentation</A> are available.
+					</p>
+
+          </span>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>
+                      Domain-specific languages enable concise and precise formalization of domain concepts and promote direct employment by domain experts.
+            Therefore, syntactic constructs are introduced to empower users to associate concepts and relationships with visual textual symbols.
+            Model-based language engineering facilitates the description of concepts and relationships in an abstract manner.
+					</p>
+					<p>
+          However, concrete representations are commonly attached to abstract domain representations, such as annotations in metamodels, or directly encoded into language grammar and thus introduce redundancy between metamodel elements and grammar elements.
+					</p>
+
+
+                </div>
+                <div class="col-lg-4">
+
+                  <p>
+                  In this work we propose an approach that enables autonomous development and maintenance of domain concepts and textual language notations in a distinctive and metamodel-agnostic manner by employing style models containing grammar rule templates and injection-based property selection.</p>
+                  <p>
+        We provide an implementation and showcase the proposed notation-specification language in a comparison with state of the art practices during the creation of notations for an executable domain-specific modeling language based on the Eclipse Modeling Framework and Xtext.
+                  </p>
+
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <A target="_blank" href="https://github.com/patrickneubauer/ECSS/archive/master.zip" class="btn btn-lg btn-outline">
+                        <i class="fa fa-download"></i> Download ECSS (source code)
+                    </a>
+
+					<div style="margin-top: 20px">
+                    Build on <A target="_blank" href="http://xmlintelledit.big.tuwien.ac.at" alt="Visit XMLIntellEdit Framework website">XMLIntellEdit</a>, <A target="_blank" href="https://www.eclipse.org/modeling/emf/" alt="Visit Eclipse Modeling Framework website">Eclipse Modeling Framework</a>, <A target="_blank" href="http://www.eclipse.org/Xtext/" alt="Visit Xtext Framework website">Xtext</a>.
+					<br/>
+					<A target="_blank" href="https://github.com/patrickneubauer/ECSS">Source code available on GitHub</A>.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Features</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+
+                <!-- placeholder -->
+                <!--
+                <div class="text-center">
+                <span class="skills" style="font-size: 1.75em">SOON TO APPEAR</span>
+                </div>
+                -->
+                <div class="col-sm-4 portfolio-item">
+                    <a href="index.html#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/approach-comparison-overview.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="index.html#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/default-notation-example-model.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+
+                <div class="col-sm-4 portfolio-item">
+                    <a href="index.html#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/desired-notation-example-model.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="index.html#portfolioModal4" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/ws-aware.ecss.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+
+                <div class="col-sm-4 portfolio-item">
+                    <a href="index.html#portfolioModal5" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/arbitrary-order.ecss.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+            </div>
+                <!--
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/submarine.png" class="img-responsive" alt="">
+                    </a>
+                </div>
+
+                -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="gettingstarted" id="gettingstarted">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Getting Started</h2>
+                    <hr class="star-light" style="padding-top: 10px">
+                <span class="skills" style="font-size: 1.75em">
+                    <div>
+					<p style="text-align: left">
+                    You can obtain the latest version of ECSS by directly downloading the <A target="_blank" href="https://github.com/patrickneubauer/ECSS/archive/master.zip">ECSS project archive file</A> or clone the <A target="_blank" href="https://github.com/patrickneubauer/ECSS.git">ECSS GitHub repository</A>.
+					</p>
+					<p style="text-align: left">
+                        Try out ECSS by following these simple steps:
+<!-- <ol>
+<li><em>Optional</em>: Download the <A target="_blank" href="vm/IntelleditUbuntuVM.7z">VirtualBox Image</a> and uncompress it using <A target="_blank" href="http://www.7-zip.de/">7-zip</a>.</li>
+<li><em>Recommended</em>: Clean Eclipse workspace.</li>
+<li><em>Recommended</em>: Right-click on "at.ac.tuwien.big.serviceexample/model/serviceexample.ecore" and register the package.</li>
+<li><em>Recommended</em>: Open the file "at.ac.tuwien.big.servicelang/src/at.ac.tuwien.big.servicelang/Service.xtext", perform a change in the same file, revert the change, and save the null change (this will remove any errors displayed in the grammar editor).</li>
+<li>Run an Eclipse runtime application, i.e., a second Eclipse instance started by your initial Eclipse instance, by right-clicking on any imported project in the package explorer and select "Run As &gt; Eclipse Application".</li>
+<li>In case the recommended steps have been skipped, an error pop-up may appear in which "Proceed" needs to be selected.</li>
+<li>Within the Eclipse runtime application you can start by creating a new project as well a new file fitting our examplary DSML, i.e., having the extension ".service".</li>
+<li>Copy the content of the file "at.ac.tuwien.big.serviceexample/model/test.service" to the ".service" file you just created.</li>
+    <li>Try out advanced editor features !</li>
+</ol>
+					</p> -->
+<p>1. After importing the maven project in Eclipse, run the following command from command line: <br/>
+   mvn clean install <br/><br/>
+
+Alternatively, right-click on the "uk.ac.york.cs.ecss.parent" project and select "Run as > Maven install".</p>
+
+<p>
+2.
+</p>
+
+                    </div>
+					</span>
+
+                </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Authors Section -->
+    <section id="authors">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Authors</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <p>
+						<a class="btn btn-lg btn-outline" href="https://www-users.cs.york.ac.uk/neubauer/">Patrick Neubauer</a>
+						<a class="btn btn-lg btn-outline" href="http://www.big.tuwien.ac.at/staff/rbill">Robert Bill</a>
+            <a class="btn btn-lg btn-outline" href="http://dimitris.io">Dimitris Kolovos</a>
+            <a class="btn btn-lg btn-outline" href="https://www.eng.mcmaster.ca/cas/people/faculty/richard-paige">Richard Paige</a>
+            <a class="btn btn-lg btn-outline" href="https://www.se.jku.at/manuel-wimmer/">Manuel Wimmer</a>
+						</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        &copy; 2019 ECSS &mdash; All Rights Reserved.
+                        <br>
+                        <!--<A target="_blank" href="http://www.tuwien.ac.at/impressum/disclaimer/">Disclaimer</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="index.html#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!-- Portfolio Modals -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>ECSS compared</h2>
+                            <hr class="star-primary">
+                            <img src="img/approach-comparison-overview.png" class="img-responsive img-centered" alt="">
+
+                            <p>
+                              In summary, grammar-first, model-first, and our approach all end up using grammar as the artifact that dictates both structure as well as style of the generated language implementation.
+</br></br>
+                              However, in our approach, the structure and style of the language under construction is modelled by two artifacts: the metamodel that contains the structural semantics of the language under construction; and the style model that depicts the textual representation of the language under construction (i.e. metamodel dependent), any Ecore-based language (i.e. metamodel agnostic), or a combination of both.
+                               </p>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Example Model in Default Notation</h2>
+                            <hr class="star-primary">
+                            <img src="img/default-notation-example-model.png" class="img-responsive img-centered" alt="">
+
+                            <p>
+
+                              Curly-brackets layout is the default layout e.g. generated by the Xtext framework when supplying metamodels to it.
+
+                            </br></br>
+
+                              Further, the order of declaration that is generated by default, is single, or in other words, requires models (instances) of a space transportation service to follow an exact and predefined sequence of element occurrences.
+
+                            </p>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Example Model in Desired Notation</h2>
+                            <hr class="star-primary">
+                            <img src="img/desired-notation-example-model.png" class="img-responsive img-centered" alt="">
+
+                            <p>
+
+                              Instead of using curly bracket-based layout, we want to have indentation-based layout that uses whitespaces as separators.
+                              Also, instead of only allowing a single order of declaration, we want our language to allow arbitrary order of declaration, i.e. considering models (instances) as valid even if they deviate from their occurrence in the grammar.
+
+                            </br></br>
+
+                            In addition to indentation-based layout and arbitrary order of declaration, we want features separated by comma (as this style requirement increases the size of grammars quadratically) and the keyword of classes that extend the class ‘NamedElement’ in domain-specific metamodels to require to be defined in uppercase letters (example of a metamodel-dependent style rule).
+
+                            </p>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Whitespace Aware Style Model</h2>
+                            <hr class="star-primary">
+                            <img src="img/ws-aware.ecss.png" class="img-responsive img-centered" alt="">
+
+<p>
+  Let’s have a look at a concrete style model for indentation-based layout.
+  The main content of this style model is the rule whitespaceClassRule ensuring that class features are indented more than the root of the class.
+  A rule is defined by a name, followed by a colon and the name of the rule template generator, which may extend an existing template such as classTemplate in this particular example.
+</br></br>
+  Next, the rule definition may be followed by a double-column and list of rule groups to which it belongs to.
+  The use of rule groups in a rule makes rule calls that belong to the used rule group be eligible to be called within the rule that specify the use of that particular rule group.
+</br></br>
+  Next, the header of grammar rules is produced and more specifically a String that is composed of: the class name in the metamodel (i.e. class.name calls class.getName()), followed by the terminal “ returns “ followed by, again the class name in the metamodel, followed by column, opening bracket, class name, and closing bracket.
+</br></br>
+  Then, if the name slot is set, then start the object definition from the return value produced by calling nameDistRules with parameter slot that is named name.
+  On the other hand, if the slot named name is not set, then the object definition starts with the object's name which is represented by the variable classname;
+</br></br>
+  Then, a rule may define calls to rule groups and in this case the rule group nameDistRules;
+  a rule call refers to TemplateFunctionCall in the ECSS language metamodel and the parameters passed to the TemplateFunctionCall cause a SlotCall, e.g. ~name[0..1]
+</br></br>
+  Subsequently, an indentation, followed by a the return produced by calling attributeDistRules by passing the content of the slot named other as parameter, followed by a dedentation;
+  From the property rule on the bottom "slot(name,name)", we can see that features named "name" have a higher priority to be associated to the slot "name". Thus, the slot "name" only contains the feature named "name", while the slot "other" contains all the remaining features. The slot name only contains a single attribute, as the upper bound on the content length is zero, while the slot "other" can take up to 99 features.
+</br></br>
+  What we have seen so far is metamodel-agnostic (i.e. no domain-specific element has been mentioned in the style model);
+</br></br>
+  In contrast, NamedElement refers to a class in our space transportation services metamodel--this acts as a showcase that ECSS models may also define parts that are metamodel-dependent;
+  If we remember the metamodel of our space transportation services language, we remember that all classes, except the root class and the class for physical properties, extend the class NamedElement
+  Therefore, this rule applies to all these classes.
+  And more specifically, what is done in this rule is that the value for the variable classname is defined by the result returned by the OCL expression rule.class.name.toUpperCase()
+</br></br>
+  * {} is global and applies therefore to all elements (including NamedElement);
+  Therefore, to make sure the style rule NamedElement+ has higher priority, we assign the priority of the global rule to 1.0 (i.e. a lower value)
+</br></br>
+  Similar to the NamedElement+ rule, the global rule defines the value for the variable classname by the return value produced by evaluating the OCL expression;
+  However, in this case, the OCL expression returns the class name without converting it to uppercase.
+</br></br>
+  Finally, as part of the global rule, we associate features that are named name, i.e. in a domain-specific Ecore metamodel, to the slot named name and assign it with priority of 2.0
+  slot(first,second) => associate the object "name", i.e. an object with the name "name" (first parameter, i.e. instance of ENamedElement) to the slot name (second parameter, i.e. instance of SlotCall)
+
+</p>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Arbitrary Order Style Model</h2>
+                            <hr class="star-primary">
+                            <img src="img/arbitrary-order.ecss.png" class="img-responsive img-centered" alt="">
+
+<p>
+  For this we define the model arbitrary-order.ecss and import our previous style at the top by stating import “ws-aware.ecss”
+  In this case we define a template named attributeTemplate and map it to the Java class AttributeXtendRule.
+</br></br>
+  Then we define a template generator with name attributeGenTemplate that extends the template defined in the previous line.
+</br></br>
+  As want to have all features separated by a comma, we cannot simply use normal unordered groups, but have to enumerate the features in a more complex way.
+  And we do this by allowing an arbitrary first feature and then having an unordered group of all the remaining features, prefixed by the comma.
+  This shows that even slight adaptations to the concrete syntax - whether to have features separated by a comma or not - can have dramatic effects on the Xtext rule.
+</br></br>
+  Let’s have a look in more detail:
+  In the outer for-loop we iterate through available features and create attribute rules for them, then (still in the outer for-loop) we directly use Java code to create a list of (all) features from which we remove the feature that we currently iterate through by the outer for-loop.
+</br></br>
+  Then, create an inner for-loop that iterates through the remaining features (i.e. features excluding the feature being iterate by the outer for-loop).
+</br></br>
+  In this inner for-loop, we return the necessary brackets connected by the ambersent symbol (i.e. resembling unordered groups in grammar) and prefix a comma before returning the attribute definition of the feature being iterated by the (this) inner for-loop.
+
+</p>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-15648520-10', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+
+</html>
