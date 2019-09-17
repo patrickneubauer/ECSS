@@ -22,17 +22,17 @@ a.active,
 a:active,
 a:focus,
 a:hover {
-    color: #02617E;
+    color: #fff;
     text-decoration: underline;
     outline: 0
 }
 
-a,
+/* a,
 a:active,
 a:focus,
 a:hover {
-    color: #fff
-}
+    color: #333
+} */
 
 h1,
 h2,
@@ -159,14 +159,14 @@ header .intro-text .skills {
 
 .navbar-custom .navbar-nav li a:active,
 .navbar-custom .navbar-nav li a:focus {
-    color: #fff
+    color: #333
 }
 
 .navbar-custom .navbar-nav li.active a,
 .navbar-custom .navbar-nav li.active a:active,
 .navbar-custom .navbar-nav li.active a:focus,
 .navbar-custom .navbar-nav li.active a:hover {
-    color: #fff;
+    color: #333;
     background: #02617E
 }
 
@@ -212,6 +212,23 @@ section {
 section h2 {
     margin: 0;
     font-size: 3em
+}
+
+#status a,
+a.active,
+a:active,
+a:focus,
+a:hover {
+  color: #333;
+}
+
+#about a,
+a.active,
+a:active,
+a:focus,
+a:hover {
+  color: #fff;
+  border-color: #fff;
 }
 
 section.about,
