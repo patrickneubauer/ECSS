@@ -4,34 +4,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice-mixed-content-operator.xsd ">
 	
-	<launchSites locationLatitude="0.0" locationLongitude="0.0"
-		name="" numberOfLaunchpads="0" operational="true">
-		<launchSiteId>idvalue0</launchSiteId>
-		<physicalProperties type="LENGTH" unit=""
+	<launchSite launchSiteId="NKSC" locationLatitude="-80.65085" locationLongitude="28.524058"
+		name="KennedySpaceCenter" numberOfLaunchpads="3" operational="true">
+		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
 		<operator>
-			The 
-			<operatorName>SpaceX</operatorName>
-			operator offers 
+			The <operatorName>SpaceY</operatorName> operator offers
 			<operatorService>private-client service</operatorService>
+			and more!
 		</operator>
-	</launchSites>
+	</launchSite>
 	
-	<engineTypes fuelKind="" name="">
-		<engineTypeId>idvalue1</engineTypeId>
-	</engineTypes>
+	<engineType engineTypeId="idvalue1" fuelKind="" name="" />
 	
-	<spacecrafts countryOfOrigin="" manufacturer="" name=""
-		relaunchCostInMioUSD="0">
-		<stages engineAmount="0" name="">
-			<engineType>idvalue1</engineType>
-			<physicalProperties type="LENGTH" unit=""
+	<spacecraft countryOfOrigin="" launchSite="NKSC"
+		manufacturer="" name="" relaunchCostInMioUSD="0">
+		<stages engineAmount="0" engineTypeId="idvalue1" name="">
+			<physicalProperty type="LENGTH" unit=""
 				value="0.0" />
 		</stages>
 		<functions>MARS_COLONIZATION</functions>
-		<physicalProperties type="LENGTH" unit=""
+		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
-		<launchSites>idvalue0</launchSites>
-	</spacecrafts>
+	</spacecraft>
 	
 </sts:SpaceTransportationService>

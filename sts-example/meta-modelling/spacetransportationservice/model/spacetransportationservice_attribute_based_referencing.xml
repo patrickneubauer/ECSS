@@ -4,24 +4,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice_attribute_based_referencing.xsd ">
 	
-	<launchSites launchSiteId="idvalue0" locationLatitude="0.0"
+	<launchSite launchSiteId="idvalue0" locationLatitude="0.0"
 		locationLongitude="0.0" name="" numberOfLaunchpads="0"
 		operational="true" operator="">
-		<physicalProperties type="LENGTH" unit=""
+		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
-	</launchSites>
+	</launchSite>
 	
-	<engineTypes engineTypeId="idvalue1" fuelKind="" name="" />
+	<engineType engineTypeId="idvalue1" fuelKind="" name="" />
 	
-	<spacecrafts countryOfOrigin="" launchSites="idvalue0"
+	<spacecraft countryOfOrigin="" launchSite="idvalue0"
 		manufacturer="" name="" relaunchCostInMioUSD="0">
 		<stages engineAmount="0" engineTypeId="idvalue1" name="">
-			<physicalProperties type="LENGTH" unit=""
+			<physicalProperty type="LENGTH" unit=""
 				value="0.0" />
 		</stages>
 		<functions>MARS_COLONIZATION</functions>
-		<physicalProperties type="LENGTH" unit=""
+		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
-	</spacecrafts>
+	</spacecraft>
 	
 </sts:SpaceTransportationService>

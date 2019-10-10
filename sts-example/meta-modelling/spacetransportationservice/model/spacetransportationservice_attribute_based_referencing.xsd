@@ -13,9 +13,9 @@
         <xsd:sequence>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="stages" type="sts:Stage"/>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="functions" type="sts:Function"/>
-          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
-    <xsd:attribute name="launchSites" type="xsd:IDREFS" use="required"/>
+    <xsd:attribute name="launchSite" type="xsd:IDREFS" use="required"/>
     <xsd:attribute name="manufacturer" type="xsd:string"/>
         <xsd:attribute name="countryOfOrigin" type="xsd:string"/>
         <xsd:attribute name="relaunchCostInMioUSD" type="xsd:integer" use="required"/>
@@ -26,7 +26,7 @@
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
         <xsd:sequence>
-          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
         <xsd:attribute name="launchSiteId" type="xsd:ID" use="required"/>
         <xsd:attribute name="locationLatitude" type="xsd:decimal" use="required"/>
@@ -41,7 +41,7 @@
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
         <xsd:sequence>
-		  <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+		  <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
         <xsd:attribute name="engineTypeId" type="xsd:IDREF" use="required"/>
         <xsd:attribute name="engineAmount" type="xsd:integer" use="required"/>
@@ -86,9 +86,9 @@
   </xsd:complexType>
   <xsd:complexType name="SpaceTransportationService">
     <xsd:sequence>
-      <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchSites" type="sts:LaunchSite"/>
-      <xsd:element maxOccurs="unbounded" minOccurs="0" name="engineTypes" type="sts:EngineType"/>
-      <xsd:element maxOccurs="unbounded" minOccurs="0" name="spacecrafts" type="sts:Spacecraft"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchSite" type="sts:LaunchSite"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="engineType" type="sts:EngineType"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="spacecraft" type="sts:Spacecraft"/>
     </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>

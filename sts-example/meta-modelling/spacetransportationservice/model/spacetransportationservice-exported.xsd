@@ -14,9 +14,9 @@
         <xsd:sequence>
           <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="stages" type="sts:Stage"/>
           <xsd:element ecore:unique="true" maxOccurs="unbounded" minOccurs="0" name="functions" type="sts:Function"/>
-          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
-        <xsd:attribute ecore:reference="sts:LaunchSite" name="launchSites">
+        <xsd:attribute ecore:reference="sts:LaunchSite" name="launchSite">
           <xsd:simpleType>
             <xsd:list itemType="xsd:anyURI"/>
           </xsd:simpleType>
@@ -31,7 +31,7 @@
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
         <xsd:sequence>
-          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
         <xsd:attribute ecore:unsettable="false" name="locationLatitude" type="ecore:EDouble" use="required"/>
         <xsd:attribute ecore:unsettable="false" name="locationLongitude" type="ecore:EDouble" use="required"/>
@@ -45,7 +45,7 @@
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
         <xsd:sequence>
-          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
         <xsd:attribute ecore:reference="sts:EngineType" name="engineType" type="xsd:anyURI" use="required"/>
         <xsd:attribute ecore:unsettable="false" name="engineAmount" type="ecore:EInt" use="required"/>
@@ -89,9 +89,9 @@
   </xsd:complexType>
   <xsd:complexType name="SpaceTransportationService">
     <xsd:sequence>
-      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="launchSites" type="sts:LaunchSite"/>
-      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="engineTypes" type="sts:EngineType"/>
-      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="spacecrafts" type="sts:Spacecraft"/>
+      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="launchSite" type="sts:LaunchSite"/>
+      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="engineType" type="sts:EngineType"/>
+      <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="spacecraft" type="sts:Spacecraft"/>
     </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>
