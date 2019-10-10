@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sts:SpaceTransportationService
+	xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice-anyElement-operatorServices.xsd ">
+	
+	<launchSites locationLatitude="0.0" locationLongitude="0.0"
+		name="" numberOfLaunchpads="0" operational="true">
+		<launchSiteId>idvalue0</launchSiteId>
+		<physicalProperties type="LENGTH" unit=""
+			value="0.0" />
+		<operator>
+			<operatorName>NASA</operatorName>
+			
+		</operator>
+	</launchSites>
+	
+	<engineTypes fuelKind="" name="">
+		<engineTypeId>idvalue1</engineTypeId>
+	</engineTypes>
+	
+	<spacecrafts countryOfOrigin="" manufacturer="" name=""
+		relaunchCostInMioUSD="0">
+		<stages engineAmount="0" name="">
+			<engineType>idvalue1</engineType>
+			<physicalProperties type="LENGTH" unit=""
+				value="0.0" />
+		</stages>
+		<functions>MARS_COLONIZATION</functions>
+		<physicalProperties type="LENGTH" unit=""
+			value="0.0" />
+		<launchSites>idvalue0</launchSites>
+	</spacecrafts>
+	
+</sts:SpaceTransportationService>

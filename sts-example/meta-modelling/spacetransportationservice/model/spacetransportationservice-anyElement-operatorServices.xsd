@@ -29,10 +29,10 @@
           <xsd:element maxOccurs="1" minOccurs="1" name="launchSiteId" type="xsd:ID"/>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
           <xsd:element name="operator">
-            <xsd:complexType mixed="true">
+            <xsd:complexType>
               <xsd:sequence>
                 <xsd:element name="operatorName" type="xsd:string"/>
-                <xsd:element name="operatorService" type="xsd:string"/>
+                <xsd:any minOccurs="0"/>
               </xsd:sequence>
             </xsd:complexType>
           </xsd:element>
