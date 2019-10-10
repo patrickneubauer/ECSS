@@ -19,11 +19,11 @@
 	
 	<spacecraft countryOfOrigin="" launchSite="NKSC"
 		manufacturer="" name="" relaunchCostInMioUSD="0">
-		<stages engineAmount="0" engineTypeId="idvalue1" name="">
+		<stage engineAmount="0" engineTypeId="idvalue1" name="">
 			<physicalProperty type="LENGTH" unit=""
 				value="0.0" />
-		</stages>
-		<functions>MARS_COLONIZATION</functions>
+		</stage>
+		<function>MARS_COLONIZATION</function>
 		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
 	</spacecraft>

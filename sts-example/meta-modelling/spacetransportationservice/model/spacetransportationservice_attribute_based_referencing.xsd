@@ -11,8 +11,8 @@
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
         <xsd:sequence>
-          <xsd:element maxOccurs="unbounded" minOccurs="0" name="stages" type="sts:Stage"/>
-          <xsd:element maxOccurs="unbounded" minOccurs="0" name="functions" type="sts:Function"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="stage" type="sts:Stage"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="function" type="sts:Function"/>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
     <xsd:attribute name="launchSite" type="xsd:IDREFS" use="required"/>

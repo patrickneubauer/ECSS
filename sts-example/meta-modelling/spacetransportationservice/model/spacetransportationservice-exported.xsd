@@ -12,8 +12,8 @@
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
         <xsd:sequence>
-          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="stages" type="sts:Stage"/>
-          <xsd:element ecore:unique="true" maxOccurs="unbounded" minOccurs="0" name="functions" type="sts:Function"/>
+          <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="stage" type="sts:Stage"/>
+          <xsd:element ecore:unique="true" maxOccurs="unbounded" minOccurs="0" name="function" type="sts:Function"/>
           <xsd:element ecore:resolveProxies="true" maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
         <xsd:attribute ecore:reference="sts:LaunchSite" name="launchSite">
