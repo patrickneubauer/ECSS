@@ -4,24 +4,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice_attribute_based_referencing.xsd ">
 	
-	<launchSite launchSiteId="idvalue0" locationLatitude="0.0"
-		locationLongitude="0.0" name="" numberOfLaunchpads="0"
-		operational="true" operator="">
+	<launchSite launchSiteId="NKSC" locationLatitude="-80.65085" locationLongitude="28.524058"
+		name="KennedySpaceCenter" numberOfLaunchpads="3" operational="true">
 		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
 	</launchSite>
 	
-	<engineType engineTypeId="idvalue1" fuelKind="" name="" />
-	
-	<spacecraft countryOfOrigin="" launchSite="idvalue0"
-		manufacturer="" name="" relaunchCostInMioUSD="0">
-		<stage engineAmount="0" engineTypeId="idvalue1" name="">
-			<physicalProperty type="LENGTH" unit=""
-				value="0.0" />
-		</stage>
-		<function>MARS_COLONIZATION</function>
-		<physicalProperty type="LENGTH" unit=""
-			value="0.0" />
+	<engineType engineTypeId="M1D" fuelKind="Subcooled LOX / Chilled RP-1" name="Merlin1D" />
+	<engineType engineTypeId="M1DV" fuelKind="LOX / RP-1" name="Merlin1DVacuum" />
+
+	<spacecraft countryOfOrigin="USA" launchSite="NKSC"
+		manufacturer="SpaceY" name="FalconHeavy" relaunchCostInMioUSD="90">
+		
+		<stage engineAmount="9" engineTypeId="M1D" name="FirstStage"/>
+		<stage engineAmount="1" engineTypeId="M1DV" name="SecondStage"/>
+		
+		<function>ORBITAL_LAUNCHER</function>
+		
+		<physicalProperty type="LENGTH" unit="m" value="70.0" />
+		<physicalProperty type="DIAMETER" unit="m" value="70.0" />
+		<physicalProperty type="WIDTH" unit="m" value="12.2" />
+		<physicalProperty type="MASS" unit="kg" value="1420788.0" />
+		
 	</spacecraft>
 	
 </sts:SpaceTransportationService>
