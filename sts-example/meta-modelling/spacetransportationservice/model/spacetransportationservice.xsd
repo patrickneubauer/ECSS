@@ -42,7 +42,6 @@
         <xsd:attribute name="launchSiteId" type="xsd:ID" use="required"/>
         <xsd:attribute name="locationLatitude" type="xsd:decimal" use="required"/>
         <xsd:attribute name="locationLongitude" type="xsd:decimal" use="required"/>
-        <xsd:attribute name="operator" type="xsd:string"/>
         <xsd:attribute name="numberOfLaunchpads" type="xsd:integer" use="required"/>
         <xsd:attribute name="operational" type="xsd:boolean" use="required"/>
       </xsd:extension>
@@ -53,6 +52,13 @@
     <xsd:sequence>
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchEvent">
         <xsd:complexType>
+          <xsd:attribute name="missionTitle" use="required">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="42" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>
           <xsd:attribute name="launchSiteId" type="xsd:IDREF" use="required"/>
           <xsd:attribute name="spacecraftId" type="xsd:IDREF" use="required"/>
           <xsd:attribute name="startDateTime">

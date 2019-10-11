@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sts:SpaceTransportationService
+	xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice.xsd ">
+	
+	<launchSite launchSiteId="NKSC" locationLatitude="-80.65085" locationLongitude="28.524058"
+		name="KennedySpaceCenter" numberOfLaunchpads="3" operational="true">
+		<operator>
+			The <operatorName>SpaceY</operatorName> operator offers 
+			<operatorService>private-client service</operatorService>
+			 and more!
+		</operator>
+	</launchSite>
+	
+	<engineType engineTypeId="M1D" fuelKind="Subcooled LOX / Chilled RP-1" name="Merlin1D" />
+	<engineType engineTypeId="M1DV" fuelKind="LOX / RP-1" name="Merlin1DVacuum" />
+
+	<spacecraft spacecraftId="FH" countryOfOrigin="USA" launchSite="NKSC"
+		manufacturer="SpaceY" name="FalconHeavy" relaunchCostInMioUSD="90">
+		
+		<stage engineAmount="9" engineTypeId="M1D" name="FirstStage"/>
+		<stage engineAmount="1" engineTypeId="M1DV" name="SecondStage"/>
+		
+		<function>ORBITAL_LAUNCHER</function>
+		
+		<physicalProperty type="LENGTH" unit="m" value="70.0" />
+		<physicalProperty type="DIAMETER" unit="m" value="70.0" />
+		<physicalProperty type="WIDTH" unit="m" value="12.2" />
+		<physicalProperty type="MASS" unit="kg" value="1420788.0" />
+		
+	</spacecraft>
+	
+	<launchSchedule>
+		<launchEvent missionTitle="GPS III-03 navigation satellite deployment" startDateTime="2020-01-31T12:00:00Z" spacecraftId="FH" launchSiteId="NKSC" />
+		<launchEvent missionTitle="AFSPC-44 payload deployment (classified)" startDateTime="2020-09-30T12:00:00Z" spacecraftId="FH" launchSiteId="NKSC" />
+	</launchSchedule>
+	
+</sts:SpaceTransportationService>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spacetransportationservice:SpaceTransportationService
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:spacetransportationservice="http://cs.york.ac.uk/ecss/examples/spacetransportationservice"
+    xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationserviceFromXsd.ecore">
+  <launchSite
+      name="KennedySpaceCenter"
+      launchSiteId="NKSC"
+      locationLatitude="-80.65085"
+      locationLongitude="28.524058"
+      numberOfLaunchpads="3"
+      operational="true">
+    <operator>
+The       <operatorName>SpaceY</operatorName>
+ operator offers       <operatorService>private-client service</operatorService>
+ and more!    </operator>
+  </launchSite>
+  <engineType
+      name="Merlin1D"
+      engineTypeId="M1D"
+      fuelKind="Subcooled LOX / Chilled RP-1"/>
+  <engineType
+      name="Merlin1DVacuum"
+      engineTypeId="M1DV"
+      fuelKind="LOX / RP-1"/>
+  <spacecraft
+      name="FalconHeavy"
+      spacecraftId="FH"
+      launchSite="NKSC"
+      manufacturer="SpaceY"
+      countryOfOrigin="USA"
+      relaunchCostInMioUSD="90">
+    <function>ORBITAL_LAUNCHER</function>
+  </spacecraft>
+  <launchSchedule>
+    <launchEvent
+        missionTitle="GPS III-03 navigation satellite deployment"
+        launchSiteId="NKSC"
+        spacecraftId="FH"
+        startDateTime="2020-01-31T12:00:00Z"/>
+    <launchEvent
+        missionTitle="AFSPC-44 payload deployment (classified)"
+        launchSiteId="NKSC"
+        spacecraftId="FH"
+        startDateTime="2020-09-30T12:00:00Z"/>
+  </launchSchedule>
+</spacetransportationservice:SpaceTransportationService>
