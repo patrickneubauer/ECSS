@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cs.york.ac.uk/ecss/examples/spacetransportationservice">
+<xsd:schema xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationserviceXsdSource" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cs.york.ac.uk/ecss/examples/spacetransportationserviceXsdSource">
   <xsd:element name="Spacecraft" type="sts:Spacecraft"/>
   <xsd:element name="LaunchSite" type="sts:LaunchSite"/>
   <xsd:element name="Stage" type="sts:Stage"/>

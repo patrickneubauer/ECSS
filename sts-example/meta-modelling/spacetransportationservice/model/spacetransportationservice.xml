@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sts:SpaceTransportationService
-	xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice"
+	xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationserviceXsdSource"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice.xsd ">
+	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationserviceXsdSource spacetransportationservice.xsd ">
 	
 	<launchSite launchSiteId="NKSC" locationLatitude="-80.65085" locationLongitude="28.524058"
 		name="KennedySpaceCenter" numberOfLaunchpads="3" operational="true">
