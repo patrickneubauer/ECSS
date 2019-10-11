@@ -19,6 +19,7 @@
     <xsd:attribute name="manufacturer" type="xsd:string"/>
         <xsd:attribute name="countryOfOrigin" type="xsd:string"/>
         <xsd:attribute name="relaunchCostInMioUSD" type="xsd:integer" use="required"/>
+        <xsd:attribute name="launchDayCountdown" type="xsd:time"/>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
