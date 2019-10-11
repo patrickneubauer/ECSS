@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice-mixed-content-operator.xsd ">
 	
 	<launchSite launchSiteId="NKSC" locationLatitude="-80.65085" locationLongitude="28.524058"
-		name="KennedySpaceCenter" numberOfLaunchpads="3" operational="true" nextScheduledLaunchTime="16:00:00">
+		name="KennedySpaceCenter" numberOfLaunchpads="3" operational="true">
 		<physicalProperty type="LENGTH" unit=""
 			value="0.0" />
 		<operator>

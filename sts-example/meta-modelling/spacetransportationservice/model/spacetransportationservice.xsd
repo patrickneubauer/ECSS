@@ -7,6 +7,7 @@
   <xsd:element name="NamedElement" type="sts:NamedElement"/>
   <xsd:element name="EngineType" type="sts:EngineType"/>
   <xsd:element name="SpaceTransportationService" type="sts:SpaceTransportationService"/>
+  
   <xsd:complexType name="Spacecraft">
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
@@ -15,6 +16,7 @@
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="function" type="sts:Function"/>
           <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperty" type="sts:PhysicalProperty"/>
         </xsd:sequence>
+    <xsd:attribute name="spacecraftId" type="xsd:ID" use="required"/>
     <xsd:attribute name="launchSite" type="xsd:IDREFS" use="required"/>
     <xsd:attribute name="manufacturer" type="xsd:string"/>
         <xsd:attribute name="countryOfOrigin" type="xsd:string"/>
@@ -22,6 +24,7 @@
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
+  
   <xsd:complexType name="LaunchSite">
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
@@ -42,10 +45,28 @@
         <xsd:attribute name="operator" type="xsd:string"/>
         <xsd:attribute name="numberOfLaunchpads" type="xsd:integer" use="required"/>
         <xsd:attribute name="operational" type="xsd:boolean" use="required"/>
-        <xsd:attribute name="nextScheduledLaunchTime" type="xsd:time"/>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
+  
+  <xsd:complexType name="LaunchSchedule">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchEvent">
+        <xsd:complexType>
+          <xsd:attribute name="launchSiteId" type="xsd:IDREF" use="required"/>
+          <xsd:attribute name="spacecraftId" type="xsd:IDREF" use="required"/>
+          <xsd:attribute name="startDateTime">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:dateTime">
+                <xsd:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ"/><!-- requires UTC as time zone (i.e. indicated by Z), e.g.: 2004-04-12T13:20:00Z -->
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:attribute>  
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
   <xsd:complexType name="Stage">
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
@@ -65,6 +86,7 @@
   <xsd:complexType abstract="true" name="NamedElement">
     <xsd:attribute name="name" type="xsd:string" use="required"/>
   </xsd:complexType>
+  
   <xsd:simpleType name="Function">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="MARS_COLONIZATION"/>
@@ -74,6 +96,7 @@
       <xsd:enumeration value="ORBITAL_LAUNCHER"/>
     </xsd:restriction>
   </xsd:simpleType>
+  
   <xsd:simpleType name="PhysicalPropertyType">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="LENGTH"/>
@@ -85,6 +108,7 @@
       <xsd:enumeration value="MASS"/>
     </xsd:restriction>
   </xsd:simpleType>
+  
   <xsd:complexType name="EngineType">
     <xsd:complexContent>
       <xsd:extension base="sts:NamedElement">
@@ -93,11 +117,14 @@
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
+  
   <xsd:complexType name="SpaceTransportationService">
     <xsd:sequence>
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchSite" type="sts:LaunchSite"/>
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="engineType" type="sts:EngineType"/>
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="spacecraft" type="sts:Spacecraft"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchSchedule" type="sts:LaunchSchedule"/>
     </xsd:sequence>
   </xsd:complexType>
+  
 </xsd:schema>

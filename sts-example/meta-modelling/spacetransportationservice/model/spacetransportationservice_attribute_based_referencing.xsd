@@ -34,7 +34,6 @@
         <xsd:attribute name="operator" type="xsd:string"/>
         <xsd:attribute name="numberOfLaunchpads" type="xsd:integer" use="required"/>
         <xsd:attribute name="operational" type="xsd:boolean" use="required"/>
-        <xsd:attribute name="nextScheduledLaunchTime" type="xsd:time"/>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
