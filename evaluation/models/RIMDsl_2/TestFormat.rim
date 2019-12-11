@@ -1,0 +1,39 @@
+domain TestDomain {
+	use Common.Global.*
+	use ONE.*
+	rim ONE {
+		basepath: "/{root}"
+		command NoopGET
+
+		initial resource A {
+			type: collection
+			entity: ENTITY
+			view: NoopGET {
+				properties [ property = "somevalue" ]
+			}
+			relations [ "http://temenostech.temenos.com/rels/new" ]
+			path: "/path"
+			GET -> TestDomain.TWO.B
+
+		}
+
+	}
+
+	rim TWO {
+		command NoopGET
+		basepath: "/{root}"
+
+		initial resource B {
+			type: collection
+			entity: ENTITY
+			view: NoopGET
+			GET -> ONE.A
+			GET -> A {
+				parameters [ someparameter = "{EntityProperty}" ]
+				title: "A"
+			}
+		}
+
+	}
+
+}

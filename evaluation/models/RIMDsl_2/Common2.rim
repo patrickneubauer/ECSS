@@ -1,0 +1,28 @@
+domain Common2 {
+    
+    rim Global {
+    	// New
+        event N {
+            method: POST
+        }
+        // Pay
+        event P {
+        	method: PUT
+       	}
+       	// Used
+       	event U {
+            method: PUT
+        }
+        // Cancel
+        event C {
+            method: DELETE
+        }
+        event GET {
+            method: GET
+        }
+
+        command t24Get
+        command t24Delete
+    }
+}
+

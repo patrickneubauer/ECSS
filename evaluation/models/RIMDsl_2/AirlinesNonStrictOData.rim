@@ -1,0 +1,206 @@
+rim FlightResponder {
+	event DELETE {
+		method: DELETE
+	}
+	event GET {
+		method: GET
+	}
+	event POST {
+		method: POST
+	}
+	event PUT {
+		method: PUT
+	}
+
+	command CreateEntity
+	command DeleteEntity
+	command GETEntities
+	command GETEntity
+	command GETException
+	command GETNavProperty
+	command GETServiceDocument
+	command NoopGET
+	command UpdateEntity
+
+initial resource ServiceDocument {
+	type: item
+	entity: ServiceDocument
+	view: GETServiceDocument
+	path: "/"
+	GET -> Airports
+	GET -> Flights
+	GET -> FlightSchedules
+	GET -> Passengers
+	GET -> ErrorMessages
+}
+
+exception resource InteractionException {
+	type: item
+	entity: InteractionException
+	view: GETException
+}
+
+resource ErrorMessages {
+	type: collection
+	entity: ErrorMessages
+	view: NoopGET
+}
+
+
+resource Airports {
+	type: collection
+	entity: Airport
+	view: GETEntities {
+		properties [ filter="{filter}" ]
+	}
+	path: "/Airports()"
+	POST -> Airports_created
+	GET *-> airport {
+		parameters [ id="{code}" ]
+	}
+	GET *-> FlightSchedules {
+		title: "departures"
+		parameters [ filter="departureAirportCode eq '{code}'" ]
+	}
+	GET *-> FlightSchedules {
+		title: "arrivals"
+		parameters [ filter="arrivalAirportCode eq '{code}'" ]
+	}
+}
+
+resource airport {
+	type: item
+	entity: Airport
+	view: GETEntity
+	path: "/Airports('{id}')"
+	GET -> FlightSchedules {
+		title: "departures"
+		parameters [ filter="departureAirportCode eq '{code}'" ]
+	}
+	GET -> FlightSchedules {
+		title: "arrivals"
+		parameters [ filter="arrivalAirportCode eq '{code}'" ]
+	}
+}
+
+resource Airports_created {
+	type: item
+	entity: Airport
+	actions [ CreateEntity ]
+	path: "/Airports()"
+}
+
+resource Flights {
+	type: collection
+	entity: Flight
+	view: GETEntities {
+		properties [ filter="{filter}" ]
+	}
+	path: "/Flights()"
+	POST -> Flights_created
+	GET *-> flight {
+		parameters [ id="{flightID}" ]
+	}
+	GET *-> flightschedule {
+		title: "flightschedule"
+		parameters [ id="{flightScheduleNum}" ]
+	}
+}
+
+resource flight {
+	type: item
+	entity: Flight
+	view: GETEntity
+	path: "/Flights({id})"
+	GET -> flightschedule {
+		title: "flightschedule"
+		parameters [ id="{flightScheduleNum}" ]
+	}
+}
+
+resource Flights_created {
+	type: item
+	entity: Flight
+	actions [ CreateEntity ]
+	path: "/Flights()"
+	onerror --> ErrorMessages
+}
+
+resource FlightSchedules {
+	type: collection
+	entity: FlightSchedule
+	view: GETEntities {
+		properties [ filter="{filter}" ]
+	}
+	path: "/FlightSchedules()"
+	POST -> FlightSchedules_created
+	GET *-> flightschedule {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> airport {
+		title: "departureAirport"
+		parameters [ id="{departureAirportCode}" ]
+	}
+	GET *-> airport {
+		title: "arrivalAirport"
+		parameters [ id="{arrivalAirportCode}" ]
+	}
+}
+
+resource flightschedule {
+	type: item
+	entity: FlightSchedule
+	view: GETEntity
+	path: "/FlightSchedules({id})"
+	GET -> airport {
+		title: "departureAirport"
+		parameters [ id="{departureAirportCode}" ]
+	}
+	GET -> airport {
+		title: "arrivalAirport"
+		parameters [ id="{arrivalAirportCode}" ]
+	}
+}
+
+resource FlightSchedules_created {
+	type: item
+	entity: FlightSchedule
+	actions [ CreateEntity ]
+	path: "/FlightSchedules()"
+}
+
+resource Passengers {
+	type: collection
+	entity: Passenger
+	view: GETEntities {
+		properties [ filter="{filter}" ]
+	}
+	path: "/Passengers()"
+	POST -> Passengers_created
+	GET *-> passenger {
+		parameters [ id="{passengerNo}" ]
+	}
+	GET *-> flight {
+		title: "flight"
+		parameters [ id="{flightID}" ]
+	}
+}
+
+resource passenger {
+	type: item
+	entity: Passenger
+	view: GETEntity
+	path: "/Passengers({id})"
+	GET -> flight {
+		title: "flight"
+		parameters [ id="{flightID}" ]
+	}
+}
+
+resource Passengers_created {
+	type: item
+	entity: Passenger
+	actions [ CreateEntity ]
+	path: "/Passengers()"
+}
+}
