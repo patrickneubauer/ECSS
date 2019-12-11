@@ -34,6 +34,19 @@ import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
 import uk.ac.york.cs.ecss.migrated.MultiExtensionResourceResolver;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
+/**
+ * WARNING: beware of the following !
+ * 
+ * 1) the first element (i.e. in the set of elements being iterated elements) does not produce a result.
+ * As a workaround, make a copy of the first element (i.e. both xtext and ecore file) with a different name and re-execute.
+ * 
+ * 2) all tests in this class have to be executed rather than only a selection of tests. To do so, right-click on the class in the Package Explorer and select "Run as JUnit test".
+ * 
+ * 3) Both xtext and ecore file must have the same name (i.e. only difference is the file extension).
+ * 
+ * @author blizzfire
+ *
+ */
 //@Ignore("to be executed manually")
 @RunWith(Parameterized.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -355,48 +368,6 @@ public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageRes
 		}
 	}
 	
-
-	/**
-	 * Tests the generation of Maven Tycho Xtext project skeleton containing MWE2 and Xtext file
-	 */
-	@Test
-	public void _5_testGenerateLanguageProjectSkeleton() {
-		logger.info("Running test on " + uniqueLanguageId + " ...");
-
-		try {
-			//assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
-			//assertFalse( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
-		
-			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
-			
-			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
-			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
-			
-			logger.info("test completed!");
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-	}
-	
-	/**
-	 * Tests the execution of MWE2 workflow producing [languageName]StandaloneSetupGenerated.java (among others)
-	 */
-	@Test
-	public void _5_testGenerateLanguageProjectAndRunWorkflow() {
-		try {
-//			assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
-
-			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
-			projectCreator.runWorkflow();
-			
-			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
-			
-			logger.info("test completed!");
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
-
 	@Test
 	public void _6_testGenerateDefaultGrammarAndLanguageProjectWithGrammarReplacement() {
 		logger.info("Running test on " + uniqueLanguageId + " ...");
@@ -417,38 +388,6 @@ public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageRes
 			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
 			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
 			assertFalse( skeletonGrammar.equals( nonSkeletonGrammar ) ); 
-			
-			//generator.getResourceLoader().getResources().remove(xtextGrammar);		
-			logger.info("test completed!");
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-	}
-
-	@Test
-	@Ignore("TODO: SERIALIZE ecoreMetamodelFile and ADD it as referencedResource in MWE2 workflow !!!\n" + 
-			"Otherwise, runWorkflow() will not succeed ! See MainLanguageResourceGenerator.generateAndSerializeGrammar(..)")
-	public void _6_testGenerateDefaultGrammarAndLanguageProjectWithGrammarReplacementAndRunWorkflow() {
-		logger.info("Running test on " + uniqueLanguageId + " ...");
-			
-		try {
-			File metamodelFile = new File(ECORE_PATH + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION);
-
-			//assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
-			//assertFalse( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
-			
-			MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
-			CharSequence skeletonGrammar = FileUtils.read( FileUtils.findFirstFileByName(outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext") );
-
-			Resource xtextGrammar = generator.generateAndSerializeGrammar(metamodelFile, new File(STYLES_FOLDER + DEFAULT_STYLE_NAME));
-			projectCreator.replaceGrammar(outputPath.toString(), xtextGrammar);
-			projectCreator.runWorkflow(); // <====
-			CharSequence nonSkeletonGrammar = FileUtils.read( FileUtils.findFirstFileByName(outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext") );
-			
-			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + ".xtext" ) );
-			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), "Generate" + outputPath.toFile().getName().toString() + ".mwe2" ) );
-			assertFalse( skeletonGrammar.equals( nonSkeletonGrammar ) ); 
-			assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
 			
 			//generator.getResourceLoader().getResources().remove(xtextGrammar);		
 			logger.info("test completed!");
