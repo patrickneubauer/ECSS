@@ -1,0 +1,2 @@
+Distance of spacetransportationservice_GENNOAO_1567699417223.xtext to spacetransportationservice_GENNOAO_1567699625400.xtext: NaN
+Distance of spacetransportationservice_NOAOBASIC_1567688840699.xtext to spacetransportationservice_GENNOAO_1567699625400.xtext: NaN

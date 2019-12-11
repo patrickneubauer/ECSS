@@ -1,0 +1,55 @@
+grammar bla.OpLao
+
+import "http://ecss.me/examples/spacetransportationservice"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+NamedElement :
+	LaunchSite | Stage | Spacecraft | EngineType;
+
+EngineType :
+	{EngineType} 'EngineType' 'name'  ':' name = IDDT '{' fuelKind = ESTRING '}';
+
+LaunchSite :
+	{LaunchSite} 'name'  ':' name = IDDT BEGIN ( 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT  locationLongitude = EDOUBLEDT ( 'operator'  ':'  operator= ESTRING )? 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? 'operational'  ':'  operational?= EBOOLEAN ) END;
+
+Stage :
+	{Stage} 'Stage' 'name'  ':' name = IDDT '{' 'engineType'  ':' BEGIN  '- '  engineType=[EngineType|IDDT] END  engineAmount = EINT ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?'}';
+
+Spacecraft :
+	{Spacecraft} 'Spacecraft' 'name'  ':' name = IDDT '{' ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )?
+	( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )?
+	(functions += Function ( ',' functions += Function)*)? ( 'manufacturer'  ':'  manufacturer= ESTRING )?countryOfOrigin = ESTRING ? 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?'}';
+
+terminal ESTRING :
+'"' ( '\\' . | !('\\' | '"'))* '"' | "'" ( '\\' . | !('\\' | "'"))* "'";
+
+terminal END: 'synthetic:END';
+
+terminal BEGIN: 'synthetic:BEGIN';
+
+PhysicalProperty :
+	{PhysicalProperty} 'PhysicalProperty' 'type'  ':' type = PhysicalPropertyType '{' ( 'unit'  ':'  unit= ESTRING )? value = EDOUBLEDT '}';
+
+EDOUBLEDT returns ecore::EDouble:
+	EINT | EDOUBLE;
+
+enum PhysicalPropertyType:
+LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS ;
+
+terminal EINT returns ecore::EInt:
+	'0'..'9'+;  
+
+enum Function:
+MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER ;
+
+terminal EBOOLEAN returns ecore::EBoolean:
+'true' | 'false';
+
+IDDT:
+	EBOOLEAN | ID;
+
+terminal EDOUBLE returns ecore::EDouble:
+	'0'..'9'+ ('.' '0'..'9'+)?;
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

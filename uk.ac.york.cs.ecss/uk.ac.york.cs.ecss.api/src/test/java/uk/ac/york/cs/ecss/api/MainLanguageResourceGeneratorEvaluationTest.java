@@ -152,6 +152,27 @@ public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageRes
 			logger.error(e.getMessage());
 		}
 	}
+	
+
+
+	@Test
+	public void _2_testGenerateStaticEcss() {
+		logger.info("RUNNING: _2_testGenerateStaticEcss: " + uniqueLanguageId);
+
+		try {
+			File metamodelFile = new File(ECORE_PATH + uniqueLanguageId + "." + METAMODEL_FILE_EXTENSION);
+			File xtendFile = new File(metamodelFile.getAbsolutePath().replace(".ecore", ".xtend"));
+			File ecssFile = new File(metamodelFile.getAbsolutePath().replace(".ecore", "_STATIC.ecss"));
+
+			
+			
+			//generator.getResourceLoader().getResources().remove(xtextGrammar);
+					
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 
 	@Test
 	public void _2_testGenerateAndSerialiseDefaultGrammar() {

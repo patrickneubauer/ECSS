@@ -1,0 +1,63 @@
+grammar opL
+
+import "http://ecss.me/examples/spacetransportationservice"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+NamedElement :
+	Stage | Spacecraft | LaunchSite | EngineType;
+
+EngineType :
+	{EngineType} 'name'  ':' name = IDDT BEGIN ( 'fuelKind'  ':'  fuelKind= ESTRING) END;
+
+LaunchSite :
+	{LaunchSite} 'name'  ':' name = IDDT BEGIN ( 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT (',' 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT & ',' ( 'operator'  ':'  operator= ESTRING )? & ',' 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? & ',' 'operational'  ':'  operational?= EBOOLEAN ) | 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT (',' 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT & ',' ( 'operator'  ':'  operator= ESTRING )? & ',' 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? & ',' 'operational'  ':'  operational?= EBOOLEAN ) | ( 'operator'  ':'  operator= ESTRING )? (',' 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT & ',' 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT & ',' 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? & ',' 'operational'  ':'  operational?= EBOOLEAN ) | 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT (',' 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT & ',' 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT & ',' ( 'operator'  ':'  operator= ESTRING )? & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? & ',' 'operational'  ':'  operational?= EBOOLEAN ) |
+	( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? (',' 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT & ',' 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT & ',' ( 'operator'  ':'  operator= ESTRING )? & ',' 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT & ',' 'operational'  ':'  operational?= EBOOLEAN ) | 'operational'  ':'  operational?= EBOOLEAN (',' 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT & ',' 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT & ',' ( 'operator'  ':'  operator= ESTRING )? & ',' 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?)) END;
+
+Spacecraft :
+	{Spacecraft} 'name'  ':' name = IDDT BEGIN (( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? (','
+	( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ','
+	( 'functions'  ':'  functions+= Function functions+= Function *)? & ',' ( 'manufacturer'  ':'  manufacturer= ESTRING )? & ',' ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? & ',' 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT]
+	( '- ' launchSites+=[LaunchSite|IDDT])*END )? (',' ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ','
+	( 'functions'  ':'  functions+= Function functions+= Function *)? & ',' ( 'manufacturer'  ':'  manufacturer= ESTRING )? & ',' ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? & ',' 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | ( 'functions'  ':'  functions+= Function functions+= Function *)? (','
+	( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ',' ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ',' ( 'manufacturer'  ':'  manufacturer= ESTRING )? & ',' ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? & ',' 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | ( 'manufacturer'  ':'  manufacturer= ESTRING )? (',' ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ',' ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT]
+	( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ',' ( 'functions'  ':'  functions+= Function functions+= Function *)?
+	& ',' ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? & ',' 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? (',' ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ',' ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ',' ( 'functions'  ':'  functions+= Function functions+= Function *)? & ',' ( 'manufacturer'  ':'  manufacturer= ESTRING )? & ',' 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT (',' ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ',' ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ',' ( 'functions'  ':'  functions+= Function functions+= Function *)? & ',' ( 'manufacturer'  ':'  manufacturer= ESTRING )? & ','
+	( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? (',' ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ',' ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ',' ( 'functions'  ':'  functions+= Function functions+= Function *)? & ','
+	( 'manufacturer'  ':'  manufacturer= ESTRING )? & ',' ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? & ',' 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT )) END;
+
+enum Function:
+MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER ;
+
+Stage :
+	{Stage} 'name'  ':' name = IDDT BEGIN ( 'engineType'  ':' BEGIN  '- '  engineType=[EngineType|IDDT] END (',' 'engineAmount'  ':'  engineAmount= EINT & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | 'engineAmount'  ':'  engineAmount= EINT (',' 'engineType'  ':' BEGIN  '- '  engineType=[EngineType|IDDT] END & ',' ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) | ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )? (',' 'engineType'  ':' BEGIN  '- '  engineType=[EngineType|IDDT] END & ',' 'engineAmount'  ':'  engineAmount= EINT )) END;
+
+PhysicalProperty :
+	{PhysicalProperty} 'type'  ':' type = PhysicalPropertyType BEGIN (( 'unit'  ':'  unit= ESTRING )? (',' 'value'  ':'  value= EDOUBLEDT ) | 'value'  ':'  value= EDOUBLEDT (',' ( 'unit'  ':'  unit= ESTRING )?)) END;
+
+enum PhysicalPropertyType:
+LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS ;
+
+EDOUBLEDT returns ecore::EDouble:
+	EINT | EDOUBLE;
+
+IDDT:
+	EBOOLEAN | ID;
+
+terminal BEGIN: 'synthetic:BEGIN';
+
+terminal EBOOLEAN returns ecore::EBoolean:
+'true' | 'false';
+
+terminal EDOUBLE returns ecore::EDouble:
+	'0'..'9'+ ('.' '0'..'9'+)?;
+
+terminal EINT returns ecore::EInt:
+	'0'..'9'+;
+
+terminal END: 'synthetic:END';
+
+terminal ESTRING :
+'"' ( '\\' . | !('\\' | '"'))* '"' | "'" ( '\\' . | !('\\' | "'"))* "'";
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

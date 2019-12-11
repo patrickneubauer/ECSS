@@ -1,0 +1,56 @@
+grammar bla.OpL
+
+import "http://ecss.me/examples/spacetransportationservice"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+NamedElement :
+	EngineType | LaunchSite | Stage | Spacecraft;
+
+Spacecraft :
+	{Spacecraft} 'name'  ':' name = IDDT BEGIN ( 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT & ( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )? & ( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT]
+	( '- ' launchSites+=[LaunchSite|IDDT])*END )? & ( 'functions'  ':'  functions+= Function functions+= Function *)? &
+	( 'manufacturer'  ':'  manufacturer= ESTRING )? & ( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )? &
+	( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) END;
+
+Stage :
+	{Stage} 'name'  ':' name = IDDT BEGIN ( 'engineType'  ':' BEGIN  '- '  engineType=[EngineType|IDDT] END & 'engineAmount'  ':'  engineAmount= EINT & ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) END;
+
+EngineType :
+	{EngineType} 'name'  ':' name = IDDT BEGIN ( 'fuelKind'  ':'  fuelKind= ESTRING ) END;
+
+LaunchSite :
+	{LaunchSite} 'name'  ':' name = IDDT BEGIN ( 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT & 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT & 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT & 'operational'  ':'  operational?= EBOOLEAN & ( 'operator'  ':'  operator= ESTRING )? & ( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?) END;
+
+terminal BEGIN: 'synthetic:BEGIN';
+
+terminal END: 'synthetic:END';
+
+terminal ESTRING :
+'"' ( '\\' . | !('\\' | '"'))* '"' | "'" ( '\\' . | !('\\' | "'"))* "'";
+
+EDOUBLEDT returns ecore::EDouble:
+	EINT | EDOUBLE;
+
+terminal EINT returns ecore::EInt:
+	'0'..'9'+;
+
+PhysicalProperty :
+	{PhysicalProperty} 'type'  ':' type = PhysicalPropertyType BEGIN ( 'value'  ':'  value= EDOUBLEDT & ( 'unit'  ':'  unit= ESTRING )?) END;
+
+enum PhysicalPropertyType:
+LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS ;
+
+terminal EBOOLEAN returns ecore::EBoolean:
+'true' | 'false';
+
+enum Function:
+MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER ;
+
+IDDT:
+	EBOOLEAN | ID;
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+
+terminal EDOUBLE returns ecore::EDouble:
+	'0'..'9'+ ('.' '0'..'9'+)?;

@@ -1,0 +1,1297 @@
+grammar opL
+
+import "http://aadl.info/AADL/2.0"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+Element :
+	PrototypeBinding | ArrayRange | ArrayDimension | Comment | FlowEnd | PropertyExpression | EndToEndFlowSegment |
+	ModeBinding | BasicPropertyAssociation | ContainedNamedElement | FlowSegment | ArrayableElement |
+	ModeTransitionTrigger | NamedElement | PropertyAssociation | ContainmentPathElement |
+	ComponentImplementationReference | Relationship | PropertyOwner | ArraySize | ConnectedElement | NumericRange;
+
+PrototypeBinding :
+	FeaturePrototypeBinding | ComponentPrototypeBinding | FeatureGroupPrototypeBinding;
+
+ModeTransitionTrigger :
+	{ModeTransitionTrigger} 'ModeTransitionTrigger''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	context =[Context|IDDT]? & triggerPort =[TriggerPort|IDDT]) '}?';
+
+NamedElement :
+	ConnectionEnd | Process | EnumerationLiteral | Memory | EndToEndFlowElement | Data | ModelUnit | TriggerPort |
+	ComponentTypeRename | Abstract | VirtualProcessor | Type | Namespace | ClassifierFeature | Bus | Device |
+	PackageRename | ThreadGroup | VirtualBus | FeatureGroupTypeRename | Thread | Processor | System | SubprogramGroup |
+	RefinableElement | AnnexLibrary | ModalElement | Subprogram | Context | TypedElement | Flow;
+
+FlowEnd :
+	{FlowEnd} 'FlowEnd''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?context =[Context|IDDT]?feature =[Feature|IDDT]) '}?';
+
+ComponentImplementationReference :
+	{ComponentImplementationReference} 'ComponentImplementationReference''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & implementation =[ComponentImplementation|IDDT] &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?) '}?';
+
+ArrayRange :
+	{ArrayRange} 'ArrayRange''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?lowerBound = INTEGER upperBound = INTEGER ) '}?';
+
+PropertyOwner :
+	MetaclassReference | ClassifierValue;
+
+PropertyAssociation :
+	{PropertyAssociation} 'PropertyAssociation' (append = BOOLEAN & constant = BOOLEAN ) '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)?property =[Property|IDDT] (appliesTo += ContainedNamedElement ( ',' appliesTo += ContainedNamedElement)*)? (inBinding +=[Classifier|IDDT] ( ',' inBinding +=[Classifier|IDDT])*)?
+	(ownedValue += ModalPropertyValue ( ',' ownedValue += ModalPropertyValue)*)) '}?';
+
+PropertyExpression :
+	PropertyValue | Operation | ListValue;
+
+NumericRange :
+	{NumericRange} 'NumericRange''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?upperBound = PropertyExpression lowerBound = PropertyExpression ) '}?';
+
+Relationship :
+	DirectedRelationship;
+
+Comment :
+	{Comment} 'Comment''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & body = STRING ?) '}?';
+
+ArrayableElement :
+	Feature | ComponentPrototypeActual | FeaturePrototypeActual | Subcomponent;
+
+ContainmentPathElement :
+	{ContainmentPathElement} 'ContainmentPathElement''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(arrayRange += ArrayRange ( ',' arrayRange += ArrayRange)*)? & namedElement =[NamedElement|IDDT] &
+	annexName = STRING ? & path = ContainmentPathElement ?) '}?';
+
+FlowSegment :
+	{FlowSegment} 'FlowSegment''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?flowElement =[FlowElement|IDDT] context =[Context|IDDT]?) '}?';
+
+ArrayDimension :
+	{ArrayDimension} 'ArrayDimension''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?size = ArraySize ?)
+	'}?';
+
+EndToEndFlowSegment :
+	{EndToEndFlowSegment} 'EndToEndFlowSegment''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?flowElement =[EndToEndFlowElement|IDDT] context =[Context|IDDT]?) '}?';
+
+ModeBinding :
+	{ModeBinding} 'ModeBinding''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?parentMode =[Mode|IDDT]
+	derivedMode =[Mode|IDDT]?) '}?';
+
+ConnectedElement :
+	{ConnectedElement} 'ConnectedElement''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	context =[Context|IDDT]? & connectionEnd =[ConnectionEnd|IDDT] & next = ConnectedElement ?) '}?';
+
+BasicPropertyAssociation :
+	{BasicPropertyAssociation} 'BasicPropertyAssociation''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?property =[BasicProperty|IDDT] ownedValue = PropertyExpression ) '}?';
+
+ContainedNamedElement :
+	ReferenceValue;
+
+ArraySize :
+	{ArraySize} 'ArraySize''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?size = INTEGER sizeProperty =[ArraySizeProperty|IDDT]?) '}?';
+
+ArraySizeProperty :
+	PropertyConstant;
+
+terminal INTEGER returns Integer:
+'INTEGER' /*Don't know how to handle INTEGER!*/
+;
+
+ReferenceValue :
+	{ReferenceValue} 'ReferenceValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	path = ContainmentPathElement ) '}?';
+
+BasicProperty :
+	Property | RecordField;
+
+Context :
+	FeatureGroup | EventDataPort | Parameter | DataPort | Subcomponent | SubprogramCall;
+
+ConnectionEnd :
+	AccessConnectionEnd | FeatureConnectionEnd | ParameterConnectionEnd | FeatureGroupConnectionEnd | PortConnectionEnd;
+
+Mode :
+	{Mode} '!Mode'initial = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?) '}?';
+
+EndToEndFlowElement :
+	FlowElement | EndToEndFlow;
+
+FlowElement :
+	Connection | FlowSpecification | DataAccess | Subcomponent;
+
+terminal STRING returns String:
+'"' ( '\\' . | !('\\' | '"'))* '"' | "'" ( '\\' . | !('\\' | "'"))* "'";
+
+FeaturePrototypeActual :
+	FeaturePrototypeReference | AccessSpecification | FeatureGroupPrototypeActual | PortSpecification;
+
+ComponentPrototypeActual :
+	{ComponentPrototypeActual} 'ComponentPrototypeActual'category = ComponentCategory '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(binding += PrototypeBinding ( ',' binding += PrototypeBinding)*)?subcomponentType =[SubcomponentType|IDDT]) '}?';
+
+Subcomponent :
+	SubprogramSubcomponent | VirtualProcessorSubcomponent | ThreadGroupSubcomponent | SystemSubcomponent |
+	BusSubcomponent | ProcessorSubcomponent | MemorySubcomponent | ProcessSubcomponent | VirtualBusSubcomponent |
+	AbstractSubcomponent | DataSubcomponent | DeviceSubcomponent | SubprogramGroupSubcomponent | ThreadSubcomponent;
+
+Feature :
+	Access | DirectedFeature;
+
+DirectedRelationship :
+	Generalization;
+
+Operation :
+	{Operation} 'Operation'op = OperationKind '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	ownedPropertyExpression += PropertyExpression ( ',' ownedPropertyExpression += PropertyExpression)*) '}?';
+
+ListValue :
+	{ListValue} 'ListValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedListElement += PropertyExpression ( ',' ownedListElement += PropertyExpression)*)?) '}?';
+
+PropertyValue :
+	ComputedValue | RecordValue | ClassifierValue | NamedValue | ReferenceValue | BooleanLiteral | NumberValue |
+	RangeValue | StringLiteral;
+
+terminal BOOLEAN returns Boolean:
+'BOOLEAN' /*Don't know how to handle BOOLEAN!*/
+;
+
+ModalPropertyValue :
+	{ModalPropertyValue} '!ModalPropertyValue'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	& (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? & ownedValue = PropertyExpression ) '}?';
+
+Property :
+	{Property} '!Property' (inherit = BOOLEAN emptyListDefault = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?type =[Type|IDDT]?referencedPropertyType =[PropertyType|IDDT]?ownedPropertyType = PropertyType ?defaultValue = PropertyExpression ? (appliesTo += PropertyOwner ( ',' appliesTo += PropertyOwner)*)?) '}?';
+
+Classifier :
+	FeatureGroupType | ComponentClassifier;
+
+MetaclassReference :
+	{MetaclassReference} 'MetaclassReference''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	annexName = STRING ? & metaclassName += STRING ( ',' metaclassName += STRING)*) '}?';
+
+ClassifierValue :
+	{ClassifierValue} 'ClassifierValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	classifier =[Classifier|IDDT]) '}?';
+
+ComponentImplementation :
+	BusImplementation | BehavioredImplementation | SubprogramGroupImplementation | SystemImplementation |
+	ProcessorImplementation | ThreadGroupImplementation | VirtualBusImplementation | DataImplementation |
+	DeviceImplementation | MemoryImplementation | ProcessImplementation | VirtualProcessorImplementation;
+
+Memory :
+	MemoryPrototype | MemoryClassifier | MemorySubcomponent;
+
+Data :
+	DataSubcomponent | DataPrototype | DataClassifier;
+
+SubprogramGroup :
+	SubprogramGroupClassifier | SubprogramGroupPrototype | SubprogramGroupSubcomponent;
+
+FeatureGroupTypeRename :
+	{FeatureGroupTypeRename} '!FeatureGroupTypeRename'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & renamedFeatureGroupType =[FeatureGroupType|IDDT]) '}?';
+
+ClassifierFeature :
+	ModeFeature | FlowImplementation | BehavioralFeature | StructuralFeature;
+
+Subprogram :
+	SubprogramSubcomponent | SubprogramClassifier | SubprogramPrototype;
+
+PackageRename :
+	{PackageRename} '!PackageRename'renameAll = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?renamedPackage =[AadlPackage|IDDT]) '}?';
+
+Process :
+	ProcessSubcomponent | ProcessPrototype | ProcessClassifier;
+
+TypedElement :
+	PropertyConstant | BasicProperty;
+
+EnumerationLiteral :
+	UnitLiteral;
+
+RefinableElement :
+	StructuralFeature;
+
+Namespace :
+	EnumerationType | Classifier | GlobalNamespace | RecordType | PackageSection | PropertySet;
+
+ThreadGroup :
+	ThreadGroupSubcomponent | ThreadGroupPrototype | ThreadGroupClassifier;
+
+Device :
+	DevicePrototype | DeviceSubcomponent | DeviceClassifier;
+
+Processor :
+	ProcessorPrototype | ProcessorClassifier | ProcessorSubcomponent;
+
+ModelUnit :
+	AadlPackage | PropertySet;
+
+VirtualProcessor :
+	VirtualProcessorSubcomponent | VirtualProcessorClassifier | VirtualProcessorPrototype;
+
+Thread :
+	ThreadClassifier | ThreadPrototype | ThreadSubcomponent;
+
+TriggerPort :
+	InternalFeature | Port | PortProxy | AbstractFeature;
+
+VirtualBus :
+	VirtualBusSubcomponent | VirtualBusPrototype | VirtualBusClassifier;
+
+Bus :
+	BusClassifier | BusSubcomponent | BusPrototype;
+
+ComponentTypeRename :
+	{ComponentTypeRename} '!ComponentTypeRename'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?category = ComponentCategory renamedComponentType =[ComponentType|IDDT]) '}?';
+
+Abstract :
+	AbstractClassifier | AbstractPrototype | AbstractSubcomponent;
+
+AnnexLibrary :
+	DefaultAnnexLibrary;
+
+ModalElement :
+	ModalPath | AnnexSubclause | SubprogramCallSequence | Subcomponent | ModalPropertyValue;
+
+Flow :
+	FlowImplementation | FlowFeature;
+
+Type :
+	PropertyType | Classifier | SubcomponentType;
+
+System :
+	SystemPrototype | SystemSubcomponent | SystemClassifier;
+
+FeaturePrototypeBinding :
+	{FeaturePrototypeBinding} 'FeaturePrototypeBinding''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	formal =[Prototype|IDDT] & actual = FeaturePrototypeActual ) '}?';
+
+FeatureGroupPrototypeBinding :
+	{FeatureGroupPrototypeBinding} 'FeatureGroupPrototypeBinding''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & formal =[Prototype|IDDT] & actual = FeatureGroupPrototypeActual ) '}?';
+
+ComponentPrototypeBinding :
+	{ComponentPrototypeBinding} 'ComponentPrototypeBinding''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & formal =[Prototype|IDDT] & actual += ComponentPrototypeActual ( ',' actual += ComponentPrototypeActual)*) '}?';
+
+PropertyConstant :
+	{PropertyConstant} '!PropertyConstant'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?type =[Type|IDDT]?referencedPropertyType =[PropertyType|IDDT]?ownedPropertyType = PropertyType ?constantValue = PropertyExpression ?) '}?';
+
+RecordField :
+	{RecordField} '!RecordField'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	type =[Type|IDDT]? & referencedPropertyType =[PropertyType|IDDT]? & ownedPropertyType = PropertyType ?) '}?';
+
+PropertyType :
+	NonListType | ListType;
+
+SubcomponentType :
+	VirtualProcessorSubcomponentType | VirtualBusSubcomponentType | SubprogramGroupSubcomponentType | ComponentClassifier | AbstractSubcomponentType | MemorySubcomponentType | DeviceSubcomponentType | ThreadSubcomponentType |
+	BusSubcomponentType | DataSubcomponentType | ProcessorSubcomponentType | SystemSubcomponentType |
+	ProcessSubcomponentType | ComponentPrototype | SubprogramSubcomponentType | ThreadGroupSubcomponentType;
+
+FeatureGroupType :
+	{FeatureGroupType} '!FeatureGroupType' (noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN )
+	name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? & (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & inverse =[FeatureGroupType|IDDT]? & ownedExtension = GroupExtension ? &
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? & (ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? & (ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)? &
+	(ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? & (ownedEventPort += EventPort
+	( ',' ownedEventPort += EventPort)*)? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? & (ownedParameter += Parameter ( ',' ownedParameter += Parameter)*)? &
+	(ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? &
+	(ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)?) '}?';
+
+ComponentClassifier :
+	VirtualProcessorClassifier | SubprogramClassifier | ComponentType | ThreadClassifier | ComponentImplementation |
+	VirtualBusClassifier | SystemClassifier | DeviceClassifier | MemoryClassifier | ProcessClassifier |
+	AbstractClassifier | SubprogramGroupClassifier | BusClassifier | ProcessorClassifier | ThreadGroupClassifier |
+	DataClassifier;
+
+Parameter :
+	{Parameter} '!Parameter' (in = BOOLEAN & out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?refined =[Feature|IDDT]?dataFeatureClassifier =[DataSubcomponentType|IDDT]?) '}?';
+
+DataPort :
+	{DataPort} '!DataPort' (in = BOOLEAN & out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? & refined =[Feature|IDDT]? & dataFeatureClassifier =[DataSubcomponentType|IDDT]?)
+	'}?';
+
+FeatureGroup :
+	{FeatureGroup} '!FeatureGroup'in = BOOLEAN out = BOOLEAN inverse = BOOLEAN name = IDDT '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?refined =[Feature|IDDT]?featureType =[FeatureType|IDDT]?) '}?';
+
+EventDataPort :
+	{EventDataPort} '!EventDataPort' (in = BOOLEAN & out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?refined =[Feature|IDDT]?dataFeatureClassifier =[DataSubcomponentType|IDDT]?) '}?';
+
+SubprogramCall :
+	{SubprogramCall} '!SubprogramCall'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?calledSubprogram =[CalledSubprogram|IDDT]?context =[CallContext|IDDT]?) '}?';
+
+SubprogramGroupSubcomponent :
+	{SubprogramGroupSubcomponent} '!SubprogramGroupSubcomponent'allModes = BOOLEAN name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?subprogramGroupSubcomponentType =[SubprogramGroupSubcomponentType|IDDT]?) '}?';
+
+ProcessorSubcomponent :
+	{ProcessorSubcomponent} '!ProcessorSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	processorSubcomponentType =[ProcessorSubcomponentType|IDDT]?) '}?';
+
+SystemSubcomponent :
+	{SystemSubcomponent} '!SystemSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?systemSubcomponentType =[SystemSubcomponentType|IDDT]?) '}?';
+
+SubprogramSubcomponent :
+	{SubprogramSubcomponent} '!SubprogramSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	subprogramSubcomponentType =[SubprogramSubcomponentType|IDDT]?) '}?';
+
+BusSubcomponent :
+	{BusSubcomponent} '!BusSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	busSubcomponentType =[BusSubcomponentType|IDDT]?) '}?';
+
+ProcessSubcomponent :
+	{ProcessSubcomponent} '!ProcessSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?processSubcomponentType =[ProcessSubcomponentType|IDDT]?) '}?';
+
+ThreadGroupSubcomponent :
+	{ThreadGroupSubcomponent} '!ThreadGroupSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?threadGroupSubcomponentType =[ThreadGroupSubcomponentType|IDDT]?) '}?';
+
+DataSubcomponent :
+	{DataSubcomponent} '!DataSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	dataSubcomponentType =[DataSubcomponentType|IDDT]?) '}?';
+
+ThreadSubcomponent :
+	{ThreadSubcomponent} '!ThreadSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?threadSubcomponentType =[ThreadSubcomponentType|IDDT]?) '}?';
+
+AbstractSubcomponent :
+	{AbstractSubcomponent} '!AbstractSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	abstractSubcomponentType =[AbstractSubcomponentType|IDDT]?) '}?';
+
+DeviceSubcomponent :
+	{DeviceSubcomponent} '!DeviceSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	deviceSubcomponentType =[DeviceSubcomponentType|IDDT]?) '}?';
+
+VirtualBusSubcomponent :
+	{VirtualBusSubcomponent} '!VirtualBusSubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?virtualBusSubcomponentType =[VirtualBusSubcomponentType|IDDT]?) '}?';
+
+VirtualProcessorSubcomponent :
+	{VirtualProcessorSubcomponent} '!VirtualProcessorSubcomponent'allModes = BOOLEAN name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)?
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)?
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)?refined =[Subcomponent|IDDT]?virtualProcessorSubcomponentType =[VirtualProcessorSubcomponentType|IDDT]?) '}?';
+
+MemorySubcomponent :
+	{MemorySubcomponent} '!MemorySubcomponent'allModes = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? &
+	(ownedModeBinding += ModeBinding ( ',' ownedModeBinding += ModeBinding)*)? &
+	(implementationReference += ComponentImplementationReference ( ',' implementationReference += ComponentImplementationReference)*)? & refined =[Subcomponent|IDDT]? &
+	memorySubcomponentType =[MemorySubcomponentType|IDDT]?) '}?';
+
+ParameterConnectionEnd :
+	EventDataPort | DataSubcomponent | Parameter | DataPort | DataAccess;
+
+AccessConnectionEnd :
+	SubprogramSubcomponent | VirtualBusSubcomponent | Access | DataSubcomponent | SubprogramGroupSubcomponent |
+	BusSubcomponent | SubprogramProxy;
+
+FeatureGroupConnectionEnd :
+	FeatureGroup;
+
+PortConnectionEnd :
+	InternalFeature | DataSubcomponent | Port | DataAccess | PortProxy;
+
+FeatureConnectionEnd :
+	Feature | InternalFeature | PortProxy;
+
+EndToEndFlow :
+	{EndToEndFlow} '!EndToEndFlow'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? & (inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)? & refined =[EndToEndFlow|IDDT]? &
+	(ownedEndToEndFlowSegment += EndToEndFlowSegment ( ',' ownedEndToEndFlowSegment += EndToEndFlowSegment)*)?) '}?';
+
+FlowSpecification :
+	{FlowSpecification} '!FlowSpecification'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? (inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)?refined =[FlowSpecification|IDDT]?kind = FlowKind outEnd = FlowEnd ?InEnd = FlowEnd ?) '}?';
+
+DataAccess :
+	{DataAccess} '!DataAccess'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? & refined =[Feature|IDDT]? &
+	kind = AccessType & dataFeatureClassifier =[DataSubcomponentType|IDDT]?) '}?';
+
+Connection :
+	FeatureGroupConnection | FeatureConnection | ParameterConnection | PortConnection | AccessConnection;
+
+DirectedFeature :
+	FeatureGroup | Port | Parameter | AbstractFeature;
+
+Access :
+	BusAccess | SubprogramGroupAccess | SubprogramAccess | DataAccess;
+
+enum ComponentCategory:
+abstract | bus | data | device | memory | process | processor | subprogram | subprogramGroup | system | thread | threadGroup | virtualBus | virtualProcessor ;
+
+AccessSpecification :
+	{AccessSpecification} 'AccessSpecification'kind = AccessType '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?category = AccessCategory classifier =[ComponentClassifier|IDDT]?componentPrototype =[ComponentPrototype|IDDT]?) '}?';
+
+PortSpecification :
+	{PortSpecification} 'PortSpecification' (in = BOOLEAN & out = BOOLEAN ) category = PortCategory '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? & classifier =[ComponentClassifier|IDDT]? &
+	componentPrototype =[ComponentPrototype|IDDT]?) '}?';
+
+FeatureGroupPrototypeActual :
+	{FeatureGroupPrototypeActual} 'FeatureGroupPrototypeActual''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	(binding += PrototypeBinding ( ',' binding += PrototypeBinding)*)? & featureType =[FeatureType|IDDT]) '}?';
+
+FeaturePrototypeReference :
+	{FeaturePrototypeReference} 'FeaturePrototypeReference' (in = BOOLEAN & out = BOOLEAN ) '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? & (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? &
+	prototype =[FeaturePrototype|IDDT]) '}?';
+
+Generalization :
+	TypeExtension | ImplementationExtension | GroupExtension | Realization;
+
+BooleanLiteral :
+	{BooleanLiteral} 'BooleanLiteral'value = BOOLEAN '{' (ownedComment += Comment ( ',' ownedComment += Comment)*)?'}?';
+
+RecordValue :
+	{RecordValue} 'RecordValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedFieldValue += BasicPropertyAssociation ( ',' ownedFieldValue += BasicPropertyAssociation)*)?) '}?';
+
+NamedValue :
+	{NamedValue} 'NamedValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	namedValue =[AbstractNamedValue|IDDT]) '}?';
+
+StringLiteral :
+	{StringLiteral} 'StringLiteral''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?value = STRING ) '}?';
+
+ComputedValue :
+	{ComputedValue} 'ComputedValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?function = STRING )
+	'}?';
+
+RangeValue :
+	{RangeValue} 'RangeValue''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	minimum = PropertyExpression & maximum = PropertyExpression & delta = PropertyExpression ?) '}?';
+
+NumberValue :
+	RealLiteral | IntegerLiteral;
+
+enum OperationKind:
+and | or | not | plus | minus ;
+
+DeviceImplementation :
+	{DeviceImplementation} '!DeviceImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedBusSubcomponent += BusSubcomponent ( ',' ownedBusSubcomponent += BusSubcomponent)*)?
+	(ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)?
+	(ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)?) '}?';
+
+SystemImplementation :
+	{SystemImplementation} '!SystemImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedBusSubcomponent += BusSubcomponent ( ',' ownedBusSubcomponent += BusSubcomponent)*)?
+	(ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)?
+	(ownedDeviceSubcomponent += DeviceSubcomponent ( ',' ownedDeviceSubcomponent += DeviceSubcomponent)*)?
+	(ownedMemorySubcomponent += MemorySubcomponent ( ',' ownedMemorySubcomponent += MemorySubcomponent)*)?
+	(ownedProcessSubcomponent += ProcessSubcomponent ( ',' ownedProcessSubcomponent += ProcessSubcomponent)*)?
+	(ownedProcessorSubcomponent += ProcessorSubcomponent ( ',' ownedProcessorSubcomponent += ProcessorSubcomponent)*)?
+	(ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)?
+	(ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent ( ',' ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent)*)? (ownedSystemSubcomponent += SystemSubcomponent
+	( ',' ownedSystemSubcomponent += SystemSubcomponent)*)? (ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)?
+	(ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent ( ',' ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent)*)?) '}?';
+
+DataImplementation :
+	{DataImplementation} '!DataImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? & (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode ( ',' ownedMode += Mode)*)? &
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)? &
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)? &
+	ownedExtension = ImplementationExtension ? & ownedRealization = Realization & (ownedEndToEndFlow += EndToEndFlow
+	( ',' ownedEndToEndFlow += EndToEndFlow)*)? & (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? & (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? & (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? & (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? & (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? & (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? & (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? & (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? & (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)? &
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)? &
+	(ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)? &
+	(ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)?) '}?';
+
+BehavioredImplementation :
+	AbstractImplementation | ThreadImplementation | SubprogramImplementation;
+
+BusImplementation :
+	{BusImplementation} '!BusImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? & (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode ( ',' ownedMode += Mode)*)? &
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)? &
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)? &
+	ownedExtension = ImplementationExtension ? & ownedRealization = Realization & (ownedEndToEndFlow += EndToEndFlow
+	( ',' ownedEndToEndFlow += EndToEndFlow)*)? & (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? & (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? & (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? & (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? & (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? & (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? & (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? & (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? & (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)? &
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)? &
+	(ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)?) '}?';
+
+ProcessImplementation :
+	{ProcessImplementation} '!ProcessImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)?
+	(ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)?
+	(ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent ( ',' ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent)*)? (ownedThreadSubcomponent += ThreadSubcomponent
+	( ',' ownedThreadSubcomponent += ThreadSubcomponent)*)? (ownedThreadGroupSubcomponent += ThreadGroupSubcomponent
+	( ',' ownedThreadGroupSubcomponent += ThreadGroupSubcomponent)*)?) '}?';
+
+SubprogramGroupImplementation :
+	{SubprogramGroupImplementation} '!SubprogramGroupImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)?
+	(ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent ( ',' ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent)*)? (ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)?) '}?';
+
+MemoryImplementation :
+	{MemoryImplementation} '!MemoryImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? & (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode ( ',' ownedMode += Mode)*)? &
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)? &
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)? &
+	ownedExtension = ImplementationExtension ? & ownedRealization = Realization & (ownedEndToEndFlow += EndToEndFlow
+	( ',' ownedEndToEndFlow += EndToEndFlow)*)? & (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? & (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? & (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? & (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? & (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? & (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? & (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? & (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? & (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)? &
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)? &
+	(ownedBusSubcomponent += BusSubcomponent ( ',' ownedBusSubcomponent += BusSubcomponent)*)? &
+	(ownedMemorySubcomponent += MemorySubcomponent ( ',' ownedMemorySubcomponent += MemorySubcomponent)*)?) '}?';
+
+ThreadGroupImplementation :
+	{ThreadGroupImplementation} '!ThreadGroupImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)?
+	(ownedThreadSubcomponent += ThreadSubcomponent ( ',' ownedThreadSubcomponent += ThreadSubcomponent)*)?
+	(ownedThreadGroupSubcomponent += ThreadGroupSubcomponent ( ',' ownedThreadGroupSubcomponent += ThreadGroupSubcomponent)*)? (ownedSubprogramSubcomponent += SubprogramSubcomponent
+	( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)?
+	(ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent ( ',' ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent)*)?) '}?';
+
+VirtualProcessorImplementation :
+	{VirtualProcessorImplementation} '!VirtualProcessorImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)?
+	(ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent ( ',' ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent)*)?) '}?';
+
+ProcessorImplementation :
+	{ProcessorImplementation} '!ProcessorImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedBusSubcomponent += BusSubcomponent ( ',' ownedBusSubcomponent += BusSubcomponent)*)?
+	(ownedMemorySubcomponent += MemorySubcomponent ( ',' ownedMemorySubcomponent += MemorySubcomponent)*)?
+	(ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)?
+	(ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent ( ',' ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent)*)?) '}?';
+
+VirtualBusImplementation :
+	{VirtualBusImplementation} '!VirtualBusImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? & (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode ( ',' ownedMode += Mode)*)? &
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)? &
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)? &
+	ownedExtension = ImplementationExtension ? & ownedRealization = Realization & (ownedEndToEndFlow += EndToEndFlow
+	( ',' ownedEndToEndFlow += EndToEndFlow)*)? & (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? & (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? & (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? & (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? & (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? & (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? & (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? & (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? & (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)? &
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)? &
+	(ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)?) '}?';
+
+SystemClassifier :
+	SystemImplementation | SystemType;
+
+SystemPrototype :
+	{SystemPrototype} '!SystemPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+FlowFeature :
+	FlowSpecification | EndToEndFlow;
+
+FlowImplementation :
+	{FlowImplementation} '!FlowImplementation'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	& (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? & (inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)? & kind = FlowKind & specification =[FlowSpecification|IDDT] &
+	(ownedFlowSegment += FlowSegment ( ',' ownedFlowSegment += FlowSegment)*)? & inEnd = FlowEnd ? & outEnd = FlowEnd ?)
+	'}?';
+
+ModalPath :
+	Connection | FlowSpecification | FlowImplementation | EndToEndFlow;
+
+AnnexSubclause :
+	DefaultAnnexSubclause;
+
+SubprogramCallSequence :
+	{SubprogramCallSequence} '!SubprogramCallSequence'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(ownedSubprogramCall += SubprogramCall ( ',' ownedSubprogramCall += SubprogramCall)*)?) '}?';
+
+DefaultAnnexLibrary :
+	{DefaultAnnexLibrary} '!DefaultAnnexLibrary'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & sourceText = STRING & parsedAnnexLibrary = AnnexLibrary ?) '}?';
+
+AbstractClassifier :
+	AbstractImplementation | AbstractType;
+
+AbstractPrototype :
+	{AbstractPrototype} '!AbstractPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+ComponentType :
+	MemoryType | ThreadType | VirtualProcessorType | AbstractType | DataType | ProcessorType | SubprogramType |
+	ThreadGroupType | SystemType | VirtualBusType | DeviceType | ProcessType | SubprogramGroupType | BusType;
+
+BusPrototype :
+	{BusPrototype} '!BusPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+BusClassifier :
+	BusImplementation | BusType;
+
+VirtualBusClassifier :
+	VirtualBusType | VirtualBusImplementation;
+
+VirtualBusPrototype :
+	{VirtualBusPrototype} '!VirtualBusPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+Port :
+	EventPort | EventDataPort | DataPort;
+
+PortProxy :
+	{PortProxy} '!PortProxy' (in = BOOLEAN out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & dataClassifier =[DataClassifier|IDDT]?) '}?';
+
+InternalFeature :
+	EventDataSource | EventSource;
+
+AbstractFeature :
+	{AbstractFeature} '!AbstractFeature' (in = BOOLEAN & out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?refined =[Feature|IDDT]?featurePrototype =[FeaturePrototype|IDDT]?abstractFeatureClassifier =[FeatureClassifier|IDDT]?) '}?';
+
+ThreadClassifier :
+	ThreadType | ThreadImplementation;
+
+ThreadPrototype :
+	{ThreadPrototype} '!ThreadPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+VirtualProcessorPrototype :
+	{VirtualProcessorPrototype} '!VirtualProcessorPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+VirtualProcessorClassifier :
+	VirtualProcessorType | VirtualProcessorImplementation;
+
+PropertySet :
+	{PropertySet} '!PropertySet'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedPropertyType += PropertyType ( ',' ownedPropertyType += PropertyType)*)? (ownedProperty += Property ( ',' ownedProperty += Property)*)? (ownedPropertyConstant += PropertyConstant ( ',' ownedPropertyConstant += PropertyConstant)*)? (importedUnit +=[ModelUnit|IDDT] ( ',' importedUnit +=[ModelUnit|IDDT])*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)?) '}?';
+
+AadlPackage :
+	{AadlPackage} '!AadlPackage'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	ownedPublicSection = PublicPackageSection ? & ownedPrivateSection = PrivatePackageSection ? &
+	publicSection =[PublicPackageSection|IDDT]? & privateSection =[PrivatePackageSection|IDDT]?) '}?';
+
+ProcessorPrototype :
+	{ProcessorPrototype} '!ProcessorPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+ProcessorClassifier :
+	ProcessorImplementation | ProcessorType;
+
+DeviceClassifier :
+	DeviceType | DeviceImplementation;
+
+DevicePrototype :
+	{DevicePrototype} '!DevicePrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+ThreadGroupClassifier :
+	ThreadGroupImplementation | ThreadGroupType;
+
+ThreadGroupPrototype :
+	{ThreadGroupPrototype} '!ThreadGroupPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+PackageSection :
+	PrivatePackageSection | PublicPackageSection;
+
+RecordType :
+	{RecordType} '!RecordType'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedField += BasicProperty ( ',' ownedField += BasicProperty)*)?) '}?';
+
+GlobalNamespace :
+	{GlobalNamespace} '!GlobalNamespace'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?) '}?';
+
+EnumerationType :
+	UnitsType;
+
+StructuralFeature :
+	Connection | Feature | InternalFeature | Prototype | FlowFeature | Subcomponent | ProcessorFeature;
+
+UnitLiteral :
+	{UnitLiteral} '!UnitLiteral'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?baseUnit =[UnitLiteral|IDDT]?factor = NumberValue ?) '}?';
+
+ProcessClassifier :
+	ProcessType | ProcessImplementation;
+
+ProcessPrototype :
+	{ProcessPrototype} '!ProcessPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+SubprogramPrototype :
+	{SubprogramPrototype} '!SubprogramPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+SubprogramClassifier :
+	SubprogramType | SubprogramImplementation;
+
+BehavioralFeature :
+	SubprogramCallSequence | SubprogramCall;
+
+ModeFeature :
+	ModeTransition | Mode;
+
+SubprogramGroupClassifier :
+	SubprogramGroupImplementation | SubprogramGroupType;
+
+SubprogramGroupPrototype :
+	{SubprogramGroupPrototype} '!SubprogramGroupPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+DataClassifier :
+	DataImplementation | DataType;
+
+DataPrototype :
+	{DataPrototype} '!DataPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+MemoryClassifier :
+	MemoryType | MemoryImplementation;
+
+MemoryPrototype :
+	{MemoryPrototype} '!MemoryPrototype'array = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+Prototype :
+	FeaturePrototype | FeatureGroupPrototype | ComponentPrototype;
+
+ListType :
+	{ListType} '!ListType'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	ownedElementType = PropertyType ? & referencedElementType =[PropertyType|IDDT]?) '}?';
+
+NonListType :
+	AadlString | RangeType | ReferenceType | EnumerationType | ClassifierType | RecordType | AadlBoolean | NumberType;
+
+ProcessorType :
+	{ProcessorType} '!ProcessorType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? (ownedDataPort += DataPort
+	( ',' ownedDataPort += DataPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? (ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+VirtualProcessorSubcomponentType :
+	VirtualProcessorClassifier | AbstractClassifier | AbstractPrototype | VirtualProcessorPrototype;
+
+VirtualBusSubcomponentType :
+	AbstractClassifier | VirtualBusPrototype | AbstractPrototype | VirtualBusClassifier;
+
+MemorySubcomponentType :
+	AbstractClassifier | AbstractPrototype | MemoryPrototype | MemoryClassifier;
+
+BusSubcomponentType :
+	AbstractClassifier | AbstractPrototype | BusClassifier | BusPrototype;
+
+SubprogramType :
+	{SubprogramType} '!SubprogramType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)?
+	(ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)? (ownedParameter += Parameter ( ',' ownedParameter += Parameter)*)?
+	(ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? (ownedSubprogramAccess += SubprogramAccess
+	( ',' ownedSubprogramAccess += SubprogramAccess)*)? (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+SubprogramImplementation :
+	{SubprogramImplementation} '!SubprogramImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedSubprogramCallSequence += SubprogramCallSequence ( ',' ownedSubprogramCallSequence += SubprogramCallSequence)*)? (ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)? (ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)?) '}?';
+
+VirtualProcessorType :
+	{VirtualProcessorType} '!VirtualProcessorType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN & derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? & (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	& (ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)? &
+	ownedExtension = TypeExtension ? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? &
+	(ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)? & (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? & (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)? &
+	(ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? &
+	(ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)? &
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)?) '}?';
+
+ThreadGroupSubcomponentType :
+	AbstractClassifier | AbstractPrototype | ThreadGroupPrototype | ThreadGroupClassifier;
+
+ThreadSubcomponentType :
+	AbstractClassifier | AbstractPrototype | ThreadClassifier | ThreadPrototype;
+
+SubprogramGroupSubcomponentType :
+	AbstractClassifier | SubprogramGroupClassifier | AbstractPrototype | SubprogramGroupPrototype;
+
+DeviceSubcomponentType :
+	DevicePrototype | AbstractClassifier | AbstractPrototype | DeviceClassifier;
+
+AbstractSubcomponentType :
+	AbstractClassifier | AbstractPrototype;
+
+DataSubcomponentType :
+	AbstractClassifier | AbstractPrototype | DataPrototype | DataClassifier;
+
+ProcessSubcomponentType :
+	AbstractClassifier | AbstractPrototype | ProcessPrototype | ProcessClassifier;
+
+SubprogramSubcomponentType :
+	SubprogramClassifier | AbstractClassifier | AbstractPrototype | SubprogramPrototype;
+
+SystemSubcomponentType :
+	AbstractClassifier | SystemPrototype | AbstractPrototype | SystemClassifier;
+
+ProcessorSubcomponentType :
+	AbstractClassifier | AbstractPrototype | ProcessorPrototype | ProcessorClassifier;
+
+ThreadImplementation :
+	{ThreadImplementation} '!ThreadImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode ( ',' ownedMode += Mode)*)?
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)?ownedExtension = ImplementationExtension ?ownedRealization = Realization (ownedEndToEndFlow += EndToEndFlow ( ',' ownedEndToEndFlow += EndToEndFlow)*)? (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)?
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)?
+	(ownedSubprogramCallSequence += SubprogramCallSequence ( ',' ownedSubprogramCallSequence += SubprogramCallSequence)*)?
+	(ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent ( ',' ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent)*)?
+	(ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)? (ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)?) '}?';
+
+AbstractImplementation :
+	{AbstractImplementation} '!AbstractImplementation'noPrototypes = BOOLEAN noAnnexes = BOOLEAN noProperties = BOOLEAN derivedModes = BOOLEAN noFlows = BOOLEAN noModes = BOOLEAN noSubcomponents = BOOLEAN noConnections = BOOLEAN noCalls = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype
+	( ',' ownedPrototype += Prototype)*)? & (ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode ( ',' ownedMode += Mode)*)? &
+	(ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)? &
+	(ownedFlowImplementation += FlowImplementation ( ',' ownedFlowImplementation += FlowImplementation)*)? &
+	ownedExtension = ImplementationExtension ? & ownedRealization = Realization & (ownedEndToEndFlow += EndToEndFlow
+	( ',' ownedEndToEndFlow += EndToEndFlow)*)? & (ownedAbstractSubcomponent += AbstractSubcomponent ( ',' ownedAbstractSubcomponent += AbstractSubcomponent)*)? & (ownedAccessConnection += AccessConnection ( ',' ownedAccessConnection += AccessConnection)*)? & (ownedParameterConnection += ParameterConnection ( ',' ownedParameterConnection += ParameterConnection)*)? & (ownedPortConnection += PortConnection ( ',' ownedPortConnection += PortConnection)*)? & (ownedFeatureConnection += FeatureConnection ( ',' ownedFeatureConnection += FeatureConnection)*)? & (ownedFeatureGroupConnection += FeatureGroupConnection ( ',' ownedFeatureGroupConnection += FeatureGroupConnection)*)? & (ownedEventSource += EventSource ( ',' ownedEventSource += EventSource)*)? & (ownedEventDataSource += EventDataSource ( ',' ownedEventDataSource += EventDataSource)*)? & (ownedPortProxy += PortProxy ( ',' ownedPortProxy += PortProxy)*)? &
+	(ownedSubprogramProxy += SubprogramProxy ( ',' ownedSubprogramProxy += SubprogramProxy)*)? &
+	(ownedSubprogramCallSequence += SubprogramCallSequence ( ',' ownedSubprogramCallSequence += SubprogramCallSequence)*)? & (ownedBusSubcomponent += BusSubcomponent ( ',' ownedBusSubcomponent += BusSubcomponent)*)? & (ownedDataSubcomponent += DataSubcomponent ( ',' ownedDataSubcomponent += DataSubcomponent)*)? & (ownedDeviceSubcomponent += DeviceSubcomponent ( ',' ownedDeviceSubcomponent += DeviceSubcomponent)*)? & (ownedMemorySubcomponent += MemorySubcomponent ( ',' ownedMemorySubcomponent += MemorySubcomponent)*)? & (ownedProcessSubcomponent += ProcessSubcomponent ( ',' ownedProcessSubcomponent += ProcessSubcomponent)*)? & (ownedProcessorSubcomponent += ProcessorSubcomponent ( ',' ownedProcessorSubcomponent += ProcessorSubcomponent)*)? & (ownedSystemSubcomponent += SystemSubcomponent ( ',' ownedSystemSubcomponent += SystemSubcomponent)*)? & (ownedSubprogramSubcomponent += SubprogramSubcomponent ( ',' ownedSubprogramSubcomponent += SubprogramSubcomponent)*)? &
+	(ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent ( ',' ownedSubprogramGroupSubcomponent += SubprogramGroupSubcomponent)*)? & (ownedThreadSubcomponent += ThreadSubcomponent
+	( ',' ownedThreadSubcomponent += ThreadSubcomponent)*)? & (ownedThreadGroupSubcomponent += ThreadGroupSubcomponent
+	( ',' ownedThreadGroupSubcomponent += ThreadGroupSubcomponent)*)? &
+	(ownedVirtualBusSubcomponent += VirtualBusSubcomponent ( ',' ownedVirtualBusSubcomponent += VirtualBusSubcomponent)*)? &
+	(ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent ( ',' ownedVirtualProcessorSubcomponent += VirtualProcessorSubcomponent)*)?) '}?';
+
+SubprogramProxy :
+	{SubprogramProxy} '!SubprogramProxy'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	subprogramClassifier =[SubprogramClassifier|IDDT]?) '}?';
+
+EventDataSource :
+	{EventDataSource} '!EventDataSource' (in = BOOLEAN out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?dataClassifier =[DataClassifier|IDDT]?) '}?';
+
+ModeTransition :
+	{ModeTransition} '!ModeTransition'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	source =[Mode|IDDT] & destination =[Mode|IDDT] & ownedTrigger += ModeTransitionTrigger ( ',' ownedTrigger += ModeTransitionTrigger)*) '}?';
+
+PortConnection :
+	{PortConnection} '!PortConnection'bidirectional = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)?destination = ConnectedElement ?source = ConnectedElement ?refined =[Connection|IDDT]?) '}?';
+
+AccessConnection :
+	{AccessConnection} '!AccessConnection'bidirectional = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	(inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)? &
+	destination = ConnectedElement ? & source = ConnectedElement ? & refined =[Connection|IDDT]? &
+	accessCategory = AccessCategory ) '}?';
+
+ParameterConnection :
+	{ParameterConnection} '!ParameterConnection'bidirectional = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)?destination = ConnectedElement ?source = ConnectedElement ?refined =[Connection|IDDT]?) '}?';
+
+FeatureConnection :
+	{FeatureConnection} '!FeatureConnection'bidirectional = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)?destination = ConnectedElement ?source = ConnectedElement ?refined =[Connection|IDDT]?) '}?';
+
+EventSource :
+	{EventSource} '!EventSource' (in = BOOLEAN out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?) '}?';
+
+Realization :
+	{Realization} 'Realization''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	implemented =[ComponentType|IDDT]) '}?';
+
+ImplementationExtension :
+	{ImplementationExtension} 'ImplementationExtension''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?extended =[ComponentImplementation|IDDT]) '}?';
+
+FeatureGroupConnection :
+	{FeatureGroupConnection} '!FeatureGroupConnection'bidirectional = BOOLEAN name = IDDT '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)?
+	(inModeOrTransition +=[ModeFeature|IDDT] ( ',' inModeOrTransition +=[ModeFeature|IDDT])*)?destination = ConnectedElement ?source = ConnectedElement ?refined =[Connection|IDDT]?) '}?';
+
+enum FlowKind:
+source | path | sink ;
+
+DataType :
+	{DataType} '!DataType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? & (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	& (ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)? &
+	ownedExtension = TypeExtension ? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? &
+	(ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? &
+	(ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? &
+	(ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?)
+	'}?';
+
+ProcessType :
+	{ProcessType} '!ProcessType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? (ownedDataPort += DataPort
+	( ',' ownedDataPort += DataPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?
+	(ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? (ownedSubprogramAccess += SubprogramAccess
+	( ',' ownedSubprogramAccess += SubprogramAccess)*)? (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+SystemType :
+	{SystemType} '!SystemType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? & (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	& (ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)? &
+	ownedExtension = TypeExtension ? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? &
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? & (ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? & (ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)? &
+	(ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)? &
+	(ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? &
+	(ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)? & (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)?) '}?';
+
+VirtualBusType :
+	{VirtualBusType} '!VirtualBusType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? (ownedDataPort += DataPort
+	( ',' ownedDataPort += DataPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)?) '}?';
+
+MemoryType :
+	{MemoryType} '!MemoryType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? & (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	& (ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)? &
+	ownedExtension = TypeExtension ? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? &
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? & (ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)? & (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? &
+	(ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?) '}?';
+
+ThreadGroupType :
+	{ThreadGroupType} '!ThreadGroupType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? (ownedDataPort += DataPort
+	( ',' ownedDataPort += DataPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?
+	(ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? (ownedSubprogramAccess += SubprogramAccess
+	( ',' ownedSubprogramAccess += SubprogramAccess)*)? (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+DeviceType :
+	{DeviceType} '!DeviceType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? & (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	& (ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)? &
+	ownedExtension = TypeExtension ? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? &
+	(ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)? & (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? & (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)? &
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? & (ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? & (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+SubprogramGroupType :
+	{SubprogramGroupType} '!SubprogramGroupType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? & (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)? &
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? & (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? & (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	& (ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)? &
+	ownedExtension = TypeExtension ? & (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)? &
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? &
+	(ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? &
+	(ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?)
+	'}?';
+
+AbstractType :
+	{AbstractType} '!AbstractType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)?
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? (ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? (ownedSubprogramAccess += SubprogramAccess ( ',' ownedSubprogramAccess += SubprogramAccess)*)? (ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)?
+	(ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+ThreadType :
+	{ThreadType} '!ThreadType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN &
+	derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)? (ownedDataPort += DataPort
+	( ',' ownedDataPort += DataPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)? (ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?
+	(ownedDataAccess += DataAccess ( ',' ownedDataAccess += DataAccess)*)? (ownedSubprogramAccess += SubprogramAccess
+	( ',' ownedSubprogramAccess += SubprogramAccess)*)? (ownedSubprogramGroupAccess += SubprogramGroupAccess ( ',' ownedSubprogramGroupAccess += SubprogramGroupAccess)*)?) '}?';
+
+BusType :
+	{BusType} '!BusType' (noPrototypes = BOOLEAN & noAnnexes = BOOLEAN & noProperties = BOOLEAN & derivedModes = BOOLEAN & noFlows = BOOLEAN & noModes = BOOLEAN & noFeatures = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedAnnexSubclause += AnnexSubclause ( ',' ownedAnnexSubclause += AnnexSubclause)*)? (ownedPrototype += Prototype ( ',' ownedPrototype += Prototype)*)?
+	(ownedPrototypeBinding += PrototypeBinding ( ',' ownedPrototypeBinding += PrototypeBinding)*)? (ownedMode += Mode
+	( ',' ownedMode += Mode)*)? (ownedModeTransition += ModeTransition ( ',' ownedModeTransition += ModeTransition)*)?
+	(ownedFlowSpecification += FlowSpecification ( ',' ownedFlowSpecification += FlowSpecification)*)?ownedExtension = TypeExtension ? (ownedFeatureGroup += FeatureGroup ( ',' ownedFeatureGroup += FeatureGroup)*)?
+	(ownedAbstractFeature += AbstractFeature ( ',' ownedAbstractFeature += AbstractFeature)*)?
+	(ownedBusAccess += BusAccess ( ',' ownedBusAccess += BusAccess)*)? (ownedDataPort += DataPort ( ',' ownedDataPort += DataPort)*)? (ownedEventDataPort += EventDataPort ( ',' ownedEventDataPort += EventDataPort)*)?
+	(ownedEventPort += EventPort ( ',' ownedEventPort += EventPort)*)?) '}?';
+
+SubprogramAccess :
+	{SubprogramAccess} '!SubprogramAccess'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? & refined =[Feature|IDDT]? &
+	kind = AccessType & subprogramFeatureClassifier =[SubprogramSubcomponentType|IDDT]?) '}?';
+
+BusAccess :
+	{BusAccess} '!BusAccess'virtual = BOOLEAN name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	& (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)? & refined =[Feature|IDDT]? &
+	kind = AccessType & busFeatureClassifier =[BusFeatureClassifier|IDDT]?) '}?';
+
+SubprogramGroupAccess :
+	{SubprogramGroupAccess} '!SubprogramGroupAccess'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?refined =[Feature|IDDT]?kind = AccessType subprogramGroupFeatureClassifier =[SubprogramGroupSubcomponentType|IDDT]?) '}?';
+
+enum AccessType:
+provides | requires ;
+
+FeaturePrototype :
+	{FeaturePrototype} '!FeaturePrototype' (in = BOOLEAN & out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment
+	( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & refined =[Prototype|IDDT]? &
+	constrainingClassifier =[ComponentClassifier|IDDT]?) '}?';
+
+FeatureClassifier :
+	BusFeatureClassifier | DataSubcomponentType | SubprogramGroupSubcomponentType | ComponentClassifier |
+	ComponentPrototype | SubprogramSubcomponentType;
+
+FeatureType :
+	FeatureGroupType | FeatureGroupPrototype;
+
+EventPort :
+	{EventPort} '!EventPort' (in = BOOLEAN & out = BOOLEAN ) name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (arrayDimension += ArrayDimension ( ',' arrayDimension += ArrayDimension)*)?refined =[Feature|IDDT]?) '}?';
+
+FeatureGroupPrototype :
+	{FeatureGroupPrototype} '!FeatureGroupPrototype'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?refined =[Prototype|IDDT]?constrainingFeatureGroupType =[FeatureGroupType|IDDT]?) '}?';
+
+ComponentPrototype :
+	AbstractPrototype | SubprogramGroupPrototype | ProcessorPrototype | MemoryPrototype | ProcessPrototype |
+	VirtualProcessorPrototype | BusPrototype | DevicePrototype | SystemPrototype | VirtualBusPrototype |
+	ThreadGroupPrototype | DataPrototype | ThreadPrototype | SubprogramPrototype;
+
+GroupExtension :
+	{GroupExtension} 'GroupExtension''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?extended =[FeatureGroupType|IDDT]) '}?';
+
+DefaultAnnexSubclause :
+	{DefaultAnnexSubclause} '!DefaultAnnexSubclause'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? & (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? & (inMode +=[Mode|IDDT] ( ',' inMode +=[Mode|IDDT])*)? &
+	sourceText = STRING & parsedAnnexSubclause = AnnexSubclause ?) '}?';
+
+CallContext :
+	SubprogramGroupAccess | FeatureGroup | SubprogramGroupSubcomponent | AbstractType | DataType | SubprogramType |
+	SubprogramGroupType;
+
+CalledSubprogram :
+	SubprogramAccess | Prototype | Subprogram | SubprogramProxy;
+
+enum PortCategory:
+data | event | eventData ;
+
+enum AccessCategory:
+bus | data | subprogram | subprogramGroup | virtualBus ;
+
+TypeExtension :
+	{TypeExtension} 'TypeExtension''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?extended =[ComponentType|IDDT]) '}?';
+
+RealLiteral :
+	{RealLiteral} 'RealLiteral''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?unit =[UnitLiteral|IDDT]?value = REAL ) '}?';
+
+IntegerLiteral :
+	{IntegerLiteral} 'IntegerLiteral''{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	unit =[UnitLiteral|IDDT]? & base = INTEGER ? & value = INTEGER ) '}?';
+
+AbstractNamedValue :
+	Property | EnumerationLiteral | PropertyConstant;
+
+PrivatePackageSection :
+	{PrivatePackageSection} '!PrivatePackageSection'noAnnexes = BOOLEAN noProperties = BOOLEAN name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedPackageRename += PackageRename ( ',' ownedPackageRename += PackageRename)*)? (ownedComponentTypeRename += ComponentTypeRename ( ',' ownedComponentTypeRename += ComponentTypeRename)*)? (ownedClassifier += Classifier ( ',' ownedClassifier += Classifier)*)? (ownedFeatureGroupTypeRename += FeatureGroupTypeRename ( ',' ownedFeatureGroupTypeRename += FeatureGroupTypeRename)*)? (ownedAnnexLibrary += AnnexLibrary ( ',' ownedAnnexLibrary += AnnexLibrary)*)? (importedUnit +=[ModelUnit|IDDT] ( ',' importedUnit +=[ModelUnit|IDDT])*)?) '}?';
+
+PublicPackageSection :
+	{PublicPackageSection} '!PublicPackageSection'noAnnexes = BOOLEAN noProperties = BOOLEAN name = IDDT '{'
+	((ownedComment += Comment ( ',' ownedComment += Comment)*)? (ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? (ownedPackageRename += PackageRename ( ',' ownedPackageRename += PackageRename)*)? (ownedComponentTypeRename += ComponentTypeRename ( ',' ownedComponentTypeRename += ComponentTypeRename)*)? (ownedClassifier += Classifier ( ',' ownedClassifier += Classifier)*)? (ownedFeatureGroupTypeRename += FeatureGroupTypeRename ( ',' ownedFeatureGroupTypeRename += FeatureGroupTypeRename)*)? (ownedAnnexLibrary += AnnexLibrary ( ',' ownedAnnexLibrary += AnnexLibrary)*)? (importedUnit +=[ModelUnit|IDDT] ( ',' importedUnit +=[ModelUnit|IDDT])*)?) '}?';
+
+UnitsType :
+	{UnitsType} '!UnitsType'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	ownedLiteral += EnumerationLiteral ( ',' ownedLiteral += EnumerationLiteral)*) '}?';
+
+ProcessorFeature :
+	PortProxy | SubprogramProxy;
+
+ClassifierType :
+	{ClassifierType} '!ClassifierType'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(classifierReference += MetaclassReference ( ',' classifierReference += MetaclassReference)*)?) '}?';
+
+AadlBoolean :
+	{AadlBoolean} '!AadlBoolean'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?) '}?';
+
+NumberType :
+	AadlReal | AadlInteger;
+
+ReferenceType :
+	{ReferenceType} '!ReferenceType'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)? &
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)? &
+	(namedElementReference += MetaclassReference ( ',' namedElementReference += MetaclassReference)*)?) '}?';
+
+AadlString :
+	{AadlString} '!AadlString'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?) '}?';
+
+RangeType :
+	{RangeType} '!RangeType'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?ownedNumberType = NumberType ?referencedNumberType =[NumberType|IDDT]?) '}?';
+
+terminal REAL returns Real:
+	'0'..'9'+ ('.' '0'..'9'+)?;
+
+BusFeatureClassifier :
+	VirtualBusSubcomponentType | BusSubcomponentType;
+
+AadlInteger :
+	{AadlInteger} '!AadlInteger'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?ownedUnitsType = UnitsType ?referencedUnitsType =[UnitsType|IDDT]?range = NumericRange ?) '}?';
+
+AadlReal :
+	{AadlReal} '!AadlReal'name = IDDT '{' ((ownedComment += Comment ( ',' ownedComment += Comment)*)?
+	(ownedPropertyAssociation += PropertyAssociation ( ',' ownedPropertyAssociation += PropertyAssociation)*)?ownedUnitsType = UnitsType ?referencedUnitsType =[UnitsType|IDDT]?range = NumericRange ?) '}?';
+
+IDDT:
+	BOOLEAN | INTEGER | ID;
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

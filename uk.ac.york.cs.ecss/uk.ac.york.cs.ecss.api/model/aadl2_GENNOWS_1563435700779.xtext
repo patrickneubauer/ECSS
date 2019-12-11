@@ -1,0 +1,845 @@
+grammar opL
+
+import "http://aadl.info/AADL/2.0"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+Element :
+	ConnectedElement | ArrayRange | ArrayDimension | ContainedNamedElement | ModeBinding | ArraySize |
+	PropertyAssociation | PropertyOwner | ContainmentPathElement | NamedElement | FlowEnd |
+	ComponentImplementationReference | BasicPropertyAssociation | FlowSegment | ModeTransitionTrigger | Comment |
+	NumericRange | Relationship | PrototypeBinding | EndToEndFlowSegment | ArrayableElement | PropertyExpression;
+
+ArrayableElement :
+	Feature | FeaturePrototypeActual | Subcomponent | ComponentPrototypeActual;
+
+PropertyAssociation :
+	{PropertyAssociation} '!Context''{''}';
+
+ArrayDimension :
+	{ArrayDimension} '!Context''{''}';
+
+ConnectedElement :
+	{ConnectedElement} 'Element''{''}';
+
+ArrayRange :
+	{ArrayRange} '!Context''{''}';
+
+ModeBinding :
+	{ModeBinding} '!Context''{''}';
+
+Comment :
+	{Comment} 'Element''{''}';
+
+ContainedNamedElement :
+	ReferenceValue;
+
+BasicPropertyAssociation :
+	{BasicPropertyAssociation} '!Context''{''}';
+
+PropertyExpression :
+	PropertyValue | Operation | ListValue;
+
+PropertyOwner :
+	MetaclassReference | ClassifierValue;
+
+NamedElement :
+	System | Process | FeatureGroupTypeRename | TypedElement | ModalElement | VirtualProcessor | Device | Processor |
+	Namespace | EndToEndFlowElement | Context | ConnectionEnd | SubprogramGroup | ComponentTypeRename | ModelUnit |
+	PackageRename | Data | Subprogram | Memory | Abstract | ClassifierFeature | Thread | TriggerPort | EnumerationLiteral | ThreadGroup | VirtualBus | Bus | Type | RefinableElement | Flow | AnnexLibrary;
+
+EndToEndFlowSegment :
+	{EndToEndFlowSegment} '!Context''{''}';
+
+FlowSegment :
+	{FlowSegment} '!Context''{''}';
+
+ComponentImplementationReference :
+	{ComponentImplementationReference} '!Context''{''}';
+
+PrototypeBinding :
+	FeatureGroupPrototypeBinding | ComponentPrototypeBinding | FeaturePrototypeBinding;
+
+ModeTransitionTrigger :
+	{ModeTransitionTrigger} '!Context''{''}';
+
+FlowEnd :
+	{FlowEnd} '!Context''{''}';
+
+Relationship :
+	DirectedRelationship;
+
+NumericRange :
+	{NumericRange} '!Context''{''}';
+
+ArraySize :
+	{ArraySize} '!Context''{''}';
+
+ContainmentPathElement :
+	{ContainmentPathElement} '!Context''{''}';
+
+terminal STRING returns String:
+'"' ( '\\' . | !('\\' | '"'))* '"' | "'" ( '\\' . | !('\\' | "'"))* "'";
+
+terminal INTEGER returns Integer:
+'INTEGER' /*Don't know how to handle INTEGER!*/
+;
+
+ArraySizeProperty :
+	PropertyConstant;
+
+PropertyConstant :
+	{PropertyConstant} '!Context''{''}';
+
+PropertyType :
+	ListType | NonListType;
+
+NonListType :
+	AadlString | RangeType | AadlBoolean | NumberType | ReferenceType | EnumerationType | RecordType | ClassifierType;
+
+ListType :
+	{ListType} '!Context''{''}';
+
+EnumerationType :
+	UnitsType;
+
+NumberType :
+	AadlInteger | AadlReal;
+
+ReferenceType :
+	{ReferenceType} '!Context''{''}';
+
+ClassifierType :
+	{ClassifierType} '!Context''{''}';
+
+RangeType :
+	{RangeType} '!Context''{''}';
+
+AadlString :
+	{AadlString} '!Context''{''}';
+
+AadlBoolean :
+	{AadlBoolean} '!Context''{''}';
+
+RecordType :
+	{RecordType} '!Context''{''}';
+
+BasicProperty :
+	Property | RecordField;
+
+Property :
+	{Property} '!Context''{''}';
+
+RecordField :
+	{RecordField} '!Context''{''}';
+
+Type :
+	PropertyType | SubcomponentType | Classifier;
+
+Classifier :
+	FeatureGroupType | ComponentClassifier;
+
+SubcomponentType :
+	ComponentPrototype | DataSubcomponentType | ComponentClassifier | VirtualProcessorSubcomponentType |
+	VirtualBusSubcomponentType | ThreadSubcomponentType | ProcessorSubcomponentType | SubprogramGroupSubcomponentType |
+	DeviceSubcomponentType | ProcessSubcomponentType | SystemSubcomponentType | ThreadGroupSubcomponentType |
+	BusSubcomponentType | MemorySubcomponentType | SubprogramSubcomponentType | AbstractSubcomponentType;
+
+ThreadSubcomponentType :
+	AbstractClassifier | ThreadPrototype | AbstractPrototype | ThreadClassifier;
+
+DataSubcomponentType :
+	AbstractClassifier | DataClassifier | AbstractPrototype | DataPrototype;
+
+ComponentClassifier :
+	ComponentType | MemoryClassifier | ThreadGroupClassifier | ProcessorClassifier | ComponentImplementation |
+	SystemClassifier | VirtualBusClassifier | ThreadClassifier | ProcessClassifier | AbstractClassifier | DataClassifier | DeviceClassifier | SubprogramGroupClassifier | VirtualProcessorClassifier | SubprogramClassifier | BusClassifier;
+
+ProcessorSubcomponentType :
+	AbstractClassifier | ProcessorPrototype | ProcessorClassifier | AbstractPrototype;
+
+BusSubcomponentType :
+	AbstractClassifier | AbstractPrototype | BusPrototype | BusClassifier;
+
+VirtualBusSubcomponentType :
+	AbstractClassifier | AbstractPrototype | VirtualBusClassifier | VirtualBusPrototype;
+
+SubprogramGroupSubcomponentType :
+	AbstractClassifier | SubprogramGroupPrototype | SubprogramGroupClassifier | AbstractPrototype;
+
+ComponentPrototype :
+	SystemPrototype | SubprogramPrototype | SubprogramGroupPrototype | ProcessPrototype | ThreadPrototype |
+	AbstractPrototype | DataPrototype | MemoryPrototype | VirtualBusPrototype | ProcessorPrototype |
+	VirtualProcessorPrototype | DevicePrototype | BusPrototype | ThreadGroupPrototype;
+
+SystemSubcomponentType :
+	AbstractClassifier | SystemPrototype | SystemClassifier | AbstractPrototype;
+
+AbstractSubcomponentType :
+	AbstractClassifier | AbstractPrototype;
+
+ProcessSubcomponentType :
+	AbstractClassifier | ProcessPrototype | AbstractPrototype | ProcessClassifier;
+
+SubprogramSubcomponentType :
+	AbstractClassifier | SubprogramPrototype | SubprogramClassifier | AbstractPrototype;
+
+VirtualProcessorSubcomponentType :
+	AbstractClassifier | VirtualProcessorClassifier | VirtualProcessorPrototype | AbstractPrototype;
+
+ThreadGroupSubcomponentType :
+	AbstractClassifier | ThreadGroupClassifier | AbstractPrototype | ThreadGroupPrototype;
+
+DeviceSubcomponentType :
+	AbstractClassifier | DeviceClassifier | DevicePrototype | AbstractPrototype;
+
+MemorySubcomponentType :
+	AbstractClassifier | MemoryClassifier | AbstractPrototype | MemoryPrototype;
+
+MemoryClassifier :
+	MemoryImplementation | MemoryType;
+
+MemoryPrototype :
+	{MemoryPrototype} '!Context''{''}';
+
+AbstractClassifier :
+	AbstractType | AbstractImplementation;
+
+AbstractPrototype :
+	{AbstractPrototype} '!Context''{''}';
+
+AbstractImplementation :
+	{AbstractImplementation} '!Context''{''}';
+
+AbstractType :
+	{AbstractType} '!Context''{''}';
+
+terminal BOOLEAN returns Boolean:
+'BOOLEAN' /*Don't know how to handle BOOLEAN!*/
+;
+
+EventPort :
+	{EventPort} '!Context''{''}';
+
+SubprogramGroupAccess :
+	{SubprogramGroupAccess} '!Context''{''}';
+
+enum AccessType:
+provides | requires ;
+
+enum AccessCategory:
+bus | data | subprogram | subprogramGroup | virtualBus ;
+
+BusAccess :
+	{BusAccess} '!Context''{''}';
+
+BusFeatureClassifier :
+	BusSubcomponentType | VirtualBusSubcomponentType;
+
+DataPort :
+	{DataPort} '!Context''{''}';
+
+enum PortCategory:
+data | event | eventData ;
+
+SubprogramAccess :
+	{SubprogramAccess} '!Context''{''}';
+
+FeatureClassifier :
+	ComponentPrototype | DataSubcomponentType | ComponentClassifier | BusFeatureClassifier |
+	SubprogramGroupSubcomponentType | SubprogramSubcomponentType;
+
+DataAccess :
+	{DataAccess} '!Context''{''}';
+
+Generalization :
+	ImplementationExtension | TypeExtension | GroupExtension | Realization;
+
+TypeExtension :
+	{TypeExtension} '!Context''{''}';
+
+ImplementationExtension :
+	{ImplementationExtension} '!Context''{''}';
+
+Realization :
+	{Realization} '!Context''{''}';
+
+GroupExtension :
+	{GroupExtension} '!Context''{''}';
+
+FeatureGroupType :
+	{FeatureGroupType} '!Context''{''}';
+
+EventDataPort :
+	{EventDataPort} '!Context''{''}';
+
+Feature :
+	Access | DirectedFeature;
+
+DirectedFeature :
+	FeatureGroup | AbstractFeature | Port | Parameter;
+
+Access :
+	SubprogramAccess | SubprogramGroupAccess | DataAccess | BusAccess;
+
+AbstractFeature :
+	{AbstractFeature} '!Context''{''}';
+
+Port :
+	EventDataPort | DataPort | EventPort;
+
+Parameter :
+	{Parameter} '!Context''{''}';
+
+FeatureGroup :
+	{FeatureGroup} '!Context''{''}';
+
+FeatureType :
+	FeatureGroupType | FeatureGroupPrototype;
+
+FeatureGroupPrototype :
+	{FeatureGroupPrototype} '!Context''{''}';
+
+Prototype :
+	ComponentPrototype | FeatureGroupPrototype | FeaturePrototype;
+
+FeaturePrototype :
+	{FeaturePrototype} '!Context''{''}';
+
+enum DirectionType:
+in | out | inOut ;
+
+ClassifierFeature :
+	ModeFeature | FlowImplementation | BehavioralFeature | StructuralFeature;
+
+ModeFeature :
+	Mode | ModeTransition;
+
+FlowImplementation :
+	{FlowImplementation} '!Context''{''}';
+
+StructuralFeature :
+	Connection | Feature | ProcessorFeature | Subcomponent | InternalFeature | Prototype | FlowFeature;
+
+BehavioralFeature :
+	SubprogramCall | SubprogramCallSequence;
+
+SubprogramCallSequence :
+	{SubprogramCallSequence} '!Context''{''}';
+
+SubprogramCall :
+	{SubprogramCall} '!Context''{''}';
+
+CallContext :
+	SubprogramType | SubprogramGroupAccess | SubprogramGroupSubcomponent | AbstractType | FeatureGroup | DataType |
+	SubprogramGroupType;
+
+DataType :
+	{DataType} '!Context''{''}';
+
+SubprogramType :
+	{SubprogramType} '!Context''{''}';
+
+SubprogramGroupSubcomponent :
+	{SubprogramGroupSubcomponent} '!Context''{''}';
+
+SubprogramGroupType :
+	{SubprogramGroupType} '!Context''{''}';
+
+CalledSubprogram :
+	SubprogramAccess | Subprogram | Prototype | SubprogramProxy;
+
+Subprogram :
+	SubprogramPrototype | SubprogramClassifier | SubprogramSubcomponent;
+
+SubprogramProxy :
+	{SubprogramProxy} '!Context''{''}';
+
+SubprogramClassifier :
+	SubprogramType | SubprogramImplementation;
+
+SubprogramImplementation :
+	{SubprogramImplementation} '!Context''{''}';
+
+DataSubcomponent :
+	{DataSubcomponent} '!Context''{''}';
+
+SubprogramSubcomponent :
+	{SubprogramSubcomponent} '!Context''{''}';
+
+InternalFeature :
+	EventDataSource | EventSource;
+
+EventDataSource :
+	{EventDataSource} '!Context''{''}';
+
+EventSource :
+	{EventSource} '!Context''{''}';
+
+DataClassifier :
+	DataImplementation | DataType;
+
+DataImplementation :
+	{DataImplementation} '!Context''{''}';
+
+PortProxy :
+	{PortProxy} '!Context''{''}';
+
+RefinableElement :
+	StructuralFeature;
+
+SubprogramPrototype :
+	{SubprogramPrototype} '!Context''{''}';
+
+Connection :
+	AccessConnection | PortConnection | FeatureConnection | ParameterConnection | FeatureGroupConnection;
+
+Subcomponent :
+	BusSubcomponent | MemorySubcomponent | DeviceSubcomponent | DataSubcomponent | SystemSubcomponent |
+	ThreadGroupSubcomponent | SubprogramGroupSubcomponent | AbstractSubcomponent | ThreadSubcomponent |
+	ProcessSubcomponent | SubprogramSubcomponent | VirtualBusSubcomponent | ProcessorSubcomponent |
+	VirtualProcessorSubcomponent;
+
+ProcessorFeature :
+	PortProxy | SubprogramProxy;
+
+FlowFeature :
+	EndToEndFlow | FlowSpecification;
+
+EndToEndFlow :
+	{EndToEndFlow} '!Context''{''}';
+
+FlowSpecification :
+	{FlowSpecification} '!Context''{''}';
+
+enum FlowKind:
+source | path | sink ;
+
+BusSubcomponent :
+	{BusSubcomponent} '!Context''{''}';
+
+MemorySubcomponent :
+	{MemorySubcomponent} '!Context''{''}';
+
+AbstractSubcomponent :
+	{AbstractSubcomponent} '!Context''{''}';
+
+ProcessSubcomponent :
+	{ProcessSubcomponent} '!Context''{''}';
+
+ThreadGroupSubcomponent :
+	{ThreadGroupSubcomponent} '!Context''{''}';
+
+ThreadSubcomponent :
+	{ThreadSubcomponent} '!Context''{''}';
+
+VirtualBusSubcomponent :
+	{VirtualBusSubcomponent} '!Context''{''}';
+
+ProcessorSubcomponent :
+	{ProcessorSubcomponent} '!Context''{''}';
+
+VirtualProcessorSubcomponent :
+	{VirtualProcessorSubcomponent} '!Context''{''}';
+
+SystemSubcomponent :
+	{SystemSubcomponent} '!Context''{''}';
+
+DeviceSubcomponent :
+	{DeviceSubcomponent} '!Context''{''}';
+
+PortConnection :
+	{PortConnection} '!Context''{''}';
+
+FeatureGroupConnection :
+	{FeatureGroupConnection} '!Context''{''}';
+
+ParameterConnection :
+	{ParameterConnection} '!Context''{''}';
+
+FeatureConnection :
+	{FeatureConnection} '!Context''{''}';
+
+AccessConnection :
+	{AccessConnection} '!Context''{''}';
+
+Mode :
+	{Mode} '!Context''{''}';
+
+ModeTransition :
+	{ModeTransition} '!Context''{''}';
+
+ComponentType :
+	SubprogramType | BusType | ProcessType | MemoryType | DataType | SubprogramGroupType | VirtualBusType | ThreadType |
+	VirtualProcessorType | DeviceType | ProcessorType | ThreadGroupType | AbstractType | SystemType;
+
+ProcessorType :
+	{ProcessorType} '!Context''{''}';
+
+ThreadType :
+	{ThreadType} '!Context''{''}';
+
+MemoryType :
+	{MemoryType} '!Context''{''}';
+
+DeviceType :
+	{DeviceType} '!Context''{''}';
+
+BusType :
+	{BusType} '!Context''{''}';
+
+VirtualBusType :
+	{VirtualBusType} '!Context''{''}';
+
+ProcessType :
+	{ProcessType} '!Context''{''}';
+
+VirtualProcessorType :
+	{VirtualProcessorType} '!Context''{''}';
+
+ThreadGroupType :
+	{ThreadGroupType} '!Context''{''}';
+
+SystemType :
+	{SystemType} '!Context''{''}';
+
+ComponentImplementation :
+	DeviceImplementation | BehavioredImplementation | SystemImplementation | ProcessorImplementation |
+	SubprogramGroupImplementation | BusImplementation | MemoryImplementation | VirtualBusImplementation |
+	VirtualProcessorImplementation | ProcessImplementation | DataImplementation | ThreadGroupImplementation;
+
+SystemImplementation :
+	{SystemImplementation} '!Context''{''}';
+
+MemoryImplementation :
+	{MemoryImplementation} '!Context''{''}';
+
+SubprogramGroupImplementation :
+	{SubprogramGroupImplementation} '!Context''{''}';
+
+DeviceImplementation :
+	{DeviceImplementation} '!Context''{''}';
+
+BehavioredImplementation :
+	ThreadImplementation | AbstractImplementation | SubprogramImplementation;
+
+BusImplementation :
+	{BusImplementation} '!Context''{''}';
+
+ProcessorImplementation :
+	{ProcessorImplementation} '!Context''{''}';
+
+VirtualBusImplementation :
+	{VirtualBusImplementation} '!Context''{''}';
+
+VirtualProcessorImplementation :
+	{VirtualProcessorImplementation} '!Context''{''}';
+
+ProcessImplementation :
+	{ProcessImplementation} '!Context''{''}';
+
+ThreadGroupImplementation :
+	{ThreadGroupImplementation} '!Context''{''}';
+
+ThreadImplementation :
+	{ThreadImplementation} '!Context''{''}';
+
+AnnexSubclause :
+	DefaultAnnexSubclause;
+
+DefaultAnnexSubclause :
+	{DefaultAnnexSubclause} '!Context''{''}';
+
+DeviceClassifier :
+	DeviceImplementation | DeviceType;
+
+DevicePrototype :
+	{DevicePrototype} '!Context''{''}';
+
+ThreadGroupPrototype :
+	{ThreadGroupPrototype} '!Context''{''}';
+
+ThreadGroupClassifier :
+	ThreadGroupType | ThreadGroupImplementation;
+
+VirtualProcessorClassifier :
+	VirtualProcessorType | VirtualProcessorImplementation;
+
+VirtualProcessorPrototype :
+	{VirtualProcessorPrototype} '!Context''{''}';
+
+ProcessPrototype :
+	{ProcessPrototype} '!Context''{''}';
+
+ProcessClassifier :
+	ProcessType | ProcessImplementation;
+
+SystemClassifier :
+	SystemImplementation | SystemType;
+
+SystemPrototype :
+	{SystemPrototype} '!Context''{''}';
+
+SubprogramGroupPrototype :
+	{SubprogramGroupPrototype} '!Context''{''}';
+
+BusPrototype :
+	{BusPrototype} '!Context''{''}';
+
+VirtualBusPrototype :
+	{VirtualBusPrototype} '!Context''{''}';
+
+DataPrototype :
+	{DataPrototype} '!Context''{''}';
+
+ProcessorPrototype :
+	{ProcessorPrototype} '!Context''{''}';
+
+ThreadPrototype :
+	{ThreadPrototype} '!Context''{''}';
+
+SubprogramGroupClassifier :
+	SubprogramGroupImplementation | SubprogramGroupType;
+
+VirtualBusClassifier :
+	VirtualBusImplementation | VirtualBusType;
+
+BusClassifier :
+	BusType | BusImplementation;
+
+ProcessorClassifier :
+	ProcessorImplementation | ProcessorType;
+
+ThreadClassifier :
+	ThreadType | ThreadImplementation;
+
+MetaclassReference :
+	{MetaclassReference} '!Context''{''}';
+
+AadlInteger :
+	{AadlInteger} '!Context''{''}';
+
+AadlReal :
+	{AadlReal} '!Context''{''}';
+
+UnitsType :
+	{UnitsType} '!Context''{''}';
+
+EnumerationLiteral :
+	UnitLiteral;
+
+UnitLiteral :
+	{UnitLiteral} '!Context''{''}';
+
+NumberValue :
+	IntegerLiteral | RealLiteral;
+
+RealLiteral :
+	{RealLiteral} '!Context''{''}';
+
+IntegerLiteral :
+	{IntegerLiteral} '!Context''{''}';
+
+terminal REAL returns Real:
+	'0'..'9'+ ('.' '0'..'9'+)?;
+
+DirectedRelationship :
+	Generalization;
+
+Context :
+	EventDataPort | Subcomponent | SubprogramCall | DataPort | FeatureGroup | Parameter;
+
+TriggerPort :
+	PortProxy | InternalFeature | AbstractFeature | Port;
+
+FeaturePrototypeBinding :
+	{FeaturePrototypeBinding} '!Context''{''}';
+
+FeatureGroupPrototypeBinding :
+	{FeatureGroupPrototypeBinding} '!Context''{''}';
+
+ComponentPrototypeBinding :
+	{ComponentPrototypeBinding} '!Context''{''}';
+
+ComponentPrototypeActual :
+	{ComponentPrototypeActual} '!Context''{''}';
+
+enum ComponentCategory:
+abstract | bus | data | device | memory | process | processor | subprogram | subprogramGroup | system | thread | threadGroup | virtualBus | virtualProcessor ;
+
+FeatureGroupPrototypeActual :
+	{FeatureGroupPrototypeActual} '!Context''{''}';
+
+FeaturePrototypeActual :
+	PortSpecification | FeaturePrototypeReference | FeatureGroupPrototypeActual | AccessSpecification;
+
+PortSpecification :
+	{PortSpecification} '!Context''{''}';
+
+FeaturePrototypeReference :
+	{FeaturePrototypeReference} '!Context''{''}';
+
+AccessSpecification :
+	{AccessSpecification} '!Context''{''}';
+
+FlowElement :
+	Connection | DataAccess | Subcomponent | FlowSpecification;
+
+EndToEndFlowElement :
+	FlowElement | EndToEndFlow;
+
+ThreadGroup :
+	ThreadGroupClassifier | ThreadGroupPrototype | ThreadGroupSubcomponent;
+
+VirtualProcessor :
+	VirtualProcessorClassifier | VirtualProcessorPrototype | VirtualProcessorSubcomponent;
+
+Namespace :
+	PropertySet | GlobalNamespace | PackageSection | Classifier | EnumerationType | RecordType;
+
+Flow :
+	FlowImplementation | FlowFeature;
+
+Process :
+	ProcessPrototype | ProcessSubcomponent | ProcessClassifier;
+
+FeatureGroupTypeRename :
+	{FeatureGroupTypeRename} '!Context''{''}';
+
+ComponentTypeRename :
+	{ComponentTypeRename} '!Context''{''}';
+
+Device :
+	DeviceClassifier | DeviceSubcomponent | DevicePrototype;
+
+ModelUnit :
+	AadlPackage | PropertySet;
+
+TypedElement :
+	BasicProperty | PropertyConstant;
+
+Data :
+	DataClassifier | DataSubcomponent | DataPrototype;
+
+Memory :
+	MemorySubcomponent | MemoryClassifier | MemoryPrototype;
+
+Abstract :
+	AbstractClassifier | AbstractSubcomponent | AbstractPrototype;
+
+ModalElement :
+	ModalPath | AnnexSubclause | ModalPropertyValue | Subcomponent | SubprogramCallSequence;
+
+ConnectionEnd :
+	ParameterConnectionEnd | PortConnectionEnd | FeatureGroupConnectionEnd | FeatureConnectionEnd | AccessConnectionEnd;
+
+System :
+	SystemPrototype | SystemClassifier | SystemSubcomponent;
+
+AnnexLibrary :
+	DefaultAnnexLibrary;
+
+Processor :
+	ProcessorPrototype | ProcessorClassifier | ProcessorSubcomponent;
+
+VirtualBus :
+	VirtualBusClassifier | VirtualBusSubcomponent | VirtualBusPrototype;
+
+SubprogramGroup :
+	SubprogramGroupPrototype | SubprogramGroupClassifier | SubprogramGroupSubcomponent;
+
+Bus :
+	BusSubcomponent | BusPrototype | BusClassifier;
+
+PackageRename :
+	{PackageRename} '!Context''{''}';
+
+Thread :
+	ThreadSubcomponent | ThreadPrototype | ThreadClassifier;
+
+AadlPackage :
+	{AadlPackage} '!Context''{''}';
+
+PrivatePackageSection :
+	{PrivatePackageSection} '!Context''{''}';
+
+PublicPackageSection :
+	{PublicPackageSection} '!Context''{''}';
+
+DefaultAnnexLibrary :
+	{DefaultAnnexLibrary} '!Context''{''}';
+
+FeatureConnectionEnd :
+	PortProxy | Feature | InternalFeature;
+
+PortConnectionEnd :
+	PortProxy | DataAccess | DataSubcomponent | InternalFeature | Port;
+
+AccessConnectionEnd :
+	BusSubcomponent | Access | SubprogramGroupSubcomponent | DataSubcomponent | SubprogramSubcomponent |
+	VirtualBusSubcomponent | SubprogramProxy;
+
+ParameterConnectionEnd :
+	DataAccess | EventDataPort | DataSubcomponent | DataPort | Parameter;
+
+FeatureGroupConnectionEnd :
+	FeatureGroup;
+
+ModalPath :
+	Connection | FlowImplementation | EndToEndFlow | FlowSpecification;
+
+ModalPropertyValue :
+	{ModalPropertyValue} '!Context''{''}';
+
+PropertySet :
+	{PropertySet} '!Context''{''}';
+
+PackageSection :
+	PrivatePackageSection | PublicPackageSection;
+
+GlobalNamespace :
+	{GlobalNamespace} '!Context''{''}';
+
+ClassifierValue :
+	{ClassifierValue} '!Context''{''}';
+
+Operation :
+	{Operation} '!Context''{''}';
+
+ListValue :
+	{ListValue} '!Context''{''}';
+
+PropertyValue :
+	BooleanLiteral | StringLiteral | ReferenceValue | RangeValue | ComputedValue | NamedValue | NumberValue | RecordValue | ClassifierValue;
+
+NamedValue :
+	{NamedValue} '!Context''{''}';
+
+BooleanLiteral :
+	{BooleanLiteral} '!Context''{''}';
+
+ReferenceValue :
+	{ReferenceValue} '!Context''{''}';
+
+StringLiteral :
+	{StringLiteral} '!Context''{''}';
+
+RecordValue :
+	{RecordValue} '!Context''{''}';
+
+RangeValue :
+	{RangeValue} '!Context''{''}';
+
+ComputedValue :
+	{ComputedValue} '!Context''{''}';
+
+AbstractNamedValue :
+	Property | EnumerationLiteral | PropertyConstant;
+
+enum OperationKind:
+and | or | not | plus | minus ;
+
+IDDT:
+	BOOLEAN | INTEGER | ID;
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

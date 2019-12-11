@@ -325,6 +325,7 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		return grammarResource;
 	}
 	
+	
 	/**
 	 * Generates and returns default Xtext grammar based on given Ecore meta-model.
 	 * 

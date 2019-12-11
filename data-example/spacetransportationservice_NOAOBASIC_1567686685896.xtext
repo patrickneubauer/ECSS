@@ -1,0 +1,58 @@
+grammar opL
+
+import "http://ecss.me/examples/spacetransportationservice"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+NamedElement :
+	Spacecraft | LaunchSite | Stage | EngineType;
+
+EngineType :
+	{EngineType} 'name'  ':' name = IDDT BEGIN ( 'fuelKind'  ':'  fuelKind= ESTRING ';') END;
+
+LaunchSite :
+	{LaunchSite} 'name'  ':' name = IDDT BEGIN (( 'locationLatitude'  ':'  locationLatitude= EDOUBLEDT ';')
+	( 'locationLongitude'  ':'  locationLongitude= EDOUBLEDT ';') (( 'operator'  ':'  operator= ESTRING )?';')
+	( 'numberOfLaunchpads'  ':'  numberOfLaunchpads= EINT ';') (( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?';') ( 'operational'  ':'  operational?= EBOOLEAN ';')) END;
+
+Spacecraft :
+	{Spacecraft} 'name'  ':' name = IDDT BEGIN ((( 'stages'  ':' BEGIN  stages+= Stage stages+= Stage *END )?';')
+	(( 'launchSites'  ':' BEGIN  '- '  launchSites+=[LaunchSite|IDDT] ( '- ' launchSites+=[LaunchSite|IDDT])*END )?';')
+	(( 'functions'  ':'  functions+= Function functions+= Function *)?';') (( 'manufacturer'  ':'  manufacturer= ESTRING )?';') (( 'countryOfOrigin'  ':'  countryOfOrigin= ESTRING )?';') ( 'relaunchCostInMioUSD'  ':'  relaunchCostInMioUSD= EINT ';') (( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?';')) END;
+
+Stage :
+	{Stage} 'name'  ':' name = IDDT BEGIN (( 'engineType'  ':' BEGIN  '- '  engineType=[EngineType|IDDT] END ';')
+	( 'engineAmount'  ':'  engineAmount= EINT ';') (( 'physicalProperties'  ':' BEGIN  physicalProperties+= PhysicalProperty physicalProperties+= PhysicalProperty *END )?';')) END;
+
+IDDT:
+	EBOOLEAN | ID;
+
+PhysicalProperty :
+	{PhysicalProperty} 'type'  ':' type = PhysicalPropertyType BEGIN ((( 'unit'  ':'  unit= ESTRING )?';') ( 'value'  ':'  value= EDOUBLEDT ';')) END;
+
+EDOUBLEDT returns ecore::EDouble:
+	EINT | EDOUBLE;
+
+enum Function:
+MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER ;
+
+enum PhysicalPropertyType:
+LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS ;
+
+terminal BEGIN: 'synthetic:BEGIN';
+
+terminal EBOOLEAN returns ecore::EBoolean: 'false' |
+'true' ;
+
+terminal EDOUBLE returns ecore::EDouble:
+	'0'..'9'+ ('.' '0'..'9'+)?;
+
+terminal EINT returns ecore::EInt:
+	'0'..'9'+;
+
+terminal END: 'synthetic:END';
+
+terminal ESTRING :
+'"' ( '\\' . | !('"' | '\\'))* '"' | "'" ( '\\' . | !("'" | '\\'))* "'";
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' )*;

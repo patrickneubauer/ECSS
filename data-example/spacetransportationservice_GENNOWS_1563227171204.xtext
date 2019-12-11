@@ -1,0 +1,54 @@
+grammar opL
+
+import "http://ecss.me/examples/spacetransportationservice"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+
+SpaceTransportationService :
+	{SpaceTransportationService} 'SpaceTransportationService''{' (launchSites += LaunchSite ( ',' launchSites += LaunchSite)*)? (engineTypes += EngineType ( ',' engineTypes += EngineType)*)? (spacecrafts += Spacecraft
+	( ',' spacecrafts += Spacecraft)*)?'}';
+
+Spacecraft :
+	{Spacecraft} 'SpaceTransportationService' 'name'  ':' name = IDDT '{' (stages += Stage ( ',' stages += Stage)*)?
+	(launchSites +=[LaunchSite|IDDT] ( ',' launchSites +=[LaunchSite|IDDT])*)? (functions += Function ( ',' functions += Function)*)?manufacturer = ESTRING ?countryOfOrigin = ESTRING ? relaunchCostInMioUSD = EINT
+	(physicalProperties += PhysicalProperty ( ',' physicalProperties += PhysicalProperty)*)?'}';
+
+enum Function:
+MARS_COLONIZATION | EARTH_LUNAR_TRANSPORT | MULTIPLANETARY_TRANSPORT | INTERCONTINENTAL_TRANSPORT | ORBITAL_LAUNCHER ;
+
+terminal EINT returns ecore::EInt:
+	'0'..'9'+;
+
+terminal ESTRING :
+'"' ( '\\' . | !('\\' | '"'))* '"' | "'" ( '\\' . | !('\\' | "'"))* "'";
+
+LaunchSite :
+	{LaunchSite} 'SpaceTransportationService' 'name'  ':' name = IDDT '{' locationLatitude = EDOUBLEDT  locationLongitude = EDOUBLEDT operator = ESTRING ? numberOfLaunchpads = EINT (physicalProperties += PhysicalProperty
+	( ',' physicalProperties += PhysicalProperty)*)? operational ?= EBOOLEAN '}';
+
+EDOUBLEDT returns ecore::EDouble:
+	EINT | EDOUBLE;
+
+PhysicalProperty :
+	{PhysicalProperty} 'SpaceTransportationService' 'type'  ':' type = PhysicalPropertyType '{'unit = ESTRING ? value = EDOUBLEDT '}';
+
+enum PhysicalPropertyType:
+LENGTH | WIDTH | DIAMETER | PERIMETER | AREA | VOLUME | MASS ;
+
+terminal EBOOLEAN returns ecore::EBoolean:
+'true' | 'false';
+
+Stage :
+	{Stage} 'SpaceTransportationService' 'name'  ':' name = IDDT '{' engineType =[EngineType|IDDT] engineAmount = EINT
+	(physicalProperties += PhysicalProperty ( ',' physicalProperties += PhysicalProperty)*)?'}';
+
+EngineType :
+	{EngineType} 'SpaceTransportationService' 'name'  ':' name = IDDT '{' fuelKind = ESTRING '}';
+
+IDDT:
+	EBOOLEAN | ID;
+
+terminal EDOUBLE returns ecore::EDouble:
+	'0'..'9'+ ('.' '0'..'9'+)?;
+
+terminal ID : '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

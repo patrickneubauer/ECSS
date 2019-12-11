@@ -1,0 +1,2 @@
+template staticRule : staticContent.Aadl2;
+javarule staticRule defaultStaticRule ::classRules ;
