@@ -13,6 +13,7 @@ class Aadl2 extends AbstractEcssXtendRule {
 	}
 	
 	override getString() '''
+grammar org.osate.xtext.aadl2.Aadl2 with org.osate.xtext.aadl2.properties.Properties
 
 import "http://aadl.info/AADL/2.0" as aadl2
 

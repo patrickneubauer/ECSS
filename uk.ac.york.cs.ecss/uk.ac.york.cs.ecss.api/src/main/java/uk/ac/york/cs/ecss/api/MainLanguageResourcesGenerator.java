@@ -146,6 +146,10 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	}
 
 	public GrammarResource generateAndSerializeGrammar(File ecoreMetamodelFile, File ecssModelFile) {
+		return generateAndSerializeGrammar(ecoreMetamodelFile, ecssModelFile, new String[1]);
+	}
+	
+	public GrammarResource generateAndSerializeGrammar(File ecoreMetamodelFile, File ecssModelFile, String[] outputString) {
 		File targetFile = new File(outputPath.toString() + "/" + languageId + "." + GRAMMAR_FILE_EXTENSION);
 
 		Resource ecoreResource = resourceLoader.getResourceSet().getResource(URI.createFileURI(ecoreMetamodelFile.getAbsolutePath()), true);
@@ -162,7 +166,7 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		cm.getTemplateManager().addTemplate(TerminalXtendRule.class, "terminalRules");
 		
 		Resource newXtextResource = resourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
-		cm.saveInResource(newXtextResource);
+		cm.saveInResource(newXtextResource,outputString);
 		
 		// create resource by loading from disk
 		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);

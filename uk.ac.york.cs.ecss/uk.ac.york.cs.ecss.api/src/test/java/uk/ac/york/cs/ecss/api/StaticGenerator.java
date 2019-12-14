@@ -51,9 +51,6 @@ public class StaticGenerator {
 						"	\n" + 
 						"	override getString() \'\'\'\n");
 				List<String> lines = new ArrayList<>(Files.readLines(file, Charset.forName("UTF-8")));
-				while (lines.get(0).trim().startsWith("grammar")) {
-					lines.remove(0);
-				}
 				lines.forEach(x->{xtendContent.append(x);xtendContent.append("\n");});
 				xtendContent.append(
 						"	\'\'\'\n" + 

@@ -192,6 +192,9 @@ public class CompleteManager {
 
 		AbstractEcssXtendRule rootRule = generateRuleForGroup("classRules", rootClass);
 		String str = rootRule.getString();
+		if (str.startsWith("grammar")) {
+			ret = new StringBuilder();
+		}
 		ret.append(str + "\n\n");
 		
 		Set<AbstractEcssXtendRule> allDepSet = new HashSet<>();
@@ -241,7 +244,12 @@ public class CompleteManager {
 	}
 
 	public void saveInResource(Resource r) {
+		saveInResource(r, new String[1]);
+	}
+	
+	public void saveInResource(Resource r, String[] outputString) {
 		GenerationOutput<Grammar> generated = generateFull();
+		outputString[0] = generated.string;
 		try {
 			boolean saved = false;
 			if (generated.value != null) {

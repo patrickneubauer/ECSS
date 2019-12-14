@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -29,7 +30,7 @@ public class MyTestStatic {
 		final String ECORE_FILE_NAME = "MD2.ecore";
 		File ecssModelFile = new File("xtexttrafo\\aadl2.ecss");
 		File metamodelFile = new File(ECORE_PATH + ECORE_FILE_NAME);
-		File xtextGrammarFile = new File(ECORE_PATH + ECORE_FILE_NAME.replace(".ecore", "_STATIC "+new Date().getTime()+".xtext"));
+		File xtextGrammarFile = new File(ecssModelFile.getAbsolutePath().substring(0,ecssModelFile.getAbsolutePath().length()-".ecss".length()) + "_STATIC "+new Date().getTime()+".xtext");
 
 		assertFalse( Files.exists( xtextGrammarFile.toPath() ) );
 		MainLanguageResourcesGenerator mlrc = new MainLanguageResourcesGenerator(new File("report"), new File("op").toPath(), "opLang", "opL", Arrays.asList("ol"));
@@ -40,8 +41,8 @@ public class MyTestStatic {
 		basePaths.add(new File(ecssModelFile.getParent()));
 		mlrc.setResourceResolver(MultiExtensionResourceResolver.get(basePaths,
 				"", true, "ecore", "ecss", "xtext"));
-
-		Resource xtextGrammar = mlrc.generateAndSerializeGrammar(metamodelFile, ecssModelFile);
+		String[] outputString = new String[] {null};
+		Resource xtextGrammar = mlrc.generateAndSerializeGrammar(metamodelFile, ecssModelFile, outputString);
 		try (FileOutputStream fos = new FileOutputStream(xtextGrammarFile)) {
 			xtextGrammar.save(fos, java.util.Collections.emptyMap());
 			System.out.println("Saved as "+xtextGrammarFile);
@@ -51,6 +52,16 @@ public class MyTestStatic {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			if (outputString[0] != null) {
+				try {
+					Files.write(xtextGrammarFile.toPath(), outputString[0].getBytes());
+					System.out.println("Saved as "+xtextGrammarFile);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 		}
 
 	}

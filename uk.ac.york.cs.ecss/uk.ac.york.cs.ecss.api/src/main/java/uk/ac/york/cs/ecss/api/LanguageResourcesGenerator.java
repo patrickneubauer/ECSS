@@ -34,7 +34,7 @@ public interface LanguageResourcesGenerator {
 	 * @throws IOException If e.g. the language metamodel file cannot be loaded or is not in the ecore resource set
 	 */
 	GrammarResource generateGrammar(File languageMetamodelFile, boolean optimized) throws IOException;
-
+	
 	/**
 	 * Generates {@link GrammarResource} from language metamodel and style model
 	 * that applies the provided ECSS style. To be used programmatically and within
@@ -46,8 +46,26 @@ public interface LanguageResourcesGenerator {
 	 *            style model conforming to language metamodel
 	 * @return {@link GrammarResource} applying provided ECSS style
 	 */
-	GrammarResource generateAndSerializeGrammar(File languageMetamodelFile, File languageModelFile);
+	default GrammarResource generateAndSerializeGrammar(File ecoreMetamodelFile, File ecssModelFile) {
+		return generateAndSerializeGrammar(ecoreMetamodelFile, ecssModelFile, new String[1]);
+	}
+	
+	/**
+	 * Generates {@link GrammarResource} from language metamodel and style model
+	 * that applies the provided ECSS style. To be used programmatically and within
+	 * eclipse-wizard module.
+	 * 
+	 * @param languageMetamodelFile
+	 *            language metamodel of language for which to produce grammar
+	 * @param languageModelFile
+	 *            style model conforming to language metamodel
+	 * @param outputString
+	 *            complete generated string
+	 * @return {@link GrammarResource} applying provided ECSS style
+	 */
+	GrammarResource generateAndSerializeGrammar(File ecoreMetamodelFile, File ecssModelFile, String[] outputString);
 
+	
 	/**
 	 * Generates {@link GrammarResource} from language metamodel that applies the
 	 * Xtext default style. To be used programmatically and within eclipse-wizard
