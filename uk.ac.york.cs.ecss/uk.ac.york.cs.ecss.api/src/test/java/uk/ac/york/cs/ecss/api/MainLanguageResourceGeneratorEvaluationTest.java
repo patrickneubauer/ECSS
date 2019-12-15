@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +18,15 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.EnumRule;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.xtext.GrammarResource;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -32,6 +41,7 @@ import uk.ac.york.cs.ecss.migrated.EcoreKeywordConfig;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelation;
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
 import uk.ac.york.cs.ecss.migrated.MultiExtensionResourceResolver;
+import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
 import uk.ac.york.cs.ecss.utilities.FileUtils;
 
 /**
@@ -414,6 +424,82 @@ public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageRes
 			logger.info("test completed!");
 		} catch (Exception e) {
 			logger.error(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void _Z_testPrintStats() {
+		try {
+			File sourceGrammar = new File(INPUT_DATA_FOLDER + XTEXT_INPUT_PATH + uniqueLanguageId + "." + GRAMMAR_FILE_EXTENSION);
+			
+			File defaultGrammar = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "_" + "DEFAULT" + "." + GRAMMAR_FILE_EXTENSION);
+			
+			File targetGrammarEcssDefault = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + DEFAULT_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+			File targetGrammarEcssWsAwareBasicAo = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + WSAWARE_BASIC_AO_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+			File targetGrammarEcssWsAwareBasicAoUc = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + WSAWARE_BASIC_AO_UC_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+			File targetGrammarEcssWsAwareBasicSq = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + WSAWARE_BASIC_SQ_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+			File targetGrammarEcssWsAwareNoAo = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + WSAWARE_NO_AO_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+			File targetGrammarEcssWsAwareNoComment = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + WSAWARE_NO_COMMENT_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+			File targetGrammarEcssWsAwareNoWs = new File(INPUT_DATA_FOLDER + "/generated/" + uniqueLanguageId + "/" + uniqueLanguageId + "." + WSAWARE_NO_WS_STYLE_NAME + "." + GRAMMAR_FILE_EXTENSION);
+
+			printStats(sourceGrammar);
+			printStats(defaultGrammar);
+			printStats(targetGrammarEcssDefault);
+			printStats(targetGrammarEcssWsAwareBasicAo);
+			printStats(targetGrammarEcssWsAwareBasicAoUc);
+			printStats(targetGrammarEcssWsAwareBasicSq);
+			printStats(targetGrammarEcssWsAwareNoAo);
+			printStats(targetGrammarEcssWsAwareNoComment);
+			printStats(targetGrammarEcssWsAwareNoWs);
+
+			//generator.getResourceLoader().getResources().remove(xtextGrammar);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	private void printStats(File targetFile) {
+		printStats(targetFile, (GrammarResource) generator.getResourceLoader().getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true));
+	}
+	
+	private void printStats(File targetFile, GrammarResource grammarResource) {
+		long lineCount = -1;
+		try {
+			lineCount = Files.lines(targetFile.toPath()).count();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		int tRuleCount = 0;
+		int eRuleCount = 0;
+		int pRuleCount = 0;
+		for ( EObject eObject : grammarResource.getContents() ) {
+			if (eObject instanceof Grammar) {
+				Grammar g = (Grammar)eObject;
+				for ( AbstractRule rule : g.getRules() ) {
+					if (rule instanceof ParserRule) {
+						pRuleCount++;
+					}
+					if (rule instanceof TerminalRule) {
+						tRuleCount++;
+					}
+					if (rule instanceof EnumRule) {
+						eRuleCount++;
+					}
+				}
+				System.out.println("File name = " + targetFile.getName() + " ; lineCount = " + lineCount + " ; tRuleCount = " + tRuleCount + " ; eRuleCount = " + eRuleCount + " ; pRuleCount = " + pRuleCount);
+				// save to file
+				try {
+					File file = new File(INPUT_DATA_FOLDER + "/generated/" + "GENERATOR-STATS.csv");
+					FileWriter fr = new FileWriter(file, true);
+					fr.write(targetFile.getName() + "," + lineCount + "," + tRuleCount + "," + eRuleCount + "," + pRuleCount + "\n");
+					fr.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
