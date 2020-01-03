@@ -63,7 +63,7 @@ import uk.ac.york.cs.ecss.utilities.FileUtils;
 public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageResourcesGeneratorTest {
 	private static final Logger logger = LogManager.getLogger(MainLanguageResourceGeneratorEvaluationTest.class);
 
-	protected static final String INPUT_DATA_FOLDER = "../../evaluation";
+	protected static final String INPUT_DATA_FOLDER = "../../evaluation-resources";
 	protected static final String ECORE_PATH = INPUT_DATA_FOLDER + "/default-ecore/";
 
 //	private static final String ECORE_FILE_NAME = "myDsl.ecore";
