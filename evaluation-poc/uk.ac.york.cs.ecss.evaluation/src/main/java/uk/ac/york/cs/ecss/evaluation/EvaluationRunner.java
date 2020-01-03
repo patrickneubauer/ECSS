@@ -32,6 +32,10 @@ import uk.ac.york.cs.ecss.evaluation.statemachine.statemachine.StatemachinePacka
 
 /**
  * 
+ * EMFCompare-based comparison of Xtext languages
+ * LEFT = source language
+ * RIGHT = target language
+ * 
  * PRECONDITION(S):
  * - Register common meta model (see main-method for example)
  * 
@@ -125,7 +129,7 @@ public class EvaluationRunner {
 		
 		// parse model serialized with source language serializer with parser of target language
 		Comparison comparison3 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/generated/model2.mydsl1", "models/model2.mydsl2");
-		assertTrue(comparison3.getDifferences().size()==0);
+		assertTrue( comparison3.getDifferences().size() == 0 );
 	
 		// print fraction of matching structural features
 		System.out.println("Fraction of matching structural features: " + (double)EvaluationHelper.getMatchCount(comparison2) / EvaluationHelper.getMatchCount(comparison3));
