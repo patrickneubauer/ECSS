@@ -52,6 +52,9 @@ public class EvaluationRunner {
 		}
 	}// constructor
 	
+	/**
+	 * Initializer for EMFCompare (configures match engine etc)
+	 */
 	private void initComparator() {
 		// Configure EMF Compare
 		IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
@@ -63,20 +66,38 @@ public class EvaluationRunner {
 	    comparator = EMFCompare.builder().setMatchEngineFactoryRegistry(matchEngineRegistry).build();
 	}// initComparator
 	
-	public void serialize(Injector langInj, String modelPath) {
-		Serializer serializer = langInj.getInstance(Serializer.class);
-		XtextResourceSet langResSet = langInj.getInstance(XtextResourceSet.class);
+	/**
+	 * Serializer for instances of XtextResource based on injected language
+	 * 
+	 * @param srcLangInj Xtext-based source language injector
+	 * @param trgLangInj Xtext-based target language injector
+	 * @param srcModelPath source language-based model path
+	 * @param trgModelPath target language-based model path
+	 */
+	public void serialize(Injector srcLangInj, Injector trgLangInj, String srcModelPath, String trgModelPath) {
+		Serializer trgLangSerializer = trgLangInj.getInstance(Serializer.class);
+		XtextResourceSet srcLangResSet = srcLangInj.getInstance(XtextResourceSet.class);
 
 		try {
-			XtextResource modelRes = (XtextResource) langResSet.getResource(
-				    URI.createURI(modelPath), true);
-			Files.write(Paths.get(modelPath), serializer.serialize(modelRes.getContents().get(0)).getBytes(), StandardOpenOption.CREATE);
+			XtextResource srcModel = (XtextResource) srcLangResSet.getResource(
+				    URI.createURI(srcModelPath), true);
+			Files.deleteIfExists(Paths.get(trgModelPath));
+			Files.write(Paths.get(trgModelPath), trgLangSerializer.serialize(srcModel.getContents().get(0)).getBytes(), StandardOpenOption.CREATE);
 		} catch (IOException e) {
-			System.err.println("Failed to serialize model: " + modelPath);
+			System.err.println("Failed to serialize model: " + srcModelPath);
 			e.printStackTrace();
 		}
 	}// serialize
 	
+	/**
+	 * EMFCompare-based comparison between Xtext-based source language model and Xtext-based target language model
+	 * 
+	 * @param srcLangInj Xtext-based source language injector
+	 * @param trgLangInj Xtext-based target language injector
+	 * @param srcLangModelPath source language-based model path
+	 * @param trgLangModelPath target language-based model path
+	 * @return
+	 */
 	public Comparison compare(Injector srcLangInj, Injector trgLangInj, String srcLangModelPath, String trgLangModelPath) {
 		// setup source and target resource sets
 		XtextResourceSet srcLangResSet = srcLangInj.getInstance(XtextResourceSet.class);
@@ -125,7 +146,7 @@ public class EvaluationRunner {
 		// ----------
 		
 		// serialize model of target language using serializer of source language
-		evaluationRunner.serialize(srcLangInj, "models/generated/model2.mydsl1");
+		evaluationRunner.serialize(trgLangInj, srcLangInj, "models/model2.mydsl2", "models/generated/model2.mydsl1");
 		
 		// parse model serialized with source language serializer with parser of target language
 		Comparison comparison3 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/generated/model2.mydsl1", "models/model2.mydsl2");

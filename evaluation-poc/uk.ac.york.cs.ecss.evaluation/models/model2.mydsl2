@@ -14,7 +14,7 @@ Statemachine2 {
 		Command2 c2 {
 			code c2a
 		},
-		Command3 c4 {
+		Command2 c3 {
 			code c3a
 		}
 	}
