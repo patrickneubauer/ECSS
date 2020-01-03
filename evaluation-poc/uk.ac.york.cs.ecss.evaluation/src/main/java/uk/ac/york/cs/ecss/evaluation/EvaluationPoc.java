@@ -9,16 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Iterator;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.DifferenceKind;
 import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.Equivalence;
-import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.match.DefaultComparisonFactory;
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
 import org.eclipse.emf.compare.match.DefaultMatchEngine;
@@ -97,11 +94,11 @@ public class EvaluationPoc {
 		Comparison comparison2 = comparator.compare(scope2);
 				
 		// assert results
-		assertTrue(getMatchCount(comparison1)==6);
+		assertTrue(EvaluationHelper.getMatchCount(comparison1)==6);
 		assertTrue(comparison1.getDifferences().size()==0);
 		assertTrue(comparison1.getConflicts().size()==0);
 		
-		assertTrue(getMatchCount(comparison2)==7);
+		assertTrue(EvaluationHelper.getMatchCount(comparison2)==7);
 		assertTrue(comparison2.getDifferences().size()==1);
 		assertTrue(comparison2.getDifferences().get(0).getKind()==DifferenceKind.DELETE);
 		assertTrue(comparison2.getConflicts().size()==0);
@@ -126,25 +123,13 @@ public class EvaluationPoc {
 
 		IComparisonScope scope3 = EMFCompare.createDefaultScope(resourceSet3, resourceSet4);
 		Comparison comparison3 = comparator.compare(scope3);
-		EList<Diff> diffList3 = comparison3.getDifferences();		
-		assertTrue(diffList3.size()==0);
+		assertTrue(comparison3.getDifferences().size()==0);
+		
+		// print fraction of matching structural features
+		System.out.println("Fraction of matching structural features: " + (double)EvaluationHelper.getMatchCount(comparison2) / EvaluationHelper.getMatchCount(comparison3));
 		
 		System.out.println("Finished !");
 
 	}
-	
-	private static int getMatchCount(Comparison comparison) {
-		int matchQuantity = 0;
-		EList<Match> matches = comparison.getMatches();
-		for (Match match : matches) {
-			matchQuantity++;
-			Iterator<Match> subMatchIterator = match.getAllSubmatches().iterator();
-			while (subMatchIterator.hasNext()) {
-				matchQuantity++;
-				subMatchIterator.next();
-			}
-		}
-		return matchQuantity;
-	}// getMatchCount
 
 }// EvaluationPoc
