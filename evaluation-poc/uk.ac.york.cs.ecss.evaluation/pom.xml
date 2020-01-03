@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>uk.ac.york.cs.ecss.evaluation-poc</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<groupId>uk.ac.york.cs.ecss.evaluation-poc</groupId>
+	
+
+	<name>uk.ac.york.cs.ecss.evaluation</name>
+
+	<dependencies>
+
+		<!-- INTERNAL DEPENDENCIES -->
+		<dependency>
+			<groupId>uk.ac.york.cs.ecss</groupId>
+			<artifactId>uk.ac.york.cs.ecss.utilities</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.xtext.example.mydsl1</groupId>
+			<artifactId>org.xtext.example.mydsl1</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>eclipse-plugin</type>
+		</dependency>
+		<dependency>
+			<groupId>org.xtext.example.mydsl2</groupId>
+			<artifactId>org.xtext.example.mydsl2</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>eclipse-plugin</type>
+		</dependency>
+		<dependency>
+			<groupId>
+				uk.ac.york.cs.ecss.evaluation.statemachine
+			</groupId>
+			<artifactId>
+				uk.ac.york.cs.ecss.evaluation.statemachine
+			</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>eclipse-plugin</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- <plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven.resources.plugin}</version>
+				<executions>
+					<execution>
+						<id>copy-log4j-configuration</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							copy global log4j configuration
+							<outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/../common-resources/logging</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins> -->
+	</build>
+
+</project>

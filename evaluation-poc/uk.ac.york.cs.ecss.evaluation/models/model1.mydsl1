@@ -1,0 +1,23 @@
+Statemachine1 {
+	events {
+		Event1 e1 {
+			code abc
+		}, 
+		Event1 e2 {
+			code def
+		}
+	}
+	commands {
+		Command1 c1 {
+			code c1a
+		},
+		Command1 c2 {
+			code c2a
+		}
+	}
+	states {
+		State1 s1 {
+			actions ( c1, c2 )
+		}		
+	}	
+}
