@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -91,28 +92,20 @@ public class EvaluationPoc {
         IComparisonScope scope1 = EMFCompare.createDefaultScope(resourceSet1, resourceSet2);
 		IComparisonScope scope2 = EMFCompare.createDefaultScope(resourceSet1, resourceSet3);
 		    
-		// Compare the equal models
+		// Compare scopes
 		Comparison comparison1 = comparator.compare(scope1);
-		EList<Diff> diffList1 = comparison1.getDifferences();		
-		
-		// Compare the different models
 		Comparison comparison2 = comparator.compare(scope2);
-		EList<Diff> diffList2 = comparison2.getDifferences();
 				
 		// assert results
-		assertTrue(diffList1.size()==0);
-		assertTrue(diffList2.size()==1);
-		assertTrue(diffList2.get(0).getKind()==DifferenceKind.DELETE);
+		assertTrue(getMatchCount(comparison1)==6);
+		assertTrue(comparison1.getDifferences().size()==0);
+		assertTrue(comparison1.getConflicts().size()==0);
+		
+		assertTrue(getMatchCount(comparison2)==7);
+		assertTrue(comparison2.getDifferences().size()==1);
+		assertTrue(comparison2.getDifferences().get(0).getKind()==DifferenceKind.DELETE);
+		assertTrue(comparison2.getConflicts().size()==0);
 
-		
-		// get equivalences
-		EList<Equivalence> eqList1 = comparison1.getEquivalences();
-		EList<Equivalence> eqList2 = comparison2.getEquivalences();
-		
-		// get matches
-		EList<Match> matchList1 = comparison1.getMatches();
-		EList<Match> matchList2 = comparison2.getMatches();
-		
 		// ----------
 		
 		// serialize model of language 2 using serializer of language 1
@@ -139,5 +132,19 @@ public class EvaluationPoc {
 		System.out.println("Finished !");
 
 	}
+	
+	private static int getMatchCount(Comparison comparison) {
+		int matchQuantity = 0;
+		EList<Match> matches = comparison.getMatches();
+		for (Match match : matches) {
+			matchQuantity++;
+			Iterator<Match> subMatchIterator = match.getAllSubmatches().iterator();
+			while (subMatchIterator.hasNext()) {
+				matchQuantity++;
+				subMatchIterator.next();
+			}
+		}
+		return matchQuantity;
+	}// getMatchCount
 
-}
+}// EvaluationPoc
