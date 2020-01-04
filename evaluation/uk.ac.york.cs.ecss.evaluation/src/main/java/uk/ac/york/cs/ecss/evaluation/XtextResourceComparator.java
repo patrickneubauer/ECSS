@@ -42,11 +42,11 @@ import uk.ac.york.cs.ecss.evaluation.statemachine.statemachine.StatemachinePacka
  * @author patrickneubauer
  *
  */
-public class EvaluationRunner {
+public class XtextResourceComparator {
 	
 	public EMFCompare comparator;
 	
-	public EvaluationRunner() {
+	public XtextResourceComparator() {
 		if (comparator == null) {
 			initComparator();
 		}
@@ -127,7 +127,7 @@ public class EvaluationRunner {
 		Injector trgLangInj = new org.xtext.example.mydsl2.MyDsl2StandaloneSetup().createInjectorAndDoEMFRegistration();
 		
 		// setup evaluation runner
-		EvaluationRunner evaluationRunner = new EvaluationRunner();
+		XtextResourceComparator evaluationRunner = new XtextResourceComparator();
 		
 		// Compare scopes
 		Comparison comparison1 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model1.mydsl2");
