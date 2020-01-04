@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: deflang.com.puppetlabs.geppetto.pp.dsl2
+Bundle-ManifestVersion: 2
+Bundle-Name: deflang.com.puppetlabs.geppetto.pp.dsl2
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: deflang.com.puppetlabs.geppetto.pp.dsl2; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: deflang.com.puppetlabs.geppetto.pp.dsl2,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.services,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.parser.antlr.internal,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.validation,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.scoping,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.formatting2,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.generator,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.serializer,
+ deflang.com.puppetlabs.geppetto.pp.dsl2.parser.antlr
+Import-Package: org.apache.log4j

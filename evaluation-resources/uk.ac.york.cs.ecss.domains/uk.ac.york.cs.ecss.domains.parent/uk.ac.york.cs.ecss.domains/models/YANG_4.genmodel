@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="YANG_4" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>YANG_4.ecore</foreignModel>
+  <genPackages prefix="Yang" disposableProviderFactory="true" loadInitialization="true"
+      literalsInterface="false" ecorePackage="YANG_4.ecore#/">
+    <genClasses ecoreClass="YANG_4.ecore#//YangFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//YangFile/name"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//Module">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//Module/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ModuleStatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//SubModule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//SubModule/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//SubmoduleStatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//DatadefStatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//YangVersionStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//YangVersionStatement/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//YangVersionStatement/yangversionunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//OrganizationStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//OrganizationStatement/organization"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//OrganizationStatement/organizationunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ContactStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ContactStatement/contact"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ContactStatement/contactunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//DescriptionStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//DescriptionStatement/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//DescriptionStatement/descriptionunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ReferenceStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ReferenceStatement/reference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ReferenceStatement/referenceunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//NamespaceStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//NamespaceStatement/uri"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//NamespaceStatement/namespaceunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//PrefixStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//PrefixStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//PrefixStatement/prefixunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//RequireInstanceStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//RequireInstanceStatement/require"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//RequireInstanceStatement/requireunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//PathStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//PathStatement/path"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//PathStatement/pathunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//PositionStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//PositionStatement/intarg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//PositionStatement/positionunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ValueStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ValueStatement/intarg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ValueStatement/valueunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ErrorAppTagStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ErrorAppTagStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ErrorAppTagStatement/erroraunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ErrorMessageStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ErrorMessageStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ErrorMessageStatement/errormunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//UnitsStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnitsStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//UnitsStatement/unitsunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//DefaultStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//DefaultStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//DefaultStatement/defaultunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//StatusStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//StatusStatement/status"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//StatusStatement/statusunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//RevisionDateStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//RevisionDateStatement/date"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//RevisionDateStatement/revisiondateunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//UniqueStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UniqueStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//UniqueStatement/uniqueunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//KeyStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//KeyStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//KeyStatement/keyunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//OrderedbyStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//OrderedbyStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//OrderedbyStatement/orderedbyunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//PresenceStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//PresenceStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//PresenceStatement/presenceunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//MandatoryStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//MandatoryStatement/boolarg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//MandatoryStatement/mandatoryunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ConfigStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ConfigStatement/boolarg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ConfigStatement/configunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//FractionDigitsStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//FractionDigitsStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//FractionDigitsStatement/fractiondigitsunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//IfFeatureStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//IfFeatureStatement/pref"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference YANG_4.ecore#//IfFeatureStatement/ident"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//IfFeatureStatement/iffeatureunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//BaseStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//BaseStatement/base"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//BaseStatement/baseunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//YinElementStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//YinElementStatement/boolarg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//YinElementStatement/yinelementunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//MinElementsStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//MinElementsStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//MinElementsStatement/minelementsunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//MaxElementsStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//MaxElementsStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//MaxElementsStatement/maxelementsunknownstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//UnknownStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnknownStatement/pref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnknownStatement/namestat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnknownStatement/argument"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//UnknownStatement/unknownsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//UnknownSubstatements">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnknownSubstatements/pref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnknownSubstatements/namestat"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UnknownSubstatements/argument"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//UnknownSubstatements/unknownsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//RangeStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//RangeStatement/range"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//RangeStatement/rangesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//PatternStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//PatternStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//PatternStatement/patternsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//LengthStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//LengthStatement/length"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//LengthStatement/lengthsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//MustStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//MustStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//MustStatement/mustsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//MultipleSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//RpcStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//RpcStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//RpcStatement/rpcsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//RpcSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//InputStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//InputStatement/inputsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//InputSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//OutputStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//OutputStatement/outputsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//OutputSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//NotificationStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//NotificationStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//NotificationStatement/notificationsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//NotificationSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//ContainerStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ContainerStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ContainerStatement/containersubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ContainerSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//ListStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ListStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ListStatement/listsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ListSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//GroupingStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//GroupingStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//GroupingStatement/groupingsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//GroupingSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//LeafStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//LeafStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//LeafStatement/leafsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//LeafSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//LeafListStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//LeafListStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//LeafListStatement/leaflistsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//LeafListSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//ChoiceStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ChoiceStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ChoiceStatement/choicesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ChoiceSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//CaseStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//CaseStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//CaseStatement/casesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//CaseSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//AnyxmlStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//AnyxmlStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//AnyxmlStatement/anyxmlsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//AnyxmlSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//UsesStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//UsesStatement/pre"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference YANG_4.ecore#//UsesStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//UsesStatement/usessubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//UsesSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//AugmentUsesStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//AugmentUsesStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//AugmentUsesStatement/augmentsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//AugmentStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//AugmentStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//AugmentStatement/augmentsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//AugmentSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//RefineStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//RefineStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//RefineStatement/refinesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//RefineSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//DeviationStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//DeviationStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//DeviationStatement/deviationsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//DeviationSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//DeviateStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//DeviateStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//DeviateStatement/deviatesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//DeviateSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//ExtensionStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ExtensionStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ExtensionStatement/extensionsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ExtensionSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//ArgumentStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ArgumentStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ArgumentStatement/argumentsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ArgumentSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//IdentityStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//IdentityStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//IdentityStatement/identitysubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//IdentitySubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//FeatureStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//FeatureStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//FeatureStatement/featuresubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//FeatureSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//BelongsToStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//BelongsToStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//BelongsToStatement/belongstosubstatement"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//BelongsToSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//TypedefStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//TypedefStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//TypedefStatement/typedefsubstatemnet"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//TypedefSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//TypeStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//TypeStatement/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//TypeStatement/pre"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference YANG_4.ecore#//TypeStatement/importtype"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//TypeStatement/typesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//TypeSubStatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//BitStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//BitStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//BitStatement/bitsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//BitSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//EnumStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//EnumStatement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//EnumStatement/enumsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//EnumSubstatement"/>
+    <genClasses ecoreClass="YANG_4.ecore#//ImportStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//ImportStatement/importURI"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//ImportStatement/importsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//ImportSubstatements"/>
+    <genClasses ecoreClass="YANG_4.ecore#//IncludeStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//IncludeStatement/importURI"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//IncludeStatement/includesubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//IncludeSubstatements"/>
+    <genClasses ecoreClass="YANG_4.ecore#//WhenStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//WhenStatement/arg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//WhenStatement/whensubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//WhenSubstatements"/>
+    <genClasses ecoreClass="YANG_4.ecore#//RevisionStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//RevisionStatement/date"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference YANG_4.ecore#//RevisionStatement/revisionsubstatements"/>
+    </genClasses>
+    <genClasses ecoreClass="YANG_4.ecore#//RevisionSubstatements"/>
+    <genClasses ecoreClass="YANG_4.ecore#//BuiltInType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute YANG_4.ecore#//BuiltInType/btype"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

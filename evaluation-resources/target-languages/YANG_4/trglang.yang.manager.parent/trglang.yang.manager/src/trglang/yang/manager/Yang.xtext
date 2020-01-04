@@ -1,0 +1,414 @@
+grammar trglang.yang.manager.Yang 
+
+import "http://www.xtext.org/editor/yang/Yang" 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+YangFile:
+	SubModule | Module;
+
+SubModule:
+	{SubModule} "SubModule" name=ID? "{" (statements+=SubmoduleStatement ("," statements+=SubmoduleStatement)*)? "}";
+
+Module:
+	{Module} "Module" name=ID? "{" (statements+=ModuleStatement ("," statements+=ModuleStatement)*)? "}";
+
+ModuleStatement:
+	DescriptionStatement | TypedefStatement | UnknownStatement | ImportStatement | FeatureStatement | RevisionStatement |
+	DeviationStatement | IncludeStatement | RpcStatement | ExtensionStatement | YangVersionStatement | DatadefStatement |
+	OrganizationStatement | GroupingStatement | AugmentStatement | ContactStatement | IdentityStatement |
+	NotificationStatement | NamespaceStatement | PrefixStatement;
+
+SubmoduleStatement:
+	DescriptionStatement | TypedefStatement | UnknownStatement | BelongsToStatement | ImportStatement | FeatureStatement |
+	RevisionStatement | DeviationStatement | IncludeStatement | RpcStatement | ExtensionStatement | YangVersionStatement |
+	DatadefStatement | OrganizationStatement | GroupingStatement | AugmentStatement | ContactStatement | IdentityStatement
+	| NotificationStatement;
+
+FeatureStatement:
+	{FeatureStatement} "FeatureStatement" name=ID? "{" (featuresubstatements+=FeatureSubstatement (","
+	featuresubstatements+=FeatureSubstatement)*)? "}";
+
+OrganizationStatement:
+	{OrganizationStatement} "OrganizationStatement" "{" organization=ESTRING?
+	(organizationunknownstatements+=UnknownStatement ("," organizationunknownstatements+=UnknownStatement)*)? "}";
+
+GroupingStatement:
+	{GroupingStatement} "GroupingStatement" name=ID? "{" (groupingsubstatements+=GroupingSubstatement (","
+	groupingsubstatements+=GroupingSubstatement)*)? "}";
+
+DatadefStatement:
+	UsesStatement | ChoiceStatement | LeafListStatement | ListStatement | ContainerStatement | LeafStatement |
+	AnyxmlStatement;
+
+IdentityStatement:
+	{IdentityStatement} "IdentityStatement" name=ID? "{" (identitysubstatements+=IdentitySubstatement (","
+	identitysubstatements+=IdentitySubstatement)*)? "}";
+
+RpcStatement:
+	{RpcStatement} "RpcStatement" name=ID? "{" (rpcsubstatements+=RpcSubstatement (","
+	rpcsubstatements+=RpcSubstatement)*)? "}";
+
+ImportStatement:
+	{ImportStatement} "ImportStatement" "{" importURI=ESTRING? (importsubstatements+=ImportSubstatements (","
+	importsubstatements+=ImportSubstatements)*)? "}";
+
+TypedefStatement:
+	{TypedefStatement} "TypedefStatement" name=ID? "{" (typedefsubstatemnet+=TypedefSubstatement (","
+	typedefsubstatemnet+=TypedefSubstatement)*)? "}";
+
+AugmentStatement:
+	{AugmentStatement} "AugmentStatement" "{" arg=ESTRING? (augmentsubstatements+=AugmentSubstatement (","
+	augmentsubstatements+=AugmentSubstatement)*)? "}";
+
+NamespaceStatement:
+	{NamespaceStatement} "NamespaceStatement" "{" uri=ESTRING? (namespaceunknownstatements+=UnknownStatement (","
+	namespaceunknownstatements+=UnknownStatement)*)? "}";
+
+ContactStatement:
+	{ContactStatement} "ContactStatement" "{" contact=ESTRING? (contactunknownstatements+=UnknownStatement (","
+	contactunknownstatements+=UnknownStatement)*)? "}";
+
+PrefixStatement:
+	{PrefixStatement} "PrefixStatement" name=ID? "{" (prefixunknownstatements+=UnknownStatement (","
+	prefixunknownstatements+=UnknownStatement)*)? "}";
+
+DeviationStatement:
+	{DeviationStatement} "DeviationStatement" "{" arg=ESTRING? (deviationsubstatements+=DeviationSubstatement (","
+	deviationsubstatements+=DeviationSubstatement)*)? "}";
+
+IncludeStatement:
+	{IncludeStatement} "IncludeStatement" "{" importURI=ESTRING? (includesubstatements+=IncludeSubstatements (","
+	includesubstatements+=IncludeSubstatements)*)? "}";
+
+YangVersionStatement:
+	{YangVersionStatement} "YangVersionStatement" "{" version=ESTRING? (yangversionunknownstatements+=UnknownStatement
+	("," yangversionunknownstatements+=UnknownStatement)*)? "}";
+
+NotificationStatement:
+	{NotificationStatement} "NotificationStatement" name=ID? "{" (notificationsubstatements+=NotificationSubstatement (","
+	notificationsubstatements+=NotificationSubstatement)*)? "}";
+
+UnknownStatement:
+	{UnknownStatement} "UnknownStatement" "{" pref=ESTRING? namestat=ESTRING? argument=ESTRING?
+	(unknownsubstatements+=UnknownSubstatements ("," unknownsubstatements+=UnknownSubstatements)*)? "}";
+
+ExtensionStatement:
+	{ExtensionStatement} "ExtensionStatement" "{" arg=ESTRING? (extensionsubstatements+=ExtensionSubstatement (","
+	extensionsubstatements+=ExtensionSubstatement)*)? "}";
+
+DescriptionStatement:
+	{DescriptionStatement} "DescriptionStatement" "{" description=ESTRING? (descriptionunknownstatements+=UnknownStatement
+	("," descriptionunknownstatements+=UnknownStatement)*)? "}";
+
+RevisionStatement:
+	{RevisionStatement} "RevisionStatement" "{" date=ESTRING? (revisionsubstatements+=RevisionSubstatements (","
+	revisionsubstatements+=RevisionSubstatements)*)? "}";
+
+BelongsToStatement:
+	{BelongsToStatement} "BelongsToStatement" name=ID? "{" (belongstosubstatement+=BelongsToSubstatement (","
+	belongstosubstatement+=BelongsToSubstatement)*)? "}";
+
+RevisionSubstatements:
+	DescriptionStatement | UnknownStatement | ReferenceStatement;
+
+terminal ESTRING:
+	"\"" ("\\" . | !("\\" | "\""))* "\"" | "\'" ("\\" . | !("\\" | "\'"))* "\'";
+
+ExtensionSubstatement:
+	DescriptionStatement | UnknownStatement | ReferenceStatement | ArgumentStatement | StatusStatement;
+
+UnknownSubstatements:
+	{UnknownSubstatements} "UnknownSubstatements" "{" pref=ESTRING? namestat=ESTRING? argument=ESTRING?
+	(unknownsubstatements+=UnknownSubstatements ("," unknownsubstatements+=UnknownSubstatements)*)? "}";
+
+NotificationSubstatement:
+	GroupingStatement | DescriptionStatement | IfFeatureStatement | TypedefStatement | UnknownStatement |
+	ReferenceStatement | StatusStatement | DatadefStatement;
+
+IncludeSubstatements:
+	UnknownStatement | TypeStatement | RevisionDateStatement;
+
+DeviationSubstatement:
+	DescriptionStatement | UnknownStatement | ReferenceStatement | DeviateStatement;
+
+AugmentSubstatement:
+	DescriptionStatement | IfFeatureStatement | UnknownStatement | CaseStatement | WhenStatement | ReferenceStatement |
+	StatusStatement | DatadefStatement;
+
+TypedefSubstatement:
+	DescriptionStatement | UnknownStatement | UnitsStatement | ReferenceStatement | TypeStatement | DefaultStatement |
+	StatusStatement;
+
+ImportSubstatements:
+	UnknownStatement | TypeStatement | RevisionDateStatement | PrefixStatement;
+
+RpcSubstatement:
+	GroupingStatement | DescriptionStatement | IfFeatureStatement | TypedefStatement | UnknownStatement |
+	ReferenceStatement | InputStatement | OutputStatement | StatusStatement;
+
+IdentitySubstatement:
+	DescriptionStatement | UnknownStatement | BaseStatement | ReferenceStatement | StatusStatement;
+
+LeafListStatement:
+	{LeafListStatement} "LeafListStatement" "{" arg=ESTRING? (leaflistsubstatements+=LeafListSubstatement (","
+	leaflistsubstatements+=LeafListSubstatement)*)? "}";
+
+ContainerStatement:
+	{ContainerStatement} "ContainerStatement" name=ID? "{" (containersubstatements+=ContainerSubstatement (","
+	containersubstatements+=ContainerSubstatement)*)? "}";
+
+AnyxmlStatement:
+	{AnyxmlStatement} "AnyxmlStatement" "{" arg=ESTRING? (anyxmlsubstatements+=AnyxmlSubstatement (","
+	anyxmlsubstatements+=AnyxmlSubstatement)*)? "}";
+
+ChoiceStatement:
+	{ChoiceStatement} "ChoiceStatement" name=ID? "{" (choicesubstatements+=ChoiceSubstatement (","
+	choicesubstatements+=ChoiceSubstatement)*)? "}";
+
+LeafStatement:
+	{LeafStatement} "LeafStatement" name=ID? "{" (leafsubstatements+=LeafSubstatement (","
+	leafsubstatements+=LeafSubstatement)*)? "}";
+
+ListStatement:
+	{ListStatement} "ListStatement" name=ID? "{" (listsubstatements+=ListSubstatement (","
+	listsubstatements+=ListSubstatement)*)? "}";
+
+UsesStatement:
+	{UsesStatement} "UsesStatement" "{" pre=ESTRING? arg=[GroupingStatement]? (usessubstatements+=UsesSubstatement (","
+	usessubstatements+=UsesSubstatement)*)? "}";
+
+GroupingSubstatement:
+	GroupingStatement | DescriptionStatement | TypedefStatement | UnknownStatement | ReferenceStatement | StatusStatement
+	| DatadefStatement;
+
+FeatureSubstatement:
+	DescriptionStatement | IfFeatureStatement | UnknownStatement | ReferenceStatement | StatusStatement;
+
+BelongsToSubstatement:
+	UnknownStatement | PrefixStatement;
+
+ReferenceStatement:
+	{ReferenceStatement} "ReferenceStatement" "{" reference=ESTRING? (referenceunknownstatements+=UnknownStatement (","
+	referenceunknownstatements+=UnknownStatement)*)? "}";
+
+StatusStatement:
+	{StatusStatement} "StatusStatement" "{" status=ESTRING? (statusunknownstatements+=UnknownStatement (","
+	statusunknownstatements+=UnknownStatement)*)? "}";
+
+ArgumentStatement:
+	{ArgumentStatement} "ArgumentStatement" "{" arg=ESTRING? (argumentsubstatements+=ArgumentSubstatement (","
+	argumentsubstatements+=ArgumentSubstatement)*)? "}";
+
+IfFeatureStatement:
+	{IfFeatureStatement} "IfFeatureStatement" "{" pref=ESTRING? ident=[FeatureStatement]?
+	(iffeatureunknownstatements+=UnknownStatement ("," iffeatureunknownstatements+=UnknownStatement)*)? "}";
+
+RevisionDateStatement:
+	{RevisionDateStatement} "RevisionDateStatement" "{" date=ESTRING? (revisiondateunknownstatements+=UnknownStatement
+	("," revisiondateunknownstatements+=UnknownStatement)*)? "}";
+
+TypeStatement:
+	{TypeStatement} "TypeStatement" "{" type=BuiltInType? pre=ESTRING? importtype=[TypedefStatement]?
+	(typesubstatements+=TypeSubStatement ("," typesubstatements+=TypeSubStatement)*)? "}";
+
+DeviateStatement:
+	{DeviateStatement} "DeviateStatement" "{" arg=ESTRING? (deviatesubstatements+=DeviateSubstatement (","
+	deviatesubstatements+=DeviateSubstatement)*)? "}";
+
+CaseStatement:
+	{CaseStatement} "CaseStatement" name=ID? "{" (casesubstatements+=CaseSubstatement (","
+	casesubstatements+=CaseSubstatement)*)? "}";
+
+WhenStatement:
+	{WhenStatement} "WhenStatement" "{" arg=ESTRING? (whensubstatements+=WhenSubstatements (","
+	whensubstatements+=WhenSubstatements)*)? "}";
+
+UnitsStatement:
+	{UnitsStatement} "UnitsStatement" "{" arg=ESTRING? (unitsunknownstatements+=UnknownStatement (","
+	unitsunknownstatements+=UnknownStatement)*)? "}";
+
+DefaultStatement:
+	{DefaultStatement} "DefaultStatement" "{" arg=ESTRING? (defaultunknownstatements+=UnknownStatement (","
+	defaultunknownstatements+=UnknownStatement)*)? "}";
+
+InputStatement:
+	{InputStatement} "InputStatement" "{" (inputsubstatements+=InputSubstatement (","
+	inputsubstatements+=InputSubstatement)*)? "}";
+
+OutputStatement:
+	{OutputStatement} "OutputStatement" "{" (outputsubstatements+=OutputSubstatement (","
+	outputsubstatements+=OutputSubstatement)*)? "}";
+
+BaseStatement:
+	{BaseStatement} "BaseStatement" "{" base=ESTRING? (baseunknownstatements+=UnknownStatement (","
+	baseunknownstatements+=UnknownStatement)*)? "}";
+
+UsesSubstatement:
+	DescriptionStatement | IfFeatureStatement | UnknownStatement | WhenStatement | AugmentUsesStatement |
+	ReferenceStatement | RefineStatement | StatusStatement;
+
+ListSubstatement:
+	OrderedbyStatement | ConfigStatement | DescriptionStatement | MinElementsStatement | TypedefStatement |
+	UnknownStatement | WhenStatement | MaxElementsStatement | ReferenceStatement | DatadefStatement | GroupingStatement |
+	IfFeatureStatement | MustStatement | KeyStatement | StatusStatement | UniqueStatement;
+
+LeafSubstatement:
+	ConfigStatement | DescriptionStatement | IfFeatureStatement | UnknownStatement | MustStatement | WhenStatement |
+	UnitsStatement | ReferenceStatement | TypeStatement | DefaultStatement | StatusStatement | MandatoryStatement;
+
+ChoiceSubstatement:
+	ConfigStatement | DescriptionStatement | UnknownStatement | WhenStatement | ReferenceStatement | ListStatement |
+	DefaultStatement | ContainerStatement | IfFeatureStatement | CaseStatement | LeafListStatement | StatusStatement |
+	MandatoryStatement | LeafStatement | AnyxmlStatement;
+
+AnyxmlSubstatement:
+	ConfigStatement | DescriptionStatement | IfFeatureStatement | UnknownStatement | MustStatement | WhenStatement |
+	ReferenceStatement | StatusStatement | MandatoryStatement;
+
+ContainerSubstatement:
+	ConfigStatement | GroupingStatement | DescriptionStatement | IfFeatureStatement | TypedefStatement | UnknownStatement
+	| MustStatement | WhenStatement | ReferenceStatement | PresenceStatement | StatusStatement | DatadefStatement;
+
+LeafListSubstatement:
+	OrderedbyStatement | ConfigStatement | DescriptionStatement | MinElementsStatement | UnknownStatement | WhenStatement
+	| MaxElementsStatement | UnitsStatement | ReferenceStatement | DefaultStatement | IfFeatureStatement | MustStatement |
+	TypeStatement | StatusStatement;
+
+ArgumentSubstatement:
+	UnknownStatement | YinElementStatement;
+
+TypeSubStatement:
+	RequireInstanceStatement | FractionDigitsStatement | BitStatement | UnknownStatement | PatternStatement |
+	PathStatement | BaseStatement | LengthStatement | EnumStatement | TypeStatement | DefaultStatement | RangeStatement;
+
+BuiltInType:
+	{BuiltInType} "BuiltInType" "{" btype=ESTRING? "}";
+
+DeviateSubstatement:
+	ConfigStatement | MinElementsStatement | UnknownStatement | MustStatement | MaxElementsStatement | UnitsStatement |
+	DefaultStatement | MandatoryStatement | UniqueStatement;
+
+WhenSubstatements:
+	DescriptionStatement | UnknownStatement | ReferenceStatement;
+
+CaseSubstatement:
+	DescriptionStatement | IfFeatureStatement | UnknownStatement | WhenStatement | ReferenceStatement | StatusStatement |
+	DatadefStatement;
+
+OutputSubstatement:
+	GroupingStatement | TypedefStatement | UnknownStatement | DatadefStatement;
+
+InputSubstatement:
+	GroupingStatement | TypedefStatement | UnknownStatement | DatadefStatement;
+
+AugmentUsesStatement:
+	{AugmentUsesStatement} "AugmentUsesStatement" "{" arg=ESTRING? (augmentsubstatements+=AugmentSubstatement (","
+	augmentsubstatements+=AugmentSubstatement)*)? "}";
+
+RefineStatement:
+	{RefineStatement} "RefineStatement" "{" arg=ESTRING? (refinesubstatements+=RefineSubstatement (","
+	refinesubstatements+=RefineSubstatement)*)? "}";
+
+MaxElementsStatement:
+	{MaxElementsStatement} "MaxElementsStatement" "{" arg=ESTRING? (maxelementsunknownstatements+=UnknownStatement (","
+	maxelementsunknownstatements+=UnknownStatement)*)? "}";
+
+KeyStatement:
+	{KeyStatement} "KeyStatement" "{" arg=ESTRING? (keyunknownstatements+=UnknownStatement (","
+	keyunknownstatements+=UnknownStatement)*)? "}";
+
+MinElementsStatement:
+	{MinElementsStatement} "MinElementsStatement" "{" arg=ESTRING? (minelementsunknownstatements+=UnknownStatement (","
+	minelementsunknownstatements+=UnknownStatement)*)? "}";
+
+MustStatement:
+	{MustStatement} "MustStatement" "{" arg=ESTRING? (mustsubstatements+=MultipleSubstatement (","
+	mustsubstatements+=MultipleSubstatement)*)? "}";
+
+ConfigStatement:
+	{ConfigStatement} "ConfigStatement" "{" boolarg=ESTRING? (configunknownstatements+=UnknownStatement (","
+	configunknownstatements+=UnknownStatement)*)? "}";
+
+OrderedbyStatement:
+	{OrderedbyStatement} "OrderedbyStatement" "{" arg=ESTRING? (orderedbyunknownstatements+=UnknownStatement (","
+	orderedbyunknownstatements+=UnknownStatement)*)? "}";
+
+UniqueStatement:
+	{UniqueStatement} "UniqueStatement" "{" arg=ESTRING? (uniqueunknownstatements+=UnknownStatement (","
+	uniqueunknownstatements+=UnknownStatement)*)? "}";
+
+MandatoryStatement:
+	{MandatoryStatement} "MandatoryStatement" "{" boolarg=ESTRING? (mandatoryunknownstatements+=UnknownStatement (","
+	mandatoryunknownstatements+=UnknownStatement)*)? "}";
+
+PresenceStatement:
+	{PresenceStatement} "PresenceStatement" "{" arg=ESTRING? (presenceunknownstatements+=UnknownStatement (","
+	presenceunknownstatements+=UnknownStatement)*)? "}";
+
+YinElementStatement:
+	{YinElementStatement} "YinElementStatement" "{" boolarg=ESTRING? (yinelementunknownstatements+=UnknownStatement (","
+	yinelementunknownstatements+=UnknownStatement)*)? "}";
+
+BitStatement:
+	{BitStatement} "BitStatement" name=ID? "{" (bitsubstatements+=BitSubstatement (","
+	bitsubstatements+=BitSubstatement)*)? "}";
+
+PathStatement:
+	{PathStatement} "PathStatement" "{" path=ESTRING? (pathunknownstatements+=UnknownStatement (","
+	pathunknownstatements+=UnknownStatement)*)? "}";
+
+PatternStatement:
+	{PatternStatement} "PatternStatement" name=ID? "{" (patternsubstatements+=MultipleSubstatement (","
+	patternsubstatements+=MultipleSubstatement)*)? "}";
+
+RequireInstanceStatement:
+	{RequireInstanceStatement} "RequireInstanceStatement" "{" require=ESTRING? (requireunknownstatements+=UnknownStatement
+	("," requireunknownstatements+=UnknownStatement)*)? "}";
+
+LengthStatement:
+	{LengthStatement} "LengthStatement" "{" length=ESTRING? (lengthsubstatements+=MultipleSubstatement (","
+	lengthsubstatements+=MultipleSubstatement)*)? "}";
+
+RangeStatement:
+	{RangeStatement} "RangeStatement" "{" range=ESTRING? (rangesubstatements+=MultipleSubstatement (","
+	rangesubstatements+=MultipleSubstatement)*)? "}";
+
+FractionDigitsStatement:
+	{FractionDigitsStatement} "FractionDigitsStatement" "{" arg=ESTRING?
+	(fractiondigitsunknownstatements+=UnknownStatement ("," fractiondigitsunknownstatements+=UnknownStatement)*)? "}";
+
+EnumStatement:
+	{EnumStatement} "EnumStatement" name=ID? "{" (enumsubstatements+=EnumSubstatement (","
+	enumsubstatements+=EnumSubstatement)*)? "}";
+
+MultipleSubstatement:
+	DescriptionStatement | UnknownStatement | ErrorMessageStatement | ReferenceStatement | ErrorAppTagStatement;
+
+RefineSubstatement:
+	ConfigStatement | DescriptionStatement | MinElementsStatement | UnknownStatement | MustStatement |
+	MaxElementsStatement | ReferenceStatement | PresenceStatement | DefaultStatement | MandatoryStatement;
+
+EnumSubstatement:
+	DescriptionStatement | ValueStatement | UnknownStatement | ReferenceStatement | StatusStatement;
+
+ErrorMessageStatement:
+	{ErrorMessageStatement} "ErrorMessageStatement" "{" arg=ESTRING? (errormunknownstatements+=UnknownStatement (","
+	errormunknownstatements+=UnknownStatement)*)? "}";
+
+ErrorAppTagStatement:
+	{ErrorAppTagStatement} "ErrorAppTagStatement" "{" arg=ESTRING? (erroraunknownstatements+=UnknownStatement (","
+	erroraunknownstatements+=UnknownStatement)*)? "}";
+
+BitSubstatement:
+	DescriptionStatement | UnknownStatement | ReferenceStatement | StatusStatement | PositionStatement;
+
+ValueStatement:
+	{ValueStatement} "ValueStatement" "{" intarg=ESTRING? (valueunknownstatements+=UnknownStatement (","
+	valueunknownstatements+=UnknownStatement)*)? "}";
+
+PositionStatement:
+	{PositionStatement} "PositionStatement" "{" intarg=ESTRING? (positionunknownstatements+=UnknownStatement (","
+	positionunknownstatements+=UnknownStatement)*)? "}";
+
+terminal ID:
+	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

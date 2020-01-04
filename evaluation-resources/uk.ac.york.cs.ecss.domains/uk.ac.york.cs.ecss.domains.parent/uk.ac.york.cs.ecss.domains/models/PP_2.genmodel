@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="PP_2" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>PP_2.ecore</foreignModel>
+  <genPackages prefix="Pp2" disposableProviderFactory="true" ecorePackage="PP_2.ecore#/">
+    <genClasses ecoreClass="PP_2.ecore#//PuppetManifest"/>
+    <genClasses ecoreClass="PP_2.ecore#//Expression"/>
+    <genClasses ecoreClass="PP_2.ecore#//ResourceBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ResourceBody/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ResourceBody/nameExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//AttributeOperation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//AttributeOperation/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//AttributeOperation/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//AttributeOperation/op"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//AttributeOperations">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//AttributeOperations/attributes"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//ICollectQuery"/>
+    <genClasses ecoreClass="PP_2.ecore#//VirtualCollectQuery"/>
+    <genClasses ecoreClass="PP_2.ecore#//ExportedCollectQuery"/>
+    <genClasses ecoreClass="PP_2.ecore#//HostClassDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//HostClassDefinition/parent"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//Definition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//Definition/className"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//Definition/arguments"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//DefinitionArgumentList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//DefinitionArgumentList/arguments"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//DefinitionArgument">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//DefinitionArgument/puppetType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//DefinitionArgument/argName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//DefinitionArgument/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//DefinitionArgument/op"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//CaseExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//CaseExpression/switchExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//CaseExpression/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//Case">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//Case/values"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//IfExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//IfExpression/condExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//IfExpression/elseStatement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//LiteralExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralNameOrReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//LiteralNameOrReference/value"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//ResourceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ResourceExpression/resourceExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ResourceExpression/resourceData"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//ImportExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ImportExpression/values"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//LiteralList/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralHash">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//LiteralHash/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//HashEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//HashEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//HashEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralBoolean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//LiteralBoolean/value"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralUndef"/>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralDefault"/>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralRegex">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//LiteralRegex/value"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//LiteralName/value"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//VariableExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//VariableExpression/varName"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//RelationshipExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//AssignmentExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//AppendExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//OrExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//AndExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//RelationalExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//EqualityExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//ShiftExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//AdditiveExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//MultiplicativeExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//MatchingExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//InExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//AtExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//CollectExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//CollectExpression/classReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//CollectExpression/query"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//CollectExpression/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//SelectorExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//SelectorEntry"/>
+    <genClasses ecoreClass="PP_2.ecore#//FunctionCall"/>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//BinaryOpExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//BinaryOpExpression/opName"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//BinaryExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//BinaryExpression/leftExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//BinaryExpression/rightExpr"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//ParameterizedExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ParameterizedExpression/leftExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ParameterizedExpression/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//NodeDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//NodeDefinition/hostNames"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//NodeDefinition/parentName"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//UnaryExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//UnaryExpression/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//UnaryMinusExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//UnaryNotExpression"/>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//ExpressionBlock">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ExpressionBlock/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//ElseExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//ElseIfExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//VirtualNameOrReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//VirtualNameOrReference/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//VirtualNameOrReference/exported"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//ParenthesisedExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ParenthesisedExpression/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//ExprList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ExprList/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//DoubleQuotedString">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//DoubleQuotedString/stringPart"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//SingleQuotedString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//SingleQuotedString/text"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//StringExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//UnquotedString">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//UnquotedString/expression"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//IQuotedString"/>
+    <genClasses ecoreClass="PP_2.ecore#//InterpolatedVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//InterpolatedVariable/varName"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//TextExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//VerbatimTE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//VerbatimTE/text"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//ExpressionTE">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//ExpressionTE/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//VariableTE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//VariableTE/varName"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//LiteralClass"/>
+    <genClasses ecoreClass="PP_2.ecore#//UnlessExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//UnlessExpression/condExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//UnlessExpression/elseStatement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="PP_2.ecore#//Lambda">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//Lambda/arguments"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//NamedAccessExpression"/>
+    <genClasses ecoreClass="PP_2.ecore#//MethodCall">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//MethodCall/parenthesized"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//MethodCall/methodExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//WithLambdaExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference PP_2.ecore#//WithLambdaExpression/lambda"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//JavaLambda">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PP_2.ecore#//JavaLambda/farrow"/>
+    </genClasses>
+    <genClasses ecoreClass="PP_2.ecore#//RubyLambda"/>
+    <genClasses ecoreClass="PP_2.ecore#//SeparatorExpression"/>
+  </genPackages>
+</genmodel:GenModel>

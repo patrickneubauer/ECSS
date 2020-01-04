@@ -1,5 +1,10 @@
 package uk.ac.york.cs.ecss.evaluation;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
@@ -41,5 +46,18 @@ public class XtextResourceComparatorUtils {
 		}
 		return (double)XtextResourceComparatorUtils.getMatchCount(comparison2) / XtextResourceComparatorUtils.getMatchCount(comparison1);	
 	}// getMatchFactor
+	
+	static void deleteDirectoryStream(Path path) throws IOException {
+	  Files.walk(path)
+	    .sorted(Comparator.reverseOrder())
+	    .map(Path::toFile)
+	    .forEach(File::delete);
+	}// deleteDirectoryStream
+	
+	static void recreateDirectory(File directory) throws IOException {
+		if ( directory.exists() )
+			XtextResourceComparatorUtils.deleteDirectoryStream(directory.toPath());
+		directory.mkdirs();
+	}
 
 }

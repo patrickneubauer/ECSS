@@ -31,5 +31,12 @@
 	</classpathentry>
 	<classpathentry kind="src" path="/org.xtext.example.mydsl1"/>
 	<classpathentry kind="src" path="/org.xtext.example.mydsl2"/>
+	<classpathentry kind="src" path="/uk.ac.york.cs.ecss.domains"/>
+	<classpathentry kind="src" path="/srclang.rethink.uml"/>
+	<classpathentry kind="src" path="/trglang.rethink.uml"/>
+	<classpathentry kind="src" path="/deflang.rethink.uml"/>
+	<classpathentry kind="src" path="/srclang.com.puppetlabs.geppetto.pp.dsl2"/>
+	<classpathentry kind="src" path="/deflang.com.puppetlabs.geppetto.pp.dsl2"/>
+	<classpathentry kind="src" path="/trglang.com.puppetlabs.geppetto.pp.dsl2"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

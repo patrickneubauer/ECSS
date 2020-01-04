@@ -45,8 +45,8 @@ public class XtextResourceComparatorStatemachineLangsTest {
 	@Test
 	public void test() {
 		// Register common meta model (Statemachine.ecore)
-		EPackage statemachinePackage = StatemachinePackage.eINSTANCE;
-		EPackage.Registry.INSTANCE.put(statemachinePackage.getNsURI(), statemachinePackage);
+		EPackage pkg = StatemachinePackage.eINSTANCE;
+		EPackage.Registry.INSTANCE.put(pkg.getNsURI(), pkg);
 		
 		// Establish injectors
 		Injector srcLangInj = new org.xtext.example.mydsl1.MyDsl1StandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -56,8 +56,8 @@ public class XtextResourceComparatorStatemachineLangsTest {
 		XtextResourceComparator evaluationRunner = new XtextResourceComparator();
 		
 		// Compare scopes
-		Comparison comparison1 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model1.mydsl2");
-		Comparison comparison2 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model2.mydsl2");
+		Comparison comparison1 = evaluationRunner.compare(srcLangInj, trgLangInj, "statemachine-models/model1.mydsl1", "statemachine-models/model1.mydsl2");
+		Comparison comparison2 = evaluationRunner.compare(srcLangInj, trgLangInj, "statemachine-models/model1.mydsl1", "statemachine-models/model2.mydsl2");
 				
 		// assert results
 		assertTrue( XtextResourceComparatorUtils.getMatchCount(comparison1) == 6 );
@@ -76,10 +76,10 @@ public class XtextResourceComparatorStatemachineLangsTest {
 		// ----------
 		
 		// serialize model of target language using serializer of source language
-		evaluationRunner.serialize(trgLangInj, srcLangInj, "models/model2.mydsl2", "models/generated/model2.mydsl1");
+		evaluationRunner.serialize(trgLangInj, srcLangInj, "statemachine-models/model2.mydsl2", "statemachine-models/generated/model2.mydsl1");
 		
 		// parse model serialized with source language serializer with parser of target language
-		Comparison comparison3 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/generated/model2.mydsl1", "models/model2.mydsl2");
+		Comparison comparison3 = evaluationRunner.compare(srcLangInj, trgLangInj, "statemachine-models/generated/model2.mydsl1", "statemachine-models/model2.mydsl2");
 		assertTrue( comparison3.getDifferences().size() == 0 );
 	
 		// print fraction of matching structural features

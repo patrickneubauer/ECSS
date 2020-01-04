@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: trglang.com.github.jknack.antlr4ide.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: trglang.com.github.jknack.antlr4ide.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: trglang.com.github.jknack.antlr4ide.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: trglang.com.github.jknack.antlr4ide,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

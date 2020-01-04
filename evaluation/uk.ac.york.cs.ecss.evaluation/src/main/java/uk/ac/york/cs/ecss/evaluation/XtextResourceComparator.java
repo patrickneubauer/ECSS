@@ -22,6 +22,7 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.mwe.Validator;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.serializer.impl.Serializer;
@@ -83,7 +84,7 @@ public class XtextResourceComparator {
 				    URI.createURI(srcModelPath), true);
 			Files.deleteIfExists(Paths.get(trgModelPath));
 			Files.write(Paths.get(trgModelPath), trgLangSerializer.serialize(srcModel.getContents().get(0)).getBytes(), StandardOpenOption.CREATE);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.err.println("Failed to serialize model: " + srcModelPath);
 			e.printStackTrace();
 		}

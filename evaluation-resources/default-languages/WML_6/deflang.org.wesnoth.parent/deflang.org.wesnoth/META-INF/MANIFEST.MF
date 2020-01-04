@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: deflang.org.wesnoth
+Bundle-ManifestVersion: 2
+Bundle-Name: deflang.org.wesnoth
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: deflang.org.wesnoth; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: deflang.org.wesnoth.validation,
+ deflang.org.wesnoth.parser.antlr.internal,
+ deflang.org.wesnoth.generator,
+ deflang.org.wesnoth.serializer,
+ deflang.org.wesnoth.services,
+ deflang.org.wesnoth,
+ deflang.org.wesnoth.scoping,
+ deflang.org.wesnoth.parser.antlr
+Import-Package: org.apache.log4j

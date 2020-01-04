@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="WML_6" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>WML_6.ecore</foreignModel>
+  <genPackages prefix="WML" disposableProviderFactory="true" ecorePackage="WML_6.ecore#/">
+    <genClasses ecoreClass="WML_6.ecore#//WMLRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLRoot/Expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLGrammarElement"/>
+    <genClasses ecoreClass="WML_6.ecore#//WMLTag">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLTag/plus"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLTag/Expressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLTag/endName"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLKey">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLKey/values"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLKey/eol"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLKeyValue"/>
+    <genClasses ecoreClass="WML_6.ecore#//WMLMacroCall">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLMacroCall/point"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLMacroCall/relative"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLMacroCall/Parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLMacroCallParameter"/>
+    <genClasses ecoreClass="WML_6.ecore#//WMLArrayCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLArrayCall/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLMacroDefine">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLMacroDefine/Expressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLMacroDefine/endName"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLPreprocIF">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLPreprocIF/Expressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLPreprocIF/Elses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WML_6.ecore#//WMLPreprocIF/ElseExpressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLPreprocIF/endName"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLRootExpression"/>
+    <genClasses ecoreClass="WML_6.ecore#//WMLExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLExpression/name"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLValuedExpression"/>
+    <genClasses ecoreClass="WML_6.ecore#//WMLTextdomain"/>
+    <genClasses ecoreClass="WML_6.ecore#//WMLLuaCode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLLuaCode/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLMacroParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WML_6.ecore#//WMLMacroParameter/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WML_6.ecore#//WMLValue"/>
+    <genClasses ecoreClass="WML_6.ecore#//MacroTokens"/>
+  </genPackages>
+</genmodel:GenModel>

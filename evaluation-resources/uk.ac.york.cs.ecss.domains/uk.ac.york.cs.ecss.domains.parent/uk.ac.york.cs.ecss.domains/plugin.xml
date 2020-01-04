@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated ClassDiagram -->
+      <package
+            uri="http://www.uml.rethink/ClassDiagram"
+            class="classDiagram.ClassDiagramPackage"
+            genModel="models/ClassDiagram.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated RIMDsl -->
+      <package
+            uri="http://www.com.trglang/temenos/interaction/rimdsl/RIMDsl"
+            class="rIMDsl.RIMDslPackage"
+            genModel="models/RIMDsl.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated PP_1 -->
+      <package
+            uri="http://www.puppetlabs.com/geppetto/1.0.0/PP1"
+            class="pp1.Pp1Package"
+            genModel="models/PP_1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated PP_2 -->
+      <package
+            uri="http://www.puppetlabs.com/geppetto/1.0.0/PP2"
+            class="pp2.Pp2Package"
+            genModel="models/PP_2.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated YANG_4 -->
+      <package
+            uri="http://www.xtext.org/editor/yang/Yang"
+            class="yang.YangPackage"
+            genModel="models/YANG_4.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated WML_6 -->
+      <package
+            uri="http://www.org.srclang/wesnoth/WML"
+            class="wML.WMLPackage"
+            genModel="models/WML_6.genmodel"/>
+   </extension>
+
+</plugin>

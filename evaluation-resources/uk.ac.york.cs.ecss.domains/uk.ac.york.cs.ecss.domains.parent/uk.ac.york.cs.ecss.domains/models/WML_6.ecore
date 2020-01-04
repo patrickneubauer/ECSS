@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="wML" nsURI="http://www.org.srclang/wesnoth/WML" nsPrefix="wML">
+  <eClassifiers xsi:type="ecore:EClass" name="WMLRoot" eSuperTypes="#//WMLGrammarElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Expressions" upperBound="-1"
+        eType="#//WMLRootExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLGrammarElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLTag" eSuperTypes="#//WMLRootExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="plus" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Expressions" upperBound="-1"
+        eType="#//WMLExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLKey" eSuperTypes="#//WMLExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//WMLKeyValue" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eol" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLKeyValue" eSuperTypes="#//WMLGrammarElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLMacroCall" eSuperTypes="#//WMLKeyValue #//WMLMacroCallParameter #//WMLRootExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="point" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relative" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Parameters" upperBound="-1"
+        eType="#//WMLMacroCallParameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLMacroCallParameter" eSuperTypes="#//WMLGrammarElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLArrayCall" eSuperTypes="#//WMLKeyValue">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
+        eType="#//WMLValue" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLMacroDefine" eSuperTypes="#//WMLRootExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Expressions" upperBound="-1"
+        eType="#//WMLValuedExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLPreprocIF" eSuperTypes="#//WMLRootExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Expressions" upperBound="-1"
+        eType="#//WMLValuedExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Elses" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ElseExpressions" upperBound="-1"
+        eType="#//WMLValuedExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLRootExpression" eSuperTypes="#//WMLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLExpression" eSuperTypes="#//WMLValuedExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLValuedExpression" eSuperTypes="#//WMLGrammarElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLTextdomain" eSuperTypes="#//WMLRootExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLLuaCode" eSuperTypes="#//WMLKeyValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLMacroParameter" eSuperTypes="#//WMLMacroCallParameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMLValue" eSuperTypes="#//WMLKeyValue #//WMLValuedExpression #//WMLMacroParameter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MacroTokens" eSuperTypes="#//WMLMacroParameter"/>
+</ecore:EPackage>

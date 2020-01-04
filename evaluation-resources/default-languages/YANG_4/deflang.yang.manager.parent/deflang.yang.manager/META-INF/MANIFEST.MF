@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: deflang.yang.manager
+Bundle-ManifestVersion: 2
+Bundle-Name: deflang.yang.manager
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: deflang.yang.manager; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: deflang.yang.manager.formatting2,
+ deflang.yang.manager.services,
+ deflang.yang.manager,
+ deflang.yang.manager.validation,
+ deflang.yang.manager.parser.antlr,
+ deflang.yang.manager.scoping,
+ deflang.yang.manager.generator,
+ deflang.yang.manager.serializer,
+ deflang.yang.manager.parser.antlr.internal
+Import-Package: org.apache.log4j

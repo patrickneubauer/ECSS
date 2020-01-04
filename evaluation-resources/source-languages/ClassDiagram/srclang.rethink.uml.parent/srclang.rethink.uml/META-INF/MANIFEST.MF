@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: srclang.rethink.uml
+Bundle-ManifestVersion: 2
+Bundle-Name: srclang.rethink.uml
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: srclang.rethink.uml; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: srclang.rethink.uml,
+ srclang.rethink.uml.generator,
+ srclang.rethink.uml.parser.antlr.internal,
+ srclang.rethink.uml.scoping,
+ srclang.rethink.uml.services,
+ srclang.rethink.uml.parser.antlr,
+ srclang.rethink.uml.validation,
+ srclang.rethink.uml.formatting2,
+ srclang.rethink.uml.serializer
+Import-Package: org.apache.log4j
