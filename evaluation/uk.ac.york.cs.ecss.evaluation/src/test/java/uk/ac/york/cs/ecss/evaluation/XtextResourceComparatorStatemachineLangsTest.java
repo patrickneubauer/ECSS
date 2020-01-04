@@ -2,9 +2,18 @@ package uk.ac.york.cs.ecss.evaluation;
 
 import static org.junit.Assert.*;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.DifferenceKind;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.resource.XtextResourceFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,7 +24,7 @@ import com.google.inject.Injector;
 
 import uk.ac.york.cs.ecss.evaluation.statemachine.statemachine.StatemachinePackage;
 
-public class XtextResourceComparatorTest {
+public class XtextResourceComparatorStatemachineLangsTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -34,7 +43,7 @@ public class XtextResourceComparatorTest {
 	}
 
 	@Test
-	public void testStatemachineLangs() {
+	public void test() {
 		// Register common meta model (Statemachine.ecore)
 		EPackage statemachinePackage = StatemachinePackage.eINSTANCE;
 		EPackage.Registry.INSTANCE.put(statemachinePackage.getNsURI(), statemachinePackage);
