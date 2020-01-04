@@ -37,7 +37,7 @@ import uk.ac.york.cs.ecss.evaluation.statemachine.statemachine.StatemachinePacka
  * RIGHT = target language
  * 
  * PRECONDITION(S):
- * - Register common meta model (see main-method for example)
+ * - Register common meta model
  * 
  * @author patrickneubauer
  *
@@ -115,48 +115,5 @@ public class XtextResourceComparator {
 		IComparisonScope scope = this.comparator.createDefaultScope(srcLangResSet, trgLangResSet);
 		return this.comparator.compare(scope);
 	}// compare
-
-	public static void main(String[] args) {
-		
-		// Register common meta model (Statemachine.ecore)
-		EPackage statemachinePackage = StatemachinePackage.eINSTANCE;
-		EPackage.Registry.INSTANCE.put(statemachinePackage.getNsURI(), statemachinePackage);
-		
-		// Establish injectors
-		Injector srcLangInj = new org.xtext.example.mydsl1.MyDsl1StandaloneSetup().createInjectorAndDoEMFRegistration();
-		Injector trgLangInj = new org.xtext.example.mydsl2.MyDsl2StandaloneSetup().createInjectorAndDoEMFRegistration();
-		
-		// setup evaluation runner
-		XtextResourceComparator evaluationRunner = new XtextResourceComparator();
-		
-		// Compare scopes
-		Comparison comparison1 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model1.mydsl2");
-		Comparison comparison2 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model2.mydsl2");
-				
-		// assert results
-		assertTrue( EvaluationHelper.getMatchCount(comparison1) == 6 );
-		assertTrue( comparison1.getDifferences().size() == 0 );
-		assertTrue( comparison1.getConflicts().size() == 0 );
-		
-		assertTrue( EvaluationHelper.getMatchCount(comparison2) == 7 );
-		assertTrue( comparison2.getDifferences().size() == 1 );
-		assertTrue( comparison2.getDifferences().get(0).getKind() == DifferenceKind.DELETE );
-		assertTrue( comparison2.getConflicts().size() == 0 );
-
-		// ----------
-		
-		// serialize model of target language using serializer of source language
-		evaluationRunner.serialize(trgLangInj, srcLangInj, "models/model2.mydsl2", "models/generated/model2.mydsl1");
-		
-		// parse model serialized with source language serializer with parser of target language
-		Comparison comparison3 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/generated/model2.mydsl1", "models/model2.mydsl2");
-		assertTrue( comparison3.getDifferences().size() == 0 );
-	
-		// print fraction of matching structural features
-		System.out.println("Fraction of matching structural features: " + (double)EvaluationHelper.getMatchCount(comparison2) / EvaluationHelper.getMatchCount(comparison3));
-	
-		System.out.println("Finished !");
-
-	}// main
 
 }// EvaluationPoc

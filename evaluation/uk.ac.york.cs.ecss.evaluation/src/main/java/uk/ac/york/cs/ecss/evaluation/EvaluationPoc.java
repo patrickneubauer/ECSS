@@ -94,11 +94,11 @@ public class EvaluationPoc {
 		Comparison comparison2 = comparator.compare(scope2);
 				
 		// assert results
-		assertTrue(EvaluationHelper.getMatchCount(comparison1)==6);
+		assertTrue(XtextResourceComparatorUtils.getMatchCount(comparison1)==6);
 		assertTrue(comparison1.getDifferences().size()==0);
 		assertTrue(comparison1.getConflicts().size()==0);
 		
-		assertTrue(EvaluationHelper.getMatchCount(comparison2)==7);
+		assertTrue(XtextResourceComparatorUtils.getMatchCount(comparison2)==7);
 		assertTrue(comparison2.getDifferences().size()==1);
 		assertTrue(comparison2.getDifferences().get(0).getKind()==DifferenceKind.DELETE);
 		assertTrue(comparison2.getConflicts().size()==0);
@@ -126,7 +126,7 @@ public class EvaluationPoc {
 		assertTrue(comparison3.getDifferences().size()==0);
 		
 		// print fraction of matching structural features
-		System.out.println("Fraction of matching structural features: " + (double)EvaluationHelper.getMatchCount(comparison2) / EvaluationHelper.getMatchCount(comparison3));
+		System.out.println("Fraction of matching structural features: " + (double)XtextResourceComparatorUtils.getMatchCount(comparison2) / XtextResourceComparatorUtils.getMatchCount(comparison3));
 		
 		System.out.println("Finished !");
 
