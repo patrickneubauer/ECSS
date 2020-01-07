@@ -62,48 +62,9 @@ public class XtextResourceComparatorPP1LangsTest extends XtextResourceComparator
 	public void loadSrcLangModels() {
 		Injector srcLangInj = new srclang.com.puppetlabs.geppetto.pp.dsl1.PPStandaloneSetup().createInjectorAndDoEMFRegistration();
 		String subPathName = "SrcModels";
-
-		XtextResourceSet srcLangResSet = srcLangInj.getInstance(XtextResourceSet.class);
-		String basePath = "models/" + langName + "/";
-		File modelPath = new File(basePath + "/" + subPathName);
-				
-		try {
-			// remove previous statistics
-			File csvFile = new File(modelPath.getParent() + "/" + langName + "_" + subPathName + "_stats.csv");
-			
-			List<String[]> header = new LinkedList<String[]>();
-			header.add(new String[] {"Model name","EENum count","EClass count","EDataType count","EMFCompare matchCount","Diagnostic count"});
-			CSVUtil.csvWriterOneByOne(header, csvFile.toPath(), false);
-			
-			for ( File srcModelFile : modelPath.listFiles() ) {
-				XtextResource srcModel = (XtextResource) srcLangResSet.getResource(
-						URI.createURI(srcModelFile.getAbsolutePath()), true);
-				System.out.println("\nLoaded model: " + srcModelFile.getName());
-				assertTrue( srcModel.isLoaded() );
-				
-				List<Diagnostic> diagnostics = srcModel.validateConcreteSyntax();
-				System.out.println("Diagnostic count = " + diagnostics.size());
-				
-				List<String[]> stats = computeModelStats(srcLangInj, srcModelFile.getAbsolutePath());
-				String[] statLine = new String[6];
-				statLine[0] = stats.get(0)[0]; // Model name
-				statLine[1] = stats.get(0)[1]; // EENum count
-				statLine[2] = stats.get(0)[2]; // EClass count
-				statLine[3] = stats.get(0)[3]; // EDataType count
-				statLine[4] = stats.get(0)[4]; // EMFCompare count
-				statLine[5] = String.valueOf(diagnostics.size()); // Diagnostic count
-				stats.set(0, statLine); // replace in list
-				
-				// store in CSV
-				CSVUtil.csvWriterOneByOne(stats, csvFile.toPath(), true);
-				
-			}// for each model
-				
-		} catch (Exception e) {
-			System.err.println("Failed to load model");
-			e.printStackTrace();
-		}
-	}
+		
+		loadLangModels(srcLangInj, langName, subPathName);
+	}// loadSrcLangModels
 	
 	@Test
 	public void serializeDefLangModels() throws IOException {

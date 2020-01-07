@@ -51,10 +51,12 @@ public class XtextResourceComparatorBaseTest {
 			int enumCount = 0;
 			int eClassCount = 0;
 			int eDataTypeCount = 0;
+			int eStrFeaCount = 0;
 			
 			for ( EObject eObject : eObjectList ) {
 				EClass eClass = eObject.eClass();
 				EList<EStructuralFeature> eClassStrFeaList = eClass.getEAllStructuralFeatures();
+				eStrFeaCount = eStrFeaCount + eClassStrFeaList.size();
 				for (EStructuralFeature strFea : eClassStrFeaList) {
 					if (strFea.getEType() instanceof EEnum) {
 						++enumCount;
@@ -70,11 +72,10 @@ public class XtextResourceComparatorBaseTest {
 				}
 			}// for each EObject
 			
-			
+			System.out.println("EStructuralFeature count = " + eStrFeaCount);
 			System.out.println("EENum count = " + enumCount);
 			System.out.println("EClass count = " + eClassCount);
 			System.out.println("EDataType count = " + eDataTypeCount);
-
 					
 			// run comparison and return result
 			Comparison comparison = resComp.compare(langInj, langInj, langModelPath, langModelPath);
@@ -83,7 +84,7 @@ public class XtextResourceComparatorBaseTest {
 			System.out.println("EMFCompare matchCount = " + matchCount);
 			System.out.println("\n");
 			
-			result.add(new String[] {new File(langModelPath).getName(), String.valueOf(enumCount),String.valueOf(eClassCount),String.valueOf(eDataTypeCount),String.valueOf(matchCount)});
+			result.add(new String[] {new File(langModelPath).getName(), String.valueOf(eStrFeaCount), String.valueOf(enumCount), String.valueOf(eClassCount),String.valueOf(eDataTypeCount),String.valueOf(matchCount)});
 			return result;
 			
 		}// printLangStats
@@ -100,7 +101,7 @@ public class XtextResourceComparatorBaseTest {
 			File csvFile = new File(modelPath.getParent() + "/" + subPathName + "_stats.csv");
 			
 			List<String[]> header = new LinkedList<String[]>();
-			header.add(new String[] {"Model name","EENum count","EClass count","EDataType count","EMFCompare matchCount","Diagnostic count"});
+			header.add(new String[] {"Model name","EStructuralFeature count","EENum count","EClass count","EDataType count","EMFCompare matchCount","Diagnostic count"});
 			CSVUtil.csvWriterOneByOne(header, csvFile.toPath(), false);
 			
 			for ( File srcGrammarFile : modelPath.listFiles() ) {
@@ -113,13 +114,14 @@ public class XtextResourceComparatorBaseTest {
 				System.out.println("Diagnostic count = " + diagnostics.size());
 				
 				List<String[]> stats = computeModelStats(langInj, srcGrammarFile.getAbsolutePath());
-				String[] statLine = new String[6];
+				String[] statLine = new String[7];
 				statLine[0] = stats.get(0)[0]; // Model name
-				statLine[1] = stats.get(0)[1]; // EENum count
-				statLine[2] = stats.get(0)[2]; // EClass count
-				statLine[3] = stats.get(0)[3]; // EDataType count
-				statLine[4] = stats.get(0)[4]; // EMFCompare count
-				statLine[5] = String.valueOf(diagnostics.size()); // Diagnostic count
+				statLine[1] = stats.get(0)[1]; // EStructuralFeature count
+				statLine[2] = stats.get(0)[2]; // EENum count
+				statLine[3] = stats.get(0)[3]; // EClass count
+				statLine[4] = stats.get(0)[4]; // EDataType count
+				statLine[5] = stats.get(0)[5]; // EMFCompare count
+				statLine[6] = String.valueOf(diagnostics.size()); // Diagnostic count
 				stats.set(0, statLine); // replace in list
 				
 				// store in CSV
@@ -132,5 +134,49 @@ public class XtextResourceComparatorBaseTest {
 			e.printStackTrace();
 		}
 	}// loadSrcGrammars
+	
+	public void loadLangModels(Injector langInj, String langName, String subPathName) {
+		XtextResourceSet srcLangResSet = langInj.getInstance(XtextResourceSet.class);
+		String basePath = "models/" + langName + "/";
+		File modelPath = new File(basePath + "/" + subPathName);
+				
+		try {
+			// remove previous statistics
+			File csvFile = new File(modelPath.getParent() + "/" + langName + "_" + subPathName + "_stats.csv");
+			
+			List<String[]> header = new LinkedList<String[]>();
+			header.add(new String[] {"Model name","EStructuralFeature count","EENum count","EClass count","EDataType count","EMFCompare matchCount","Diagnostic count"});
+			CSVUtil.csvWriterOneByOne(header, csvFile.toPath(), false);
+			
+			for ( File srcModelFile : modelPath.listFiles() ) {
+				XtextResource srcModel = (XtextResource) srcLangResSet.getResource(
+						URI.createURI(srcModelFile.getAbsolutePath()), true);
+				System.out.println("\nLoaded model: " + srcModelFile.getName());
+				assertTrue( srcModel.isLoaded() );
+				
+				List<Diagnostic> diagnostics = srcModel.validateConcreteSyntax();
+				System.out.println("Diagnostic count = " + diagnostics.size());
+				
+				List<String[]> stats = computeModelStats(langInj, srcModelFile.getAbsolutePath());
+				String[] statLine = new String[7];
+				statLine[0] = stats.get(0)[0]; // Model name
+				statLine[1] = stats.get(0)[1]; // EStructuralFeature count
+				statLine[2] = stats.get(0)[2]; // EENum count
+				statLine[3] = stats.get(0)[3]; // EClass count
+				statLine[4] = stats.get(0)[4]; // EDataType count
+				statLine[5] = stats.get(0)[5]; // EMFCompare count
+				statLine[6] = String.valueOf(diagnostics.size()); // Diagnostic count
+				stats.set(0, statLine); // replace in list
+				
+				// store in CSV
+				CSVUtil.csvWriterOneByOne(stats, csvFile.toPath(), true);
+				
+			}// for each model
+				
+		} catch (Exception e) {
+			System.err.println("Failed to load model");
+			e.printStackTrace();
+		}
+	}// loadLangModels
 
 }// XtextResourceComparatorBaseTest
