@@ -1,0 +1,85 @@
+/*******************************************************************************
+ * Copyright (c) 2013 AKSW Xturtle Project, itemis AG (http://www.itemis.eu).
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
+grammar srclang.de.itemis.tooling.xturtle.Xturtle hidden(WS, SL_COMMENT)
+
+import "http://www.de.srclang/itemis/tooling/xturtle/Xturtle" 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+//Search filter für Triples, so that exported name spaces do not appear in opem model elements dialog?
+
+DirectiveBlock: {DirectiveBlock}
+		directives=Directives
+		(triples+=Triples
+		 triples+=Triples*
+		directiveblock=DirectiveBlock)?
+;
+Directives:{Directives} 
+	directive+=Directive*
+;
+Directive: (PrefixId|Base) TRIPELEND;
+PrefixId:'@prefix' (id=PrefixName? ':') uri=URI;
+Base:'@base' uri=URI;
+
+Triples: (=>subject=Subject) (predObjs+=PredicateObjectList ( =>(';')+  predObjs+=PredicateObjectList)* (';')*)? =>TRIPELEND;
+
+PredicateObjectList: verb=Predicate objects+=Object ( =>','  objects+=Object)*;
+
+Subject:Resource|Blank;
+Object: (ResourceRef|Blank|Literal);
+Predicate: (ResourceRef|({TypePredicate}'a'));
+Resource:QNameDef|UriDef;
+ResourceRef:QNameRef|UriRef;
+
+Blank:BlankObjects|BlankCollection;
+BlankObjects:=>'['{BlankObjects}(predObjs+=PredicateObjectList ((';')+ predObjs+=PredicateObjectList)* (';')*)? ']';
+BlankCollection:=>'('{BlankCollection} (objects+=Object (objects+=Object)*)?')';
+
+
+//ref to prefix URI
+QNameDef:{QNameDef} prefix=[PrefixId|PrefixName] ? id=ColonName;
+QNameRef:{QNameRef} prefix=[PrefixId|PrefixName] ? ref=[Resource|ColonName];
+UriDef:uri=URI;
+UriRef:ref=[Resource|URI];
+
+
+Literal:NumberLiteral|StringLiteral|BooleanLiteral;
+NumberLiteral:value=SignedNumber;
+StringLiteral hidden():value=STRING('^^'type=ResourceRef| language=LANGUAGE)?;
+BooleanLiteral:value=('true'|'false');
+
+SignedNumber hidden():('+'|'-')?NUMBER;
+Name hidden(): =>(LOCALESC|ID|'a'|NUMBER) =>('.'? (LOCALESC|ID|'a'|NUMBER))*;
+PrefixName hidden():=>ID=>('.'? (ID|NUMBER))*;
+
+ColonName hidden(): =>':' Name?;
+
+terminal TRIPELEND:'DEFINEDINCUSTOMLEXER';
+//'@' [a-zA-Z]+ ('-' [a-zA-Z0-9]+)*
+terminal LANGUAGE:'@'(('A'..'Z') | ('a'..'z'))+('-'(('A'..'Z') | ('a'..'z')|('0'..'9'))+)*;
+
+//actually we override the Number lexing
+terminal NUMBER: DIGITS (!('#'|' '|'\t'|'\r'|'\n'|'"'|"'"|'<'|','|';'))*;
+//TODO extend ID to CHAR+ and have semantic check that ID does not start with '-', '\u00B7' | ('\u0300'..'\u036F') | ('\u203F'..'\u2040')
+terminal ID: CHAR_U CHAR*;
+terminal LOCALESC:("%" HEX HEX |'\\'(('_' | '~' | '.' | '-' | '!' | '$' | '&' | "'" | '(' | ')' | '*' | '+' | ',' | ';' | '=' | '/' | '?' | '#' | '@' | '%')))+;
+terminal SL_COMMENT 	: '#' !('\n'|'\r')* ('\r'? '\n')?;
+
+//TODO allow \> in URI?
+terminal URI: '<'->'>';
+//actually we override the String lexing
+terminal STRING:'"'->'"';
+
+terminal WS: (' '|'\t'|'\r'|'\n')+;
+
+terminal ANY_OTHER: .;
+
+terminal fragment HEX:('0'..'9')|('a'..'f'|'A'..'F');
+terminal fragment DIGITS:('0'..'9')+;
+terminal fragment CHAR_BASE:('A'..'Z') | ('a'..'z') | ('\u00C0'..'\u00D6') | ('\u00D8'..'\u00F6') | ('\u00F8'..'\u02FF') | ('\u0370'..'\u037D') | ('\u037F'..'\u1FFF') | ('\u200C'..'\u200D') | ('\u2070'..'\u218F') | ('\u2C00'..'\u2FEF') | ('\u3001'..'\uD7FF') | ('\uF900'..'\uFDCF') | ('\uFDF0'..'\uFFFD');// | ('\u10000'..'\uEFFFF');
+terminal fragment CHAR_U: CHAR_BASE| '_';
+terminal fragment CHAR: CHAR_U | '-' | DIGITS | '\u00B7' | ('\u0300'..'\u036F') | ('\u203F'..'\u2040');

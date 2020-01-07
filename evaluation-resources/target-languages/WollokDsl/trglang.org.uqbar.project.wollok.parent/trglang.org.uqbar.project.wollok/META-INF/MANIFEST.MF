@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: trglang.org.uqbar.project.wollok
+Bundle-ManifestVersion: 2
+Bundle-Name: trglang.org.uqbar.project.wollok
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: trglang.org.uqbar.project.wollok; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: trglang.org.uqbar.project.wollok.parser.antlr,
+ trglang.org.uqbar.project.wollok.scoping,
+ trglang.org.uqbar.project.wollok.services,
+ trglang.org.uqbar.project.wollok.parser.antlr.internal,
+ trglang.org.uqbar.project.wollok.validation,
+ trglang.org.uqbar.project.wollok.serializer,
+ trglang.org.uqbar.project.wollok.formatting2,
+ trglang.org.uqbar.project.wollok,
+ trglang.org.uqbar.project.wollok.generator
+Import-Package: org.apache.log4j

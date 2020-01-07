@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: srclang.org.uqbar.project.wollok.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: srclang.org.uqbar.project.wollok.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: srclang.org.uqbar.project.wollok.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: srclang.org.uqbar.project.wollok,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: srclang.org.uqbar.project.wollok.ide.contentassist.antlr,
+ srclang.org.uqbar.project.wollok.ide.contentassist.antlr.internal

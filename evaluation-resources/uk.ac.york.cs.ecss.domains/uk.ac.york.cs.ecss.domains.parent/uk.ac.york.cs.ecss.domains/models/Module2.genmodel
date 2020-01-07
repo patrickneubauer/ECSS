@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="Module2" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>Module2.ecore</foreignModel>
+  <genPackages prefix="Module2" disposableProviderFactory="true" ecorePackage="Module2.ecore#/">
+    <genClasses ecoreClass="Module2.ecore#//JsonObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Module2.ecore#//JsonObject/pairs"/>
+    </genClasses>
+    <genClasses ecoreClass="Module2.ecore#//JsonMetadata"/>
+    <genClasses ecoreClass="Module2.ecore#//Pair">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Module2.ecore#//Pair/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Module2.ecore#//Pair/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Module2.ecore#//UnrecognizedPair"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonArray">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Module2.ecore#//JsonArray/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Module2.ecore#//JsonDependency"/>
+    <genClasses ecoreClass="Module2.ecore#//MetadataRefPair">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Module2.ecore#//MetadataRefPair/ref"/>
+    </genClasses>
+    <genClasses ecoreClass="Module2.ecore#//JsonRequirement"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Module2.ecore#//JsonValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Module2.ecore#//RequirementNameValue"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonVersionRange"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonModuleName"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonTag"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonVersion"/>
+    <genClasses ecoreClass="Module2.ecore#//JsonOS"/>
+    <genClasses ecoreClass="Module2.ecore#//Value"/>
+  </genPackages>
+</genmodel:GenModel>

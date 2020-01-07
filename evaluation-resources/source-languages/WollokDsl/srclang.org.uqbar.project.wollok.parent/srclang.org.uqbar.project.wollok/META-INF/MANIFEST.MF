@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: srclang.org.uqbar.project.wollok
+Bundle-ManifestVersion: 2
+Bundle-Name: srclang.org.uqbar.project.wollok
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: srclang.org.uqbar.project.wollok; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.apache.log4j
+Export-Package: srclang.org.uqbar.project.wollok.parser.antlr.internal,
+ srclang.org.uqbar.project.wollok.generator,
+ srclang.org.uqbar.project.wollok.parser.antlr,
+ srclang.org.uqbar.project.wollok.scoping,
+ srclang.org.uqbar.project.wollok.serializer,
+ srclang.org.uqbar.project.wollok.formatting2,
+ srclang.org.uqbar.project.wollok.services,
+ srclang.org.uqbar.project.wollok.validation,
+ srclang.org.uqbar.project.wollok

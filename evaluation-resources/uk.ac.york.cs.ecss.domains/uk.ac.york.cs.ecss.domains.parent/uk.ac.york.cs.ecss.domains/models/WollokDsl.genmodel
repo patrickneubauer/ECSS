@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="WollokDsl" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>WollokDsl.ecore</foreignModel>
+  <genPackages prefix="WollokDsl" disposableProviderFactory="true" ecorePackage="WollokDsl.ecore#/">
+    <genClasses ecoreClass="WollokDsl.ecore#//WFile">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WFile/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WFile/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WFile/main"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WFile/tests"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WFile/suites"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//Import/importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WProgram">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WProgram/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WProgram/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WTest">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WTest/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WTest/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WSuite">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WSuite/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WSuite/fixture"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WSuite/tests"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WFixture">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WFixture/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WPackage">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WPackage/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WLibraryElement"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WNamed">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WNamed/name"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WMethodContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WMethodContainer/members"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WReferenciable"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WExpression"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WMethodDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WMethodDeclaration/overrides"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WMethodDeclaration/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WMethodDeclaration/native"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WMethodDeclaration/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WMethodDeclaration/expressionReturns"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WParameter/varArg"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WVariable"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WFeatureCall"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WVariableReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WVariableReference/ref"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WIfExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WIfExpression/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WIfExpression/then"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WIfExpression/else"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WCollectionLiteral">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WCollectionLiteral/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WListLiteral"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WSetLiteral"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WNamedObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WNamedObject/parent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WNamedObject/parentParameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WNamedObject/mixins"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WCanExtendClass"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WClass">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WClass/parent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WClass/mixins"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WClass/constructors"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WMixin"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WMember"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WConstructor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WConstructor/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WConstructor/delegatingConstructorCall"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WConstructor/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WDelegatingConstructorCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WDelegatingConstructorCall/argumentList"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WSelfDelegatingConstructorCall"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WSuperDelegatingConstructorCall"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WConstructorCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WConstructorCall/classRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WConstructorCall/argumentList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WConstructorCall/mixins"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WArgumentList"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WNamedArgumentsList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WNamedArgumentsList/initializers"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WPositionalArgumentsList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WPositionalArgumentsList/values"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WInitializer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WInitializer/initializer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WInitializer/initialValue"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WTry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WTry/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WTry/catchBlocks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WTry/alwaysExpression"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WCatch">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WCatch/exceptionVarName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WCatch/exceptionType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WCatch/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WReturnExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WReturnExpression/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WThrow">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WThrow/exception"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WObjectLiteral">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WObjectLiteral/parent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WObjectLiteral/parentParameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WObjectLiteral/mixins"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WVariableDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WVariableDeclaration/writeable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WVariableDeclaration/property"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WVariableDeclaration/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WVariableDeclaration/right"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WAssignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WAssignment/feature"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WAssignment/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WBinaryOperation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WBinaryOperation/leftOperand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WBinaryOperation/feature"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WBinaryOperation/rightOperand"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WUnaryOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WUnaryOperation/feature"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WUnaryOperation/operand"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WPostfixOperation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WPostfixOperation/operand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WPostfixOperation/feature"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WMemberFeatureCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WMemberFeatureCall/memberCallTarget"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WMemberFeatureCall/nullSafe"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WMemberFeatureCall/feature"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WMemberFeatureCall/memberCallArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WSelf"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WSuperInvocation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WSuperInvocation/memberCallArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WBlockExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WBlockExpression/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WBooleanLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WBooleanLiteral/isTrue"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WNullLiteral"/>
+    <genClasses ecoreClass="WollokDsl.ecore#//WStringLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WStringLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WNumberLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WollokDsl.ecore#//WNumberLiteral/value"/>
+    </genClasses>
+    <genClasses ecoreClass="WollokDsl.ecore#//WClosure">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WClosure/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WollokDsl.ecore#//WClosure/expression"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

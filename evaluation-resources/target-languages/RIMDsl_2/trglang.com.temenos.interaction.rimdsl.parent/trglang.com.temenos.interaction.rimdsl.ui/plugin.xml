@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension
+		point="org.eclipse.ui.editors">
+		<editor
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+			default="true"
+			extensions="rim"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			name="RIMDsl Editor">
+		</editor>
+	</extension>
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+			commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+			<activeWhen>
+				<reference
+					definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+			commandId="trglang.com.temenos.interaction.rimdsl.RIMDsl.validate">
+		<activeWhen>
+			<reference
+					definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+			</reference>
+		</activeWhen>
+		</handler>
+		<!-- copy qualified name -->
+		<handler
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
+			<activeWhen>
+				<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened" />
+			</activeWhen>
+		</handler>
+		<handler
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
+			<activeWhen>
+				<and>
+					<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.XtextEditor.opened" />
+					<iterate>
+						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension point="org.eclipse.core.expressions.definitions">
+		<definition id="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+			<and>
+				<reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+				<with variable="activeEditor">
+					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName"
+						value="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+						forcePluginActivation="true"/>
+				</with>
+			</and>
+		</definition>
+		<definition id="trglang.com.temenos.interaction.rimdsl.RIMDsl.XtextEditor.opened">
+			<and>
+				<reference definitionId="isXtextEditorActive"/>
+				<with variable="activeEditor">
+					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName"
+						value="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+						forcePluginActivation="true"/>
+				</with>
+			</and>
+		</definition>
+	</extension>
+	<extension
+			point="org.eclipse.ui.preferencePages">
+		<page
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			name="RIMDsl">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+		</page>
+		<page
+			category="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.coloring"
+			name="Syntax Coloring">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+		</page>
+		<page
+			category="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.templates"
+			name="Templates">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+		</page>
+	</extension>
+	<extension
+			point="org.eclipse.ui.propertyPages">
+		<page
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			name="RIMDsl">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+			<enabledWhen>
+				<adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+			<filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+		</page>
+	</extension>
+	<extension
+		point="org.eclipse.ui.keywords">
+		<keyword
+			id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"
+			label="RIMDsl"/>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+	<command
+			description="Trigger expensive validation"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.validate"
+			name="Validate">
+	</command>
+	<!-- copy qualified name -->
+	<command
+			id="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+			categoryId="org.eclipse.ui.category.edit"
+			description="Copy the qualified name for the selected element"
+			name="Copy Qualified Name">
+	</command>
+	<command
+			id="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName"
+			categoryId="org.eclipse.ui.category.edit"
+			description="Copy the qualified name for the selected element"
+			name="Copy Qualified Name">
+	</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.edit">
+			 <command
+				 commandId="trglang.com.temenos.interaction.rimdsl.RIMDsl.validate"
+				 style="push"
+				 tooltip="Trigger expensive validation">
+			<visibleWhen checkEnabled="false">
+				<reference
+					definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+				</reference>
+			</visibleWhen>
+		</command>
+		</menuContribution>
+		<!-- copy qualified name -->
+		<menuContribution locationURI="popup:#TextEditorContext?after=copy">
+			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+				style="push" tooltip="Copy Qualified Name">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened" />
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:edit?after=copy">
+			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+				style="push" tooltip="Copy Qualified Name">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened" />
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="popup:org.eclipse.xtext.ui.outline?after=additions">
+			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName"
+				style="push" tooltip="Copy Qualified Name">
+				<visibleWhen checkEnabled="false">
+					<and>
+						<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.XtextEditor.opened" />
+						<iterate>
+							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
+						</iterate>
+					</and>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+					</reference>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+			commandId="org.eclipse.xtext.ui.editor.FindReferences">
+			<activeWhen>
+				<reference
+					definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="rim"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.contenttype"
+			name="RIMDsl File"
+			priority="normal">
+		</content-type>
+	</extension>
+	<!-- adding resource factories -->
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="rim">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+		<resourceServiceProvider
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+			uriExtension="rim">
+		</resourceServiceProvider>
+	</extension>
+	<!-- marker definitions for trglang.com.temenos.interaction.rimdsl.RIMDsl -->
+	<extension
+			id="rimdsl.check.fast"
+			name="RIMDsl Problem"
+			point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.xtext.ui.check.fast"/>
+		<persistent value="true"/>
+	</extension>
+	<extension
+			id="rimdsl.check.normal"
+			name="RIMDsl Problem"
+			point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.xtext.ui.check.normal"/>
+		<persistent value="true"/>
+	</extension>
+	<extension
+			id="rimdsl.check.expensive"
+			name="RIMDsl Problem"
+			point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.xtext.ui.check.expensive"/>
+		<persistent value="true"/>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.validator.preferencePage"
+			name="Errors/Warnings">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+		</page>
+	</extension>
+	<extension point="org.eclipse.xtext.builder.participant">
+		<participant
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
+			fileExtensions="rim"/>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.compiler.preferencePage"
+			name="Compiler">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+		</page>
+	</extension>
+	<extension point="org.eclipse.ui.propertyPages">
+		<page
+			category="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.compiler.propertyPage"
+			name="Compiler">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+			<enabledWhen>
+				<adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+			<filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+		</page>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?after=xtext.ui.openDeclaration">
+			<command
+				commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand"
+				id="trglang.com.temenos.interaction.rimdsl.RIMDsl.OpenGeneratedCode"
+				style="push">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened" />
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
+			commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand">
+			<activeWhen>
+				<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened" />
+			</activeWhen>
+		</handler>
+	</extension>
+	<!-- Quick Outline -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+				style="push"
+				tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<!-- quickfix marker resolution generator for trglang.com.temenos.interaction.rimdsl.RIMDsl -->
+	<extension
+			point="org.eclipse.ui.ide.markerResolution">
+		<markerResolutionGenerator
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="trglang.com.temenos.interaction.rimdsl.ui.rimdsl.check.fast">
+			<attribute
+				name="FIXABLE_KEY"
+				value="true">
+			</attribute>
+		</markerResolutionGenerator>
+		<markerResolutionGenerator
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="trglang.com.temenos.interaction.rimdsl.ui.rimdsl.check.normal">
+			<attribute
+				name="FIXABLE_KEY"
+				value="true">
+			</attribute>
+		</markerResolutionGenerator>
+		<markerResolutionGenerator
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="trglang.com.temenos.interaction.rimdsl.ui.rimdsl.check.expensive">
+			<attribute
+				name="FIXABLE_KEY"
+				value="true">
+			</attribute>
+		</markerResolutionGenerator>
+	</extension>
+	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.edit">
+			<command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+				style="push">
+				<visibleWhen checkEnabled="false">
+					<reference
+						definitionId="trglang.com.temenos.interaction.rimdsl.RIMDsl.Editor.opened">
+					</reference>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="trglang.com.temenos.interaction.rimdsl.RIMDsl"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+			id="trglang.com.temenos.interaction.rimdsl.RIMDsl.refactoring"
+			name="Refactoring">
+			<keywordReference id="trglang.com.temenos.interaction.rimdsl.ui.keyword_RIMDsl"/>
+		</page>
+	</extension>
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="trglang.com.temenos.interaction.rimdsl.RIMDsl.compare.contentViewers"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="rim">
+		</viewer>
+		<contentTypeBinding
+			contentTypeId="trglang.com.temenos.interaction.rimdsl.RIMDsl.contenttype"
+			contentViewerId="trglang.com.temenos.interaction.rimdsl.RIMDsl.compare.contentViewers" />
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="trglang.com.temenos.interaction.rimdsl.RIMDsl.compare.contentMergeViewers"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="rim" label="RIMDsl Compare">
+		</viewer>
+		<contentTypeBinding
+			contentTypeId="trglang.com.temenos.interaction.rimdsl.RIMDsl.contenttype"
+			contentMergeViewerId="trglang.com.temenos.interaction.rimdsl.RIMDsl.compare.contentMergeViewers" />
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="trglang.com.temenos.interaction.rimdsl.RIMDsl.editors.documentProviders"
+			class="trglang.com.temenos.interaction.rimdsl.ui.RIMDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="rim">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="rim"
+			type="text">
+		</fileTypes>
+	</extension>
+</plugin>

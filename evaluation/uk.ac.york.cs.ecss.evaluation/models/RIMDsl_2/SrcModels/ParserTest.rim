@@ -1,0 +1,55 @@
+rim ParserTest {
+
+  	// New
+    event N {
+        method: POST
+    }
+    // Pay
+    event P {
+     	method: PUT
+   	}
+   	// Used
+   	event U {
+        method: PUT
+    }
+    // Cancel
+    event C {
+        method: DELETE
+    }
+    event GET {
+        method: GET
+    }
+
+	command t24Get
+	command t24Delete
+
+initial resource demo_initial {
+	type: item
+	entity: HOME
+	view: t24Get
+	GET -> demo_tickets
+}
+
+resource demo_tickets {
+	type: collection
+	entity: TICKET
+	view: t24Get
+	GET -> demo_aticket
+	C *-> demo_deleted
+}
+
+resource demo_aticket {
+	type: item
+	entity: TICKET
+	view: t24Get
+	C -> demo_deleted
+}
+
+resource demo_deleted {
+	type: item
+	entity: TICKET
+	actions [t24Delete]
+	GET -> demo_tickets
+}
+
+}

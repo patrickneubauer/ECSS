@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="wollokDsl" nsURI="http://www.org.srclang/uqbar/project/wollok/WollokDsl"
+    nsPrefix="wollokDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="WFile">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="#//Import" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//WLibraryElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="main" eType="#//WProgram"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tests" upperBound="-1"
+        eType="#//WTest" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="suites" upperBound="-1"
+        eType="#//WSuite" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Import">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WProgram">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WTest">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WSuite" eSuperTypes="#//WMethodContainer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fixture" eType="#//WFixture"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tests" upperBound="-1"
+        eType="#//WTest" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WFixture">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WPackage" eSuperTypes="#//WLibraryElement #//WNamed">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WLibraryElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WNamed">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMethodContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//WMember" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WReferenciable" eSuperTypes="#//WNamed"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WExpression" eSuperTypes="#//WLibraryElement #//WFeatureCall #//WMember"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMethodDeclaration" eSuperTypes="#//WNamed #//WMember">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="overrides" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//WParameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="native" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expressionReturns" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WParameter" eSuperTypes="#//WReferenciable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varArg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WVariable" eSuperTypes="#//WReferenciable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WFeatureCall"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WVariableReference" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//WReferenciable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WIfExpression" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WCollectionLiteral" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WListLiteral" eSuperTypes="#//WCollectionLiteral"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WSetLiteral" eSuperTypes="#//WCollectionLiteral"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WNamedObject" eSuperTypes="#//WLibraryElement #//WMethodContainer #//WReferenciable #//WCanExtendClass">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//WClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentParameters" eType="#//WArgumentList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mixins" unique="false"
+        upperBound="-1" eType="#//WMixin"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WCanExtendClass"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WClass" eSuperTypes="#//WLibraryElement #//WNamed #//WMethodContainer #//WCanExtendClass">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//WClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mixins" unique="false"
+        upperBound="-1" eType="#//WMixin"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constructors" upperBound="-1"
+        eType="#//WConstructor" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMixin" eSuperTypes="#//WLibraryElement #//WNamed #//WMethodContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WMember"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WConstructor">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//WParameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delegatingConstructorCall"
+        eType="#//WDelegatingConstructorCall" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WDelegatingConstructorCall">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argumentList" eType="#//WPositionalArgumentsList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WSelfDelegatingConstructorCall" eSuperTypes="#//WDelegatingConstructorCall"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WSuperDelegatingConstructorCall" eSuperTypes="#//WDelegatingConstructorCall"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WConstructorCall" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="classRef" eType="#//WClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argumentList" eType="#//WArgumentList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mixins" unique="false"
+        upperBound="-1" eType="#//WMixin"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WArgumentList"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WNamedArgumentsList" eSuperTypes="#//WArgumentList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initializers" upperBound="-1"
+        eType="#//WInitializer" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WPositionalArgumentsList" eSuperTypes="#//WArgumentList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WInitializer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initializer" eType="#//WVariable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WTry" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="catchBlocks" upperBound="-1"
+        eType="#//WCatch" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alwaysExpression" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WCatch">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exceptionVarName" eType="#//WVariable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exceptionType" eType="#//WClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WReturnExpression" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WThrow" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exception" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WObjectLiteral" eSuperTypes="#//WMethodContainer #//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//WClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentParameters" eType="#//WArgumentList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mixins" unique="false"
+        upperBound="-1" eType="#//WMixin"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WVariableDeclaration" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="writeable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="property" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//WVariable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WAssignment" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" eType="#//WVariableReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WBinaryOperation" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="leftOperand" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="feature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rightOperand" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WUnaryOperation" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="feature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operand" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WPostfixOperation" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operand" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="feature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WMemberFeatureCall" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="memberCallTarget" eType="#//WExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullSafe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="feature" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="memberCallArguments" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WSelf" eSuperTypes="#//WExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WSuperInvocation" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="memberCallArguments" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WBlockExpression" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+        eType="#//WExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WBooleanLiteral" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTrue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WNullLiteral" eSuperTypes="#//WExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WStringLiteral" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WNumberLiteral" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WClosure" eSuperTypes="#//WExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//WParameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//WExpression"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

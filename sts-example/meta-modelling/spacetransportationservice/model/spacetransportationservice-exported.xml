@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sts:SpaceTransportationService xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cs.york.ac.uk/ecss/examples/spacetransportationservice spacetransportationservice-exported.xsd ">
+  <launchSites locationLatitude="0.0" locationLongitude="0.0" name="" numberOfLaunchpads="" operational="" operator="">
+    <physicalProperties type="LENGTH" unit="" value="0.0"/>
+  </launchSites>
+  <engineTypes fuelKind="" name=""/>
+  <spacecrafts countryOfOrigin="" launchSites="" manufacturer="" name="" relaunchCostInMioUSD="">
+    <stages engineAmount="" engineType="http://tempuri.org" name=""/>
+    <functions>MARS_COLONIZATION</functions>
+    <physicalProperties type="LENGTH" unit="" value="0.0"/>
+  </spacecrafts>
+</sts:SpaceTransportationService>

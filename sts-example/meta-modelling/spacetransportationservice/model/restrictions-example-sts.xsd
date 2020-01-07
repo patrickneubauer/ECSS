@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/NewXMLSchema" xmlns="http://www.example.org/NewXMLSchema" elementFormDefault="qualified">
+
+<!-- restrictions on length -->
+<xsd:element name="fuelKind">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="128"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on values -->
+<xsd:element name="locationLongitude">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-180"/>
+      <xsd:maxInclusive value="180"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on set of values -->
+<xsd:element name="function">
+ <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="MARS_COLONIZATION"/>
+      <xsd:enumeration value="EARTH_LUNAR_TRANSPORT"/>
+      <xsd:enumeration value="MULTIPLANETARY_TRANSPORT"/>
+      <xsd:enumeration value="INTERCONTINENTAL_TRANSPORT"/>
+      <xsd:enumeration value="ORBITAL_LAUNCHER"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on whitespace characters -->
+<xsd:element name="operator">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on series of values -->
+<xsd:element name="countryOfOrigin">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-Z]{2}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on datatypes -->
+<!-- enumeration -->
+<!-- fractionDigits -->
+<!-- ... -->
+<!--  see: https://www.w3schools.com/xml/schema_facets.asp -->
+
+</xsd:schema>

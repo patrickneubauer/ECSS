@@ -1,0 +1,444 @@
+domain AirlineModel {
+rim Airline {
+
+	event DELETE {
+		method: DELETE
+	}
+	event GET {
+		method: GET
+	}
+	event POST {
+		method: POST
+	}
+	event PUT {
+		method: PUT
+	}
+
+	command CreateEntity
+	command DeleteEntity
+	command GETEntities
+	command GETEntity
+	command GETEntityPassengerWithEmbeddedFlight
+	command GETException
+	command GETNavProperty
+	command GETServiceDocument
+	command NoopGET
+	command UpdateEntity
+
+initial resource ServiceDocument {
+	type: item
+	entity: ServiceDocument
+	view: GETServiceDocument
+	path: "/"
+	GET -> Airports
+	GET -> Flights
+	GET -> FlightSchedules
+	GET -> Passengers
+}
+
+resource Airports {
+	type: collection
+	entity: Airport
+	view: GETEntities
+	path: "/Airports()"
+	POST -> Airports_created
+	GET *-> airport {
+		parameters [ id="{code}" ]
+	}
+	GET *-> airport_departures {
+		id: "123456"
+		title: "departures"
+		parameters [ id="{code}" ]
+	}
+	GET *-> airport_arrivals {
+		title: "arrivals"
+		id: "654321"
+		parameters [ id="{code}" ]
+	}
+	PUT *-> airport_updated {
+		parameters [ id="{code}" ]
+	}
+	DELETE *-> airport_deleted {
+		parameters [ id="{code}" ]
+	}
+}
+
+resource airport {
+	type: item
+	entity: Airport
+	view: GETEntity
+	path: "/Airports('{id}')"
+	GET -> airport_departures {
+		title: "departures"
+		parameters [ id="{code}" ]
+	}
+	GET -> airport_arrivals {
+		title: "arrivals"
+		parameters [ id="{code}" ]
+	}
+	PUT -> airport_updated {
+		parameters [ id="{code}" ]
+	}
+	DELETE -> airport_deleted {
+		parameters [ id="{code}" ]
+	}
+}
+
+resource airport_deleted {
+	type: item
+	entity: Airport
+	actions [ DeleteEntity ]
+	relations [ "edit" ]
+	path: "/Airports('{id}')/deleted"
+}
+
+resource airport_updated {
+	type: item
+	entity: Airport
+	actions [ UpdateEntity ]
+	relations [ "edit" ]
+	path: "/Airports('{id}')"
+}
+
+resource Airports_created {
+	type: item
+	entity: Airport
+	actions [ CreateEntity ]
+	path: "/Airports()"
+	GET --> airport {
+		condition: OK(airport)
+		parameters [ id="{code}" ]
+	}
+}
+
+resource airport_arrivals {
+	type: collection
+	entity: FlightSchedule
+	view: GETEntities {
+		properties [ filter="arrivalAirportCode eq '{id}'" ]
+	}
+	path: "/Airports('{id}')/arrivals"
+	GET *-> flightschedule {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_departureAirport {
+		title: "departureAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_arrivalAirport {
+		title: "arrivalAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_flights {
+		title: "flights"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	PUT *-> flightschedule_updated {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	DELETE *-> flightschedule_deleted {
+		parameters [ id="{flightScheduleID}" ]
+	}
+}
+
+resource airport_departures {
+	type: collection
+	entity: FlightSchedule
+	view: GETEntities {
+		properties [ filter="departureAirportCode eq '{id}'" ]
+	}
+	path: "/Airports('{id}')/departures"
+	GET *-> flightschedule {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_departureAirport {
+		title: "departureAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_arrivalAirport {
+		title: "arrivalAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_flights {
+		title: "flights"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	PUT *-> flightschedule_updated {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	DELETE *-> flightschedule_deleted {
+		parameters [ id="{flightScheduleID}" ]
+	}
+}
+
+resource Flights {
+	type: collection
+	entity: Flight
+	view: GETEntities
+	path: "/Flights()"
+	POST -> Flights_created
+	GET *-> flight {
+		parameters [ id="{flightID}" ]
+	}
+	GET *-> flight_flightSchedule {
+		title: "flightSchedule"
+		parameters [ id="{flightID}" ]
+	}
+	PUT *-> flight_updated {
+		parameters [ id="{flightID}" ]
+	}
+	DELETE *-> flight_deleted {
+		parameters [ id="{flightID}" ]
+	}
+}
+
+resource flight {
+	type: item
+	entity: Flight
+	view: GETEntity
+	path: "/Flights({id})"
+	GET +-> flight_flightSchedule {
+		// title is used as the navProperty name in the $metadata
+		title: "FlightSchedule"
+		parameters [ id="{flightID}" ]
+	}
+	PUT -> flight_updated {
+		parameters [ id="{flightID}" ]
+	}
+	DELETE -> flight_deleted {
+		parameters [ id="{flightID}" ]
+	}
+}
+
+resource flight_deleted {
+	type: item
+	entity: Flight
+	actions [ DeleteEntity ]
+	relations [ "edit" ]
+	path: "/Flights({id})"
+}
+
+resource flight_updated {
+	type: item
+	entity: Flight
+	actions [ UpdateEntity ]
+	relations [ "edit" ]
+	path: "/Flights({id})"
+}
+
+resource Flights_created {
+	type: item
+	entity: Flight
+	actions [ CreateEntity ]
+	path: "/Flights()"
+	GET --> flight {
+		condition: OK(flight)
+		parameters [ id="{flightID}" ]
+	}
+}
+
+resource flight_flightSchedule {
+	type: item
+	entity: FlightSchedule
+	view: GETNavProperty {
+		properties [ navproperty="flightSchedule", entity=Flight ]
+	}
+	path: "/Flights({id})/flightSchedule"
+}
+
+resource FlightSchedules {
+	type: collection
+	entity: FlightSchedule
+	view: GETEntities
+	path: "/FlightSchedules()"
+	POST -> FlightSchedules_created
+	GET *-> flightschedule {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_departureAirport {
+		title: "departureAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_arrivalAirport {
+		title: "arrivalAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET *-> flightschedule_flights {
+		title: "flights"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	PUT *-> flightschedule_updated {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	DELETE *-> flightschedule_deleted {
+		parameters [ id="{flightScheduleID}" ]
+	}
+}
+
+resource flightschedule {
+	type: item
+	entity: FlightSchedule
+	view: GETEntity
+	path: "/FlightSchedules({id})"
+	GET -> flightschedule_departureAirport {
+		title: "departureAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET -> flightschedule_arrivalAirport {
+		title: "arrivalAirport"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	GET -> flightschedule_flights {
+		title: "flights"
+		parameters [ id="{flightScheduleID}" ]
+	}
+	PUT -> flightschedule_updated {
+		parameters [ id="{flightScheduleID}" ]
+	}
+	DELETE -> flightschedule_deleted {
+		parameters [ id="{flightScheduleID}" ]
+	}
+}
+
+resource flightschedule_arrivalAirport {
+	type: item
+	entity: Airport
+	view: GETNavProperty {
+		properties [ navproperty="arrivalAirport", entity=FlightSchedule ]
+	}
+	path: "/FlightSchedules({id})/arrivalAirport"
+}
+
+resource flightschedule_departureAirport {
+	type: item
+	entity: Airport
+	view: GETNavProperty {
+		properties [ navproperty="departureAirport", entity=FlightSchedule ]
+	}
+	path: "/FlightSchedules({id})/departureAirport"
+}
+
+resource flightschedule_flights {
+	type: collection
+	entity: Flight
+	view: GETEntities {
+		properties [ filter="flightScheduleNum eq {id}" ]
+	}
+	path: "/FlightSchedules({id})/flights"
+	GET *-> flight {
+		parameters [ id="{flightID}" ]
+	}
+	GET *-> flight_flightSchedule {
+		title: "flightSchedule"
+		parameters [ id="{flightID}" ]
+	}
+	PUT *-> flight_updated {
+		parameters [ id="{flightID}" ]
+	}
+	DELETE *-> flight_deleted {
+		parameters [ id="{flightID}" ]
+	}
+}
+
+resource flightschedule_deleted {
+	type: item
+	entity: FlightSchedule
+	actions [ DeleteEntity ]
+	relations [ "edit" ]
+	path: "/FlightSchedules({id})/deleted"
+}
+
+resource flightschedule_updated {
+	type: item
+	entity: FlightSchedule
+	actions [ UpdateEntity ]
+	relations [ "edit" ]
+	path: "/FlightSchedules({id})"
+}
+
+resource FlightSchedules_created {
+	type: item
+	entity: FlightSchedule
+	actions [ CreateEntity ]
+	path: "/FlightSchedules()"
+	GET --> flightschedule {
+		condition: OK(flightschedule)
+		parameters [ id="{flightScheduleID}" ]
+	}
+}
+
+resource Passengers {
+	type: collection
+	entity: Passenger
+	view: GETEntities
+	path: "/Passengers()"
+	POST -> Passengers_created
+	GET *-> passenger {
+		parameters [ id="{passengerNo}" ]
+	}
+	GET *-> passenger_flight {
+		title: "Flight"
+		parameters [ id="{passengerNo}" ]
+	}
+	PUT *-> passenger_updated {
+		parameters [ id="{passengerNo}" ]
+	}
+	DELETE *-> passenger_deleted {
+		parameters [ id="{passengerNo}" ]
+	}
+}
+
+resource passenger {
+	type: item
+	entity: Passenger
+	view: GETEntityPassengerWithEmbeddedFlight
+	path: "/Passengers({id})"
+	GET -> passenger_flight {
+		title: "Flight"
+		parameters [ id="{passengerNo}" ]
+	}
+	PUT -> passenger_updated {
+		parameters [ id="{passengerNo}" ]
+	}
+	DELETE -> passenger_deleted {
+		parameters [ id="{passengerNo}" ]
+	}
+}
+
+resource passenger_flight {
+	type: item
+	entity: Flight
+	view: GETNavProperty {
+		properties [ navproperty="flight", entity=Passenger ]
+	}
+	path: "/Passengers({id})/Flight"
+}
+
+resource passenger_deleted {
+	type: item
+	entity: Passenger
+	actions [ DeleteEntity ]
+	relations [ "edit" ]
+	path: "/Passengers({id})/deleted"
+}
+
+resource passenger_updated {
+	type: item
+	entity: Passenger
+	actions [ UpdateEntity ]
+	relations [ "edit" ]
+	path: "/Passengers({id})"
+}
+
+resource Passengers_created {
+	type: item
+	entity: Passenger
+	actions [ CreateEntity ]
+	path: "/Passengers()"
+	GET --> passenger {
+		condition: OK(passenger)
+		parameters [ id="{passengerNo}" ]
+	}
+}
+}
+}

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="Sculptordsl" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>Sculptordsl.ecore</foreignModel>
+  <genPackages prefix="Sculptordsl" disposableProviderFactory="true" ecorePackage="Sculptordsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Sculptordsl.ecore#//DslHttpMethod">
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslHttpMethod/None"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslHttpMethod/GET"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslHttpMethod/POST"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslHttpMethod/PUT"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslHttpMethod/DELETE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Sculptordsl.ecore#//DslInheritanceType">
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslInheritanceType/JOINED"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslInheritanceType/SINGLE_TABLE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Sculptordsl.ecore#//DslDiscriminatorType">
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslDiscriminatorType/STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslDiscriminatorType/CHAR"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslDiscriminatorType/INTEGER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Sculptordsl.ecore#//DslCollectionType">
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslCollectionType/None"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslCollectionType/Set"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslCollectionType/List"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslCollectionType/Bag"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslCollectionType/Collection"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Sculptordsl.ecore#//DslVisibility">
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslVisibility/public"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslVisibility/protected"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslVisibility/private"/>
+      <genEnumLiterals ecoreEnumLiteral="Sculptordsl.ecore#//DslVisibility/package"/>
+    </genEnums>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslModel/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslModel/app"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslImport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslImport/importURI"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslApplication">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslApplication/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslApplication/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslApplication/basePackage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslApplication/modules"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslModule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslModule/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslModule/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslModule/external"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslModule/basePackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslModule/hint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslModule/services"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslModule/resources"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslModule/consumers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslModule/domainObjects"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslService">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslService/webService"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslService/operations"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslResource">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/gapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/noGapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/hint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/scaffold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResource/path"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResource/dependencies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResource/operations"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslConsumer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslConsumer/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslConsumer/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslConsumer/hint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslConsumer/dependencies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslConsumer/messageRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslConsumer/channel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslConsumer/subscribe"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslSubscribe">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslSubscribe/topic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslSubscribe/eventBus"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslPublish">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslPublish/eventType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslPublish/topic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslPublish/eventBus"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslEvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEvent/persistent"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDomainObjectTypedElement"/>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslServiceOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceOperation/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceOperation/visibility"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceOperation/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceOperation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceOperation/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceOperation/throws"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceOperation/hint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceOperation/publish"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceOperation/delegateHolder"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslServiceOperationDelegate">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceOperationDelegate/delegate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceOperationDelegate/delegateOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslServiceRepositoryOption">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceRepositoryOption/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceRepositoryOption/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceRepositoryOption/gapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceRepositoryOption/noGapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslServiceRepositoryOption/hint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceRepositoryOption/subscribe"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceRepositoryOption/dependencies"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslServiceRepositoryOperationOption"/>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslResourceOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/visibility"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResourceOperation/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResourceOperation/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/throws"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/hint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/httpMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslResourceOperation/returnString"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResourceOperation/delegateHolder"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslResourceOperationDelegate">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResourceOperationDelegate/delegate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslResourceOperationDelegate/delegateOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslRepositoryOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/visibility"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslRepositoryOperation/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslRepositoryOperation/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/throws"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/hint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/cache"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/gapOperation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/noGapOperation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/query"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/select"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/groupBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/orderBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/construct"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/build"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/map"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslRepositoryOperation/publish"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/delegateToAccessObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslRepositoryOperation/accessObjectName"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslParameter/doc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslParameter/parameterType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslParameter/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslComplexType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslComplexType/collectionType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslComplexType/domainObjectType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslComplexType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslComplexType/mapCollectionType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslComplexType/mapKeyType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslComplexType/mapKeyDomainObjectType"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslSimpleDomainObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslSimpleDomainObject/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslSimpleDomainObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslSimpleDomainObject/package"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslSimpleDomainObject/hint"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDomainObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/abstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/extendsName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObject/traits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/cache"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/gapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/noGapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/scaffold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/databaseTable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/discriminatorValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/discriminatorColumn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/discriminatorType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/discriminatorLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/inheritanceType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/validate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObject/notAggregateRoot"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObject/belongsTo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObject/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObject/references"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObject/operations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObject/repository"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslEntity">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslEntity/extends"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEntity/notOptimisticLocking"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEntity/notAuditable"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslValueObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslValueObject/extends"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslValueObject/notOptimisticLocking"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslValueObject/notImmutable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslValueObject/persistent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslValueObject/notPersistent"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDomainEvent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainEvent/extends"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslCommandEvent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslCommandEvent/extends"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslTrait">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslTrait/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslTrait/references"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslTrait/operations"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDomainObjectOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObjectOperation/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObjectOperation/abstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObjectOperation/visibility"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObjectOperation/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObjectOperation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDomainObjectOperation/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObjectOperation/throws"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDomainObjectOperation/hint"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDataTransferObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDataTransferObject/abstract"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDataTransferObject/extends"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDataTransferObject/extendsName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDataTransferObject/gapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDataTransferObject/noGapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDataTransferObject/validate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDataTransferObject/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDataTransferObject/references"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslBasicType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslBasicType/traits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslBasicType/notImmutable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslBasicType/gapClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslBasicType/noGapClass"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslBasicType/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslBasicType/references"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslBasicType/operations"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/assertFalse"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/assertFalseMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/assertTrue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/assertTrueMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/creditCardNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/creditCardNumberMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/digits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/emailMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/future"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/futureMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/past"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/pastMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/max"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/min"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/decimalMax"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/decimalMin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/notBlank"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/notBlankMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/pattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/range"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/scriptAssert"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAttribute/databaseType"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslReference/domainObjectType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/cascade"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/fetch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/cache"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/inverse"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/databaseJoinTable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/databaseJoinColumn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/valid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/validMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/orderBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/orderColumn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslReference/orderColumnName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslReference/oppositeHolder"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDtoAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/assertFalse"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/assertFalseMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/assertTrue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/assertTrueMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/creditCardNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/creditCardNumberMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/digits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/emailMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/future"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/futureMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/past"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/pastMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/max"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/min"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/decimalMax"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/decimalMin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/notBlank"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/notBlankMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/pattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/range"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/scriptAssert"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoAttribute/url"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDtoReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDtoReference/domainObjectType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoReference/valid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDtoReference/validMessage"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslOppositeHolder">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslOppositeHolder/opposite"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslRepository">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslRepository/operations"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslServiceDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslServiceDependency/dependency"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslDependency/dependency"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslDependency/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslEnum">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnum/ordinal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslEnum/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslEnum/values"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslEnumAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumAttribute/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumAttribute/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumAttribute/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumAttribute/key"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslEnumValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumValue/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumValue/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sculptordsl.ecore#//DslEnumValue/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslEnumParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumParameter/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslEnumParameter/integerValue"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslAnyProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/visibility"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/collectionType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/notChangeable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/required"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/nullable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/nullableMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/hint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/notEmpty"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/notEmptyMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/validate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslAnyProperty/transient"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sculptordsl.ecore#//DslProperty/databaseColumn"/>
+    </genClasses>
+    <genClasses ecoreClass="Sculptordsl.ecore#//DslDtoProperty"/>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,5 @@
+program exception {
+	const a = 23
+	const b = 11
+	console.println(a+b)
+}

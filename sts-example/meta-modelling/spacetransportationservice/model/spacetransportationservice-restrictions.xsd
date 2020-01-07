@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:sts="http://cs.york.ac.uk/ecss/examples/spacetransportationservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cs.york.ac.uk/ecss/examples/spacetransportationservice">
+  <xsd:element name="Spacecraft" type="sts:Spacecraft"/>
+  <xsd:element name="LaunchSite" type="sts:LaunchSite"/>
+  <xsd:element name="Stage" type="sts:Stage"/>
+  <xsd:element name="PhysicalProperty" type="sts:PhysicalProperty"/>
+  <xsd:element name="NamedElement" type="sts:NamedElement"/>
+  <xsd:element name="EngineType" type="sts:EngineType"/>
+  <xsd:element name="SpaceTransportationService" type="sts:SpaceTransportationService"/>
+  <xsd:complexType name="Spacecraft">
+    <xsd:complexContent>
+      <xsd:extension base="sts:NamedElement">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="stages" type="sts:Stage"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="functions" type="sts:Function"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+        </xsd:sequence>
+        
+        <!-- reference to (multiple) instances of LaunchSite (below) -->
+        <xsd:element name="launchSites">
+          <xsd:data type="xsd:IDREFS"/>
+        </xsd:element>
+        <!-- <xsd:attribute ecore:reference="sts:LaunchSite" name="launchSites">
+          <xsd:simpleType>
+            <xsd:list itemType="xsd:anyURI"/>
+          </xsd:simpleType>
+        </xsd:attribute> -->
+        
+        <xsd:attribute name="manufacturer" type="xsd:string"/>
+        <xsd:attribute name="countryOfOrigin" type="xsd:string">
+        	<xsd:simpleType>
+        		<xsd:restriction base="xsd:string">
+        			<xsd:pattern value="[A-Z][A-Z]"/>
+        		</xsd:restriction>
+        	</xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="relaunchCostInMioUSD" type="xsd:integer" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="LaunchSite">
+    <xsd:complexContent>
+      <xsd:extension base="sts:NamedElement">
+      
+        <!-- identifier for LaunchSite (below) -->
+      	<xsd:attribute name="identifier">
+      	  <xsd:data type="xsd:ID"/>
+      	</xsd:attribute>
+      	
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+        </xsd:sequence>
+        <xsd:attribute name="locationLatitude" type="xsd:decimal" use="required"/>
+        <xsd:attribute name="locationLongitude" type="xsd:decimal" use="required">
+        	<xsd:simpleType>
+        		<xsd:restriction base="xsd:decimal">
+        			<xsd:minInclusive value="-180"/>
+        			<xsd:maxInclusive value="180"/>
+        		</xsd:restriction>
+        	</xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="operator" type="xsd:string"/>
+        <xsd:attribute name="numberOfLaunchpads" type="xsd:integer" use="required"/>
+        <xsd:attribute name="operational" type="xsd:boolean" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Stage">
+    <xsd:complexContent>
+      <xsd:extension base="sts:NamedElement">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalProperties" type="sts:PhysicalProperty"/>
+        </xsd:sequence>
+        
+        <!-- identifier for EngineType (below) -->
+        <xsd:element name="engineType">
+          <xsd:attribute name="ref">
+            <xsd:data type="xsd:IDREF"/>
+          </xsd:attribute>
+        </xsd:element>
+        <!-- <xsd:attribute ecore:reference="sts:EngineType" name="engineType" type="xsd:anyURI" use="required"/> -->
+        
+        <xsd:attribute name="engineAmount" type="xsd:integer" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PhysicalProperty">
+    <xsd:attribute name="type" type="sts:PhysicalPropertyType" use="required"/>
+    <xsd:attribute name="unit" type="xsd:string"/>
+    <xsd:attribute name="value" type="xsd:decimal" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType abstract="true" name="NamedElement">
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:simpleType name="Function">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="MARS_COLONIZATION"/>
+      <xsd:enumeration value="EARTH_LUNAR_TRANSPORT"/>
+      <xsd:enumeration value="MULTIPLANETARY_TRANSPORT"/>
+      <xsd:enumeration value="INTERCONTINENTAL_TRANSPORT"/>
+      <xsd:enumeration value="ORBITAL_LAUNCHER"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PhysicalPropertyType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="LENGTH"/>
+      <xsd:enumeration value="WIDTH"/>
+      <xsd:enumeration value="DIAMETER"/>
+      <xsd:enumeration value="PERIMETER"/>
+      <xsd:enumeration value="AREA"/>
+      <xsd:enumeration value="VOLUME"/>
+      <xsd:enumeration value="MASS"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="EngineType">
+    <xsd:complexContent>
+      <xsd:extension base="sts:NamedElement">
+        <xsd:attribute name="fuelKind" type="xsd:string" type="xsd:string">
+        	<xsd:simpleType>
+        		<xsd:restriction base="xsd:string">
+        			<xs:length value="128"/>
+        		</xsd:restriction>
+        	</xsd:simpleType>
+        </xsd:attribute>
+      </xsd:extension>
+      
+      <!-- identifier for EngineType (below) -->
+      <xsd:attribute name="identifier">
+        <xsd:data type="xsd:ID"/>
+      </xsd:attribute>
+      
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="SpaceTransportationService">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="launchSites" type="sts:LaunchSite"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="engineTypes" type="sts:EngineType"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="spacecrafts" type="sts:Spacecraft"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- restricting type for identifier reference (below) -->
+  <xsd:simpleType name="IDREF" id="IDREF">
+    <xsd:restriction base="xsd:anyURI"/>
+  </xsd:simpleType>
+  
+    <!-- restricting type for list of identifier references (below) -->
+	<xsd:simpleType name="IDREFS" id="IDREFS">
+	  <xsd:restriction>
+	    <xsd:simpleType>
+	      <xsd:list>
+	        <xsd:simpleType>
+	          <xsd:restriction base="xsd:anyURI"/>
+	        </xsd:simpleType>
+	      </xsd:list>
+	    </xsd:simpleType>
+	  </xsd:restriction>
+	</xsd:simpleType>
+	
+</xsd:schema>

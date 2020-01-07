@@ -54,4 +54,52 @@
             genModel="models/WML_6.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated WollokDsl -->
+      <package
+            uri="http://www.org.srclang/uqbar/project/wollok/WollokDsl"
+            class="wollokDsl.WollokDslPackage"
+            genModel="models/WollokDsl.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Sculptordsl -->
+      <package
+            uri="http://www.org.srclang/sculptor/dsl/Sculptordsl"
+            class="sculptordsl.SculptordslPackage"
+            genModel="models/Sculptordsl.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Antlr4 -->
+      <package
+            uri="http://www.com.srclang/github/jknack/antlr4ide/Antlr4"
+            class="antlr4.Antlr4Package"
+            genModel="models/Antlr4.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Module2 -->
+      <package
+            uri="http://www.com.srclang/puppetlabs/geppetto/module2/dsl/Module2"
+            class="module2.Module2Package"
+            genModel="models/Module2.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Xturtle -->
+      <package
+            uri="http://www.de.srclang/itemis/tooling/xturtle/Xturtle"
+            class="xturtle.XturtlePackage"
+            genModel="models/Xturtle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Xtext -->
+      <package
+            uri="http://www.eclipse.org/2008/Xtext"
+            class="xtext.XtextPackage"
+            genModel="models/Xtext.genmodel"/>
+   </extension>
+
 </plugin>

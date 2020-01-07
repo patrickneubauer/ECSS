@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="xturtle" nsURI="http://www.de.srclang/itemis/tooling/xturtle/Xturtle"
+    nsPrefix="xturtle">
+  <eClassifiers xsi:type="ecore:EClass" name="DirectiveBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="directives" eType="#//Directives"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="triples" upperBound="-1"
+        eType="#//Triples" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="directiveblock" eType="#//DirectiveBlock"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Directives">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="directive" upperBound="-1"
+        eType="#//Directive" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Directive">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrefixId" eSuperTypes="#//Directive">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Base" eSuperTypes="#//Directive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Triples">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subject" eType="#//Subject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predObjs" upperBound="-1"
+        eType="#//PredicateObjectList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PredicateObjectList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="verb" eType="#//Predicate"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="#//Object" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Subject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Predicate"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Resource" eSuperTypes="#//Subject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceRef" eSuperTypes="#//Object #//Predicate">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Resource"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Blank" eSuperTypes="#//Subject #//Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BlankObjects" eSuperTypes="#//Blank">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predObjs" upperBound="-1"
+        eType="#//PredicateObjectList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BlankCollection" eSuperTypes="#//Blank">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="#//Object" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QNameDef" eSuperTypes="#//Resource">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prefix" eType="#//PrefixId"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QNameRef" eSuperTypes="#//ResourceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prefix" eType="#//PrefixId"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UriDef" eSuperTypes="#//Resource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UriRef" eSuperTypes="#//ResourceRef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Literal" eSuperTypes="#//Object">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumberLiteral" eSuperTypes="#//Literal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringLiteral" eSuperTypes="#//Literal">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ResourceRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanLiteral" eSuperTypes="#//Literal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TypePredicate" eSuperTypes="#//Predicate"/>
+</ecore:EPackage>

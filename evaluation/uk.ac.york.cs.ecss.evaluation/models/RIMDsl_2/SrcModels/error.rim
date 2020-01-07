@@ -1,0 +1,18 @@
+domain Anything {
+
+	rim Something {
+
+	
+		event GET {
+			method: GET
+		}
+	
+		command GETException
+	
+		resource otherErrorHandler {
+			type: item
+			entity: Exception
+			view: GETException
+		}
+	}
+}

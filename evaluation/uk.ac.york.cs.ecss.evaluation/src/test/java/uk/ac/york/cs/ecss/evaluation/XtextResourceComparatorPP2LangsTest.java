@@ -6,11 +6,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.DifferenceKind;
+import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.After;
@@ -22,10 +29,10 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import pp2.Pp2Package;
+import uk.ac.york.cs.ecss.utilities.CSVUtil;
 
-public class XtextResourceComparatorPP2LangsTest {
+public class XtextResourceComparatorPP2LangsTest extends XtextResourceComparatorBaseTest {
 
-	private static XtextResourceComparator evaluationRunner;
 	private static String langName;
 
 	@BeforeClass
@@ -35,7 +42,7 @@ public class XtextResourceComparatorPP2LangsTest {
 		EPackage.Registry.INSTANCE.put(pkg.getNsURI(), pkg);
 		langName = "PP_2";
 		
-		evaluationRunner = new XtextResourceComparator();
+		resComp = new XtextResourceComparator();
 	}// setUpBeforeClass
 
 	@AfterClass
@@ -53,16 +60,44 @@ public class XtextResourceComparatorPP2LangsTest {
 	@Test
 	public void loadSrcLangModels() {
 		Injector srcLangInj = new srclang.com.puppetlabs.geppetto.pp.dsl2.PPStandaloneSetup().createInjectorAndDoEMFRegistration();
+		String subPathName = "SrcModels";
+
 		XtextResourceSet srcLangResSet = srcLangInj.getInstance(XtextResourceSet.class);
 		String basePath = "models/" + langName + "/";
+		File modelPath = new File(basePath + "/" + subPathName);
 				
 		try {
-			for ( File srcModelFile : new File(basePath + "/SrcModels").listFiles() ) {
+			// remove previous statistics
+			File csvFile = new File(modelPath.getParent() + "/" + langName + "_" + subPathName + "_stats.csv");
+			
+			List<String[]> header = new LinkedList<String[]>();
+			header.add(new String[] {"Model name","EENum count","EClass count","EDataType count","EMFCompare matchCount","Diagnostic count"});
+			CSVUtil.csvWriterOneByOne(header, csvFile.toPath(), false);
+			
+			for ( File srcModelFile : modelPath.listFiles() ) {
 				XtextResource srcModel = (XtextResource) srcLangResSet.getResource(
 						URI.createURI(srcModelFile.getAbsolutePath()), true);
-				System.out.println("Loaded model: " + srcModelFile.getName());
+				System.out.println("\nLoaded model: " + srcModelFile.getName());
 				assertTrue( srcModel.isLoaded() );
-			}
+				
+				List<Diagnostic> diagnostics = srcModel.validateConcreteSyntax();
+				System.out.println("Diagnostic count = " + diagnostics.size());
+				
+				List<String[]> stats = computeModelStats(srcLangInj, srcModelFile.getAbsolutePath());
+				String[] statLine = new String[6];
+				statLine[0] = stats.get(0)[0]; // Model name
+				statLine[1] = stats.get(0)[1]; // EENum count
+				statLine[2] = stats.get(0)[2]; // EClass count
+				statLine[3] = stats.get(0)[3]; // EDataType count
+				statLine[4] = stats.get(0)[4]; // EMFCompare count
+				statLine[5] = String.valueOf(diagnostics.size()); // Diagnostic count
+				stats.set(0, statLine); // replace in list
+				
+				// store in CSV
+				CSVUtil.csvWriterOneByOne(stats, csvFile.toPath(), true);
+				
+			}// for each model
+				
 		} catch (Exception e) {
 			System.err.println("Failed to load model");
 			e.printStackTrace();
@@ -80,7 +115,7 @@ public class XtextResourceComparatorPP2LangsTest {
 		
 		// serialize model of source language using serializer of default language
 		for ( File srcModelFile : new File(basePath + "/SrcModels").listFiles() ) {
-			evaluationRunner.serialize(srcLangInj, defLangInj, srcModelFile.getAbsolutePath(), defModelsPath.getAbsolutePath() + "/" + srcModelFile.getName());
+			resComp.serialize(srcLangInj, defLangInj, srcModelFile.getAbsolutePath(), defModelsPath.getAbsolutePath() + "/" + srcModelFile.getName());
 		}
 	}// serializeDefLangModels
 	
@@ -95,47 +130,35 @@ public class XtextResourceComparatorPP2LangsTest {
 		
 		// serialize model of source language using serializer of target language
 		for ( File srcModelFile : new File(basePath + "/SrcModels").listFiles() ) {
-			evaluationRunner.serialize(srcLangInj, trgLangInj, srcModelFile.getAbsolutePath(), trgModelsPath.getAbsolutePath() + "/" + srcModelFile.getName());
+			resComp.serialize(srcLangInj, trgLangInj, srcModelFile.getAbsolutePath(), trgModelsPath.getAbsolutePath() + "/" + srcModelFile.getName());
 		}
 		
 	}// serializeTrgLangModels
 
 	@Test
-	public void test() {
-//		
-//		// Compare scopes
-//		Comparison comparison1 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model1.mydsl2");
-//		Comparison comparison2 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/model1.mydsl1", "models/model2.mydsl2");
-//				
-//		// assert results
-//		assertTrue( XtextResourceComparatorUtils.getMatchCount(comparison1) == 6 );
-//		assertTrue( comparison1.getDifferences().size() == 0 );
-//		assertTrue( comparison1.getConflicts().size() == 0 );
-//		
-//		assertTrue( XtextResourceComparatorUtils.getMatchCount(comparison2) == 7 );
-//		assertTrue( comparison2.getDifferences().size() == 1 );
-//		assertTrue( comparison2.getDifferences().get(0).getKind() == DifferenceKind.DELETE );
-//		assertTrue( comparison2.getConflicts().size() == 0 );
-//		
-//		double matchFactor1 = XtextResourceComparatorUtils.getMatchFactor(comparison2, comparison1);
-//		assertTrue( matchFactor1 == 0.8571428571428571 );
-//		System.out.println("Fraction of matching structural features: " + matchFactor1);
-//
-//		// ----------
-//		
-//		// serialize model of target language using serializer of source language
-//		evaluationRunner.serialize(trgLangInj, srcLangInj, "models/model2.mydsl2", "models/generated/model2.mydsl1");
-//		
-//		// parse model serialized with source language serializer with parser of target language
-//		Comparison comparison3 = evaluationRunner.compare(srcLangInj, trgLangInj, "models/generated/model2.mydsl1", "models/model2.mydsl2");
-//		assertTrue( comparison3.getDifferences().size() == 0 );
-//	
-//		// print fraction of matching structural features
-//		double matchFactor2 = XtextResourceComparatorUtils.getMatchFactor(comparison3, comparison2);
-//		assertTrue( matchFactor2 == 1.0 );
-//		System.out.println("Fraction of matching structural features: " + matchFactor2);
-//	
-//		System.out.println("Finished !");
+	public void compareModels() {
+		Injector srcLangInj = new srclang.com.puppetlabs.geppetto.pp.dsl2.PPStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector defLangInj = new deflang.com.puppetlabs.geppetto.pp.dsl2.PPStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector trgLangInj = new trglang.com.puppetlabs.geppetto.pp.dsl2.PPStandaloneSetup().createInjectorAndDoEMFRegistration();
+		String basePath = "models/" + langName + "/";
+
+		try {
+			for ( File srcModelFile : new File(basePath + "/SrcModels").listFiles() ) {
+				File trgModelFile = new File(basePath + "/TrgModels/" + srcModelFile.getName());
+				File defModelFile = new File(basePath + "/DefModels/" + srcModelFile.getName());
+
+				Comparison comparison1 = resComp.compare(srcLangInj, trgLangInj, srcModelFile.getAbsolutePath(), trgModelFile.getAbsolutePath());
+				Comparison comparison2 = resComp.compare(srcLangInj, defLangInj, srcModelFile.getAbsolutePath(), defModelFile.getAbsolutePath());
+				double matchFactor = XtextResourceComparatorUtils.getMatchFactor(comparison2, comparison1);
+				
+				System.out.println("Fraction of matching structural features: " + matchFactor);
+			}
+		} catch (Exception e) {
+			System.err.println("Failed to load model");
+			e.printStackTrace();
+		}
+		
+		System.out.println("Finished !");
 	}
 
 }

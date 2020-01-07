@@ -43,7 +43,7 @@ public class XtextResourceComparatorStatemachineLangsTest {
 	}
 
 	@Test
-	public void test() {
+	public void compare() {
 		// Register common meta model (Statemachine.ecore)
 		EPackage pkg = StatemachinePackage.eINSTANCE;
 		EPackage.Registry.INSTANCE.put(pkg.getNsURI(), pkg);

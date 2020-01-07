@@ -11,6 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -18,6 +19,7 @@ import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Group;
+import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.UnorderedGroup;
 import org.eclipse.xtext.xtext.GrammarResource;
@@ -150,7 +152,7 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 	}
 	
 	public GrammarResource generateAndSerializeGrammar(File ecoreMetamodelFile, File ecssModelFile, String[] outputString) {
-		File targetFile = new File(outputPath.toString() + "/" + languageId + "." + GRAMMAR_FILE_EXTENSION);
+		File targetFile = new File(outputPath.toString() + "/" + languageId + "." + ecssModelFile.getName() + "." + GRAMMAR_FILE_EXTENSION);
 
 		Resource ecoreResource = resourceLoader.getResourceSet().getResource(URI.createFileURI(ecoreMetamodelFile.getAbsolutePath()), true);
 		
@@ -171,7 +173,10 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		// create resource by loading from disk
 		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);
 		
+		printStats(targetFile, grammarResource);
+		
 		grammarResource.getContents().forEach(x->{
+			
 			if (x instanceof Grammar) {
 				Grammar g = (Grammar)x;
 				Normalizer.moveSort(g.getRules(),(a,b)->{
@@ -205,6 +210,29 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		// Otherwise, runWorkflow() will not succeed !
 		
 		return grammarResource;
+	}
+
+	private void printStats(File targetFile, GrammarResource grammarResource) {
+		int tRuleCount = 0;
+		int eRuleCount = 0;
+		int pRuleCount = 0;
+		for ( EObject eObject : grammarResource.getContents() ) {
+			if (eObject instanceof Grammar) {
+				Grammar g = (Grammar)eObject;
+				for ( AbstractRule rule : g.getRules() ) {
+					if (rule instanceof ParserRule) {
+						pRuleCount++;
+					}
+					if (rule instanceof TerminalRule) {
+						tRuleCount++;
+					}
+					if (rule instanceof EnumRule) {
+						eRuleCount++;
+					}
+				}
+				System.out.println("File name = " + targetFile.getName() + " ; tRuleCount = " + tRuleCount + " ; eRuleCount = " + eRuleCount + " ; pRuleCount = " + pRuleCount);
+			}
+		}
 	}
 	
 	private File getOptimizedEcssFile(Resource ecoreFile) {
@@ -325,6 +353,8 @@ public class MainLanguageResourcesGenerator implements LanguageResourcesGenerato
 		
 		// create resource by loading from disk
 		GrammarResource grammarResource = (GrammarResource) resourceLoader.getResourceSet().createResource(URI.createFileURI(targetFile.toString()));
+		
+		printStats(targetFile, grammarResource);
 		
 		return grammarResource;
 	}

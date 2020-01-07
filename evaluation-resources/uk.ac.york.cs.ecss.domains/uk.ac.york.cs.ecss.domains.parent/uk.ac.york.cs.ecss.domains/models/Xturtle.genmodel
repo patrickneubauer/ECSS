@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/uk.ac.york.cs.ecss.domains/src" modelPluginID="uk.ac.york.cs.ecss.domains"
+    modelName="Xturtle" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>Xturtle.ecore</foreignModel>
+  <genPackages prefix="Xturtle" disposableProviderFactory="true" ecorePackage="Xturtle.ecore#/">
+    <genClasses ecoreClass="Xturtle.ecore#//DirectiveBlock">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//DirectiveBlock/directives"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//DirectiveBlock/triples"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//DirectiveBlock/directiveblock"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//Directives">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//Directives/directive"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//Directive">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Xturtle.ecore#//Directive/uri"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//PrefixId">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Xturtle.ecore#//PrefixId/id"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//Base"/>
+    <genClasses ecoreClass="Xturtle.ecore#//Triples">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//Triples/subject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//Triples/predObjs"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//PredicateObjectList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//PredicateObjectList/verb"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//PredicateObjectList/objects"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//Subject"/>
+    <genClasses ecoreClass="Xturtle.ecore#//Object"/>
+    <genClasses ecoreClass="Xturtle.ecore#//Predicate"/>
+    <genClasses ecoreClass="Xturtle.ecore#//Resource"/>
+    <genClasses ecoreClass="Xturtle.ecore#//ResourceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Xturtle.ecore#//ResourceRef/ref"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//Blank"/>
+    <genClasses ecoreClass="Xturtle.ecore#//BlankObjects">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//BlankObjects/predObjs"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//BlankCollection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//BlankCollection/objects"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//QNameDef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Xturtle.ecore#//QNameDef/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Xturtle.ecore#//QNameDef/id"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//QNameRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Xturtle.ecore#//QNameRef/prefix"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//UriDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Xturtle.ecore#//UriDef/uri"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//UriRef"/>
+    <genClasses ecoreClass="Xturtle.ecore#//Literal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Xturtle.ecore#//Literal/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//NumberLiteral"/>
+    <genClasses ecoreClass="Xturtle.ecore#//StringLiteral">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Xturtle.ecore#//StringLiteral/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Xturtle.ecore#//StringLiteral/language"/>
+    </genClasses>
+    <genClasses ecoreClass="Xturtle.ecore#//BooleanLiteral"/>
+    <genClasses ecoreClass="Xturtle.ecore#//TypePredicate"/>
+  </genPackages>
+</genmodel:GenModel>

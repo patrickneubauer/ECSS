@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: srclang.com.github.jknack.antlr4ide
+Bundle-ManifestVersion: 2
+Bundle-Name: srclang.com.github.jknack.antlr4ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: srclang.com.github.jknack.antlr4ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: srclang.com.github.jknack.antlr4ide,
+ srclang.com.github.jknack.antlr4ide.formatting2,
+ srclang.com.github.jknack.antlr4ide.serializer,
+ srclang.com.github.jknack.antlr4ide.scoping,
+ srclang.com.github.jknack.antlr4ide.generator,
+ srclang.com.github.jknack.antlr4ide.validation,
+ srclang.com.github.jknack.antlr4ide.services,
+ srclang.com.github.jknack.antlr4ide.parser.antlr,
+ srclang.com.github.jknack.antlr4ide.parser.antlr.internal,
+ srclang.com.github.jknack.antlr4ide.parser.antlr.lexer
+Import-Package: org.apache.log4j

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/NewXMLSchema" xmlns="http://www.example.org/NewXMLSchema" elementFormDefault="qualified">
+
+<!-- restrictions on values -->
+<xsd:element name="age">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="120"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on set of values -->
+<xsd:element name="car">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Audi"/>
+      <xsd:enumeration value="Golf"/>
+      <xsd:enumeration value="BMW"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on series of values -->
+<xsd:element name="letter">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[a-z]"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on whitespace characters -->
+<xsd:element name="address">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on length -->
+<xsd:element name="password">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="8"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element>
+
+<!-- restrictions on datatypes -->
+<!-- enumeration -->
+<!-- fractionDigits -->
+<!-- ... -->
+<!--  see: https://www.w3schools.com/xml/schema_facets.asp -->
+
+</xsd:schema>

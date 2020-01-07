@@ -26,6 +26,14 @@ Workflow {
 		language = StandardLanguage {
 			name = "trglang.com.github.jknack.antlr4ide.Antlr4"
 			fileExtensions = "g4"
+			referencedResource = "platform:/resource/uk.ac.york.cs.ecss.domains/models/Antlr4.genmodel"
+			referencedResource = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
+			
+			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment2 auto-inject {}
+
+			formatter = {
+				generateStub = true
+			}
 
 			serializer = {
 				generateStub = false
@@ -37,6 +45,11 @@ Workflow {
 			}
 			junitSupport = {
 				junitVersion = "5"
+			}
+			parserGenerator = {
+				options = {
+					backtrack = true
+				}
 			}
 		}
 	}

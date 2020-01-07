@@ -19,7 +19,7 @@ public class XtextResourceComparatorUtils {
 	 * @param comparison comparison result produced by EMFCompare
 	 * @return match count depicted by Comparison result produced by EMFCompare
 	 */
-	static int getMatchCount(Comparison comparison) {
+	public static int getMatchCount(Comparison comparison) {
 		int matchQuantity = 0;
 		EList<Match> matches = comparison.getMatches();
 		for (Match match : matches) {

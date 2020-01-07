@@ -8,6 +8,7 @@ Bundle-SymbolicName: trglang.com.github.jknack.antlr4ide.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: trglang.com.github.jknack.antlr4ide,
  trglang.com.github.jknack.antlr4ide.ide,
+ uk.ac.york.cs.ecss.domains,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,

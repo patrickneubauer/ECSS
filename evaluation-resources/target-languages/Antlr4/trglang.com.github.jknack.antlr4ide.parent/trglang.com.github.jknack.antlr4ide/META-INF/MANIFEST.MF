@@ -6,22 +6,22 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: trglang.com.github.jknack.antlr4ide; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext,
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
- org.eclipse.emf.ecore,
  org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  org.eclipse.xtext.util,
- org.eclipse.emf.common,
- org.eclipse.xtend.lib;bundle-version="2.14.0"
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: trglang.com.github.jknack.antlr4ide.lang.util,
- trglang.com.github.jknack.antlr4ide,
- trglang.com.github.jknack.antlr4ide.lang.impl,
- trglang.com.github.jknack.antlr4ide.lang,
+Export-Package: trglang.com.github.jknack.antlr4ide,
  trglang.com.github.jknack.antlr4ide.scoping,
+ trglang.com.github.jknack.antlr4ide.formatting2,
+ trglang.com.github.jknack.antlr4ide.parser.antlr.internal,
  trglang.com.github.jknack.antlr4ide.generator,
  trglang.com.github.jknack.antlr4ide.services,
+ trglang.com.github.jknack.antlr4ide.parser.antlr,
  trglang.com.github.jknack.antlr4ide.validation,
  trglang.com.github.jknack.antlr4ide.serializer
 Import-Package: org.apache.log4j

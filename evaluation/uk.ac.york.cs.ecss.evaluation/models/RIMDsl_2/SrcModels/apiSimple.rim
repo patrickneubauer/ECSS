@@ -1,0 +1,32 @@
+domain SimpleDomain {
+    rim Simple @ Annotation : tags ( "Simple" ) {
+        event POST { method: POST }
+
+        command GetEntity
+        command GetException
+        command UpdateEntity
+
+        basepath: "/Simple"
+
+        initial resource A {
+            type: collection
+            entity: ENTITY
+            view: GetEntity
+            path: "/A"
+            POST -> B
+        }
+
+        exception resource E {
+            type: collection
+            entity: EXCEPTION
+            view: GetException
+        }
+
+        resource B {
+            type: item
+            entity: ENTITY
+            actions [ UpdateEntity ]
+            path: "/B"
+        }
+    }
+}

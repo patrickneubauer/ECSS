@@ -1,0 +1,73 @@
+grammar trglang.rethink.uml.ClassDiagram 
+
+import "http://www.uml.rethink/ClassDiagram" 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+DomainModel:
+	{DomainModel} "DomainModel" "{" file=ESTRING? (packages+=CPackage ("," packages+=CPackage)*)? "}";
+
+terminal ESTRING:
+	"\"" ("\\" . | !("\\" | "\""))* "\"" | "\'" ("\\" . | !("\\" | "\'"))* "\'";
+
+CPackage:
+	{CPackage} "CPackage" name=IDDT? "{" style=PackageStyle? (elements+=Element ("," elements+=Element)*)? "}";
+
+Element:
+	Relation | Node;
+
+enum PackageStyle:
+	Node | Rect | Folder | Frame | Cloud | Database;
+
+Node:
+	Entity | CPackage | Note;
+
+Relation:
+	{Relation} "Relation" name=IDDT? "{" leftRef=[Node|IDDT]? relType=RelationParse? rightRef=[Node|IDDT]? "}";
+
+RelationParse:
+	{RelationParse} "RelationParse" comp=CompType? "{" type=RelationType? direct?=EBOOLEAN? multi=ESTRING? ext?=EBOOLEAN? "}";
+
+Note:
+	{Note} "Note" name=IDDT? "{" position=NotePosition? value=ESTRING? of=[Entity|IDDT]? "}";
+
+Entity:
+	Enumer | Clazz;
+
+terminal EBOOLEAN returns ecore::EBoolean:
+	"true" | "false";
+
+RelationType:
+	{RelationType} "RelationType" "{" strong?=EBOOLEAN? weak?=EBOOLEAN? "}";
+
+Clazz:
+	{Clazz} "Clazz" name=IDDT? "{" stereotype=ESTRING? (properties+=Property ("," properties+=Property)*)? "}";
+
+Enumer:
+	{Enumer} "Enumer" name=IDDT? "{" (types+=ESTRING ("," types+=ESTRING)*)? "}";
+
+enum NotePosition:
+	top | bottom | left | right;
+
+Property:
+	{Property} "Property" name=IDDT? "{" optional?=EBOOLEAN? type=DataType? entityList=EntityList? constant?=EBOOLEAN?
+	value=ESTRING? "}";
+
+EntityList:
+	{EntityList} "EntityList" "{" (refs+=[Entity|IDDT] ("," refs+=[Entity|IDDT])*)? "}";
+
+DataType:
+	{DataType} "DataType" native=NativeType? "{" entity=[Entity|IDDT]? isArray?=EBOOLEAN? "}";
+
+IDDT:
+	EBOOLEAN | ID;
+
+enum NativeType:
+	string | number | integer | boolean | date | object
+;
+
+enum CompType:
+	none | comp='*' | agre='o'
+;
+
+terminal ID:
+	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

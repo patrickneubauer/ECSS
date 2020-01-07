@@ -47,6 +47,7 @@ Workflow {
 			}
 			
 			parserGenerator = {
+        	  antlrParam = "-Xconversiontimeout" antlrParam = "10000"
 			  options = {
 			    backtrack = true
 			  }

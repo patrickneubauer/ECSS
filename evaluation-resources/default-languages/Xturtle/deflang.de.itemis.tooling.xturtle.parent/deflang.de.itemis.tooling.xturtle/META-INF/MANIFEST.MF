@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: deflang.de.itemis.tooling.xturtle
+Bundle-ManifestVersion: 2
+Bundle-Name: deflang.de.itemis.tooling.xturtle
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: deflang.de.itemis.tooling.xturtle; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: uk.ac.york.cs.ecss.domains,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: deflang.de.itemis.tooling.xturtle.serializer,
+ deflang.de.itemis.tooling.xturtle.formatting2,
+ deflang.de.itemis.tooling.xturtle.parser.antlr,
+ deflang.de.itemis.tooling.xturtle.services,
+ deflang.de.itemis.tooling.xturtle.generator,
+ deflang.de.itemis.tooling.xturtle.scoping,
+ deflang.de.itemis.tooling.xturtle,
+ deflang.de.itemis.tooling.xturtle.validation,
+ deflang.de.itemis.tooling.xturtle.parser.antlr.internal
+Import-Package: org.apache.log4j

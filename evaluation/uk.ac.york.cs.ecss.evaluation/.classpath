@@ -38,5 +38,29 @@
 	<classpathentry kind="src" path="/srclang.com.puppetlabs.geppetto.pp.dsl2"/>
 	<classpathentry kind="src" path="/deflang.com.puppetlabs.geppetto.pp.dsl2"/>
 	<classpathentry kind="src" path="/trglang.com.puppetlabs.geppetto.pp.dsl2"/>
+	<classpathentry kind="src" path="/srclang.org.wesnoth"/>
+	<classpathentry kind="src" path="/deflang.org.wesnoth"/>
+	<classpathentry kind="src" path="/trglang.org.wesnoth"/>
+	<classpathentry kind="src" path="/srclang.org.uqbar.project.wollok"/>
+	<classpathentry kind="src" path="/deflang.org.uqbar.project.wollok"/>
+	<classpathentry kind="src" path="/trglang.org.uqbar.project.wollok"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/srclang.com.temenos.interaction.rimdsl"/>
+	<classpathentry kind="src" path="/deflang.com.temenos.interaction.rimdsl"/>
+	<classpathentry kind="src" path="/trglang.com.temenos.interaction.rimdsl"/>
+	<classpathentry kind="src" path="/deflang.com.puppetlabs.geppetto.pp.dsl1"/>
+	<classpathentry kind="src" path="/trglang.com.puppetlabs.geppetto.pp.dsl1"/>
+	<classpathentry kind="src" path="/srclang.com.puppetlabs.geppetto.pp.dsl1"/>
+	<classpathentry kind="src" path="/srclang.org.sculptor.dsl"/>
+	<classpathentry kind="src" path="/deflang.org.sculptor.dsl"/>
+	<classpathentry kind="src" path="/trglang.org.sculptor.dsl"/>
+	<classpathentry kind="src" path="/srclang.com.github.jknack.antlr4ide"/>
+	<classpathentry kind="src" path="/deflang.com.github.jknack.antlr4ide"/>
+	<classpathentry kind="src" path="/trglang.com.github.jknack.antlr4ide"/>
+	<classpathentry kind="src" path="/trglang.com.puppetlabs.geppetto.module2.dsl"/>
+	<classpathentry kind="src" path="/deflang.com.puppetlabs.geppetto.module2.dsl"/>
+	<classpathentry kind="src" path="/srclang.com.puppetlabs.geppetto.module2.dsl"/>
+	<classpathentry kind="src" path="/srclang.de.itemis.tooling.xturtle"/>
+	<classpathentry kind="src" path="/deflang.de.itemis.tooling.xturtle"/>
+	<classpathentry kind="src" path="/trglang.de.itemis.tooling.xturtle"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

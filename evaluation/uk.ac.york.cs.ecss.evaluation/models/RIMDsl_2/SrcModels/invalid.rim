@@ -1,0 +1,34 @@
+rim test {
+
+event GET {
+	method: GET
+}
+event PUT {
+	method: PUT
+}
+
+command GetEntities
+command GetEntity
+command UpdateEntity
+
+initial resource A {
+	type: collection
+	entity: ENTITY
+	view: GetEntities
+	GET -> 
+}
+
+resource B {
+	type: item
+	entity: ENTITY
+	view: GetEntity
+	PUT -> "{B_update}"
+}
+
+resource B_update {
+	type: item
+	entity: ENTITY
+    actions [ UpdateEntity ]
+}
+
+}
