@@ -4,129 +4,59 @@ grammar trglang.com.puppetlabs.geppetto.module2.dsl.Module2 with org.eclipse.xte
 import "http://www.com.srclang/puppetlabs/geppetto/module2/dsl/Module2"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-JsonObject_Impl returns JsonObject:
-	{JsonObject}
-	'JsonObject'
-	'{'
-		('pairs' '{' pairs+=Pair ( "," pairs+=Pair)* '}' )?
-	'}';
+Value:
+	JsonValue | JsonArray | JsonObject;
 
-Pair returns Pair:
-	Pair_Impl | UnrecognizedPair | MetadataRefPair;
+JsonValue:
+	RequirementNameValue | JsonVersionRange | JsonVersion | JsonModuleName | JsonTag;
 
-Value returns Value:
-	Value_Impl | JsonObject_Impl | JsonMetadata | JsonArray | JsonDependency | JsonRequirement | JsonValue_Impl | RequirementNameValue | JsonVersionRange | JsonModuleName | JsonTag | JsonVersion | JsonOS;
+JsonObject:
+	JsonOS | JsonRequirement | JsonDependency | JsonMetadata;
 
+JsonArray:
+	{JsonArray} "JsonArray" "{" (value+=Value ("," value+=Value)*)? "}";
 
-Pair_Impl returns Pair:
-	{Pair}
-	'Pair'
-	name=EString
-	'{'
-		('value' value=Value)?
-	'}';
+JsonDependency:
+	{JsonDependency} "JsonDependency" "{" (pairs+=Pair ("," pairs+=Pair)*)? "}";
 
-JsonMetadata returns JsonMetadata:
-	{JsonMetadata}
-	'JsonMetadata'
-	'{'
-		('pairs' '{' pairs+=Pair ( "," pairs+=Pair)* '}' )?
-	'}';
+JsonOS:
+	{JsonOS} "JsonOS" "{" (pairs+=Pair ("," pairs+=Pair)*)? "}";
 
-JsonDependency returns JsonDependency:
-	{JsonDependency}
-	'JsonDependency'
-	'{'
-		('pairs' '{' pairs+=Pair ( "," pairs+=Pair)* '}' )?
-	'}';
+JsonRequirement:
+	{JsonRequirement} "JsonRequirement" "{" (pairs+=Pair ("," pairs+=Pair)*)? "}";
 
-JsonRequirement returns JsonRequirement:
-	{JsonRequirement}
-	'JsonRequirement'
-	'{'
-		('pairs' '{' pairs+=Pair ( "," pairs+=Pair)* '}' )?
-	'}';
+JsonMetadata:
+	{JsonMetadata} "JsonMetadata" "{" (pairs+=Pair ("," pairs+=Pair)*)? "}";
 
-JsonOS returns JsonOS:
-	{JsonOS}
-	'JsonOS'
-	'{'
-		('pairs' '{' pairs+=Pair ( "," pairs+=Pair)* '}' )?
-	'}';
+RequirementNameValue:
+	{RequirementNameValue} "RequirementNameValue" "{" value=EJAVAOBJECT? "}";
 
-EString returns ecore::EString:
-	STRING | ID;
+JsonModuleName:
+	{JsonModuleName} "JsonModuleName" "{" value=EJAVAOBJECT? "}";
 
-Value_Impl returns Value:
-	{Value}
-	'Value'
-	;
+JsonVersionRange:
+	{JsonVersionRange} "JsonVersionRange" "{" value=EJAVAOBJECT? "}";
 
-UnrecognizedPair returns UnrecognizedPair:
-	{UnrecognizedPair}
-	'UnrecognizedPair'
-	name=EString
-	'{'
-		('value' value=Value)?
-	'}';
+JsonVersion:
+	{JsonVersion} "JsonVersion" "{" value=EJAVAOBJECT? "}";
 
-MetadataRefPair returns MetadataRefPair:
-	{MetadataRefPair}
-	'MetadataRefPair'
-	name=EString
-	'{'
-		('ref' ref=[JsonMetadata|EString])?
-		('value' value=Value)?
-	'}';
+JsonTag:
+	{JsonTag} "JsonTag" "{" value=EJAVAOBJECT? "}";
 
-JsonArray returns JsonArray:
-	{JsonArray}
-	'JsonArray'
-	'{'
-		('value' '{' value+=Value ( "," value+=Value)* '}' )?
-	'}';
+Pair:
+	UnrecognizedPair | MetadataRefPair;
 
-JsonValue_Impl returns JsonValue:
-	{JsonValue}
-	'JsonValue'
-	'{'
-		('value' value=EJavaObject)?
-	'}';
+terminal EJAVAOBJECT returns ecore::EJavaObject:
+	"EJAVAOBJECT";
 
-RequirementNameValue returns RequirementNameValue:
-	{RequirementNameValue}
-	'RequirementNameValue'
-	'{'
-		('value' value=EJavaObject)?
-	'}';
+MetadataRefPair:
+	{MetadataRefPair} "MetadataRefPair" name=IDDT? "{" value=Value? ref=[JsonMetadata|IDDT]? "}";
 
-JsonVersionRange returns JsonVersionRange:
-	{JsonVersionRange}
-	'JsonVersionRange'
-	'{'
-		('value' value=EJavaObject)?
-	'}';
+UnrecognizedPair:
+	{UnrecognizedPair} "UnrecognizedPair" name=IDDT? "{" value=Value? "}";
 
-JsonModuleName returns JsonModuleName:
-	{JsonModuleName}
-	'JsonModuleName'
-	'{'
-		('value' value=EJavaObject)?
-	'}';
+IDDT:
+	EJAVAOBJECT | ID;
 
-JsonTag returns JsonTag:
-	{JsonTag}
-	'JsonTag'
-	'{'
-		('value' value=EJavaObject)?
-	'}';
-
-JsonVersion returns JsonVersion:
-	{JsonVersion}
-	'JsonVersion'
-	'{'
-		('value' value=EJavaObject)?
-	'}';
-
-EJavaObject returns ecore::EJavaObject:
-	'EJavaObject' /* TODO: implement this rule and an appropriate IValueConverter */;
+terminal ID:
+	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
