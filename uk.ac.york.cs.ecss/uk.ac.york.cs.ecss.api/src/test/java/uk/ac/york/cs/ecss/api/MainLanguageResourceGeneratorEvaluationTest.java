@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -26,6 +27,7 @@ import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.util.RuntimeIOException;
 import org.eclipse.xtext.xtext.GrammarResource;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -459,7 +461,14 @@ public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageRes
 	}
 	
 	private void printStats(File targetFile) {
-		printStats(targetFile, (GrammarResource) generator.getResourceLoader().getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true));
+		GrammarResource grammarResource = null;
+		try {
+			grammarResource = (GrammarResource) generator.getResourceLoader().getResourceSet().getResource(URI.createFileURI(targetFile.toString()), true);
+		} catch(RuntimeIOException e) {
+			logger.error(e.getMessage());
+		}
+		if (grammarResource!=null)
+			printStats(targetFile, grammarResource);
 	}
 	
 	private void printStats(File targetFile, GrammarResource grammarResource) {
@@ -474,7 +483,16 @@ public class MainLanguageResourceGeneratorEvaluationTest extends BaseLanguageRes
 		int tRuleCount = 0;
 		int eRuleCount = 0;
 		int pRuleCount = 0;
-		for ( EObject eObject : grammarResource.getContents() ) {
+		
+		EList<EObject> grammarContents = null;
+		try {
+			grammarContents = grammarResource.getContents();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+			return;
+		}
+		
+		for ( EObject eObject : grammarContents ) {
 			if (eObject instanceof Grammar) {
 				Grammar g = (Grammar)eObject;
 				for ( AbstractRule rule : g.getRules() ) {
