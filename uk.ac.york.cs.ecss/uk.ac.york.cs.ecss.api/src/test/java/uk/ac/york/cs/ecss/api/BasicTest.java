@@ -14,13 +14,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import uk.ac.york.cs.ecss.migrated.EcoreNameRelation;
-import uk.ac.york.cs.ecss.migrated.EcoreNameRelationDistanceManager;
 import uk.ac.york.cs.ecss.migrated.MultiExtensionResourceResolver;
-import uk.ac.york.cs.ecss.migrated.ResourceLoaderImpl;
-import uk.ac.york.cs.ecss.migrated.ResourceResolver;
 
 public class BasicTest {
 	
