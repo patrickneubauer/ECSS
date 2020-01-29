@@ -30,6 +30,7 @@ import org.eclipse.xtext.serializer.impl.Serializer;
 import com.google.inject.Injector;
 
 import uk.ac.york.cs.ecss.evaluation.statemachine.statemachine.StatemachinePackage;
+import weka.core.pmml.jaxbbindings.ModelVerification;
 
 /**
  * 

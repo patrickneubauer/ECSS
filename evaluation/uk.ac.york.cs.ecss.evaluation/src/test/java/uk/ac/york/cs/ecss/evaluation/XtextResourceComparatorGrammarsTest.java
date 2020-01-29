@@ -1,20 +1,9 @@
 package uk.ac.york.cs.ecss.evaluation;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.XtextPackage;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.xtext.GrammarResource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,8 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.inject.Injector;
-
-import uk.ac.york.cs.ecss.utilities.CSVUtil;
 
 public class XtextResourceComparatorGrammarsTest extends XtextResourceComparatorBaseTest {
 
