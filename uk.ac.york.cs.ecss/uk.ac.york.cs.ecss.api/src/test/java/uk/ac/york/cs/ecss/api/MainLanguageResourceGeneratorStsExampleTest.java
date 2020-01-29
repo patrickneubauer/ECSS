@@ -507,8 +507,59 @@ public class MainLanguageResourceGeneratorStsExampleTest extends BaseLanguageRes
 		}
 	}
 	
-	public static void main(String args[]) {
-		org.junit.runner.JUnitCore.main("uk.ac.york.cs.ecss.api.MainLanguageResourceGeneratorStsExampleTest");
+	public static void main(String args[]) throws Exception {
+		Path inputPath = Paths.get("../../sts-example/grammar-variations/StsLanguageYaml.xtext");
+
+		String uniqueLanguageId = com.google.common.io.Files.getNameWithoutExtension(inputPath.toString()); // "StsLanguageYaml"
+		String languageName = LANGUAGE_NAME_PREFIX + "." + uniqueLanguageId;
+		Path outputPath = Paths.get(INPUT_DATA_FOLDER + OUTPUT_PATH + uniqueLanguageId + "/");
+		try {
+			FileUtils.deleteDirectory(outputPath);
+			Files.createDirectories(outputPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// prepare destination (wipe previously generated; re-create generation target location)
+		FileUtils.deleteDirectory(Paths.get(INPUT_DATA_FOLDER+OUTPUT_PATH));
+		Files.createDirectories(Paths.get(INPUT_DATA_FOLDER+OUTPUT_PATH));
+		// copy language language meta-model to generation target location, i.e. used by ResourceResolver
+//				Files.copy(Paths.get(ECORE_PATH+ECORE_FILE_NAME), Paths.get(INPUT_DATA_FOLDER+OUTPUT_PATH+ECORE_FILE_NAME));
+		
+		languageFileExtensions.add(LANGUAGE_FILE_EXTENSION);
+		reportFile = new File(INPUT_DATA_FOLDER + REPORT_FILE_LOCATION);
+
+		generator = new MainLanguageResourcesGenerator(reportFile, Paths.get(""), 
+				languageProjectBaseName, "", languageFileExtensions);
+		
+		generator.setLanguageName(languageName);
+		generator.setLanguageId(uniqueLanguageId);
+		generator.setOutputPath(outputPath);		
+		
+		List<File> basePaths = new LinkedList<File>();
+		basePaths.add(new File(INPUT_DATA_FOLDER+OUTPUT_PATH));
+		basePaths.add(new File(ECORE_PATH));
+		basePaths.add(new File(ECSS_LANGUAGE_OTHER_MODELS_PATH));
+		generator.setResourceResolver(MultiExtensionResourceResolver.get(basePaths,
+				"", true, "ecore", "ecss", "xtext"));
+		generator.getResourceLoader().loadAll();
+		EcoreKeywordConfig config = new EcoreKeywordConfig();
+		config.useKeywords = true;
+		EcoreNameRelation relation = new EcoreNameRelation(reportFile.getAbsolutePath(), generator.getResourceLoader().getResources(), 
+				generator.getResourceLoader().getResourceSet(), config);
+		EcoreNameRelationDistanceManager man = new EcoreNameRelationDistanceManager(generator.getResourceLoader(), relation);
+		generator.initEcoreUtil(generator.getResourceLoader(), man);
+		
+//		org.junit.runner.JUnitCore.main("uk.ac.york.cs.ecss.api.MainLanguageResourceGeneratorStsExampleTest");
+		assertFalse( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
+
+		MavenTychoXtextProjectCreator projectCreator = generator.generateLanguageProject(outputPath.toFile());
+		projectCreator.runWorkflow();
+		
+		assertTrue( FileUtils.containsFileByName( outputPath.toFile(), outputPath.toFile().getName().toString() + "StandaloneSetupGenerated.java" ) );
+		
+		logger.info("test completed!");
 	}
 
 }
